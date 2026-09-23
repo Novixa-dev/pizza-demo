@@ -23,19 +23,30 @@ import { TimeSlotOption } from "@/types";
 interface CheckoutClientViewProps {
   restaurant: any;
   availableSlots: TimeSlotOption[];
+  restaurantStatus?: any;
 }
 
 export default function CheckoutClientView({
   restaurant,
-  availableSlots,
+  availableSlots = [],
+  restaurantStatus,
 }: CheckoutClientViewProps) {
   const { cart, cartTotal, clearCart, language, dict } = useApp();
 
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
-  const [pickupMode, setPickupMode] = useState<"ASAP" | "SCHEDULED">("ASAP");
+  const [pickupMode, setPickupMode] = useState<"ASAP" | "SCHEDULED">(() => {
+    if (
+      restaurantStatus &&
+      !restaurantStatus.canOrderImmediate &&
+      restaurantStatus.canOrderScheduled
+    ) {
+      return "SCHEDULED";
+    }
+    return "ASAP";
+  });
   const [selectedSlot, setSelectedSlot] = useState<string>(
-    availableSlots.find((s) => s.isAvailable)?.timeString || ""
+    availableSlots?.find((s) => s.isAvailable)?.timeString || ""
   );
   const [paymentMethod, setPaymentMethod] = useState<
     "PAY_AT_PICKUP" | "TRANSFER_KURAIMI" | "TRANSFER_AMQI" | "TRANSFER_BUSAIRI"
@@ -162,7 +173,25 @@ export default function CheckoutClientView({
       {restaurant?.isOnlineOrderingPaused && (
         <div className="mb-6 p-4 rounded-2xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm flex items-center gap-3">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <span>{dict.checkout.orderingPausedAlert}</span>
+          <span>{restaurant.pauseMessageAr || dict.checkout.orderingPausedAlert}</span>
+        </div>
+      )}
+
+      {restaurantStatus && !restaurantStatus.canOrderImmediate && restaurantStatus.canOrderScheduled && (
+        <div className="mb-6 p-4 rounded-2xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 text-sky-800 dark:text-sky-200 text-xs sm:text-sm flex items-center gap-3">
+          <Clock className="w-5 h-5 flex-shrink-0 text-sky-600" />
+          <span>
+            {language === "ar" ? restaurantStatus.descriptionAr : restaurantStatus.descriptionEn} (تم توجيه الطلب تلقائياً إلى خيار &quot;الاستلام المجدول&quot;).
+          </span>
+        </div>
+      )}
+
+      {restaurantStatus && !restaurantStatus.canOrderImmediate && !restaurantStatus.canOrderScheduled && (
+        <div className="mb-6 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 text-xs sm:text-sm flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 flex-shrink-0 text-amber-600" />
+          <span>
+            {language === "ar" ? restaurantStatus.descriptionAr : restaurantStatus.descriptionEn}
+          </span>
         </div>
       )}
 
@@ -225,9 +254,12 @@ export default function CheckoutClientView({
               {/* ASAP Option */}
               <button
                 type="button"
+                disabled={restaurantStatus && !restaurantStatus.canOrderImmediate}
                 onClick={() => setPickupMode("ASAP")}
                 className={`p-4 rounded-2xl border text-start transition-all ${
-                  pickupMode === "ASAP"
+                  restaurantStatus && !restaurantStatus.canOrderImmediate
+                    ? "opacity-50 cursor-not-allowed bg-stone-100 dark:bg-stone-850 border-stone-200 dark:border-stone-800 text-stone-400"
+                    : pickupMode === "ASAP"
                     ? "border-pizza-600 bg-pizza-50/70 dark:bg-pizza-950/40 text-pizza-950 dark:text-white shadow-sm"
                     : "border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 bg-white dark:bg-stone-850 text-stone-700 dark:text-stone-300"
                 }`}
@@ -247,7 +279,9 @@ export default function CheckoutClientView({
                   </div>
                 </div>
                 <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">
-                  {dict.checkout.asapBadge}
+                  {restaurantStatus && !restaurantStatus.canOrderImmediate
+                    ? "غير متاح حالياً (خارج ساعات العمل الفوري)"
+                    : dict.checkout.asapBadge}
                 </p>
               </button>
 
@@ -288,34 +322,40 @@ export default function CheckoutClientView({
                   {dict.checkout.selectSlot}
                 </label>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-1">
-                  {availableSlots.map((slot) => (
-                    <button
-                      type="button"
-                      key={slot.timeString}
-                      disabled={!slot.isAvailable}
-                      onClick={() => setSelectedSlot(slot.timeString)}
-                      className={`p-2.5 rounded-xl border text-xs font-bold font-outfit text-center transition-all ${
-                        !slot.isAvailable
-                          ? "opacity-35 cursor-not-allowed bg-stone-100 dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400"
-                          : selectedSlot === slot.timeString
-                          ? "bg-pizza-700 text-white border-pizza-700 shadow-sm"
-                          : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700 hover:border-pizza-500"
-                      }`}
-                    >
-                      <div>
-                        {language === "ar"
-                          ? slot.displayLabelAr
-                          : slot.displayLabelEn}
-                      </div>
-                      {!slot.isAvailable && (
-                        <span className="text-[9px] block text-red-500 font-cairo mt-0.5">
-                          {slot.reason || dict.checkout.slotFull}
-                        </span>
-                      )}
-                    </button>
-                  ))}
-                </div>
+                {availableSlots.length === 0 ? (
+                  <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-800 text-center text-xs text-stone-500">
+                    لا توجد فترات حجز متبقية لليوم. يمكنك التواصل مع خدمة العملاء عبر الواتساب للتنسيق.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-1">
+                    {availableSlots.map((slot) => (
+                      <button
+                        type="button"
+                        key={slot.timeString}
+                        disabled={!slot.isAvailable}
+                        onClick={() => setSelectedSlot(slot.timeString)}
+                        className={`p-2.5 rounded-xl border text-xs font-bold font-outfit text-center transition-all ${
+                          !slot.isAvailable
+                            ? "opacity-35 cursor-not-allowed bg-stone-100 dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400"
+                            : selectedSlot === slot.timeString
+                            ? "bg-pizza-700 text-white border-pizza-700 shadow-sm"
+                            : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700 hover:border-pizza-500"
+                        }`}
+                      >
+                        <div>
+                          {language === "ar"
+                            ? slot.displayLabelAr
+                            : slot.displayLabelEn}
+                        </div>
+                        {!slot.isAvailable && (
+                          <span className="text-[9px] block text-red-500 font-cairo mt-0.5">
+                            {slot.reason || dict.checkout.slotFull}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -532,9 +572,19 @@ export default function CheckoutClientView({
             {/* Submit CTA */}
             <button
               type="submit"
-              disabled={isSubmitting || restaurant?.isOnlineOrderingPaused}
+              disabled={
+                isSubmitting ||
+                restaurant?.isOnlineOrderingPaused ||
+                (restaurantStatus &&
+                  !restaurantStatus.canOrderImmediate &&
+                  !restaurantStatus.canOrderScheduled)
+              }
               className={`w-full py-3.5 px-5 rounded-2xl font-bold text-sm shadow-xl active:scale-[0.99] transition-all flex items-center justify-center gap-2 ${
-                isSubmitting || restaurant?.isOnlineOrderingPaused
+                isSubmitting ||
+                restaurant?.isOnlineOrderingPaused ||
+                (restaurantStatus &&
+                  !restaurantStatus.canOrderImmediate &&
+                  !restaurantStatus.canOrderScheduled)
                   ? "bg-stone-300 dark:bg-stone-700 text-stone-500 cursor-not-allowed shadow-none"
                   : "bg-gradient-to-r from-pizza-700 via-pizza-600 to-pizza-700 hover:from-pizza-800 hover:to-pizza-800 text-white shadow-pizza-700/25"
               }`}

@@ -8,6 +8,7 @@ import {
   updateOrderStatusAction,
   togglePauseOrderingAction,
   toggleProductAvailabilityAction,
+  updateStoreSettingsAction,
 } from "@/app/actions/orderActions";
 import { useRouter } from "next/navigation";
 import {
@@ -26,7 +27,9 @@ import {
   RotateCw,
   ExternalLink,
   ShieldAlert,
+  LogOut,
 } from "lucide-react";
+import { logoutStaffAction } from "@/app/actions/orderActions";
 
 interface AdminClientViewProps {
   restaurant: any;
@@ -59,6 +62,19 @@ export default function AdminClientView({
   const [pauseMessage, setPauseMessage] = useState(
     restaurant?.pauseMessageAr || ""
   );
+
+  const [prepDuration, setPrepDuration] = useState(
+    restaurant?.defaultPrepDuration || 15
+  );
+  const [slotCapacity, setSlotCapacity] = useState(
+    restaurant?.slotCapacityLimit || 6
+  );
+  const [phone, setPhone] = useState(restaurant?.phone || "05375561");
+  const [whatsapp, setWhatsapp] = useState(restaurant?.whatsapp || "772207788");
+  const [addressAr, setAddressAr] = useState(
+    restaurant?.addressAr || "المكلا - فوه - حي المساكن"
+  );
+  const [saveSuccessMsg, setSaveSuccessMsg] = useState("");
 
   // Metrics calculation
   const totalRevenue = orders
@@ -127,13 +143,27 @@ export default function AdminClientView({
           </h1>
         </div>
 
-        <button
-          onClick={() => router.refresh()}
-          className="inline-flex items-center gap-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 text-stone-800 dark:text-stone-200 px-4 py-2 rounded-xl text-xs font-bold transition-colors w-fit"
-        >
-          <RotateCw className="w-3.5 h-3.5" />
-          <span>تحديث البيانات</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => router.refresh()}
+            className="inline-flex items-center gap-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 text-stone-800 dark:text-stone-200 px-4 py-2 rounded-xl text-xs font-bold transition-colors w-fit"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+            <span>تحديث البيانات</span>
+          </button>
+
+          <button
+            onClick={async () => {
+              await logoutStaffAction();
+              window.location.reload();
+            }}
+            className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-700 dark:bg-red-950/40 dark:hover:bg-red-950/70 dark:text-red-300 px-3 py-2 rounded-xl text-xs font-bold transition-colors"
+            title="تسجيل الخروج"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">خروج</span>
+          </button>
+        </div>
       </div>
 
       {/* Navigation Tabs */}
@@ -594,56 +624,212 @@ export default function AdminClientView({
 
       {/* Tab 5: Operational Settings & Emergency Pause */}
       {activeTab === "settings" && (
-        <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-6 max-w-2xl">
-          <div className="space-y-1">
-            <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
-              {dict.admin.pauseOrdering}
-            </h3>
-            <p className="text-xs text-stone-500">{dict.admin.pauseOrderingDesc}</p>
-          </div>
-
-          <div className="p-4 rounded-2xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-stone-900 dark:text-white">
-                حالة استقبال الطلبات الرقمية:
-              </span>
-              <button
-                onClick={handleTogglePause}
-                disabled={isProcessing}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white transition-colors ${
-                  isPaused
-                    ? "bg-emerald-600 hover:bg-emerald-700"
-                    : "bg-red-600 hover:bg-red-700"
-                }`}
-              >
-                {isPaused ? (
-                  <>
-                    <PlayCircle className="w-4 h-4" />
-                    <span>إعادة استئناف الطلبات</span>
-                  </>
-                ) : (
-                  <>
-                    <PauseCircle className="w-4 h-4" />
-                    <span>إيقاف مؤقت للطلبات</span>
-                  </>
-                )}
-              </button>
+        <div className="space-y-6 max-w-3xl">
+          {/* Pause Ordering Card */}
+          <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+            <div className="space-y-1">
+              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+                {dict.admin.pauseOrdering}
+              </h3>
+              <p className="text-xs text-stone-500">{dict.admin.pauseOrderingDesc}</p>
             </div>
 
-            {isPaused && (
-              <div className="space-y-1.5 pt-3 border-t border-stone-200 dark:border-stone-700">
-                <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
-                  رسالة التنبيه المعروضة للزبائن:
+            <div className="p-4 rounded-2xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-stone-900 dark:text-white">
+                  حالة استقبال الطلبات الرقمية:
+                </span>
+                <button
+                  onClick={handleTogglePause}
+                  disabled={isProcessing}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white transition-colors ${
+                    isPaused
+                      ? "bg-emerald-600 hover:bg-emerald-700"
+                      : "bg-red-600 hover:bg-red-700"
+                  }`}
+                >
+                  {isPaused ? (
+                    <>
+                      <PlayCircle className="w-4 h-4" />
+                      <span>إعادة استئناف الطلبات</span>
+                    </>
+                  ) : (
+                    <>
+                      <PauseCircle className="w-4 h-4" />
+                      <span>إيقاف مؤقت للطلبات</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {isPaused && (
+                <div className="space-y-1.5 pt-3 border-t border-stone-200 dark:border-stone-700">
+                  <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                    رسالة التنبيه المعروضة للزبائن:
+                  </label>
+                  <input
+                    type="text"
+                    value={pauseMessage}
+                    onChange={(e) => setPauseMessage(e.target.value)}
+                    placeholder="نعتذر، تم إيقاف استقبال الطلبات مؤقتاً..."
+                    className="w-full text-xs p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-white"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Ovens, Slots & Branch Logistics Configuration */}
+          <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-5">
+            <div className="space-y-1">
+              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+                إعدادات الأفران، سعة الفترات، وبيانات الفرع
+              </h3>
+              <p className="text-xs text-stone-500">
+                تحديد وقت التجهيز الافتراضي للفرن، الحد الأقصى للطلبات في الشريحة الزمنية، ومعلومات التواصل.
+              </p>
+            </div>
+
+            {saveSuccessMsg && (
+              <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold rounded-xl flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>{saveSuccessMsg}</span>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="space-y-1.5">
+                <label className="font-bold text-stone-700 dark:text-stone-300">
+                  مدة تجهيز وخبز البيتزا (بالدقائق):
+                </label>
+                <input
+                  type="number"
+                  min="5"
+                  max="60"
+                  value={prepDuration}
+                  onChange={(e) => setPrepDuration(Number(e.target.value))}
+                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
+                />
+                <span className="text-[11px] text-stone-500">
+                  تحدد موعد إطلاق التذكرة في شاشة المطبخ (افتراضياً: 15 دقيقة)
+                </span>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="font-bold text-stone-700 dark:text-stone-300">
+                  سعة الأفران القصوى لكل شريحة (15 دقيقة):
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="30"
+                  value={slotCapacity}
+                  onChange={(e) => setSlotCapacity(Number(e.target.value))}
+                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
+                />
+                <span className="text-[11px] text-stone-500">
+                  الحد الأقصى للطلبات المتزامنة قبل وضع الشريحة بحالة &quot;ممتلئ&quot;
+                </span>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="font-bold text-stone-700 dark:text-stone-300">
+                  رقم الهاتف الثابت للفرع:
                 </label>
                 <input
                   type="text"
-                  value={pauseMessage}
-                  onChange={(e) => setPauseMessage(e.target.value)}
-                  placeholder="نعتذر، تم إيقاف استقبال الطلبات مؤقتاً..."
-                  className="w-full text-xs p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-white"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
                 />
               </div>
-            )}
+
+              <div className="space-y-1.5">
+                <label className="font-bold text-stone-700 dark:text-stone-300">
+                  رقم الواتساب الرسمي (خدمة العملاء):
+                </label>
+                <input
+                  type="text"
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
+                />
+              </div>
+
+              <div className="sm:col-span-2 space-y-1.5">
+                <label className="font-bold text-stone-700 dark:text-stone-300">
+                  العنوان الرسمي ونقاط الدلالة (بالعربية):
+                </label>
+                <input
+                  type="text"
+                  value={addressAr}
+                  onChange={(e) => setAddressAr(e.target.value)}
+                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white"
+                />
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                disabled={isProcessing}
+                onClick={async () => {
+                  setIsProcessing(true);
+                  setSaveSuccessMsg("");
+                  const res = await updateStoreSettingsAction({
+                    defaultPrepDuration: prepDuration,
+                    slotCapacityLimit: slotCapacity,
+                    phone,
+                    whatsapp,
+                    addressAr,
+                  });
+                  if (res.success) {
+                    setSaveSuccessMsg("تم حفظ وتحديث إعدادات الفرع بنجاح!");
+                    router.refresh();
+                  }
+                  setIsProcessing(false);
+                }}
+                className="bg-pizza-700 hover:bg-pizza-800 text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-pizza-700/20 active:scale-95 transition-all"
+              >
+                {isProcessing ? "جاري الحفظ..." : "حفظ التعديلات"}
+              </button>
+            </div>
+          </div>
+
+          {/* Official Bank Accounts Information */}
+          <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+              حسابات التحويل المالي المعتمدة للعملاء
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 space-y-1">
+                <span className="font-bold text-pizza-700 dark:text-pizza-400 block">
+                  بنك الكريمي (حاسب)
+                </span>
+                <span className="font-outfit font-black text-stone-900 dark:text-white block text-sm">
+                  PH-772207788
+                </span>
+                <span className="text-[11px] text-stone-500">باسم: بيتزا هاوس</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 space-y-1">
+                <span className="font-bold text-emerald-700 dark:text-emerald-400 block">
+                  شركة العمقي للصرافة
+                </span>
+                <span className="font-outfit font-black text-stone-900 dark:text-white block text-sm">
+                  25401982
+                </span>
+                <span className="text-[11px] text-stone-500">حساب تجاري: بيتزا هاوس</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 space-y-1">
+                <span className="font-bold text-sky-700 dark:text-sky-400 block">
+                  شركة البسيري للصرافة
+                </span>
+                <span className="font-outfit font-black text-stone-900 dark:text-white block text-sm">
+                  889104
+                </span>
+                <span className="text-[11px] text-stone-500">فرع فوه: بيتزا هاوس</span>
+              </div>
+            </div>
           </div>
         </div>
       )}

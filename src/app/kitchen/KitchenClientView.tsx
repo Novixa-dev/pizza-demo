@@ -15,7 +15,9 @@ import {
   AlertTriangle,
   Sparkles,
   Package,
+  LogOut,
 } from "lucide-react";
+import { logoutStaffAction } from "@/app/actions/orderActions";
 
 interface KitchenClientViewProps {
   initialOrders: any[];
@@ -160,6 +162,18 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
           >
             <RotateCw className="w-4 h-4" />
             <span className="hidden sm:inline">{dict.kitchen.autoRefresh}</span>
+          </button>
+
+          <button
+            onClick={async () => {
+              await logoutStaffAction();
+              window.location.reload();
+            }}
+            className="p-2.5 rounded-xl bg-red-950/40 hover:bg-red-950/80 border border-red-800/40 text-red-300 flex items-center gap-1.5 text-xs font-bold"
+            title="تسجيل الخروج"
+          >
+            <LogOut className="w-4 h-4" />
+            <span className="hidden sm:inline">خروج</span>
           </button>
         </div>
       </div>

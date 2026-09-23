@@ -16,11 +16,14 @@ import {
   ArrowRight,
   Pizza,
   Sparkles,
+  AlertCircle,
+  Timer,
 } from "lucide-react";
 import MenuCard from "@/components/customer/MenuCard";
 import CustomizerModal, {
   CustomizerProduct,
 } from "@/components/customer/CustomizerModal";
+import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 
 interface HomeClientViewProps {
   restaurant: any;
@@ -36,6 +39,14 @@ export default function HomeClientView({
   const { language, dict } = useApp();
   const [selectedProduct, setSelectedProduct] = useState<CustomizerProduct | null>(null);
 
+  const opStatus = calculateRestaurantStatus({
+    businessHours: restaurant?.businessHours,
+    isOnlineOrderingPaused: restaurant?.isOnlineOrderingPaused,
+    pauseMessageAr: restaurant?.pauseMessageAr,
+    pauseMessageEn: restaurant?.pauseMessageEn,
+    now: getYemenNow(),
+  });
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-16">
       {/* 1. Hero Section */}
@@ -44,11 +55,44 @@ export default function HomeClientView({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             {/* Text & Pitch */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-start">
-              {/* Branch Landmark Pill */}
-              <div className="inline-flex items-center gap-2 bg-pizza-50 dark:bg-pizza-950/80 border border-pizza-200 dark:border-pizza-800/60 px-3.5 py-1.5 rounded-full text-xs font-bold text-pizza-800 dark:text-pizza-300 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-pizza-600 animate-ping" />
-                <MapPin className="w-3.5 h-3.5 text-pizza-600" />
-                <span>المكلا - فوه - حي المساكن</span>
+              {/* Branch Landmark Text & Real-Time Operational Status */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-pizza-700 dark:text-pizza-400 bg-pizza-50 dark:bg-pizza-950/60 px-3 py-1 rounded-xl border border-pizza-200 dark:border-pizza-900/40">
+                  <MapPin className="w-3.5 h-3.5 text-pizza-600" />
+                  <span>المكلا · فوه · حي المساكن</span>
+                </div>
+
+                <div
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold border ${
+                    opStatus.status === "OPEN_FOR_ORDERING"
+                      ? "bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60"
+                      : opStatus.status === "CLOSING_SOON"
+                      ? "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60"
+                      : opStatus.status === "SCHEDULED_ONLY"
+                      ? "bg-sky-50 text-sky-800 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800/60"
+                      : "bg-red-50 text-red-800 border-red-200 dark:bg-red-950/60 dark:text-red-300 dark:border-red-800/60"
+                  }`}
+                >
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      opStatus.status === "OPEN_FOR_ORDERING"
+                        ? "bg-emerald-500 animate-pulse"
+                        : opStatus.status === "CLOSING_SOON"
+                        ? "bg-amber-500 animate-ping"
+                        : opStatus.status === "SCHEDULED_ONLY"
+                        ? "bg-sky-500"
+                        : "bg-red-500"
+                    }`}
+                  />
+                  <span>
+                    {language === "ar" ? opStatus.badgeLabelAr : opStatus.badgeLabelEn}
+                  </span>
+                  {opStatus.canOrderImmediate && (
+                    <span className="text-[11px] opacity-80 border-s border-current ps-1.5 ms-1">
+                      تجهيز خلال 15 دقيقة
+                    </span>
+                  )}
+                </div>
               </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-stone-900 dark:text-white leading-[1.18] tracking-tight font-cairo">

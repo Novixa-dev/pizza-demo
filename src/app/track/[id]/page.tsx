@@ -44,11 +44,33 @@ export default async function OrderTrackingPage({
     notFound();
   }
 
-  // If customer phone is present, mask it for privacy (e.g. 77****788)
-  const maskedOrder = {
+  const isOwner = Boolean(
+    searchParams.token && searchParams.token === order.trackingToken
+  );
+
+  // If visitor is the verified order owner (holds secret token), provide full tracking access.
+  // Otherwise, sanitize data strictly to prevent IDOR and data harvesting.
+  const sanitizedOrder = {
     ...order,
-    customerPhone: order.customerPhone.replace(/(\d{2})\d+(\d{3})/, "$1****$2"),
+    // Redact secret tracking token if not owner
+    trackingToken: isOwner ? order.trackingToken : null,
+    // Mask customer name if unauthenticated visitor
+    customerName: isOwner
+      ? order.customerName
+      : order.customerName.replace(/^(.).*(.)$/, "$1***$2"),
+    // Mask phone number completely for strangers
+    customerPhone: isOwner
+      ? order.customerPhone.replace(/(\d{2})\d+(\d{3})/, "$1****$2")
+      : "***",
+    // Protect uploaded payment receipt image from public scrapers
+    payment: order.payment
+      ? {
+          ...order.payment,
+          receipt: isOwner ? order.payment.receipt : null,
+        }
+      : null,
+    isOwner,
   };
 
-  return <TrackingClientView order={maskedOrder} />;
+  return <TrackingClientView order={sanitizedOrder} isOwner={isOwner} />;
 }

@@ -32,11 +32,11 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
           {/* Badges */}
           <div className="absolute top-3 start-3 flex flex-col gap-1.5">
             {!product.isAvailable ? (
-              <span className="bg-stone-900/90 text-red-300 backdrop-blur-md text-[10px] font-bold px-2.5 py-1 rounded-full border border-red-800/40 shadow-sm">
+              <span className="bg-stone-900/90 text-red-300 backdrop-blur-md text-[10px] font-bold px-2 py-0.5 rounded-lg border border-red-800/40 shadow-sm">
                 {dict.menu.soldOut}
               </span>
             ) : product.basePrice >= 5000 ? (
-              <span className="bg-gradient-to-r from-amber-500 to-crust-500 text-stone-950 text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
+              <span className="bg-amber-400 text-stone-950 text-[10px] font-black px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1">
                 <Star className="w-3 h-3 fill-stone-950" />
                 <span>{dict.menu.featured}</span>
               </span>

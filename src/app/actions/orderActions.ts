@@ -7,6 +7,7 @@ import {
   calculateEarliestPickup,
   calculateKitchenReleaseTime,
 } from "@/lib/scheduler";
+import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 import { validateOrderTransition, OrderStatus } from "@/lib/stateMachine";
 import {
   isAuthorizedStaff,
@@ -23,6 +24,17 @@ import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import fs from "fs";
 import path from "path";
+
+/**
+ * Safe wrapper around revalidatePath that prevents errors when called outside an active Next.js static generation store context.
+ */
+function safeRevalidatePath(targetPath: string) {
+  try {
+    revalidatePath(targetPath);
+  } catch {
+    // Intentionally suppressed for standalone / test executions
+  }
+}
 
 /**
  * Saves a base64 data URI receipt to disk safely.
@@ -104,7 +116,7 @@ export async function createOrderAction(rawInput: unknown) {
 
     const data = parseResult.data;
 
-    // 1. Check restaurant status (is ordering paused?)
+    // 1. Check restaurant status (is ordering paused or outside hours?)
     const restaurant = await prisma.restaurant.findFirst({
       include: { businessHours: true },
     });
@@ -113,12 +125,25 @@ export async function createOrderAction(rawInput: unknown) {
       return { success: false, error: "تعذر العثور على بيانات المطعم." };
     }
 
-    if (restaurant.isOnlineOrderingPaused) {
+    const opStatus = calculateRestaurantStatus({
+      businessHours: restaurant.businessHours,
+      isOnlineOrderingPaused: restaurant.isOnlineOrderingPaused,
+      pauseMessageAr: restaurant.pauseMessageAr,
+      pauseMessageEn: restaurant.pauseMessageEn,
+      now: getYemenNow(),
+    });
+
+    if (!opStatus.canOrderImmediate && !opStatus.canOrderScheduled) {
       return {
         success: false,
-        error:
-          restaurant.pauseMessageAr ||
-          "نعتذر، استقبال الطلبات متوقف مؤقتاً لضغط المطبخ.",
+        error: opStatus.descriptionAr,
+      };
+    }
+
+    if (data.pickupMode === "ASAP" && !opStatus.canOrderImmediate) {
+      return {
+        success: false,
+        error: `الطلب الفوري غير متاح حالياً (${opStatus.badgeLabelAr}). ${opStatus.descriptionAr} يرجى اختيار موعد استلام محدد لجدولة طلبك.`,
       };
     }
 
@@ -145,6 +170,12 @@ export async function createOrderAction(rawInput: unknown) {
       const [h, m] = data.requestedTime.split(":").map(Number);
       requestedPickupTime = new Date(now);
       requestedPickupTime.setHours(h, m, 0, 0);
+
+      // If scheduled time hour is numerically much earlier than current hour (e.g. 00:15 vs 23:00),
+      // it means it belongs to tomorrow's post-midnight shift
+      if (requestedPickupTime.getTime() < now.getTime() - 2 * 60 * 60 * 1000) {
+        requestedPickupTime.setDate(requestedPickupTime.getDate() + 1);
+      }
 
       // Validate that requested pickup time provides at least minimum prep duration
       const earliestAllowed = calculateEarliestPickup(
@@ -264,8 +295,8 @@ export async function createOrderAction(rawInput: unknown) {
       return order;
     });
 
-    revalidatePath("/kitchen");
-    revalidatePath("/admin");
+    safeRevalidatePath("/kitchen");
+    safeRevalidatePath("/admin");
 
     return {
       success: true,
@@ -347,9 +378,9 @@ export async function updateOrderStatusAction(
       },
     });
 
-    revalidatePath("/kitchen");
-    revalidatePath("/admin");
-    revalidatePath(`/track/${orderId}`);
+    safeRevalidatePath("/kitchen");
+    safeRevalidatePath("/admin");
+    safeRevalidatePath(`/track/${orderId}`);
 
     return { success: true };
   } catch (err) {
@@ -453,9 +484,9 @@ export async function verifyPaymentAction(
       },
     });
 
-    revalidatePath("/admin");
-    revalidatePath("/kitchen");
-    revalidatePath(`/track/${orderId}`);
+    safeRevalidatePath("/admin");
+    safeRevalidatePath("/kitchen");
+    safeRevalidatePath(`/track/${orderId}`);
 
     return { success: true };
   } catch (err) {
@@ -502,9 +533,9 @@ export async function togglePauseOrderingAction(
       },
     });
 
-    revalidatePath("/");
-    revalidatePath("/menu");
-    revalidatePath("/admin");
+    safeRevalidatePath("/");
+    safeRevalidatePath("/menu");
+    safeRevalidatePath("/admin");
 
     return { success: true };
   } catch (err) {
@@ -549,8 +580,8 @@ export async function toggleProductAvailabilityAction(
       },
     });
 
-    revalidatePath("/menu");
-    revalidatePath("/admin");
+    safeRevalidatePath("/menu");
+    safeRevalidatePath("/admin");
 
     return { success: true };
   } catch (err) {
@@ -666,9 +697,9 @@ export async function cancelCustomerOrderAction(
       },
     });
 
-    revalidatePath("/kitchen");
-    revalidatePath("/admin");
-    revalidatePath(`/track/${orderId}`);
+    safeRevalidatePath("/kitchen");
+    safeRevalidatePath("/admin");
+    safeRevalidatePath(`/track/${orderId}`);
 
     return { success: true };
   } catch (err) {
@@ -678,13 +709,70 @@ export async function cancelCustomerOrderAction(
 }
 
 /**
+ * Updates restaurant store operational settings (Admin only).
+ */
+export async function updateStoreSettingsAction(data: {
+  defaultPrepDuration?: number;
+  slotCapacityLimit?: number;
+  phone?: string;
+  whatsapp?: string;
+  addressAr?: string;
+}) {
+  try {
+    const session = getStaffSession();
+    if (!isAuthorizedStaff(["ADMIN"])) {
+      return { success: false, error: "غير مصرح لك بتعديل إعدادات الفرع." };
+    }
+
+    const restaurant = await prisma.restaurant.findFirst();
+    if (!restaurant) {
+      return { success: false, error: "تعذر العثور على بيانات المطعم." };
+    }
+
+    await prisma.restaurant.update({
+      where: { id: restaurant.id },
+      data: {
+        ...(data.defaultPrepDuration !== undefined && {
+          defaultPrepDuration: Math.max(5, Math.min(60, data.defaultPrepDuration)),
+        }),
+        ...(data.slotCapacityLimit !== undefined && {
+          slotCapacityMax: Math.max(1, Math.min(30, data.slotCapacityLimit)),
+        }),
+        ...(data.phone && { phone: data.phone.trim() }),
+        ...(data.whatsapp && { whatsapp: data.whatsapp.trim() }),
+        ...(data.addressAr && { addressAr: data.addressAr.trim() }),
+      },
+    });
+
+    await prisma.auditLog.create({
+      data: {
+        actor: `Admin (${session.role})`,
+        action: "STORE_SETTINGS_UPDATED",
+        entity: "Restaurant",
+        entityId: restaurant.id,
+        metadata: JSON.stringify(data),
+      },
+    });
+
+    safeRevalidatePath("/admin");
+    safeRevalidatePath("/checkout");
+    safeRevalidatePath("/");
+
+    return { success: true };
+  } catch (err) {
+    console.error("Failed to update store settings:", err);
+    return { success: false, error: "تعذر حفظ إعدادات الفرع." };
+  }
+}
+
+/**
  * Staff logout action.
  */
 export async function logoutStaffAction() {
   try {
     clearStaffSessionCookie();
-    revalidatePath("/admin");
-    revalidatePath("/kitchen");
+    safeRevalidatePath("/admin");
+    safeRevalidatePath("/kitchen");
     return { success: true };
   } catch (err) {
     console.error("Staff logout failed:", err);

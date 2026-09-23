@@ -19,27 +19,25 @@ import { cancelCustomerOrderAction } from "@/app/actions/orderActions";
 
 interface TrackingClientViewProps {
   order: any;
+  isOwner?: boolean;
 }
 
-export default function TrackingClientView({ order }: TrackingClientViewProps) {
+export default function TrackingClientView({ order, isOwner = false }: TrackingClientViewProps) {
   const { language, dict } = useApp();
   const router = useRouter();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
   const [cancelError, setCancelError] = useState<string | null>(null);
 
-  const handleCancelOrder = async () => {
-    const confirmMsg =
-      language === "ar"
-        ? "هل أنت متأكد من رغبتك في إلغاء هذا الطلب؟"
-        : "Are you sure you want to cancel this order?";
-    if (!window.confirm(confirmMsg)) return;
+  const [showCancelModal, setShowCancelModal] = useState(false);
 
+  const handleConfirmCancel = async () => {
     setIsCancelling(true);
     setCancelError(null);
     try {
       const res = await cancelCustomerOrderAction(order.id, order.trackingToken);
       if (res.success) {
+        setShowCancelModal(false);
         router.refresh();
       } else {
         setCancelError(res.error || "تعذر إلغاء الطلب.");
@@ -308,13 +306,13 @@ export default function TrackingClientView({ order }: TrackingClientViewProps) {
           <span>{dict.tracking.helpWhatsApp}</span>
         </a>
 
-        {["PENDING", "PAYMENT_PENDING", "QUEUED"].includes(order.status) && (
+        {isOwner && order.trackingToken && ["PENDING", "PAYMENT_PENDING", "QUEUED"].includes(order.status) && (
           <div className="pt-2">
             {cancelError && (
               <p className="text-xs text-red-500 mb-2">{cancelError}</p>
             )}
             <button
-              onClick={handleCancelOrder}
+              onClick={() => setShowCancelModal(true)}
               disabled={isCancelling}
               className="text-xs text-red-600 dark:text-red-400 hover:underline font-bold disabled:opacity-50"
             >
@@ -323,6 +321,59 @@ export default function TrackingClientView({ order }: TrackingClientViewProps) {
           </div>
         )}
       </div>
+
+      {/* Confirmation Modal for Cancellation */}
+      {showCancelModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/80 backdrop-blur-sm">
+          <div className="bg-white dark:bg-stone-900 rounded-3xl max-w-sm w-full p-6 border border-stone-200 dark:border-stone-800 shadow-2xl space-y-4 text-center">
+            <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto">
+              <AlertCircle className="w-6 h-6" />
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+                {language === "ar" ? "تأكيد إلغاء الطلب" : "Cancel Order Confirmation"}
+              </h3>
+              <p className="text-xs text-stone-500 dark:text-stone-400">
+                {language === "ar"
+                  ? "هل أنت متأكد من رغبتك في إلغاء هذا الطلب؟ لا يمكن التراجع بعد الإلغاء."
+                  : "Are you sure you want to cancel this order? This cannot be undone."}
+              </p>
+            </div>
+
+            {cancelError && (
+              <p className="text-xs text-red-600 bg-red-50 dark:bg-red-950/60 p-2.5 rounded-xl">
+                {cancelError}
+              </p>
+            )}
+
+            <div className="flex gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowCancelModal(false)}
+                disabled={isCancelling}
+                className="flex-1 py-2.5 px-4 rounded-xl border border-stone-200 dark:border-stone-700 text-xs font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              >
+                {language === "ar" ? "تراجع" : "Keep Order"}
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmCancel}
+                disabled={isCancelling}
+                className="flex-1 py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-colors disabled:opacity-50"
+              >
+                {isCancelling
+                  ? language === "ar"
+                    ? "جاري الإلغاء..."
+                    : "Cancelling..."
+                  : language === "ar"
+                  ? "نعم، إلغاء الطلب"
+                  : "Yes, Cancel"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

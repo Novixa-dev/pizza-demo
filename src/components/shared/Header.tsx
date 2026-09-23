@@ -16,7 +16,9 @@ import {
   Pizza,
   ChefHat,
   ShieldCheck,
+  Info,
 } from "lucide-react";
+import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 
 export default function Header() {
   const {
@@ -30,7 +32,15 @@ export default function Header() {
   } = useApp();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [opStatus, setOpStatus] = useState(() => calculateRestaurantStatus({ now: getYemenNow() }));
   const pathname = usePathname();
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setOpStatus(calculateRestaurantStatus({ now: getYemenNow() }));
+    }, 30000);
+    return () => clearInterval(timer);
+  }, []);
 
   const navLinks = [
     { href: "/", label: dict.nav.home },
@@ -57,9 +67,30 @@ export default function Header() {
             </span>
           </div>
           <div className="flex items-center gap-3 text-stone-400">
-            <span className="inline-flex items-center gap-1 text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full text-[11px] font-medium border border-emerald-800/40">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              {dict.brand.openNow}
+            <span
+              title={language === "ar" ? opStatus.descriptionAr : opStatus.descriptionEn}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${
+                opStatus.status === "OPEN_FOR_ORDERING"
+                  ? "text-emerald-400 bg-emerald-950/60 border-emerald-800/40"
+                  : opStatus.status === "CLOSING_SOON"
+                  ? "text-amber-300 bg-amber-950/60 border-amber-800/40"
+                  : opStatus.status === "SCHEDULED_ONLY"
+                  ? "text-sky-300 bg-sky-950/60 border-sky-800/40"
+                  : "text-red-400 bg-red-950/60 border-red-800/40"
+              }`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  opStatus.status === "OPEN_FOR_ORDERING"
+                    ? "bg-emerald-400 animate-pulse"
+                    : opStatus.status === "CLOSING_SOON"
+                    ? "bg-amber-400 animate-ping"
+                    : opStatus.status === "SCHEDULED_ONLY"
+                    ? "bg-sky-400"
+                    : "bg-red-400"
+                }`}
+              />
+              <span>{language === "ar" ? opStatus.badgeLabelAr : opStatus.badgeLabelEn}</span>
             </span>
             <span>{dict.brand.phones}</span>
           </div>
@@ -175,6 +206,31 @@ export default function Header() {
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 pt-3 pb-5 space-y-1">
+          {/* Real-time Branch Status in Mobile Drawer */}
+          <div className="p-3 mb-2 bg-stone-50 dark:bg-stone-850 rounded-2xl border border-stone-200 dark:border-stone-800 text-xs space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-stone-900 dark:text-white">
+                {language === "ar" ? "حالة الفرع الآن:" : "Branch Status:"}
+              </span>
+              <span
+                className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-bold text-[11px] ${
+                  opStatus.status === "OPEN_FOR_ORDERING"
+                    ? "text-emerald-700 bg-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-300"
+                    : opStatus.status === "CLOSING_SOON"
+                    ? "text-amber-700 bg-amber-100 dark:bg-amber-950/80 dark:text-amber-300"
+                    : opStatus.status === "SCHEDULED_ONLY"
+                    ? "text-sky-700 bg-sky-100 dark:bg-sky-950/80 dark:text-sky-300"
+                    : "text-red-700 bg-red-100 dark:bg-red-950/80 dark:text-red-300"
+                }`}
+              >
+                {language === "ar" ? opStatus.badgeLabelAr : opStatus.badgeLabelEn}
+              </span>
+            </div>
+            <p className="text-[11px] text-stone-500 dark:text-stone-400">
+              {language === "ar" ? opStatus.descriptionAr : opStatus.descriptionEn}
+            </p>
+          </div>
+
           {navLinks.map((link) => (
             <Link
               key={link.href}
