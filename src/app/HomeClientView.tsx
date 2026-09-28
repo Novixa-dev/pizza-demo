@@ -182,8 +182,8 @@ export default function HomeClientView({
         </div>
       </section>
 
-      {/* 2. Three Value Pillars */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 2. Three Value Pillars / About Section */}
+      <section id="about" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           <div className="bg-white dark:bg-stone-850 p-6 sm:p-8 rounded-3xl border border-stone-200/80 dark:border-stone-800 shadow-sm hover:border-pizza-500/30 transition-colors space-y-3">
             <div className="w-12 h-12 rounded-2xl bg-pizza-100 dark:bg-pizza-950/60 flex items-center justify-center text-pizza-700 dark:text-pizza-400">
@@ -261,8 +261,8 @@ export default function HomeClientView({
       </section>
 
       {/* 4. Verified Branch Location & Hours Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-900 text-white rounded-3xl p-6 sm:p-10 border border-stone-800 shadow-xl relative overflow-hidden">
+      <section id="branches" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+        <div id="contact" className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-900 text-white rounded-3xl p-6 sm:p-10 border border-stone-800 shadow-xl relative overflow-hidden scroll-mt-24">
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
               <span className="text-xs bg-pizza-600 text-white font-bold px-3 py-1 rounded-full uppercase tracking-wider font-outfit">

@@ -21,6 +21,11 @@
     --text-muted: #a8a29e;
   }
 
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     background-color: var(--bg-main);
     color: var(--text-main);

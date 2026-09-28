@@ -15,6 +15,9 @@ export const dictionaries = {
     nav: {
       home: "الرئيسية",
       menu: "قائمة الطعام",
+      branches: "الفروع وأوقات العمل",
+      about: "عن المطعم",
+      contact: "اتصل بنا",
       trackOrder: "تتبع طلبك",
       kitchen: "شاشة المطبخ (KDS)",
       admin: "لوحة الإدارة",
@@ -178,6 +181,9 @@ export const dictionaries = {
     nav: {
       home: "Home",
       menu: "Menu",
+      branches: "Branches & Hours",
+      about: "About Us",
+      contact: "Contact",
       trackOrder: "Track Order",
       kitchen: "Kitchen (KDS)",
       admin: "Admin Ops",

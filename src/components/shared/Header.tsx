@@ -45,6 +45,9 @@ export default function Header() {
   const navLinks = [
     { href: "/", label: dict.nav.home },
     { href: "/menu", label: dict.nav.menu },
+    { href: "/#branches", label: dict.nav.branches },
+    { href: "/#about", label: dict.nav.about },
+    { href: "/#contact", label: dict.nav.contact },
     { href: "/track", label: dict.nav.trackOrder },
     { href: "/kitchen", label: dict.nav.kitchen, badge: "KDS" },
     { href: "/admin", label: dict.nav.admin },

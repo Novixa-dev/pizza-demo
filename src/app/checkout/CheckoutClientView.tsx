@@ -48,6 +48,16 @@ export default function CheckoutClientView({
   const [selectedSlot, setSelectedSlot] = useState<string>(
     availableSlots?.find((s) => s.isAvailable)?.timeString || ""
   );
+
+  // Sync selectedSlot when availableSlots updates or if current selection is invalid
+  React.useEffect(() => {
+    if (!selectedSlot || !availableSlots.some((s) => s.timeString === selectedSlot && s.isAvailable)) {
+      const firstAvail = availableSlots.find((s) => s.isAvailable)?.timeString;
+      if (firstAvail) {
+        setSelectedSlot(firstAvail);
+      }
+    }
+  }, [availableSlots, selectedSlot]);
   const [paymentMethod, setPaymentMethod] = useState<
     "PAY_AT_PICKUP" | "TRANSFER_KURAIMI" | "TRANSFER_AMQI" | "TRANSFER_BUSAIRI"
   >("PAY_AT_PICKUP");
