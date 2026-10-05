@@ -17,8 +17,10 @@ import {
   Phone,
   User,
   FileText,
+  X,
 } from "lucide-react";
 import { TimeSlotOption } from "@/types";
+import { recordCompletedOrderForReminders } from "@/lib/notifications/orderReminderService";
 
 interface CheckoutClientViewProps {
   restaurant: any;
@@ -48,6 +50,16 @@ export default function CheckoutClientView({
   const [selectedSlot, setSelectedSlot] = useState<string>(
     availableSlots?.find((s) => s.isAvailable)?.timeString || ""
   );
+
+  // Pre-fill customer details from localStorage if available
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedPhone = localStorage.getItem("ph_customer_phone");
+      const savedName = localStorage.getItem("ph_customer_name");
+      if (savedPhone) setCustomerPhone(savedPhone);
+      if (savedName) setCustomerName(savedName);
+    }
+  }, []);
 
   // Sync selectedSlot when availableSlots updates or if current selection is invalid
   React.useEffect(() => {
@@ -143,6 +155,15 @@ export default function CheckoutClientView({
       }
 
       // Success! Clear cart and redirect to order tracking screen
+      if (typeof window !== "undefined") {
+        localStorage.setItem("ph_customer_phone", customerPhone.trim());
+        localStorage.setItem("ph_customer_name", customerName.trim());
+        recordCompletedOrderForReminders({
+          productName: cart[0]?.nameAr || cart[0]?.nameEn,
+          productId: cart[0]?.productId,
+          customerName: customerName.trim(),
+        });
+      }
       clearCart();
       window.location.href = `/track/${result.orderId}?token=${result.trackingToken}`;
     } catch (err) {
@@ -212,6 +233,28 @@ export default function CheckoutClientView({
         </div>
       )}
 
+      {/* 4-Step Checkout Progress Bar */}
+      <div className="mb-8 bg-white dark:bg-stone-850 p-4 rounded-2xl border border-stone-200/80 dark:border-stone-800 shadow-xs">
+        <div className="grid grid-cols-4 gap-2 text-center text-xs">
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="w-6 h-6 rounded-full bg-pizza-700 text-white font-bold flex items-center justify-center text-xs font-outfit">1</span>
+            <span className="font-bold text-stone-900 dark:text-white text-[11px] truncate">{language === "ar" ? "بيانات العميل" : "Customer"}</span>
+          </div>
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="w-6 h-6 rounded-full bg-pizza-700 text-white font-bold flex items-center justify-center text-xs font-outfit">2</span>
+            <span className="font-bold text-stone-900 dark:text-white text-[11px] truncate">{language === "ar" ? "موعد الاستلام" : "Pickup Slot"}</span>
+          </div>
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="w-6 h-6 rounded-full bg-pizza-700 text-white font-bold flex items-center justify-center text-xs font-outfit">3</span>
+            <span className="font-bold text-stone-900 dark:text-white text-[11px] truncate">{language === "ar" ? "طريقة الدفع" : "Payment"}</span>
+          </div>
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="w-6 h-6 rounded-full bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 font-bold flex items-center justify-center text-xs font-outfit">4</span>
+            <span className="font-bold text-stone-500 text-[11px] truncate">{language === "ar" ? "التأكيد والاستلام" : "Confirm"}</span>
+          </div>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Form Fields */}
         <div className="lg:col-span-7 space-y-8">
@@ -249,6 +292,9 @@ export default function CheckoutClientView({
                   placeholder={dict.checkout.phonePlaceholder}
                   className="w-full text-xs sm:text-sm p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white placeholder:text-stone-400 focus:outline-none focus:border-pizza-600 transition-colors font-outfit"
                 />
+                <p className="text-[10px] text-stone-400">
+                  {language === "ar" ? "أرقام يمن موبايل (77) / يو (73) / سبأفون (71) أو الهاتف الثابت" : "e.g. 771234567 or 73XXXXXXX"}
+                </p>
               </div>
             </div>
           </div>
@@ -486,13 +532,21 @@ export default function CheckoutClientView({
                     </label>
 
                     {receiptBase64 && (
-                      <div className="mt-3 inline-block relative rounded-xl overflow-hidden border border-stone-300 max-h-32">
+                      <div className="mt-3 inline-block relative rounded-xl overflow-hidden border border-stone-300 dark:border-stone-700 max-h-36">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={receiptBase64}
                           alt="Receipt Preview"
-                          className="h-32 object-contain"
+                          className="h-32 object-contain bg-stone-100 dark:bg-stone-900"
                         />
+                        <button
+                          type="button"
+                          onClick={() => setReceiptBase64("")}
+                          className="absolute top-1.5 end-1.5 p-1 bg-stone-900/80 hover:bg-red-600 text-white rounded-full transition-colors"
+                          title="حذف صورة الإشعار"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     )}
                   </div>

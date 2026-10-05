@@ -37,6 +37,7 @@ export default async function AdminPage() {
           receipt: true,
         },
       },
+      feedback: true,
     },
     orderBy: {
       createdAt: "desc",

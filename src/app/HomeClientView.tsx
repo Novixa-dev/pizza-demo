@@ -59,7 +59,11 @@ export default function HomeClientView({
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
                 <div className="inline-flex items-center gap-1.5 text-xs font-bold text-pizza-700 dark:text-pizza-400 bg-pizza-50 dark:bg-pizza-950/60 px-3 py-1 rounded-xl border border-pizza-200 dark:border-pizza-900/40">
                   <MapPin className="w-3.5 h-3.5 text-pizza-600" />
-                  <span>المكلا · فوه · حي المساكن</span>
+                  <span>
+                    {language === "ar"
+                      ? "المكلا · فوه · حي المساكن"
+                      : "Mukalla · Fuwa · Al-Masaken"}
+                  </span>
                 </div>
 
                 <div
@@ -89,7 +93,7 @@ export default function HomeClientView({
                   </span>
                   {opStatus.canOrderImmediate && (
                     <span className="text-[11px] opacity-80 border-s border-current ps-1.5 ms-1">
-                      تجهيز خلال 15 دقيقة
+                      {language === "ar" ? "تجهيز خلال 15 دقيقة" : "Ready in 15 mins"}
                     </span>
                   )}
                 </div>
@@ -130,15 +134,27 @@ export default function HomeClientView({
               <div className="pt-4 border-t border-stone-200/60 dark:border-stone-800 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-stone-500">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                  <span>استلام فوري بدون طوابير</span>
+                  <span>
+                    {language === "ar"
+                      ? "استلام فوري بدون طوابير"
+                      : "Instant pickup with zero wait"}
+                  </span>
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                  <span>دعم تحويل كريمي والعمقي والبسيري</span>
+                  <span>
+                    {language === "ar"
+                      ? "دعم تحويل كريمي والعمقي والبسيري"
+                      : "Kuraimi, Amqi & Busairi transfers"}
+                  </span>
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                  <span>عجينة طازجة مخبوزة على الحجر</span>
+                  <span>
+                    {language === "ar"
+                      ? "عجينة طازجة مخبوزة على الحجر"
+                      : "Fresh stone-baked artisanal dough"}
+                  </span>
                 </span>
               </div>
             </div>
@@ -229,10 +245,16 @@ export default function HomeClientView({
           <div className="space-y-1.5">
             <div className="flex items-center gap-1.5 text-xs font-bold text-pizza-600 dark:text-pizza-400 uppercase tracking-wider">
               <Sparkles className="w-4 h-4" />
-              <span>مختارات بيتزا هاوس المفضلة</span>
+              <span>
+                {language === "ar"
+                  ? "مختارات بيتزا هاوس المفضلة"
+                  : "Pizza House Favorites"}
+              </span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white font-cairo">
-              أشهر أطباق البيتزا والفطائر
+              {language === "ar"
+                ? "أشهر أطباق البيتزا والفطائر"
+                : "Popular Pizzas & Pastries"}
             </h2>
           </div>
 
@@ -240,7 +262,7 @@ export default function HomeClientView({
             href="/menu"
             className="inline-flex items-center gap-1.5 text-sm font-bold text-pizza-700 dark:text-pizza-400 hover:text-pizza-800"
           >
-            <span>عرض القائمة الكاملة</span>
+            <span>{language === "ar" ? "عرض القائمة الكاملة" : "View Full Menu"}</span>
             {language === "ar" ? (
               <ArrowLeft className="w-4 h-4" />
             ) : (
@@ -260,6 +282,43 @@ export default function HomeClientView({
         </div>
       </section>
 
+      {/* 3.5 Quick Order History & Live Tracking Access Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-r from-pizza-50 via-amber-50/50 to-pizza-50 dark:from-stone-850 dark:via-stone-900 dark:to-stone-850 rounded-3xl p-6 sm:p-8 border border-pizza-200/80 dark:border-stone-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-pizza-700 text-white flex items-center justify-center shadow-md shadow-pizza-700/20 shrink-0">
+              <Clock className="w-6 h-6 text-amber-300" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-base sm:text-lg font-extrabold text-stone-900 dark:text-white font-cairo">
+                {language === "ar" ? "هل لديك طلب سابق وتريد متابعته أو إعادته؟" : "Want to track or reorder past orders?"}
+              </h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400">
+                {language === "ar"
+                  ? "أدخل رقم هاتفك في سجل الطلبات لمشاهدة تفاصيل طلباتك، وإعادة طلب وجبتك المفضلة بنقرة واحدة!"
+                  : "Enter your phone number in our Order History to view past receipts and reorder in 1-click!"}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <a
+              href="/history"
+              className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 bg-pizza-700 hover:bg-pizza-800 text-white font-bold px-5 py-3 rounded-2xl text-xs shadow-md transition-transform active:scale-95 whitespace-nowrap"
+            >
+              <span>{language === "ar" ? "سجل طلباتي السابقة" : "My Order History"}</span>
+              {language === "ar" ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+            </a>
+            <a
+              href="/track"
+              className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-750 text-stone-800 dark:text-stone-200 border border-stone-200 dark:border-stone-700 font-bold px-5 py-3 rounded-2xl text-xs transition-colors whitespace-nowrap"
+            >
+              <span>{language === "ar" ? "تتبع برقم الطلب" : "Track by Order #"}</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* 4. Verified Branch Location & Hours Banner */}
       <section id="branches" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
         <div id="contact" className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-900 text-white rounded-3xl p-6 sm:p-10 border border-stone-800 shadow-xl relative overflow-hidden scroll-mt-24">
@@ -269,10 +328,14 @@ export default function HomeClientView({
                 Fuwa Branch • فرع فوه
               </span>
               <h3 className="text-2xl sm:text-3xl font-black font-cairo">
-                تفضل بزيارتنا في فوه - حي المساكن
+                {language === "ar"
+                  ? "تفضل بزيارتنا في فوه - حي المساكن"
+                  : "Visit Our Fuwa Branch - Al-Masaken"}
               </h3>
               <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                يقع المطعم في موقع استراتيجي بالقرب من جامعة الأحقاف، مستوصف النور، ومدرسة السلال. تتوفر جلسات مريحة وخدمة استلام سريعة مسبقة الدفع والتجهيز.
+                {language === "ar"
+                  ? "يقع المطعم في موقع استراتيجي بالقرب من جامعة الأحقاف، مستوصف النور، ومدرسة السلال. تتوفر جلسات مريحة وخدمة استلام سريعة مسبقة الدفع والتجهيز."
+                  : "Conveniently located near Al-Ahgaff University, Al-Noor Clinic, and Al-Sellal School. Dine-in seating and rapid prep-ahead takeout counter available."}
               </p>
               <div className="flex flex-wrap gap-4 pt-2">
                 <a
@@ -289,7 +352,7 @@ export default function HomeClientView({
                   className="inline-flex items-center gap-2 bg-emerald-900/60 hover:bg-emerald-900 text-emerald-300 text-xs font-bold px-4 py-2.5 rounded-xl border border-emerald-700/60 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>واتساب: 772207788</span>
+                  <span>{language === "ar" ? "واتساب: 772207788" : "WhatsApp: 772207788"}</span>
                 </a>
               </div>
             </div>
@@ -297,19 +360,19 @@ export default function HomeClientView({
             <div className="bg-stone-800/80 p-5 rounded-2xl border border-stone-700/60 space-y-3">
               <h4 className="text-xs font-bold text-crust-400 uppercase tracking-wider flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                <span>جدول الدوام المعتمد</span>
+                <span>{language === "ar" ? "جدول الدوام المعتمد" : "Official Working Hours"}</span>
               </h4>
               <div className="space-y-2 text-xs text-stone-300">
                 <div className="flex justify-between border-b border-stone-700/60 pb-1.5">
-                  <span>الفترة الصباحية (معجنات وفطائر):</span>
+                  <span>{language === "ar" ? "الفترة الصباحية (معجنات وفطائر):" : "Morning Shift (Pastries):"}</span>
                   <span className="font-outfit text-white">8:00 AM – 12:00 PM</span>
                 </div>
                 <div className="flex justify-between border-b border-stone-700/60 pb-1.5">
-                  <span>الفترة المسائية (بيتزا وعشاء):</span>
+                  <span>{language === "ar" ? "الفترة المسائية (بيتزا وعشاء):" : "Evening Shift (Dinner & Pizza):"}</span>
                   <span className="font-outfit text-white">4:00 PM – 11:30 PM</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>الجمعة (مساءً فقط):</span>
+                  <span>{language === "ar" ? "الجمعة (مساءً فقط):" : "Friday (Evening only):"}</span>
                   <span className="font-outfit text-white">4:00 PM – 11:30 PM</span>
                 </div>
               </div>

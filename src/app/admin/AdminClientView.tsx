@@ -28,6 +28,8 @@ import {
   ExternalLink,
   ShieldAlert,
   LogOut,
+  Star,
+  MessageSquare,
 } from "lucide-react";
 import { logoutStaffAction } from "@/app/actions/orderActions";
 
@@ -46,7 +48,7 @@ export default function AdminClientView({
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState<
-    "overview" | "orders" | "payments" | "menu" | "settings"
+    "overview" | "orders" | "payments" | "feedback" | "menu" | "settings"
   >("overview");
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -88,6 +90,25 @@ export default function AdminClientView({
   const activeKitchenCount = orders.filter((o) =>
     ["QUEUED", "PREPARING", "READY"].includes(o.status)
   ).length;
+
+  // Customer Feedback metrics
+  const ordersWithFeedback = orders.filter((o) => o.feedback);
+  const avgMealRating = ordersWithFeedback.length
+    ? (
+        ordersWithFeedback.reduce(
+          (acc, o) => acc + (o.feedback?.mealRating || 5),
+          0
+        ) / ordersWithFeedback.length
+      ).toFixed(1)
+    : "5.0";
+  const avgServiceRating = ordersWithFeedback.length
+    ? (
+        ordersWithFeedback.reduce(
+          (acc, o) => acc + (o.feedback?.serviceRating || 5),
+          0
+        ) / ordersWithFeedback.length
+      ).toFixed(1)
+    : "5.0";
 
   // Filtered orders
   const filteredOrders = orders.filter((o) => {
@@ -178,6 +199,13 @@ export default function AdminClientView({
             count: pendingPayments.length,
             highlight: pendingPayments.length > 0,
           },
+          {
+            id: "feedback",
+            label: language === "ar" ? "تقييمات العملاء" : "Customer Reviews",
+            icon: Star,
+            count: ordersWithFeedback.length,
+            highlight: ordersWithFeedback.length > 0,
+          },
           { id: "menu", label: dict.admin.menuMgmt, icon: ChefHat },
           { id: "settings", label: dict.admin.settings, icon: ShieldAlert },
         ].map((tab) => {
@@ -217,56 +245,76 @@ export default function AdminClientView({
       {activeTab === "overview" && (
         <div className="space-y-8">
           {/* Key Metric Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
               <div className="flex justify-between items-center text-stone-400">
                 <span className="text-xs font-bold font-cairo">{dict.admin.todayOrders}</span>
                 <ShoppingBag className="w-5 h-5 text-pizza-600" />
               </div>
-              <div className="text-2xl sm:text-3xl font-black font-outfit text-stone-900 dark:text-white">
+              <div className="text-2xl font-black font-outfit text-stone-900 dark:text-white">
                 {orders.length}
               </div>
-              <p className="text-[11px] text-stone-500">إجمالي الطلبات المسجلة اليوم</p>
+              <p className="text-[11px] text-stone-500">إجمالي الطلبات اليوم</p>
             </div>
 
-            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
               <div className="flex justify-between items-center text-stone-400">
                 <span className="text-xs font-bold font-cairo">{dict.admin.todayRevenue}</span>
                 <TrendingUp className="w-5 h-5 text-emerald-600" />
               </div>
-              <div className="text-2xl sm:text-3xl font-black font-outfit text-emerald-600">
+              <div className="text-2xl font-black font-outfit text-emerald-600">
                 {totalRevenue.toLocaleString()}{" "}
                 <span className="text-xs font-normal font-cairo text-stone-500">
                   {dict.menu.currency}
                 </span>
               </div>
-              <p className="text-[11px] text-stone-500">صافي المبيعات المحققة</p>
+              <p className="text-[11px] text-stone-500">صافي المبيعات</p>
             </div>
 
-            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
               <div className="flex justify-between items-center text-stone-400">
                 <span className="text-xs font-bold font-cairo">
                   {dict.admin.pendingVerification}
                 </span>
                 <CreditCard className="w-5 h-5 text-amber-500" />
               </div>
-              <div className="text-2xl sm:text-3xl font-black font-outfit text-amber-600">
+              <div className="text-2xl font-black font-outfit text-amber-600">
                 {pendingPayments.length}
               </div>
-              <p className="text-[11px] text-stone-500">تحويلات مالية بانتظار الاعتماد</p>
+              <p className="text-[11px] text-stone-500">تحويلات مالية للمراجعة</p>
             </div>
 
-            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
               <div className="flex justify-between items-center text-stone-400">
                 <span className="text-xs font-bold font-cairo">
                   {dict.admin.activeInKitchen}
                 </span>
                 <ChefHat className="w-5 h-5 text-pizza-600" />
               </div>
-              <div className="text-2xl sm:text-3xl font-black font-outfit text-pizza-600">
+              <div className="text-2xl font-black font-outfit text-pizza-600">
                 {activeKitchenCount}
               </div>
-              <p className="text-[11px] text-stone-500">طلبات في مراحل الخبز والاستلام</p>
+              <p className="text-[11px] text-stone-500">طلبات في المطبخ</p>
+            </div>
+
+            <div
+              onClick={() => setActiveTab("feedback")}
+              className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2 cursor-pointer hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+            >
+              <div className="flex justify-between items-center text-stone-400">
+                <span className="text-xs font-bold font-cairo">
+                  {language === "ar" ? "رضا العملاء والتقييم" : "Customer Rating"}
+                </span>
+                <Star className="w-5 h-5 text-amber-500 fill-amber-400" />
+              </div>
+              <div className="text-2xl font-black font-outfit text-amber-500 flex items-center gap-1.5">
+                <span>{avgMealRating}</span>
+                <span className="text-xs font-normal text-stone-400">/ 5.0</span>
+              </div>
+              <p className="text-[11px] text-stone-500">
+                {ordersWithFeedback.length}{" "}
+                {language === "ar" ? "تقييم مسجل" : "reviews received"}
+              </p>
             </div>
           </div>
 
@@ -618,6 +666,157 @@ export default function AdminClientView({
                 </button>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tab: Customer Feedback & Reviews */}
+      {activeTab === "feedback" && (
+        <div className="space-y-6">
+          {/* Top Score Summary Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-1">
+              <span className="text-xs font-bold text-stone-500">
+                {language === "ar" ? "متوسط تقييم جودة الوجبات" : "Average Food Rating"}
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-3xl font-black font-outfit text-amber-500">
+                  {avgMealRating}
+                </span>
+                <div className="flex items-center text-amber-400">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star
+                      key={s}
+                      className={`w-4 h-4 ${
+                        s <= Math.round(Number(avgMealRating))
+                          ? "fill-amber-400 text-amber-400"
+                          : "text-stone-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-1">
+              <span className="text-xs font-bold text-stone-500">
+                {language === "ar" ? "متوسط تقييم سرعة الخدمة" : "Average Service Speed"}
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-3xl font-black font-outfit text-emerald-500">
+                  {avgServiceRating}
+                </span>
+                <div className="flex items-center text-amber-400">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star
+                      key={s}
+                      className={`w-4 h-4 ${
+                        s <= Math.round(Number(avgServiceRating))
+                          ? "fill-amber-400 text-amber-400"
+                          : "text-stone-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-1">
+              <span className="text-xs font-bold text-stone-500">
+                {language === "ar" ? "إجمالي التقييمات المستلمة" : "Total Reviews"}
+              </span>
+              <div className="text-3xl font-black font-outfit text-stone-900 dark:text-white">
+                {ordersWithFeedback.length}
+              </div>
+            </div>
+          </div>
+
+          {/* Reviews List */}
+          <div className="bg-white dark:bg-stone-850 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+              {language === "ar" ? "آراء وتقييمات زبائن بيتزا هاوس" : "Customer Reviews & Feedback"}
+            </h3>
+
+            {ordersWithFeedback.length === 0 ? (
+              <div className="py-12 text-center text-xs text-stone-500 space-y-2">
+                <Star className="w-8 h-8 text-stone-300 mx-auto" />
+                <p>{language === "ar" ? "لا توجد تقييمات مسجلة حتى الآن." : "No reviews registered yet."}</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-stone-100 dark:divide-stone-800 space-y-4">
+                {ordersWithFeedback.map((ord) => {
+                  const fb = ord.feedback;
+                  const tags = fb.tags ? (typeof fb.tags === "string" ? fb.tags.split(",") : fb.tags) : [];
+
+                  return (
+                    <div key={ord.id} className="pt-4 first:pt-0 space-y-2 text-xs">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-stone-900 dark:text-white font-cairo text-sm">
+                            {ord.customerName}
+                          </span>
+                          <span className="px-2 py-0.5 rounded-md bg-pizza-50 dark:bg-pizza-950 text-pizza-700 dark:text-pizza-300 font-outfit font-black text-[11px]">
+                            {ord.orderNumber}
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-stone-400 font-outfit">
+                          {new Date(fb.createdAt).toLocaleDateString("ar-YE")}
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-4 text-[11px]">
+                        <div className="flex items-center gap-1">
+                          <span className="text-stone-500">جودة الوجبة:</span>
+                          <div className="flex text-amber-400">
+                            {[1, 2, 3, 4, 5].map((s: number) => (
+                              <Star
+                                key={s}
+                                className={`w-3.5 h-3.5 ${
+                                  s <= fb.mealRating ? "fill-amber-400 text-amber-400" : "text-stone-300"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-1">
+                          <span className="text-stone-500">سرعة الخدمة:</span>
+                          <div className="flex text-amber-400">
+                            {[1, 2, 3, 4, 5].map((s: number) => (
+                              <Star
+                                key={s}
+                                className={`w-3.5 h-3.5 ${
+                                  s <= fb.serviceRating ? "fill-amber-400 text-amber-400" : "text-stone-300"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {tags.map((tg: string) => (
+                            <span
+                              key={tg}
+                              className="px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-[10px] font-bold"
+                            >
+                              {tg}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {fb.comment && (
+                        <p className="p-3 rounded-xl bg-stone-50 dark:bg-stone-800/60 text-stone-800 dark:text-stone-200 italic">
+                          &quot;{fb.comment}&quot;
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}

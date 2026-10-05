@@ -1,12 +1,22 @@
 import { PrismaClient } from "@prisma/client";
+import path from "path";
+import fs from "fs";
 
 declare global {
   // eslint-disable-next-line no-var
   var prismaGlobal: PrismaClient | undefined;
 }
 
-if (!process.env.DATABASE_URL) {
-  process.env.DATABASE_URL = "file:./dev.db";
+if (!process.env.DATABASE_URL || process.env.DATABASE_URL === "file:./dev.db") {
+  const prismaDirDb = path.resolve(process.cwd(), "prisma/dev.db");
+  const rootDirDb = path.resolve(process.cwd(), "dev.db");
+  if (fs.existsSync(prismaDirDb)) {
+    process.env.DATABASE_URL = `file:${prismaDirDb}`;
+  } else if (fs.existsSync(rootDirDb)) {
+    process.env.DATABASE_URL = `file:${rootDirDb}`;
+  } else {
+    process.env.DATABASE_URL = `file:${prismaDirDb}`;
+  }
 }
 
 let prismaClient: PrismaClient;

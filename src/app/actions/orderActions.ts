@@ -779,3 +779,256 @@ export async function logoutStaffAction() {
     return { success: false, error: "تعذر تسجيل الخروج." };
   }
 }
+
+/**
+ * Customer Order History Action:
+ * Retrieves past orders for a customer by their phone number (with robust Yemen phone normalization).
+ */
+export async function getCustomerOrderHistoryAction(phoneInput: string) {
+  try {
+    const raw = (phoneInput || "").trim();
+    if (!raw) {
+      return { success: false, error: "يرجى إدخال رقم الهاتف." };
+    }
+
+    // Clean non-digits
+    const digits = raw.replace(/\D/g, "");
+    if (digits.length < 5) {
+      return { success: false, error: "رقم الهاتف المدخل قصير جداً." };
+    }
+
+    // Generate phone variants:
+    // e.g. "967771234567" -> "771234567"
+    // e.g. "0771234567" -> "771234567"
+    let localDigits = digits;
+    if (localDigits.startsWith("967")) {
+      localDigits = localDigits.substring(3);
+    }
+    if (localDigits.startsWith("0")) {
+      localDigits = localDigits.substring(1);
+    }
+
+    const last7 = digits.slice(-7);
+
+    const candidates = Array.from(
+      new Set([
+        raw,
+        digits,
+        localDigits,
+        `0${localDigits}`,
+        `+967${localDigits}`,
+        `967${localDigits}`,
+        `00967${localDigits}`,
+      ])
+    );
+
+    const orders = await prisma.order.findMany({
+      where: {
+        OR: [
+          ...candidates.map((c) => ({ customerPhone: { equals: c } })),
+          { customerPhone: { contains: last7 } },
+        ],
+      },
+      include: {
+        items: {
+          include: {
+            options: true,
+            product: {
+              select: {
+                id: true,
+                nameAr: true,
+                nameEn: true,
+                imageUrl: true,
+                isAvailable: true,
+                basePrice: true,
+                categoryId: true,
+                optionGroups: {
+                  include: {
+                    options: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        payment: {
+          include: {
+            receipt: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    // In-memory precision filter to ensure only true matches for this phone
+    const filteredOrders = orders.filter((o) => {
+      const oDigits = o.customerPhone.replace(/\D/g, "");
+      return (
+        oDigits.endsWith(last7) ||
+        candidates.includes(o.customerPhone.trim())
+      );
+    });
+
+    // Calculate customer profile summary stats
+    const totalOrders = filteredOrders.length;
+    const totalSpent = filteredOrders.reduce((sum, o) => sum + o.total, 0);
+    const activeOrdersCount = filteredOrders.filter((o) =>
+      ["PENDING", "PAYMENT_PENDING", "CONFIRMED", "QUEUED", "PREPARING", "READY"].includes(o.status)
+    ).length;
+
+    const latestCustomerName = filteredOrders[0]?.customerName || "";
+
+    // Count product frequencies to find favorite item
+    const productCounts: Record<string, { nameAr: string; nameEn: string; count: number }> = {};
+    for (const ord of filteredOrders) {
+      for (const it of ord.items) {
+        if (!productCounts[it.productId]) {
+          productCounts[it.productId] = {
+            nameAr: it.productNameAr,
+            nameEn: it.productNameEn,
+            count: 0,
+          };
+        }
+        productCounts[it.productId].count += it.quantity;
+      }
+    }
+
+    const sortedProducts = Object.values(productCounts).sort((a, b) => b.count - a.count);
+    const favoriteItem = sortedProducts[0] || null;
+
+    return {
+      success: true,
+      orders: filteredOrders,
+      stats: {
+        totalOrders,
+        totalSpent,
+        activeOrdersCount,
+        latestCustomerName,
+        favoriteItem,
+        searchedPhone: raw,
+        lastOrderDate: filteredOrders[0]?.createdAt || null,
+      },
+    };
+  } catch (err) {
+    console.error("Failed to query customer order history:", err);
+    return { success: false, error: "تعذر استرجاع سجل الطلبات. يرجى المحاولة مرة أخرى." };
+  }
+}
+
+/**
+ * Customer action: Submit or update feedback and rating for a completed order.
+ * Validates that order exists and is in COMPLETED status.
+ */
+export async function submitOrderFeedbackAction(payload: {
+  orderId: string;
+  token?: string;
+  mealRating: number;
+  serviceRating: number;
+  tags?: string[];
+  comment?: string;
+}) {
+  try {
+    const { orderId, token, mealRating, serviceRating, tags = [], comment = "" } = payload;
+
+    if (!orderId) {
+      return { success: false, error: "معرف الطلب مفقود." };
+    }
+
+    if (
+      !mealRating ||
+      mealRating < 1 ||
+      mealRating > 5 ||
+      !serviceRating ||
+      serviceRating < 1 ||
+      serviceRating > 5
+    ) {
+      return {
+        success: false,
+        error: "يرجى تحديد التقييم بالنجوم من 1 إلى 5 لكل من الوجبة والخدمة.",
+      };
+    }
+
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: { feedback: true },
+    });
+
+    if (!order) {
+      return { success: false, error: "الطلب غير موجود." };
+    }
+
+    // Authorization: If token provided, ensure it matches trackingToken
+    if (token && order.trackingToken && token !== order.trackingToken) {
+      return { success: false, error: "غير مصرح لك بتقديم تقييم لهذا الطلب." };
+    }
+
+    // Ensure order is completed
+    if (order.status !== "COMPLETED") {
+      return {
+        success: false,
+        error: "يمكنك تقييم الطلب بعد استلامه واكتماله بنجاح.",
+      };
+    }
+
+    const tagsString = Array.isArray(tags) ? tags.filter(Boolean).join(",") : "";
+    const sanitizedComment = (comment || "").slice(0, 500).trim();
+
+    const feedback = await prisma.orderFeedback.upsert({
+      where: { orderId },
+      create: {
+        orderId,
+        mealRating: Math.round(mealRating),
+        serviceRating: Math.round(serviceRating),
+        tags: tagsString,
+        comment: sanitizedComment,
+        customerName: order.customerName,
+      },
+      update: {
+        mealRating: Math.round(mealRating),
+        serviceRating: Math.round(serviceRating),
+        tags: tagsString,
+        comment: sanitizedComment,
+        customerName: order.customerName,
+      },
+    });
+
+    await prisma.auditLog.create({
+      data: {
+        actor: `${order.customerName} (Customer)`,
+        action: "ORDER_FEEDBACK_SUBMITTED",
+        entity: "OrderFeedback",
+        entityId: feedback.id,
+        metadata: JSON.stringify({
+          orderId,
+          orderNumber: order.orderNumber,
+          mealRating: Math.round(mealRating),
+          serviceRating: Math.round(serviceRating),
+          tags,
+        }),
+      },
+    });
+
+    safeRevalidatePath(`/track/${order.orderNumber}`);
+    safeRevalidatePath(`/track/${orderId}`);
+    safeRevalidatePath("/admin");
+
+    return {
+      success: true,
+      feedback: {
+        id: feedback.id,
+        mealRating: feedback.mealRating,
+        serviceRating: feedback.serviceRating,
+        tags: feedback.tags ? feedback.tags.split(",") : [],
+        comment: feedback.comment,
+        createdAt: feedback.createdAt,
+      },
+    };
+  } catch (err) {
+    console.error("Failed to submit feedback:", err);
+    return { success: false, error: "تعذر حفظ التقييم. يرجى المحاولة مرة أخرى." };
+  }
+}
+
+

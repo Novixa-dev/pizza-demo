@@ -17,8 +17,10 @@ import {
   ChefHat,
   ShieldCheck,
   Info,
+  Bell,
 } from "lucide-react";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
+import RecurringReminderModal from "@/components/customer/RecurringReminderModal";
 
 export default function Header() {
   const {
@@ -32,6 +34,7 @@ export default function Header() {
   } = useApp();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isReminderModalOpen, setIsReminderModalOpen] = useState(false);
   const [opStatus, setOpStatus] = useState(() => calculateRestaurantStatus({ now: getYemenNow() }));
   const pathname = usePathname();
 
@@ -45,10 +48,10 @@ export default function Header() {
   const navLinks = [
     { href: "/", label: dict.nav.home },
     { href: "/menu", label: dict.nav.menu },
+    { href: "/history", label: dict.nav.orderHistory },
+    { href: "/track", label: dict.nav.trackOrder },
     { href: "/#branches", label: dict.nav.branches },
     { href: "/#about", label: dict.nav.about },
-    { href: "/#contact", label: dict.nav.contact },
-    { href: "/track", label: dict.nav.trackOrder },
     { href: "/kitchen", label: dict.nav.kitchen, badge: "KDS" },
     { href: "/admin", label: dict.nav.admin },
   ];
@@ -150,16 +153,40 @@ export default function Header() {
 
           {/* Actions & Utilities */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Language Switcher */}
-            <button
-              onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
-              className="p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 text-xs font-bold font-outfit flex items-center gap-1"
-              title="تغيير اللغة / Switch Language"
-              aria-label="Switch Language"
+            {/* Global Language Toggle (Persisted in localStorage) */}
+            <div
+              className="flex items-center bg-stone-100 dark:bg-stone-800 p-0.5 rounded-xl border border-stone-200/80 dark:border-stone-700/80"
+              role="group"
+              aria-label="Language selection"
             >
-              <Globe className="w-4 h-4" />
-              <span>{language === "ar" ? "EN" : "عربي"}</span>
-            </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("ar")}
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+                  language === "ar"
+                    ? "bg-white dark:bg-stone-900 text-pizza-700 dark:text-pizza-400 shadow-xs font-black"
+                    : "text-stone-500 hover:text-stone-900 dark:hover:text-stone-200"
+                }`}
+                title="العربية (RTL)"
+                aria-pressed={language === "ar"}
+              >
+                <span>عربي</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold font-outfit transition-all flex items-center gap-1 ${
+                  language === "en"
+                    ? "bg-white dark:bg-stone-900 text-pizza-700 dark:text-pizza-400 shadow-xs font-black"
+                    : "text-stone-500 hover:text-stone-900 dark:hover:text-stone-200"
+                }`}
+                title="English (LTR)"
+                aria-pressed={language === "en"}
+              >
+                <span>EN</span>
+              </button>
+            </div>
 
             {/* Dark / Light Mode Toggle */}
             <button
@@ -173,6 +200,21 @@ export default function Header() {
               ) : (
                 <Sun className="w-4 h-4 text-amber-400" />
               )}
+            </button>
+
+            {/* Recurring Order Reminders Bell */}
+            <button
+              onClick={() => setIsReminderModalOpen(true)}
+              className="p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 relative transition-colors"
+              title={
+                language === "ar"
+                  ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
+                  : "Favorite Meal Reminders (2 Weeks)"
+              }
+              aria-label="Recurring Order Reminders"
+            >
+              <Bell className="w-4 h-4 text-amber-500" />
+              <span className="absolute top-1.5 end-1.5 w-2 h-2 rounded-full bg-pizza-600 animate-pulse" />
             </button>
 
             {/* Cart Trigger */}
@@ -208,7 +250,45 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 pt-3 pb-5 space-y-1">
+        <div className="md:hidden border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 pt-3 pb-5 space-y-2">
+          {/* Mobile Language Switcher Row */}
+          <div className="p-3 bg-stone-50 dark:bg-stone-850 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
+                <Globe className="w-3.5 h-3.5 text-pizza-600" />
+                <span>{language === "ar" ? "لغة الواجهة" : "Interface Language"}</span>
+              </span>
+              <span className="text-[11px] text-stone-400 font-bold uppercase font-outfit">
+                {language === "ar" ? "العربية (RTL)" : "English (LTR)"}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setLanguage("ar")}
+                className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-all ${
+                  language === "ar"
+                    ? "bg-pizza-700 text-white border-pizza-700 shadow-xs font-black"
+                    : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700"
+                }`}
+              >
+                <span>🇾🇪 العربية</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-all font-outfit ${
+                  language === "en"
+                    ? "bg-pizza-700 text-white border-pizza-700 shadow-xs font-black"
+                    : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700"
+                }`}
+              >
+                <span>🇬🇧 English</span>
+              </button>
+            </div>
+          </div>
+
           {/* Real-time Branch Status in Mobile Drawer */}
           <div className="p-3 mb-2 bg-stone-50 dark:bg-stone-850 rounded-2xl border border-stone-200 dark:border-stone-800 text-xs space-y-1">
             <div className="flex items-center justify-between">
@@ -251,6 +331,29 @@ export default function Header() {
               </div>
             </Link>
           ))}
+
+          {/* Mobile Recurring Reminders Button */}
+          <button
+            type="button"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              setIsReminderModalOpen(true);
+            }}
+            className="w-full mt-2 p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800/60 text-amber-900 dark:text-amber-300 font-bold text-xs flex items-center justify-between transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <Bell className="w-4 h-4 text-pizza-600" />
+              <span>
+                {language === "ar"
+                  ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
+                  : "Meal Reminders (2 Weeks)"}
+              </span>
+            </span>
+            <span className="text-[10px] bg-pizza-600 text-white px-2 py-0.5 rounded-full font-bold">
+              {language === "ar" ? "ضبط" : "Setup"}
+            </span>
+          </button>
+
           <div className="pt-3 border-t border-stone-200 dark:border-stone-800 text-xs text-stone-500 space-y-1">
             <p className="flex items-center gap-1">
               <MapPin className="w-3.5 h-3.5 text-pizza-600" />
@@ -263,6 +366,12 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {/* Recurring Order Reminder Configuration Modal */}
+      <RecurringReminderModal
+        isOpen={isReminderModalOpen}
+        onClose={() => setIsReminderModalOpen(false)}
+      />
     </header>
   );
 }

@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export default function Footer() {
-  const { dict } = useApp();
+  const { language, dict } = useApp();
 
   return (
     <footer className="bg-stone-900 text-stone-300 border-t border-stone-800 pt-12 pb-8">
@@ -30,7 +30,9 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs text-stone-400 leading-relaxed">
-              متخصصون في عمل أشهى أنواع البيتزا الإيطالية والفطائر الطازجة في المكلا بعجينة يومية ومكونات فاخرة مخبوزة على الحجر.
+              {language === "ar"
+                ? "متخصصون في عمل أشهى أنواع البيتزا الإيطالية والفطائر الطازجة في المكلا بعجينة يومية ومكونات فاخرة مخبوزة على الحجر."
+                : "Specializing in mouthwatering Italian stone-baked pizzas and fresh fatayer in Mukalla with artisanal dough and premium ingredients."}
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a
@@ -58,19 +60,19 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-crust-400" />
-              <span>أوقات العمل الرسمية</span>
+              <span>{language === "ar" ? "أوقات العمل الرسمية" : "Operating Hours"}</span>
             </h4>
             <ul className="text-xs text-stone-400 space-y-2">
               <li className="flex justify-between border-b border-stone-800/60 pb-1.5">
-                <span>السبت – الخميس (صباحاً):</span>
+                <span>{language === "ar" ? "السبت – الخميس (صباحاً):" : "Sat – Thu (Morning):"}</span>
                 <span className="text-stone-200 font-outfit">8:00 AM – 12:00 PM</span>
               </li>
               <li className="flex justify-between border-b border-stone-800/60 pb-1.5">
-                <span>السبت – الخميس (مساءً):</span>
+                <span>{language === "ar" ? "السبت – الخميس (مساءً):" : "Sat – Thu (Evening):"}</span>
                 <span className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
               </li>
               <li className="flex justify-between">
-                <span>الجمعة:</span>
+                <span>{language === "ar" ? "الجمعة:" : "Friday:"}</span>
                 <span className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
               </li>
             </ul>
@@ -80,17 +82,21 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-pizza-400" />
-              <span>العنوان والتواصل</span>
+              <span>{language === "ar" ? "العنوان والتواصل" : "Location & Contact"}</span>
             </h4>
             <div className="text-xs text-stone-400 space-y-2">
               <p className="leading-relaxed">
-                حضرموت، المكلا، فوه، حي المساكن (بالقرب من مستوصف النور وجامعة الأحقاف ومدرسة السلال).
+                {language === "ar"
+                  ? "حضرموت، المكلا، فوه، حي المساكن (بالقرب من مستوصف النور وجامعة الأحقاف ومدرسة السلال)."
+                  : "Hadhramaut, Mukalla, Fuwa, Al-Masaken District (near Al-Noor Clinic and Al-Ahgaff University)."}
               </p>
               <p className="font-outfit text-stone-200">
-                هاتف أرضي: <span className="text-pizza-400">05375561</span>
+                {language === "ar" ? "هاتف أرضي: " : "Landline: "}
+                <span className="text-pizza-400">05375561</span>
               </p>
               <p className="font-outfit text-stone-200">
-                واتساب / جوال: <span className="text-emerald-400">+967 772207788</span>
+                {language === "ar" ? "واتساب / جوال: " : "WhatsApp / Mobile: "}
+                <span className="text-emerald-400">+967 772207788</span>
               </p>
             </div>
           </div>
@@ -98,28 +104,33 @@ export default function Footer() {
           {/* Col 4: Quick Links & Platform */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-              روابط سريعة
+              {language === "ar" ? "روابط سريعة" : "Quick Links"}
             </h4>
             <ul className="text-xs space-y-2">
               <li>
                 <a href="/menu" className="hover:text-pizza-400 transition-colors">
-                  قائمة البيتزا والفطائر
+                  {dict.nav.menu}
+                </a>
+              </li>
+              <li>
+                <a href="/history" className="hover:text-pizza-400 transition-colors">
+                  {dict.nav.orderHistory}
                 </a>
               </li>
               <li>
                 <a href="/track" className="hover:text-pizza-400 transition-colors">
-                  متابعة حالة طلب سابق
+                  {dict.nav.trackOrder}
                 </a>
               </li>
               <li>
                 <a href="/kitchen" className="hover:text-pizza-400 transition-colors flex items-center gap-1">
-                  <span>شاشة إدارة المطبخ (KDS)</span>
+                  <span>{dict.kitchen.title}</span>
                   <ExternalLink className="w-3 h-3 text-stone-500" />
                 </a>
               </li>
               <li>
                 <a href="/admin" className="hover:text-pizza-400 transition-colors flex items-center gap-1">
-                  <span>لوحة تحكم الإدارة</span>
+                  <span>{dict.admin.title}</span>
                   <ExternalLink className="w-3 h-3 text-stone-500" />
                 </a>
               </li>
@@ -130,10 +141,16 @@ export default function Footer() {
         {/* Bottom Bar: Brand & Novixa Restaurant Reference */}
         <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-stone-500">
           <p>
-            جميع الحقوق محفوظة © {new Date().getFullYear()} مطعم بيتزا هاوس المكلا (Pizza House).
+            {language === "ar"
+              ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} مطعم بيتزا هاوس المكلا (Pizza House).`
+              : `All rights reserved © ${new Date().getFullYear()} Pizza House Mukalla.`}
           </p>
           <div className="flex items-center gap-1.5">
-            <span>مدعوم بواسطة منصة العمليات الرقمية للمطاعم</span>
+            <span>
+              {language === "ar"
+                ? "مدعوم بواسطة منصة العمليات الرقمية للمطاعم"
+                : "Powered by Digital Restaurant Platform"}
+            </span>
             <span className="font-bold text-crust-400 font-outfit">Novixa Restaurant</span>
           </div>
         </div>

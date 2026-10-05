@@ -51,6 +51,20 @@ export default function TrackSearchClientView() {
           )}
         </button>
       </form>
+
+      {/* Alternative Phone Lookup */}
+      <div className="pt-4 border-t border-stone-200 dark:border-stone-800 text-xs space-y-2">
+        <p className="text-stone-500">
+          {language === "ar" ? "هل تبحث عن جميع طلباتك السابقة أو نسيت رقم الطلب؟" : "Looking for all your past orders or forgot your order #?"}
+        </p>
+        <a
+          href="/history"
+          className="inline-flex items-center gap-1.5 font-bold text-pizza-700 dark:text-pizza-400 hover:underline"
+        >
+          <span>{language === "ar" ? "استعراض سجل الطلبات برقم الهاتف" : "View Order History by Phone"}</span>
+          {language === "ar" ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
+        </a>
+      </div>
     </div>
   );
 }

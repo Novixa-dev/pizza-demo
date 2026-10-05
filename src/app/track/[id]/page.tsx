@@ -37,6 +37,7 @@ export default async function OrderTrackingPage({
           receipt: true,
         },
       },
+      feedback: true,
     },
   });
 
@@ -67,6 +68,12 @@ export default async function OrderTrackingPage({
       ? {
           ...order.payment,
           receipt: isOwner ? order.payment.receipt : null,
+        }
+      : null,
+    feedback: order.feedback
+      ? {
+          ...order.feedback,
+          tags: order.feedback.tags ? order.feedback.tags.split(",") : [],
         }
       : null,
     isOwner,

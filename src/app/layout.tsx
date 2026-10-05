@@ -6,6 +6,8 @@ import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import CartDrawer from "@/components/customer/CartDrawer";
 import FloatingCartBar from "@/components/shared/FloatingCartBar";
+import RealtimeOrderToaster from "@/components/shared/RealtimeOrderToaster";
+import RecurringReminderBanner from "@/components/customer/RecurringReminderBanner";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -130,6 +132,8 @@ export default function RootLayout({
           <Footer />
           <CartDrawer />
           <FloatingCartBar />
+          <RealtimeOrderToaster />
+          <RecurringReminderBanner />
         </AppProvider>
       </body>
     </html>

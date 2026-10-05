@@ -121,6 +121,7 @@ model Order {
   trackingToken       String      @default(cuid())
   items               OrderItem[]
   payment             Payment?
+  feedback            OrderFeedback?
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
 }
@@ -194,3 +195,17 @@ model AnalyticsEvent {
   metadata  String?  // JSON stringified
   createdAt DateTime @default(now())
 }
+
+model OrderFeedback {
+  id            String   @id @default(cuid())
+  orderId       String   @unique
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  mealRating    Int      // 1 to 5 stars
+  serviceRating Int      // 1 to 5 stars
+  tags          String?  // comma-separated tags
+  comment       String?
+  customerName  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+

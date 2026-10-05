@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useApp } from "@/context/AppContext";
 import {
   Clock,
@@ -13,9 +14,11 @@ import {
   Flame,
   PackageCheck,
   RotateCw,
+  Sparkles,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cancelCustomerOrderAction } from "@/app/actions/orderActions";
+import OrderFeedbackCard from "@/components/customer/OrderFeedbackCard";
 
 interface TrackingClientViewProps {
   order: any;
@@ -28,6 +31,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
   const [cancelError, setCancelError] = useState<string | null>(null);
+  const [previewFeedback, setPreviewFeedback] = useState(false);
 
   const [showCancelModal, setShowCancelModal] = useState(false);
 
@@ -247,6 +251,16 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
         </div>
       </div>
 
+      {/* Customer Feedback & Star Rating Form (Appears when order is Completed) */}
+      {(order.status === "COMPLETED" || previewFeedback) && (
+        <OrderFeedbackCard
+          orderId={order.id}
+          orderNumber={order.orderNumber}
+          trackingToken={order.trackingToken}
+          existingFeedback={order.feedback}
+        />
+      )}
+
       {/* Order Item Details Card */}
       <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
         <h3 className="text-sm font-bold text-stone-900 dark:text-white border-b border-stone-200 dark:border-stone-800 pb-3">
@@ -292,20 +306,72 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
         </div>
       </div>
 
-      {/* Direct Contact & Support */}
-      <div className="text-center space-y-3">
+      {/* Direct Actions: WhatsApp, Order History, Reorder */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <a
           href={`https://wa.me/967772207788?text=${encodeURIComponent(
             `مرحباً بيتزا هاوس، بخصوص طلبي رقم ${order.orderNumber}`
           )}`}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-2xl text-xs font-bold shadow-md shadow-emerald-600/20 transition-all"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-2xl text-xs font-bold shadow-md shadow-emerald-600/20 transition-all"
         >
           <Phone className="w-4 h-4" />
           <span>{dict.tracking.helpWhatsApp}</span>
         </a>
 
+        <Link
+          href={`/history?phone=${encodeURIComponent(order.customerPhone.replace(/\D/g, ""))}`}
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-800 dark:text-stone-200 px-6 py-3 rounded-2xl text-xs font-bold transition-all border border-stone-200 dark:border-stone-700"
+        >
+          <Clock className="w-4 h-4 text-pizza-600" />
+          <span>{language === "ar" ? "سجل طلباتي السابقة" : "My Order History"}</span>
+        </Link>
+
+        <Link
+          href="/menu"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-pizza-50 hover:bg-pizza-100 dark:bg-pizza-950/80 dark:hover:bg-pizza-900 text-pizza-700 dark:text-pizza-300 px-6 py-3 rounded-2xl text-xs font-bold transition-all border border-pizza-200 dark:border-pizza-900"
+        >
+          <Pizza className="w-4 h-4" />
+          <span>{dict.tracking.backToMenu}</span>
+        </Link>
+      </div>
+
+      {/* Real-time Toast Demonstration Button */}
+      <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs">
+        <button
+          type="button"
+          onClick={() => {
+            const nextMock = order.status === "PREPARING" ? "READY" : "PREPARING";
+            (window as any).__triggerTestOrderToast?.(nextMock);
+          }}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-800/60 font-bold transition-colors text-[11px]"
+        >
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          <span>{language === "ar" ? "تجربة صوت وتنبيه التحديث الفوري 🔔" : "Test Live Toast & Chime Alert 🔔"}</span>
+        </button>
+
+        {order.status !== "COMPLETED" && (
+          <button
+            type="button"
+            onClick={() => setPreviewFeedback(!previewFeedback)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 font-bold transition-colors text-[11px]"
+          >
+            <span>⭐</span>
+            <span>
+              {previewFeedback
+                ? language === "ar"
+                  ? "إخفاء نموذج التقييم"
+                  : "Hide Feedback Form"
+                : language === "ar"
+                ? "معاينة نموذج تقييم الخدمة ⭐"
+                : "Preview Feedback Form ⭐"}
+            </span>
+          </button>
+        )}
+      </div>
+
+      <div className="text-center">
         {isOwner && order.trackingToken && ["PENDING", "PAYMENT_PENDING", "QUEUED"].includes(order.status) && (
           <div className="pt-2">
             {cancelError && (

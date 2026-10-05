@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "node dev.js",
     "build": "prisma generate && prisma db push --skip-generate && next build",
     "start": "next start",
     "lint": "next lint",
