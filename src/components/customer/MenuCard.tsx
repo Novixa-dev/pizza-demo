@@ -40,7 +40,12 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
                 <Star className="w-3 h-3 fill-stone-950" />
                 <span>{dict.menu.featured}</span>
               </span>
-            ) : null}
+            ) : (
+              <span className="bg-stone-900/80 backdrop-blur-md text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1 border border-stone-700/50">
+                <Flame className="w-3 h-3 text-orange-400" />
+                <span>{language === "ar" ? "خبز حجري: 15 د" : "Stone-baked: 15m"}</span>
+              </span>
+            )}
           </div>
         </div>
 

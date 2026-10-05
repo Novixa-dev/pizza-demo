@@ -19,6 +19,8 @@ import {
 import { useRouter } from "next/navigation";
 import { cancelCustomerOrderAction } from "@/app/actions/orderActions";
 import OrderFeedbackCard from "@/components/customer/OrderFeedbackCard";
+import OrderShareCard from "@/components/customer/OrderShareCard";
+import StoneOvenLiveView from "@/components/customer/StoneOvenLiveView";
 
 interface TrackingClientViewProps {
   order: any;
@@ -197,6 +199,22 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           </div>
         )}
       </div>
+
+      {/* Social Media Share Order Progress Card */}
+      <OrderShareCard
+        orderNumber={order.orderNumber}
+        orderStatus={order.status}
+        pickupTimeText={formattedPickupTime}
+        trackingToken={order.trackingToken}
+        itemsCount={order.items?.length || 0}
+      />
+
+      {/* Live Stone Oven Visualizer during Baking or Ready */}
+      <StoneOvenLiveView
+        orderStatus={order.status}
+        orderNumber={order.orderNumber}
+        pickupTimeText={formattedPickupTime}
+      />
 
       {/* Steps Visual Progress Tracker */}
       <div className="bg-white dark:bg-stone-850 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-6">

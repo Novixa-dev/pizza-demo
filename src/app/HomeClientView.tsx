@@ -23,6 +23,7 @@ import MenuCard from "@/components/customer/MenuCard";
 import CustomizerModal, {
   CustomizerProduct,
 } from "@/components/customer/CustomizerModal";
+import QuickReorderHeroCard from "@/components/customer/QuickReorderHeroCard";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 
 interface HomeClientViewProps {
@@ -196,6 +197,11 @@ export default function HomeClientView({
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Returning Customer Quick Reorder Spotlight */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-10 relative z-20">
+        <QuickReorderHeroCard />
       </section>
 
       {/* 2. Three Value Pillars / About Section */}

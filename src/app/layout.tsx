@@ -8,6 +8,7 @@ import CartDrawer from "@/components/customer/CartDrawer";
 import FloatingCartBar from "@/components/shared/FloatingCartBar";
 import RealtimeOrderToaster from "@/components/shared/RealtimeOrderToaster";
 import RecurringReminderBanner from "@/components/customer/RecurringReminderBanner";
+import PwaInstallPrompt from "@/components/shared/PwaInstallPrompt";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -134,6 +135,7 @@ export default function RootLayout({
           <FloatingCartBar />
           <RealtimeOrderToaster />
           <RecurringReminderBanner />
+          <PwaInstallPrompt />
         </AppProvider>
       </body>
     </html>
