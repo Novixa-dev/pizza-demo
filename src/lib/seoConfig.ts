@@ -23,6 +23,16 @@ export const siteMetadata: Metadata = {
   creator: "Pizza House Mukalla",
   publisher: "Pizza House Mukalla",
   metadataBase: new URL("https://pizzahouse.ye"),
+  icons: {
+    icon: [
+      { url: "/favicon.png", sizes: "64x64", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.webmanifest",
   alternates: {
     canonical: "/",
     languages: {
