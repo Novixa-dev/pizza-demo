@@ -47,7 +47,7 @@ export default function CheckoutClientView({
   availableSlots = [],
   restaurantStatus,
 }: CheckoutClientViewProps) {
-  const { cart, cartTotal, updateQuantity, removeFromCart, clearCart, language, dict } = useApp();
+  const { cart, cartTotal, addToCart, updateQuantity, removeFromCart, clearCart, language, dict } = useApp();
 
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -307,6 +307,40 @@ export default function CheckoutClientView({
   };
 
   // If cart is empty
+  const handleAddSampleItem = () => {
+    console.log("[Checkout Audit] Adding sample valid Pepperoni pizza to cart for testing");
+    addToCart({
+      productId: "cmux4ii5q0014u2oqfp9n86oa",
+      nameAr: "بيتزا ببروني كلاسيك",
+      nameEn: "Classic Pepperoni Pizza",
+      imageUrl: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=80",
+      basePrice: 4500,
+      unitPrice: 4500,
+      quantity: 1,
+      selectedOptions: [
+        {
+          groupId: "cmux4ii5q0015u2oqyfqe9y82",
+          groupNameAr: "الحجم",
+          groupNameEn: "Size",
+          optionId: "cmux4ii5q0016u2oqcsaohsyh",
+          optionNameAr: "كبير (14 بوصة)",
+          optionNameEn: "Large (14 inch)",
+          priceDelta: 0,
+        },
+        {
+          groupId: "cmux4ii5q0019u2oq53y6nsv8",
+          groupNameAr: "نوع العجينة",
+          groupNameEn: "Crust Type",
+          optionId: "cmux4ii5q001au2oqqn2tssqk",
+          optionNameAr: "عجينة إيطالية كلاسيكية هشة",
+          optionNameEn: "Classic Italian Thin Crust",
+          priceDelta: 0,
+        },
+      ],
+      notes: "طلب تجريبي",
+    });
+  };
+
   if (cart.length === 0) {
     return (
       <div className="max-w-xl mx-auto px-4 py-20 text-center space-y-6 animate-in fade-in">
@@ -319,17 +353,27 @@ export default function CheckoutClientView({
           </h2>
           <p className="text-sm text-stone-500 max-w-sm mx-auto leading-relaxed">
             {language === "ar"
-              ? "سلتك فارغة حالياً. تصفح قائمتنا اللذيذة واختر بيتزتك الإيطالية أو فطائرك المفضلة."
+              ? "سلتك فارغة حالياً. تصفح قائمتنا اللذيذة أو أضف صنفاً تجريبياً لتجربة الدفع فوراً."
               : dict.cart.emptyDesc}
           </p>
         </div>
-        <Link
-          href="/menu"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-pizza-700 via-pizza-600 to-pizza-700 hover:from-pizza-800 hover:to-pizza-800 text-white px-8 py-4 rounded-2xl font-bold text-sm shadow-xl shadow-pizza-700/25 active:scale-95 transition-all"
-        >
-          <span>{dict.cart.continueShopping}</span>
-          {language === "ar" ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/menu"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-pizza-700 via-pizza-600 to-pizza-700 hover:from-pizza-800 hover:to-pizza-800 text-white px-7 py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-pizza-700/25 active:scale-95 transition-all"
+          >
+            <span>{dict.cart.continueShopping}</span>
+            {language === "ar" ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+          </Link>
+          <button
+            type="button"
+            onClick={handleAddSampleItem}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-stone-950 px-6 py-3.5 rounded-2xl font-bold text-sm shadow-md active:scale-95 transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            <span>{language === "ar" ? "إضافة بيتزا ببروني وتجربة الدفع فوراً" : "Add Pepperoni Pizza & Test"}</span>
+          </button>
+        </div>
       </div>
     );
   }
@@ -1091,6 +1135,37 @@ export default function CheckoutClientView({
           </div>
         </div>
       </form>
+
+      {/* Mobile Sticky Checkout Bar to guarantee 100% visibility on all phones */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border-t border-stone-200 dark:border-stone-800 p-3.5 z-40 shadow-2xl flex items-center justify-between gap-4">
+        <div>
+          <span className="text-[10px] text-stone-400 block font-cairo">الإجمالي النهائي:</span>
+          <span className="text-lg font-black font-outfit text-pizza-700 dark:text-pizza-400">
+            {cartTotal.toLocaleString()} <span className="text-xs font-cairo font-bold">{dict.menu.currency}</span>
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={(e) => {
+            console.log("[Checkout Audit] Mobile Sticky Submit Button tapped");
+            handleSubmitOrder(e as any);
+          }}
+          disabled={isSubmitting}
+          className="flex-1 py-3 px-5 rounded-2xl font-bold text-sm shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-pizza-700 via-pizza-600 to-pizza-700 hover:from-pizza-800 text-white shadow-pizza-700/25 cursor-pointer"
+        >
+          {isSubmitting ? (
+            <span className="flex items-center gap-2">
+              <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+              <span>جاري التأكيد...</span>
+            </span>
+          ) : (
+            <>
+              <span className="text-sm font-black">{dict.checkout.placeOrder}</span>
+              {language === "ar" ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
