@@ -75,14 +75,14 @@ export default function Header() {
           <div className="flex items-center gap-3 text-stone-400">
             <span
               title={language === "ar" ? opStatus.descriptionAr : opStatus.descriptionEn}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${
+              className={`inline-flex items-center gap-1.5 text-[11px] font-medium ${
                 opStatus.status === "OPEN_FOR_ORDERING"
-                  ? "text-emerald-400 bg-emerald-950/60 border-emerald-800/40"
+                  ? "text-emerald-400"
                   : opStatus.status === "CLOSING_SOON"
-                  ? "text-amber-300 bg-amber-950/60 border-amber-800/40"
+                  ? "text-amber-300"
                   : opStatus.status === "SCHEDULED_ONLY"
-                  ? "text-sky-300 bg-sky-950/60 border-sky-800/40"
-                  : "text-red-400 bg-red-950/60 border-red-800/40"
+                  ? "text-sky-300"
+                  : "text-red-400"
               }`}
             >
               <span

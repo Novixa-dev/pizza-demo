@@ -30,12 +30,8 @@ export default function CartDrawer() {
       />
 
       {/* Slide-over panel */}
-      <div
-        className={`fixed inset-y-0 ${
-          language === "ar" ? "left-0" : "right-0"
-        } max-w-full flex w-full sm:max-w-md`}
-      >
-        <div className="w-full bg-white dark:bg-stone-900 shadow-2xl flex flex-col justify-between border-stone-200 dark:border-stone-800 transition-colors">
+      <div className="fixed inset-y-0 end-0 max-w-full flex w-full sm:max-w-md animate-in slide-in-from-end duration-300">
+        <div className="w-full bg-white dark:bg-stone-900 shadow-2xl flex flex-col justify-between border-s border-stone-200 dark:border-stone-800 transition-colors">
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between">
             <div className="flex items-center gap-2">

@@ -56,28 +56,18 @@ export default function HomeClientView({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             {/* Text & Pitch */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-start">
-              {/* Branch Landmark Text & Real-Time Operational Status */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-pizza-700 dark:text-pizza-400 bg-pizza-50 dark:bg-pizza-950/60 px-3 py-1 rounded-xl border border-pizza-200 dark:border-pizza-900/40">
-                  <MapPin className="w-3.5 h-3.5 text-pizza-600" />
+              {/* Branch Landmark Text & Real-Time Operational Status (Clean unboxed typography) */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs text-stone-600 dark:text-stone-300">
+                <span className="flex items-center gap-1.5 text-pizza-700 dark:text-pizza-400 font-bold">
+                  <MapPin className="w-3.5 h-3.5" />
                   <span>
                     {language === "ar"
                       ? "المكلا · فوه · حي المساكن"
                       : "Mukalla · Fuwa · Al-Masaken"}
                   </span>
-                </div>
-
-                <div
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold border ${
-                    opStatus.status === "OPEN_FOR_ORDERING"
-                      ? "bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60"
-                      : opStatus.status === "CLOSING_SOON"
-                      ? "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60"
-                      : opStatus.status === "SCHEDULED_ONLY"
-                      ? "bg-sky-50 text-sky-800 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800/60"
-                      : "bg-red-50 text-red-800 border-red-200 dark:bg-red-950/60 dark:text-red-300 dark:border-red-800/60"
-                  }`}
-                >
+                </span>
+                <span className="text-stone-300 dark:text-stone-700">·</span>
+                <span className="flex items-center gap-1.5 font-bold">
                   <span
                     className={`w-2 h-2 rounded-full ${
                       opStatus.status === "OPEN_FOR_ORDERING"
@@ -92,12 +82,15 @@ export default function HomeClientView({
                   <span>
                     {language === "ar" ? opStatus.badgeLabelAr : opStatus.badgeLabelEn}
                   </span>
-                  {opStatus.canOrderImmediate && (
-                    <span className="text-[11px] opacity-80 border-s border-current ps-1.5 ms-1">
-                      {language === "ar" ? "تجهيز خلال 15 دقيقة" : "Ready in 15 mins"}
+                </span>
+                {opStatus.canOrderImmediate && (
+                  <>
+                    <span className="text-stone-300 dark:text-stone-700">·</span>
+                    <span className="text-stone-500 dark:text-stone-400">
+                      {language === "ar" ? "تجهيز طازج خلال 15 دقيقة" : "Fresh bake in 15 mins"}
                     </span>
-                  )}
-                </div>
+                  </>
+                )}
               </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-stone-900 dark:text-white leading-[1.18] tracking-tight font-cairo">

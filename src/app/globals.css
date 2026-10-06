@@ -4,21 +4,28 @@
 
 @layer base {
   :root {
-    --bg-main: #fffdfa;
+    --bg-main: #fcfaf7;
     --bg-surface: #ffffff;
-    --bg-surface-raised: #fbf8f2;
-    --border-color: #eee8dc;
+    --bg-surface-raised: #f7f3eb;
+    --border-color: #ebe4d8;
     --text-main: #1c1917;
     --text-muted: #78716c;
   }
 
   .dark {
-    --bg-main: #0c0b0a;
-    --bg-surface: #141312;
-    --bg-surface-raised: #1c1a17;
-    --border-color: #292622;
+    --bg-main: #121110;
+    --bg-surface: #181615;
+    --bg-surface-raised: #201e1b;
+    --border-color: #2e2a26;
     --text-main: #fafaf9;
     --text-muted: #a8a29e;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   html, body {
@@ -32,9 +39,19 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-tap-highlight-color: transparent;
   }
+
+  ::selection {
+    background-color: #ea580c;
+    color: #ffffff;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #ea580c;
+    outline-offset: 2px;
+  }
 }
 
-/* Custom Scrollbar */
+/* Custom Artisan Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -43,11 +60,17 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d6d0c4;
+  background: #d8d1c3;
   border-radius: 9999px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: #c7bead;
+}
 .dark ::-webkit-scrollbar-thumb {
-  background: #383531;
+  background: #36322e;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #47423c;
 }
 
 /* Pulse badge animation */
@@ -58,3 +81,4 @@
 .animate-pulse-subtle {
   animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
