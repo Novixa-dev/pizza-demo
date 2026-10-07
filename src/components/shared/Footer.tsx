@@ -110,7 +110,7 @@ export default function Footer() {
               </p>
               <div className="pt-2">
                 <a
-                  href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+                  href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 text-pizza-400 hover:text-pizza-300 font-bold transition-colors text-xs"

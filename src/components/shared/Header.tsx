@@ -204,7 +204,7 @@ export default function Header() {
 
             {/* Google Maps Quick Link */}
             <a
-              href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+              href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
               target="_blank"
               rel="noreferrer"
               className="p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:text-pizza-600 dark:hover:text-pizza-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors hidden sm:inline-flex"
@@ -383,7 +383,7 @@ export default function Header() {
           {/* Mobile Quick Shortcuts: Google Maps & Instagram & WhatsApp */}
           <div className="grid grid-cols-2 gap-2 pt-2">
             <a
-              href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+              href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 text-xs font-bold border border-stone-200 dark:border-stone-700 hover:border-pizza-500 transition-colors"

@@ -112,8 +112,8 @@ export const siteMetadata: Metadata = {
     "restaurant:contact_info:country_name": "Yemen",
     "restaurant:contact_info:phone_number": "+967-5-375561",
     "restaurant:contact_info:website": "https://pizzahouse.ye",
-    "place:location:latitude": "14.5388",
-    "place:location:longitude": "49.1232",
+    "place:location:latitude": "14.4892",
+    "place:location:longitude": "49.0445",
   },
 };
 
@@ -133,9 +133,10 @@ export const jsonLdRestaurantData = {
   url: "https://pizzahouse.ye",
   sameAs: [
     "https://www.instagram.com/pizza_house66/",
+    "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
     "https://maps.app.goo.gl/p9awfgXmTeSStM317",
   ],
-  hasMap: "https://maps.app.goo.gl/p9awfgXmTeSStM317",
+  hasMap: "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
   menu: "https://pizzahouse.ye/menu",
   hasMenu: "https://pizzahouse.ye/menu",
   servesCuisine: ["Italian Pizza", "Pastries", "Fatayer", "Calzone", "Burgers"],
@@ -152,8 +153,8 @@ export const jsonLdRestaurantData = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 14.5388,
-    longitude: 49.1232,
+    latitude: 14.4891696,
+    longitude: 49.0444845,
   },
   contactPoint: [
     {

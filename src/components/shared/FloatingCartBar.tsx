@@ -98,7 +98,7 @@ export default function FloatingCartBar() {
 
           {/* 2. Map & Location */}
           <a
-            href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+            href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center gap-1 bg-stone-800 hover:bg-stone-750 text-stone-200 py-2.5 px-3 rounded-xl text-xs font-bold border border-stone-700/60 active:scale-95 transition-all"

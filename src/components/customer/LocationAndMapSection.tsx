@@ -30,10 +30,16 @@ export default function LocationAndMapSection() {
 
   const loc = dict.location;
 
+  const MAP_URL = "https://maps.app.goo.gl/zre73sxKGyM27KvE6";
+  const MAP_EMBED =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.921954946859!2d49.044484499999996!3d14.489169599999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3de8e1986e8cba9d%3A0x375ce5e3654e4040!2z2KjZitiq2LLYpyDZh9in2YjYsw!5e0!3m2!1sen!2ssa!4v1791336550065!5m2!1sen!2ssa";
+  const DIRECTIONS_URL =
+    "https://www.google.com/maps/dir/?api=1&destination=14.4891696,49.0444845";
+
   const handleCopyAddress = async () => {
     try {
       await navigator.clipboard.writeText(
-        `مطعم بيتزا هاوس المكلا (Pizza House) - فوه، حي المساكن، بعد جامعة الأحقاف ومستوصف النور يمين الشارع العام. بلس كود: F2QV+HPW. رابط الخريطة: https://maps.app.goo.gl/p9awfgXmTeSStM317`
+        `مطعم بيتزا هاوس المكلا (Pizza House) - المكلا، فوه حي المساكن. موقعنا على الخريطة: ${MAP_URL} - هاتف: 05-375561 / واتساب: 772207788`
       );
       setCopiedAddress(true);
       setTimeout(() => setCopiedAddress(false), 3000);
@@ -47,8 +53,8 @@ export default function LocationAndMapSection() {
       try {
         await navigator.share({
           title: "مطعم بيتزا هاوس المكلا | Pizza House Mukalla",
-          text: "موقع مطعم بيتزا هاوس في فوه، حي المساكن، المكلا - تفضل بزيارتنا أو اطلب مسبقاً!",
-          url: "https://maps.app.goo.gl/p9awfgXmTeSStM317",
+          text: "موقع مطعم بيتزا هاوس على خرائط Google - تفضل بزيارتنا أو اطلب مسبقاً!",
+          url: MAP_URL,
         });
         return;
       } catch {
@@ -57,7 +63,7 @@ export default function LocationAndMapSection() {
     }
     // Fallback
     try {
-      await navigator.clipboard.writeText("https://maps.app.goo.gl/p9awfgXmTeSStM317");
+      await navigator.clipboard.writeText(MAP_URL);
       setShareFeedback(true);
       setTimeout(() => setShareFeedback(false), 2500);
     } catch {
@@ -168,7 +174,7 @@ export default function LocationAndMapSection() {
         {/* Action buttons for quick map navigation */}
         <div className="flex flex-wrap items-center gap-2.5">
           <a
-            href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+            href={MAP_URL}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-pizza-700 to-pizza-600 hover:from-pizza-800 hover:to-pizza-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-pizza-700/20 active:scale-95 transition-all"
@@ -179,7 +185,7 @@ export default function LocationAndMapSection() {
           </a>
 
           <a
-            href="https://www.google.com/maps/dir/?api=1&destination=14.5388,49.1232"
+            href={DIRECTIONS_URL}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-800 dark:text-stone-100 px-4 py-2.5 rounded-xl text-xs font-bold border border-stone-200 dark:border-stone-700 transition-colors"
@@ -238,15 +244,15 @@ export default function LocationAndMapSection() {
         <div className="lg:col-span-7 space-y-4">
           <div className="relative rounded-3xl overflow-hidden border border-stone-200 dark:border-stone-800 shadow-xl bg-stone-100 dark:bg-stone-900 aspect-[16/11] sm:aspect-[16/10]">
             <iframe
-              src="https://maps.google.com/maps?q=14.5388,49.1232&hl=ar&z=16&output=embed"
+              src={MAP_EMBED}
               width="100%"
               height="100%"
               style={{ border: 0 }}
-              allowFullScreen={false}
+              allowFullScreen={true}
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="strict-origin-when-cross-origin"
               title="Pizza House Mukalla Location Google Map"
-              className="w-full h-full grayscale-[0.1] contrast-[1.05]"
+              className="w-full h-full grayscale-[0.05] contrast-[1.05]"
             />
 
             {/* Floating Map Info Capsule */}
@@ -257,15 +263,17 @@ export default function LocationAndMapSection() {
                 </div>
                 <div>
                   <h4 className="text-xs font-bold font-cairo">
-                    بيتزا هاوس | فوه حي المساكن
+                    {language === "ar" ? "بيتزا هاوس | المكلا - فوه" : "Pizza House | Mukalla - Fuwa"}
                   </h4>
                   <p className="text-[11px] text-stone-300">
-                    بعد جامعة الأحقاف ومستوصف النور يمين الشارع العام
+                    {language === "ar"
+                      ? "حي المساكن - بعد جامعة الأحقاف ومستوصف النور"
+                      : "Al-Masaken - near Al-Ahgaff Univ & Al-Noor"}
                   </p>
                 </div>
               </div>
               <a
-                href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+                href={MAP_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-xl transition-colors shrink-0"

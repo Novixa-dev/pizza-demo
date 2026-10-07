@@ -76,14 +76,15 @@ export default async function HomePage() {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 14.5388,
-      longitude: 49.1232,
+      latitude: 14.4891696,
+      longitude: 49.0444845,
     },
     sameAs: [
       "https://www.instagram.com/pizza_house66/",
+      "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
       "https://maps.app.goo.gl/p9awfgXmTeSStM317",
     ],
-    hasMap: "https://maps.app.goo.gl/p9awfgXmTeSStM317",
+    hasMap: "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",

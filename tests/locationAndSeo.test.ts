@@ -28,7 +28,7 @@ describe("Location, Google Maps, Instagram & SEO Suite", () => {
 
     // Other restaurant meta
     expect(siteMetadata.other?.["restaurant:contact_info:street_address"]).toBeTruthy();
-    expect(siteMetadata.other?.["place:location:latitude"]).toBe("14.5388");
+    expect(siteMetadata.other?.["place:location:latitude"]).toBe("14.4892");
   });
 
   it("verifies Schema.org JSON-LD LocalBusiness structured data enhancements", () => {
@@ -36,12 +36,12 @@ describe("Location, Google Maps, Instagram & SEO Suite", () => {
     expect(jsonLdRestaurantData["@type"]).toContain("LocalBusiness");
     expect(jsonLdRestaurantData.alternateName).toContain("pizza_house66");
     expect(jsonLdRestaurantData.sameAs).toContain("https://www.instagram.com/pizza_house66/");
-    expect(jsonLdRestaurantData.sameAs).toContain("https://maps.app.goo.gl/p9awfgXmTeSStM317");
-    expect(jsonLdRestaurantData.hasMap).toBe("https://maps.app.goo.gl/p9awfgXmTeSStM317");
+    expect(jsonLdRestaurantData.sameAs).toContain("https://maps.app.goo.gl/zre73sxKGyM27KvE6");
+    expect(jsonLdRestaurantData.hasMap).toBe("https://maps.app.goo.gl/zre73sxKGyM27KvE6");
 
     // Coordinates check
-    expect(jsonLdRestaurantData.geo.latitude).toBeCloseTo(14.5388, 2);
-    expect(jsonLdRestaurantData.geo.longitude).toBeCloseTo(49.1232, 2);
+    expect(jsonLdRestaurantData.geo.latitude).toBeCloseTo(14.4892, 2);
+    expect(jsonLdRestaurantData.geo.longitude).toBeCloseTo(49.0445, 2);
 
     // Contact points & amenities
     expect(jsonLdRestaurantData.telephone).toBe("+967-5-375561");
