@@ -1023,4 +1023,45 @@ export async function submitOrderFeedbackAction(payload: {
   }
 }
 
+/**
+ * Customer Testimonials Action:
+ * Fetches recent verified customer feedback stored in the database.
+ */
+export async function getRecentTestimonialsAction(limit = 6) {
+  try {
+    const feedback = await prisma.orderFeedback.findMany({
+      where: {
+        mealRating: { gte: 4 },
+      },
+      include: {
+        order: {
+          select: {
+            orderNumber: true,
+            pickupMode: true,
+            createdAt: true,
+            items: {
+              select: {
+                productNameAr: true,
+                productNameEn: true,
+                quantity: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      take: limit,
+    });
+
+    return {
+      success: true,
+      testimonials: feedback,
+    };
+  } catch (err) {
+    console.error("Failed to query recent testimonials:", err);
+    return { success: false, testimonials: [] };
+  }
+}
+
+
 

@@ -5,23 +5,28 @@ import MenuClientView from "./MenuClientView";
 export const revalidate = 60;
 
 export default async function MenuPage() {
-  const categories = await prisma.category.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-    include: {
-      products: {
-        where: { isAvailable: true },
-        include: {
-          optionGroups: {
-            include: {
-              options: true,
+  let categories: any[] = [];
+  try {
+    categories = await prisma.category.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+      include: {
+        products: {
+          where: { isAvailable: true },
+          include: {
+            optionGroups: {
+              include: {
+                options: true,
+              },
             },
           },
+          orderBy: { sortOrder: "asc" },
         },
-        orderBy: { sortOrder: "asc" },
       },
-    },
-  });
+    });
+  } catch (err) {
+    console.error("Failed to load categories for MenuPage:", err);
+  }
 
   return <MenuClientView categories={categories} />;
 }

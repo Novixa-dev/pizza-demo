@@ -620,7 +620,132 @@ async function main() {
     },
   });
 
-  console.log("✅ Seeded 3 sample operational orders!");
+  // Seed completed orders with customer testimonials (OrderFeedback)
+  const pepperoniProd = await prisma.product.findFirst({ where: { nameEn: "Classic Pepperoni Pizza" } });
+  const supremeProd = await prisma.product.findFirst({ where: { nameEn: "Pizza House Supreme Special" } });
+  const ranchProd = await prisma.product.findFirst({ where: { nameEn: "Chicken Ranch Pizza" } });
+  const margheritaProd = await prisma.product.findFirst({ where: { nameEn: "Traditional Margherita" } });
+
+  const feedbacksData = [
+    {
+      orderNumber: "#PH-991",
+      customerName: "أحمد سالم باوزير",
+      customerPhone: "771234567",
+      product: supremeProd || pepperoniProd!,
+      unitPrice: 5500,
+      total: 7500,
+      mealRating: 5,
+      serviceRating: 5,
+      tags: "طازج وساخن, عجينة ممتازة, استلام سريع",
+      comment: "أفضل بيتزا في المكلا بلا منازع! طلبت مسبقاً ووصلت الفرع واستلمتها ساخنة مقرمشة طازجة من الفرن بدون أي انتظار. الجبنة الموزاريلا واضحة أنها أصلية والعجينة خفيفة جداً.",
+      daysAgo: 1,
+    },
+    {
+      orderNumber: "#PH-992",
+      customerName: "د. عمر بن عبد العزيز",
+      customerPhone: "772345678",
+      product: ranchProd || pepperoniProd!,
+      unitPrice: 5000,
+      total: 7000,
+      mealRating: 5,
+      serviceRating: 5,
+      tags: "خدمة راقية, دقة الموعد, قرب جامعة الأحقاف",
+      comment: "موقع المطعم ممتاز بقرب مجمع كليات الأحقاف في فوه. خدمة الطلب المسبق وفرت علينا وقتاً ثميناً بين المحاضرات. صوص الرانش والتحمير على الحجر متقن للغاية.",
+      daysAgo: 2,
+    },
+    {
+      orderNumber: "#PH-993",
+      customerName: "أم عبدالله الكندي",
+      customerPhone: "773456789",
+      product: margheritaProd || pepperoniProd!,
+      unitPrice: 3500,
+      total: 5500,
+      mealRating: 5,
+      serviceRating: 5,
+      tags: "جلسات عائلية مريحة, نظافة فائقة",
+      comment: "زرنا قسم العوائل في فرع فوه، الجلسات مريحة وتوفر الخصوصية التامة للعائلات مع تكييف ممتاز. الأبناء استمتعوا جداً بطعم البيتزا والفطائر الساخنة.",
+      daysAgo: 3,
+    },
+    {
+      orderNumber: "#PH-994",
+      customerName: "سالم بن دغار",
+      customerPhone: "774567890",
+      product: pepperoniProd!,
+      unitPrice: 4500,
+      total: 8500,
+      mealRating: 5,
+      serviceRating: 4,
+      tags: "طعم إيطالي أصيل, تحويل كريمي سهل",
+      comment: "دفعت عن طريق تطبيق بنك الكريمي حاسب بسهولة واستلمت الطلب في موعده تماماً. الخبز على الحجر يعطي نكهة مدخنة مميزة تختلف عن أي مطعم آخر بالمكلا.",
+      daysAgo: 4,
+    },
+    {
+      orderNumber: "#PH-995",
+      customerName: "م. خالد باحيدرة",
+      customerPhone: "775678901",
+      product: ranchProd || supremeProd!,
+      unitPrice: 5000,
+      total: 7000,
+      mealRating: 5,
+      serviceRating: 5,
+      tags: "كرنش ممتاز, صوصات رهيبة",
+      comment: "الصوصات الجانبية خصوصاً الثومية والهلابينو ممتازة وتكمل الطعم. فكرة شاشة متابعة حالة الخبز في الفرن ذكية واحترافية. استمروا بهذا المستوى!",
+      daysAgo: 5,
+    },
+  ];
+
+  for (const item of feedbacksData) {
+    const orderDate = new Date(now.getTime() - item.daysAgo * 24 * 60 * 60 * 1000);
+    const order = await prisma.order.create({
+      data: {
+        orderNumber: item.orderNumber,
+        restaurantId: restaurant.id,
+        customerName: item.customerName,
+        customerPhone: item.customerPhone,
+        pickupMode: "SCHEDULED",
+        requestedPickupTime: orderDate,
+        plannedPrepStartTime: orderDate,
+        actualPrepStartTime: orderDate,
+        readyTime: orderDate,
+        completedTime: orderDate,
+        status: "COMPLETED",
+        subtotal: item.total,
+        discount: 0,
+        total: item.total,
+        createdAt: orderDate,
+        items: {
+          create: {
+            productId: item.product.id,
+            productNameAr: item.product.nameAr,
+            productNameEn: item.product.nameEn,
+            unitPrice: item.unitPrice,
+            quantity: 1,
+            subtotal: item.total,
+          },
+        },
+        payment: {
+          create: {
+            method: "PAY_AT_PICKUP",
+            status: "VERIFIED",
+            amount: item.total,
+            verifiedAt: orderDate,
+          },
+        },
+        feedback: {
+          create: {
+            mealRating: item.mealRating,
+            serviceRating: item.serviceRating,
+            tags: item.tags,
+            comment: item.comment,
+            customerName: item.customerName,
+            createdAt: orderDate,
+          },
+        },
+      },
+    });
+  }
+
+  console.log("✅ Seeded 5 completed orders with authentic customer feedback testimonials!");
   console.log("🎉 Database seeding completed successfully!");
 }
 

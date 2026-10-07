@@ -964,11 +964,12 @@ export default function HistoryClientView() {
                     day: "numeric",
                     hour: "numeric",
                     minute: "2-digit",
+                    timeZone: "Asia/Aden",
                   }
                 );
                 const pickupTime = new Date(order.requestedPickupTime).toLocaleTimeString(
                   language === "ar" ? "ar-YE" : "en-US",
-                  { hour: "numeric", minute: "2-digit" }
+                  { hour: "numeric", minute: "2-digit", timeZone: "Asia/Aden" }
                 );
 
                 return (

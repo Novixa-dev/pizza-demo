@@ -18,6 +18,8 @@ import {
   ShieldCheck,
   Info,
   Bell,
+  Instagram,
+  Navigation,
 } from "lucide-react";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 import RecurringReminderModal from "@/components/customer/RecurringReminderModal";
@@ -48,10 +50,10 @@ export default function Header() {
   const navLinks = [
     { href: "/", label: dict.nav.home },
     { href: "/menu", label: dict.nav.menu },
+    { href: "/#reviews", label: language === "ar" ? "التقييمات" : "Reviews" },
+    { href: "/#branches", label: language === "ar" ? "الموقع والخريطة" : "Location & Map" },
     { href: "/history", label: dict.nav.orderHistory },
     { href: "/track", label: dict.nav.trackOrder },
-    { href: "/#branches", label: dict.nav.branches },
-    { href: "/#about", label: dict.nav.about },
     { href: "/kitchen", label: dict.nav.kitchen, badge: "KDS" },
     { href: "/admin", label: dict.nav.admin },
   ];
@@ -187,6 +189,30 @@ export default function Header() {
                 <span>EN</span>
               </button>
             </div>
+
+            {/* Instagram Profile Quick Link */}
+            <a
+              href="https://www.instagram.com/pizza_house66/"
+              target="_blank"
+              rel="noreferrer"
+              className="p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors hidden sm:inline-flex"
+              title="Instagram @pizza_house66"
+              aria-label="Instagram @pizza_house66"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
+
+            {/* Google Maps Quick Link */}
+            <a
+              href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+              target="_blank"
+              rel="noreferrer"
+              className="p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:text-pizza-600 dark:hover:text-pizza-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors hidden sm:inline-flex"
+              title={language === "ar" ? "موقع المطعم على خرائط Google" : "Google Maps Location"}
+              aria-label="Google Maps"
+            >
+              <MapPin className="w-4 h-4" />
+            </a>
 
             {/* Dark / Light Mode Toggle */}
             <button
@@ -353,6 +379,28 @@ export default function Header() {
               {language === "ar" ? "ضبط" : "Setup"}
             </span>
           </button>
+
+          {/* Mobile Quick Shortcuts: Google Maps & Instagram & WhatsApp */}
+          <div className="grid grid-cols-2 gap-2 pt-2">
+            <a
+              href="https://maps.app.goo.gl/p9awfgXmTeSStM317"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 text-xs font-bold border border-stone-200 dark:border-stone-700 hover:border-pizza-500 transition-colors"
+            >
+              <Navigation className="w-3.5 h-3.5 text-pizza-600" />
+              <span>{language === "ar" ? "خرائط Google" : "Google Maps"}</span>
+            </a>
+            <a
+              href="https://www.instagram.com/pizza_house66/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-900/50 transition-colors font-outfit"
+            >
+              <Instagram className="w-3.5 h-3.5 text-rose-500" />
+              <span>@pizza_house66</span>
+            </a>
+          </div>
 
           <div className="pt-3 border-t border-stone-200 dark:border-stone-800 text-xs text-stone-500 space-y-1">
             <p className="flex items-center gap-1">

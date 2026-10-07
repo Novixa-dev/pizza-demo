@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node dev.js",
-    "build": "prisma generate && prisma db push --skip-generate && next build",
+    "build": "prisma generate && prisma db push --skip-generate && tsx prisma/seed.ts && NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",

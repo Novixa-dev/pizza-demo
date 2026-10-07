@@ -18,24 +18,30 @@ import {
   Sparkles,
   AlertCircle,
   Timer,
+  Instagram,
+  Navigation,
 } from "lucide-react";
 import MenuCard from "@/components/customer/MenuCard";
 import CustomizerModal, {
   CustomizerProduct,
 } from "@/components/customer/CustomizerModal";
 import QuickReorderHeroCard from "@/components/customer/QuickReorderHeroCard";
+import LocationAndMapSection from "@/components/customer/LocationAndMapSection";
+import TestimonialsSection from "@/components/customer/TestimonialsSection";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 
 interface HomeClientViewProps {
   restaurant: any;
   featuredProducts: any[];
   categories: any[];
+  initialTestimonials?: any[];
 }
 
 export default function HomeClientView({
   restaurant,
   featuredProducts,
   categories,
+  initialTestimonials = [],
 }: HomeClientViewProps) {
   const { language, dict } = useApp();
   const [selectedProduct, setSelectedProduct] = useState<CustomizerProduct | null>(null);
@@ -318,67 +324,11 @@ export default function HomeClientView({
         </div>
       </section>
 
-      {/* 4. Verified Branch Location & Hours Banner */}
-      <section id="branches" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
-        <div id="contact" className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-900 text-white rounded-3xl p-6 sm:p-10 border border-stone-800 shadow-xl relative overflow-hidden scroll-mt-24">
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-4">
-              <span className="text-xs bg-pizza-600 text-white font-bold px-3 py-1 rounded-full uppercase tracking-wider font-outfit">
-                Fuwa Branch • فرع فوه
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-black font-cairo">
-                {language === "ar"
-                  ? "تفضل بزيارتنا في فوه - حي المساكن"
-                  : "Visit Our Fuwa Branch - Al-Masaken"}
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                {language === "ar"
-                  ? "يقع المطعم في موقع استراتيجي بالقرب من جامعة الأحقاف، مستوصف النور، ومدرسة السلال. تتوفر جلسات مريحة وخدمة استلام سريعة مسبقة الدفع والتجهيز."
-                  : "Conveniently located near Al-Ahgaff University, Al-Noor Clinic, and Al-Sellal School. Dine-in seating and rapid prep-ahead takeout counter available."}
-              </p>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <a
-                  href="tel:05375561"
-                  className="inline-flex items-center gap-2 bg-stone-800 hover:bg-stone-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl border border-stone-700 transition-colors"
-                >
-                  <Phone className="w-3.5 h-3.5 text-pizza-400" />
-                  <span>05375561</span>
-                </a>
-                <a
-                  href="https://wa.me/967772207788"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-emerald-900/60 hover:bg-emerald-900 text-emerald-300 text-xs font-bold px-4 py-2.5 rounded-xl border border-emerald-700/60 transition-colors"
-                >
-                  <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{language === "ar" ? "واتساب: 772207788" : "WhatsApp: 772207788"}</span>
-                </a>
-              </div>
-            </div>
+      {/* 3.8 Verified Customer Testimonials & Reviews Section */}
+      <TestimonialsSection initialTestimonials={initialTestimonials} />
 
-            <div className="bg-stone-800/80 p-5 rounded-2xl border border-stone-700/60 space-y-3">
-              <h4 className="text-xs font-bold text-crust-400 uppercase tracking-wider flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span>{language === "ar" ? "جدول الدوام المعتمد" : "Official Working Hours"}</span>
-              </h4>
-              <div className="space-y-2 text-xs text-stone-300">
-                <div className="flex justify-between border-b border-stone-700/60 pb-1.5">
-                  <span>{language === "ar" ? "الفترة الصباحية (معجنات وفطائر):" : "Morning Shift (Pastries):"}</span>
-                  <span className="font-outfit text-white">8:00 AM – 12:00 PM</span>
-                </div>
-                <div className="flex justify-between border-b border-stone-700/60 pb-1.5">
-                  <span>{language === "ar" ? "الفترة المسائية (بيتزا وعشاء):" : "Evening Shift (Dinner & Pizza):"}</span>
-                  <span className="font-outfit text-white">4:00 PM – 11:30 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>{language === "ar" ? "الجمعة (مساءً فقط):" : "Friday (Evening only):"}</span>
-                  <span className="font-outfit text-white">4:00 PM – 11:30 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 4. Comprehensive Interactive Location & Map Section with Instagram & Amenities */}
+      <LocationAndMapSection />
 
       {/* Customizer Modal */}
       {selectedProduct && (
