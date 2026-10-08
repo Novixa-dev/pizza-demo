@@ -16,7 +16,7 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
   const [isLiked, setIsLiked] = useState(false);
 
   return (
-    <div className="group bg-[#14181f] rounded-2xl overflow-hidden border border-[#222934] hover:border-[#e45a38]/60 hover:shadow-2xl hover:shadow-black/60 transition-all duration-300 flex flex-col justify-between p-4 relative text-center">
+    <div className="group glass-panel-luxury rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/40 hover:shadow-[0_15px_40px_rgba(245,158,11,0.2)] transition-all duration-300 flex flex-col justify-between p-4 relative text-center">
       {/* Top action row: Wishlist Heart & Availability/Featured Badges */}
       <div className="flex items-center justify-between w-full mb-2 z-10">
         <button
@@ -27,13 +27,13 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
           }}
           className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
             isLiked
-              ? "text-[#e45a38] bg-[#e45a38]/15"
-              : "text-stone-400 hover:text-[#e45a38] hover:bg-[#1a202a]"
+              ? "text-[#ff8c00] bg-[#ff8c00]/15"
+              : "text-stone-400 hover:text-[#ff8c00] hover:bg-white/5"
           }`}
           title={language === "ar" ? "إضافة للمفضلة" : "Add to favorites"}
           aria-label="Favorite"
         >
-          <Heart className={`w-3.5 h-3.5 ${isLiked ? "fill-[#e45a38]" : ""}`} />
+          <Heart className={`w-3.5 h-3.5 ${isLiked ? "fill-[#ff8c00]" : ""}`} />
         </button>
 
         <div className="flex items-center gap-1">
@@ -42,13 +42,13 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
               {dict.menu.soldOut}
             </span>
           ) : product.basePrice >= 5000 ? (
-            <span className="bg-[#e45a38] text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 font-outfit uppercase">
+            <span className="bg-gradient-to-r from-[#ff8c00] to-[#dc2626] text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 font-outfit uppercase">
               <Star className="w-2.5 h-2.5 fill-white" />
-              <span>SALE</span>
+              <span>SIGNATURE</span>
             </span>
           ) : (
-            <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800/40 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-              <Flame className="w-2.5 h-2.5" />
+            <span className="bg-amber-950/80 text-amber-300 border border-amber-800/40 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+              <Flame className="w-2.5 h-2.5 fill-amber-400" />
               <span>{language === "ar" ? "15 دقيقة" : "15m"}</span>
             </span>
           )}
@@ -58,7 +58,7 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
       {/* Product Image */}
       <div
         onClick={() => product.isAvailable && onCustomize(product)}
-        className="relative w-full aspect-square max-w-[190px] mx-auto overflow-hidden rounded-full bg-[#101318] cursor-pointer mb-3 border border-[#1f2530]"
+        className="relative w-full aspect-square max-w-[190px] mx-auto overflow-hidden rounded-full bg-[#0a0c10] cursor-pointer mb-3 border border-white/10 group-hover:border-amber-500/30 transition-colors"
       >
         <Image
           src={product.imageUrl}
@@ -82,20 +82,20 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
         onClick={() => product.isAvailable && onCustomize(product)}
         className="cursor-pointer space-y-1 mb-4"
       >
-        <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-[#e45a38] transition-colors font-cairo line-clamp-1">
+        <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-amber-400 transition-colors font-cairo line-clamp-1">
           {language === "ar" ? product.nameAr : product.nameEn}
         </h3>
-        <p className="text-[11px] text-stone-400 line-clamp-1 leading-relaxed">
+        <p className="text-[11px] text-stone-400 line-clamp-1 leading-relaxed font-cairo">
           {language === "ar" ? product.descriptionAr : product.descriptionEn}
         </p>
       </div>
 
       {/* Footer / Price & Add to Cart Button */}
-      <div className="pt-2 border-t border-[#1f2530] flex items-center justify-between mt-auto">
+      <div className="pt-2 border-t border-white/10 flex items-center justify-between mt-auto">
         <div className="text-start">
-          <div className="text-sm sm:text-base font-black text-white font-outfit">
+          <div className="text-sm sm:text-base font-black text-amber-400 font-playfair">
             {product.basePrice.toLocaleString()}{" "}
-            <span className="text-[11px] font-bold text-[#e45a38] font-cairo">
+            <span className="text-[11px] font-bold text-stone-400 font-cairo">
               {dict.menu.currency}
             </span>
           </div>
@@ -107,13 +107,13 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
           disabled={!product.isAvailable}
           className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all active:scale-90 ${
             product.isAvailable
-              ? "bg-[#1c222b] hover:bg-[#e45a38] text-white border border-[#2b3544] hover:border-[#e45a38] shadow-sm"
+              ? "bg-gradient-to-br from-[#ff8c00] to-[#dc2626] hover:shadow-[0_0_15px_rgba(255,140,0,0.6)] text-white shadow-md shadow-orange-950/50"
               : "bg-stone-900 text-stone-600 cursor-not-allowed border border-transparent"
           }`}
           title={dict.menu.customize}
           aria-label={dict.menu.customize}
         >
-          <ShoppingBag className="w-4 h-4" />
+          <Plus className="w-4 h-4" />
         </button>
       </div>
     </div>

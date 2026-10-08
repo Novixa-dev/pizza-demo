@@ -14,6 +14,7 @@ import {
   Clock,
   MapPin,
   Pizza,
+  Flame,
   ChefHat,
   ShieldCheck,
   Info,
@@ -84,14 +85,14 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0e1217]/95 text-white backdrop-blur-md border-b border-[#1f2632] transition-colors shadow-sm">
+    <header className="sticky top-0 z-40 bg-[#08090d]/90 text-white backdrop-blur-2xl border-b border-amber-500/15 transition-colors shadow-[0_4px_30px_rgba(0,0,0,0.85)]">
       {/* Top micro bar for branch details & hours */}
-      <div className="bg-[#080a0e] text-stone-300 text-xs py-1.5 px-4 hidden md:block border-b border-[#161b24]">
+      <div className="bg-[#050608]/95 text-stone-400 text-xs py-1.5 px-4 hidden md:block border-b border-amber-500/10">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#e45a38]" />
-              <span>{dict.brand.masaken} ({dict.brand.landmarks})</span>
+              <MapPin className="w-3.5 h-3.5 text-[#ff8c00]" />
+              <span className="text-stone-300">{dict.brand.masaken} ({dict.brand.landmarks})</span>
             </span>
             <span className="text-stone-700">|</span>
             <span className="flex items-center gap-1.5 text-amber-300 font-medium">
@@ -130,30 +131,30 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Main Bar (Matches Reference: Logo on Right, Search in Middle, Actions on Left) */}
+      {/* Main Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16 sm:h-20">
           {/* Brand Logo & Name */}
           <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#e45a38] via-pizza-600 to-[#b8381c] flex items-center justify-center text-white shadow-md shadow-[#e45a38]/25 group-hover:scale-105 transition-transform">
-              <Pizza className="w-5 h-5 sm:w-6 sm:h-6 text-amber-300" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#ff8c00] via-[#ea580c] to-[#dc2626] flex items-center justify-center text-white shadow-lg shadow-[#ff8c00]/30 group-hover:scale-105 transition-transform border border-amber-300/30">
+              <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-amber-100 fill-amber-300 drop-shadow-[0_0_8px_rgba(245,158,11,0.9)]" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-white font-cairo">
-                  {dict.brand.name}
+                <span className="text-xl sm:text-2xl font-black tracking-wider text-white font-playfair">
+                  AURA PIZZA
                 </span>
-                <span className="text-xs bg-[#e45a38]/20 text-[#e45a38] border border-[#e45a38]/30 px-1.5 py-0.5 rounded-full font-bold font-outfit">
-                  66
+                <span className="text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded-full font-bold font-cairo">
+                  {language === "ar" ? "بيتزا هاوس" : "Mukalla"}
                 </span>
               </div>
-              <p className="text-[10px] sm:text-[11px] text-stone-400 hidden sm:block">
-                {language === "ar" ? "بيتزا إيطالية فاخرة مخبوزة على الحجر" : "Artisanal Stone-Baked Italian Pizza"}
+              <p className="text-[10px] sm:text-[11px] text-amber-200/60 hidden sm:block font-cairo">
+                {language === "ar" ? "الحرفية الإيطالية الفاخرة على الحجر" : "Artisanal Stone-Baked Luxury Pizza"}
               </p>
             </div>
           </Link>
 
-          {/* Central Search Bar (Matches Reference Image) */}
+          {/* Central Search Bar */}
           <form
             onSubmit={handleSearchSubmit}
             className="hidden md:flex flex-1 max-w-md mx-4 relative"
@@ -165,14 +166,14 @@ export default function Header() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={
                   language === "ar"
-                    ? "ابحث عن البيتزا المفضلة (ببروني، رانش، سوبريم...)"
-                    : "Search pizzas (Pepperoni, Ranch, Supreme...)"
+                    ? "ابحث عن البيتزا المفضلة (ترافل، ببروني، مارغريتا، بوراتا...)"
+                    : "Search artisanal pizzas (Truffle, Pepperoni, Burrata...)"
                 }
-                className="w-full pl-10 pr-10 py-2.5 bg-[#141820] border border-[#242c38] rounded-full text-xs sm:text-sm text-white placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#e45a38]/50 focus:border-[#e45a38] transition-all shadow-inner"
+                className="w-full pl-10 pr-10 py-2.5 bg-[#11131a]/90 border border-amber-500/20 rounded-full text-xs sm:text-sm text-white placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#ff8c00]/40 focus:border-[#ff8c00] transition-all shadow-inner"
               />
               <button
                 type="submit"
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-[#e45a38] transition-colors"
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-[#ff8c00] transition-colors"
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" />
@@ -180,21 +181,30 @@ export default function Header() {
             </div>
           </form>
 
-          {/* Actions & Utilities (Matches Reference: Orange Pill Button, Wishlist/Bell, Cart) */}
+          {/* Actions & Utilities */}
           <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Prominent Golden-Orange CTA Button: "Order Now / اطلب الآن" */}
+            <Link
+              href="/menu"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#ff8c00] via-[#f59e0b] to-[#dc3c14] hover:shadow-[0_0_22px_rgba(255,140,0,0.6)] text-white px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-orange-950/50 active:scale-95 transition-all"
+            >
+              <Pizza className="w-4 h-4" />
+              <span>{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
+            </Link>
+
             {/* Orange Pill Button: "سجل طلباتي" */}
             <Link
               href="/history"
-              className="hidden sm:inline-flex items-center gap-1.5 bg-[#e45a38] hover:bg-[#d04a2c] text-white px-4 py-2 rounded-full text-xs font-bold shadow-md shadow-orange-950/40 active:scale-95 transition-all"
+              className="hidden lg:inline-flex items-center gap-1.5 bg-[#141720] hover:bg-[#1c212d] border border-white/10 hover:border-amber-500/30 text-stone-300 px-3 py-2 rounded-full text-xs font-semibold active:scale-95 transition-all"
             >
-              <User className="w-3.5 h-3.5" />
+              <User className="w-3.5 h-3.5 text-amber-400" />
               <span>{language === "ar" ? "سجل طلباتي" : "My Orders"}</span>
             </Link>
 
             {/* Recurring Order Reminders / Wishlist Bell */}
             <button
               onClick={() => setIsReminderModalOpen(true)}
-              className="p-2.5 rounded-full border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-300 hover:text-pizza-600 hover:bg-stone-50 dark:hover:bg-stone-800 relative transition-colors"
+              className="p-2.5 rounded-full bg-[#141720] border border-white/10 text-stone-300 hover:text-amber-400 hover:border-amber-500/40 relative transition-colors"
               title={
                 language === "ar"
                   ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
@@ -202,19 +212,19 @@ export default function Header() {
               }
               aria-label="Recurring Order Reminders"
             >
-              <Bell className="w-4 h-4 text-amber-500" />
-              <span className="absolute top-1.5 end-1.5 w-2 h-2 rounded-full bg-pizza-600 animate-pulse" />
+              <Bell className="w-4 h-4 text-amber-400" />
+              <span className="absolute top-1.5 end-1.5 w-2 h-2 rounded-full bg-[#ff8c00] animate-pulse shadow-[0_0_8px_rgba(255,140,0,0.8)]" />
             </button>
 
             {/* Cart Trigger with Circular Badge */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center justify-center p-2.5 rounded-full border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 transition-all"
+              className="relative flex items-center justify-center p-2.5 rounded-full bg-[#141720] border border-white/10 hover:border-amber-500/40 text-stone-200 hover:text-white transition-all"
               aria-label="Open Shopping Cart"
             >
-              <ShoppingBag className="w-4 h-4 text-pizza-600" />
+              <ShoppingBag className="w-4 h-4 text-[#ff8c00]" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -end-1 w-5 h-5 rounded-full bg-pizza-600 text-white text-[11px] font-black flex items-center justify-center font-outfit shadow-sm">
+                <span className="absolute -top-1 -end-1 w-5 h-5 rounded-full bg-gradient-to-r from-[#ff8c00] to-[#dc2626] text-white text-[11px] font-black flex items-center justify-center font-outfit shadow-md shadow-orange-950/60">
                   {cartCount}
                 </span>
               )}
@@ -282,42 +292,42 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Secondary Nav Bar (Matches Reference: Categories + Links on Right, Phone Support on Left) */}
-      <div className="border-t border-stone-100 dark:border-stone-800/80 bg-stone-50/50 dark:bg-stone-900/50 hidden md:block">
+      {/* Secondary Nav Bar */}
+      <div className="border-t border-amber-500/10 bg-[#07090d]/90 text-stone-300 hidden md:block backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between text-xs">
           {/* Right Navigation & Category Dropdown */}
           <div className="flex items-center gap-1 lg:gap-2">
-            {/* Categories Dropdown Button (دسته‌بندی‌ها) */}
+            {/* Categories Dropdown Button */}
             <div className="relative">
               <button
                 onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold text-stone-800 dark:text-stone-200 hover:bg-stone-200/60 dark:hover:bg-stone-800 transition-colors"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold text-stone-200 hover:text-white hover:bg-white/5 border border-white/5 hover:border-amber-500/20 transition-colors"
               >
-                <LayoutGrid className="w-3.5 h-3.5 text-pizza-600" />
-                <span>{language === "ar" ? "دسته‌بندی‌ها (الفئات)" : "Categories"}</span>
+                <LayoutGrid className="w-3.5 h-3.5 text-[#ff8c00]" />
+                <span>{language === "ar" ? "قائمة الأقسام (الفئات)" : "Categories"}</span>
                 <ChevronDown className="w-3 h-3 text-stone-400" />
               </button>
 
               {isCategoryMenuOpen && (
                 <div
                   onMouseLeave={() => setIsCategoryMenuOpen(false)}
-                  className="absolute top-full start-0 mt-1 w-52 bg-white dark:bg-stone-850 rounded-2xl shadow-xl border border-stone-200 dark:border-stone-700 py-2 z-50 animate-in fade-in zoom-in-95 duration-150"
+                  className="absolute top-full start-0 mt-1 w-56 bg-[#11141c]/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-amber-500/20 py-2 z-50 animate-in fade-in zoom-in-95 duration-150"
                 >
                   {quickCategories.map((cat) => (
                     <Link
                       key={cat.slug}
                       href={`/menu?category=${cat.slug}`}
                       onClick={() => setIsCategoryMenuOpen(false)}
-                      className="block px-4 py-2 text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-pizza-50 dark:hover:bg-pizza-950/40 hover:text-pizza-600"
+                      className="block px-4 py-2.5 text-xs font-semibold text-stone-300 hover:bg-[#ff8c00]/15 hover:text-[#ff8c00] transition-colors"
                     >
                       {language === "ar" ? cat.nameAr : cat.nameEn}
                     </Link>
                   ))}
-                  <div className="border-t border-stone-100 dark:border-stone-800 my-1" />
+                  <div className="border-t border-white/10 my-1" />
                   <Link
                     href="/menu"
                     onClick={() => setIsCategoryMenuOpen(false)}
-                    className="block px-4 py-2 text-xs font-bold text-pizza-600 hover:underline"
+                    className="block px-4 py-2 text-xs font-bold text-[#ff8c00] hover:underline"
                   >
                     {language === "ar" ? "عرض كامل القائمة ←" : "View All Menu →"}
                   </Link>

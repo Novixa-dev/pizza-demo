@@ -204,24 +204,29 @@ export default function HomeClientView({
       {/* =========================================================================
           1. NEW ANIMATED LUXURY HERO SECTION
       ========================================================================= */}
-      <HeroSection language={language} opStatus={opStatus} />
+      <HeroSection
+        language={language}
+        opStatus={opStatus}
+        onCustomizeProduct={(prod) => setSelectedProduct(prod)}
+        featuredProducts={featuredProducts}
+      />
 
       {/* =========================================================================
           2. THREE SERVICE PILLARS STRIP (Matching Section Below Hero in Mockup)
       ========================================================================= */}
-      <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-8 relative z-20">
-        <div className="bg-[#14181f] border border-[#222934] rounded-2xl p-4 sm:p-6 shadow-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-[#222934]">
+      <section id="features" className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-10 relative z-20">
+        <div className="glass-panel-luxury rounded-3xl p-5 sm:p-7 shadow-2xl border border-white/10 hover:border-amber-500/30 transition-all">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-white/10">
             {/* Pillar 1 */}
             <div className="flex items-center gap-4 pt-4 md:pt-0">
-              <div className="w-12 h-12 rounded-full border border-[#2e3746] bg-[#0c0e12] flex items-center justify-center text-[#e45a38] shrink-0 shadow-inner">
+              <div className="w-12 h-12 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0 shadow-lg shadow-orange-950/40">
                 <Truck className="w-5 h-5" />
               </div>
               <div>
                 <h4 className="text-sm font-bold text-white tracking-wide uppercase font-cairo">
                   {language === "ar" ? "استلام فوري وتوصيل سريع" : "FAST DELIVERY & TAKEOUT"}
                 </h4>
-                <p className="text-xs text-stone-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-0.5 font-cairo">
                   {language === "ar" ? "تجهيز فوري خلال 15 دقيقة بدون انتظار" : "Prepared fresh in 15 mins zero wait"}
                 </p>
               </div>
@@ -229,14 +234,14 @@ export default function HomeClientView({
 
             {/* Pillar 2 */}
             <div className="flex items-center gap-4 pt-4 md:pt-0 md:px-6">
-              <div className="w-12 h-12 rounded-full border border-[#2e3746] bg-[#0c0e12] flex items-center justify-center text-[#e45a38] shrink-0 shadow-inner">
-                <Flame className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0 shadow-lg shadow-orange-950/40">
+                <Flame className="w-5 h-5 fill-amber-400" />
               </div>
               <div>
                 <h4 className="text-sm font-bold text-white tracking-wide uppercase font-cairo">
                   {language === "ar" ? "فرن حجري 100% طازج" : "100% STONE-BAKED OVEN"}
                 </h4>
-                <p className="text-xs text-stone-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-0.5 font-cairo">
                   {language === "ar" ? "عجين يومي مخبوز على الحجر الطبيعي" : "Artisanal dough baked on natural stone"}
                 </p>
               </div>
@@ -244,14 +249,14 @@ export default function HomeClientView({
 
             {/* Pillar 3 */}
             <div className="flex items-center gap-4 pt-4 md:pt-0 md:px-6">
-              <div className="w-12 h-12 rounded-full border border-[#2e3746] bg-[#0c0e12] flex items-center justify-center text-[#e45a38] shrink-0 shadow-inner">
+              <div className="w-12 h-12 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0 shadow-lg shadow-orange-950/40">
                 <CreditCard className="w-5 h-5" />
               </div>
               <div>
                 <h4 className="text-sm font-bold text-white tracking-wide uppercase font-cairo">
                   {language === "ar" ? "دفع محلي آمن ومرن" : "SECURE LOCAL PAYMENT"}
                 </h4>
-                <p className="text-xs text-stone-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-0.5 font-cairo">
                   {language === "ar" ? "كريمي، العمقي، البسيري، والدفع نقداً" : "Kuraimi, Amqi, Busairi & Cash"}
                 </p>
               </div>
@@ -460,20 +465,24 @@ export default function HomeClientView({
       {/* =========================================================================
           5. SHOP BY COLLECTION - PRODUCT GRID WITH TABS (Matches Mockup 8-Cards)
       ========================================================================= */}
-      <section id="menu" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20">
+      <section id="menu" className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
-              {language === "ar" ? "قائمة أطباقنا الحجرية المختارة" : "Shop By Collection"}
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-widest mb-1 font-cairo">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>{language === "ar" ? "قائمة الأطباق الحجرية" : "ALL ARTISAN PIES"}</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white font-playfair tracking-tight">
+              {language === "ar" ? "أطباق الفرن الحجري المخبوزة طازجة" : "Stone-Oven Gourmet Collection"}
             </h2>
-            <p className="text-xs text-stone-400 mt-1">
+            <p className="text-xs text-stone-400 mt-1 font-cairo">
               {language === "ar"
-                ? "أشهى أنواع البيتزا والفطائر المخبوزة طازجة عند الطلب"
+                ? "أشهى أنواع البيتزا والفطائر المخبوزة طازجة عند الطلب بأيدي شيف متخصص"
                 : "Handcrafted stone-oven specialties ready for instant ordering"}
             </p>
           </div>
 
-          {/* Filter Tabs (Matches Mockup Tabs) */}
+          {/* Filter Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
             {[
               { id: "all", labelAr: "الكل", labelEn: "All" },
@@ -487,8 +496,8 @@ export default function HomeClientView({
                 onClick={() => setActiveCategoryTab(tab.id)}
                 className={`px-4 py-2 rounded-full text-xs font-bold font-cairo transition-all whitespace-nowrap ${
                   activeCategoryTab === tab.id
-                    ? "bg-[#e45a38] text-white shadow-md shadow-orange-950/60"
-                    : "bg-[#14181f] text-stone-300 hover:text-white border border-[#222934] hover:border-stone-600"
+                    ? "bg-gradient-to-r from-[#ff8c00] to-[#dc2626] text-white shadow-md shadow-orange-950/60 border border-amber-300/30"
+                    : "bg-[#11141c] text-stone-300 hover:text-white border border-white/10 hover:border-amber-500/30"
                 }`}
               >
                 {language === "ar" ? tab.labelAr : tab.labelEn}
@@ -512,10 +521,10 @@ export default function HomeClientView({
         <div className="text-center pt-4">
           <Link
             href="/menu"
-            className="inline-flex items-center gap-2 bg-[#14181f] hover:bg-[#1c222b] text-white border border-[#222934] hover:border-[#e45a38] px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95"
+            className="inline-flex items-center gap-2 bg-[#12151e] hover:bg-[#1a1f2c] text-amber-400 border border-amber-500/30 hover:border-amber-400 px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold transition-all shadow-lg shadow-orange-950/40 active:scale-95 group font-cairo"
           >
             <span>{language === "ar" ? "استعراض كامل القائمة الإيطالية (Menu)" : "View Complete Menu"}</span>
-            <ArrowLeft className="w-4 h-4 rtl:rotate-0 ltr:rotate-180 text-[#e45a38]" />
+            <ArrowLeft className="w-4 h-4 rtl:rotate-0 ltr:rotate-180 text-amber-400" />
           </Link>
         </div>
       </section>

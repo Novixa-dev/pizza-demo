@@ -16,18 +16,23 @@ export default function Footer() {
   const { language, dict } = useApp();
 
   return (
-    <footer className="bg-[#090b0e] text-stone-300 border-t border-[#1a202a] pt-14 pb-10">
+    <footer className="bg-[#050609] text-stone-300 border-t border-amber-500/15 pt-14 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-[#1a202a]">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-white/10">
           {/* Col 1: Brand & Slogan */}
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#e45a38] flex items-center justify-center text-white shadow-lg shadow-orange-950/50">
-                <Pizza className="w-5 h-5 text-amber-200" />
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ff8c00] via-[#ea580c] to-[#dc2626] flex items-center justify-center text-white shadow-lg shadow-[#ff8c00]/30 border border-amber-300/30">
+                <Pizza className="w-5 h-5 text-amber-100" />
               </div>
-              <span className="text-xl font-black text-white font-cairo">
-                {dict.brand.name}
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl font-black text-white font-playfair tracking-wider">
+                  AURA PIZZA
+                </span>
+                <span className="text-[10px] text-amber-400 font-bold font-cairo">
+                  {dict.brand.name} · المكلا
+                </span>
+              </div>
             </div>
             <p className="text-xs text-stone-400 leading-relaxed">
               {language === "ar"
