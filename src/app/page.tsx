@@ -10,6 +10,15 @@ export default async function HomePage() {
       businessHours: true,
       categories: {
         where: { isActive: true },
+        include: {
+          products: {
+            where: { isAvailable: true },
+            take: 1,
+            select: {
+              imageUrl: true,
+            },
+          },
+        },
         orderBy: { sortOrder: "asc" },
       },
       products: {
@@ -24,6 +33,19 @@ export default async function HomePage() {
         orderBy: { sortOrder: "asc" },
       },
     },
+  });
+
+  const latestProducts = await prisma.product.findMany({
+    where: { isAvailable: true },
+    include: {
+      optionGroups: {
+        include: {
+          options: true,
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+    take: 8,
   });
 
   const restaurantSchema = {
@@ -88,6 +110,7 @@ export default async function HomePage() {
       <HomeClientView
         restaurant={restaurant}
         featuredProducts={restaurant?.products || []}
+        latestProducts={latestProducts || []}
         categories={restaurant?.categories || []}
       />
     </>

@@ -11,17 +11,24 @@ const config: Config = {
     extend: {
       colors: {
         pizza: {
-          50: "#fff7ed",
-          100: "#ffedd5",
-          200: "#fed7aa",
-          300: "#fdba74",
-          400: "#fb923c",
-          500: "#f97316",
-          600: "#ea580c",
-          700: "#c2410c", // Brand Terracotta / Pizza Rust
-          800: "#9a3412",
-          900: "#7c2d12",
-          950: "#431407",
+          50: "#fef2f2",
+          100: "#fee2e2",
+          200: "#fecaca",
+          300: "#fca5a5",
+          400: "#f87171",
+          500: "#ef4444",
+          600: "#dc2626", // Brand Red from design
+          700: "#c8102e", // Deep Brand Red
+          800: "#991b1b",
+          900: "#7f1d1d",
+          950: "#450a0a",
+        },
+        brandRed: {
+          50: "#fef2f2",
+          100: "#fee2e2",
+          500: "#ef4444",
+          600: "#dc2626",
+          700: "#c8102e",
         },
         crust: {
           50: "#fffbeb",
@@ -51,6 +58,25 @@ const config: Config = {
       fontFamily: {
         cairo: ["var(--font-cairo)", "sans-serif"],
         outfit: ["var(--font-outfit)", "sans-serif"],
+      },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "50%": { transform: "translateY(-10px) rotate(3deg)" },
+        },
+        floatDelayed: {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "50%": { transform: "translateY(-8px) rotate(-3deg)" },
+        },
+        floatSlow: {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "50%": { transform: "translateY(-14px) rotate(4deg)" },
+        },
+      },
+      animation: {
+        "float": "float 5s ease-in-out infinite",
+        "float-delayed": "floatDelayed 6.5s ease-in-out 1s infinite",
+        "float-slow": "floatSlow 8s ease-in-out infinite",
       },
     },
   },

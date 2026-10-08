@@ -1,6 +1,16 @@
 const { spawn } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
-let port = process.env.PORT || '3000';
+let port = process.env.PORT;
+if (!port) {
+  try {
+    const envContent = fs.readFileSync(path.resolve(__dirname, '.env'), 'utf8');
+    const match = envContent.match(/^PORT=(\d+)/m);
+    if (match) port = match[1];
+  } catch (e) {}
+}
+if (!port) port = '3000';
 const rawArgs = process.argv.slice(2);
 
 for (let i = 0; i < rawArgs.length; i++) {
@@ -16,7 +26,7 @@ for (let i = 0; i < rawArgs.length; i++) {
 }
 
 const nextBin = require.resolve('next/dist/bin/next');
-const child = spawn(process.execPath, [nextBin, 'dev', '-p', port], {
+const child = spawn(process.execPath, [nextBin, 'dev', '-p', port, '-H', '0.0.0.0'], {
   stdio: 'inherit',
   env: {
     ...process.env,

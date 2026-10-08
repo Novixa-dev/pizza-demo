@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useApp } from "@/context/AppContext";
-import { Plus, Flame, Star, Sparkles } from "lucide-react";
+import { Plus, Flame, Star, ShoppingBag, Heart } from "lucide-react";
 import { CustomizerProduct } from "./CustomizerModal";
 
 interface MenuCardProps {
@@ -13,78 +13,107 @@ interface MenuCardProps {
 
 export default function MenuCard({ product, onCustomize }: MenuCardProps) {
   const { language, dict } = useApp();
+  const [isLiked, setIsLiked] = useState(false);
 
   return (
-    <div className="group bg-white dark:bg-stone-850 rounded-3xl overflow-hidden border border-stone-200/80 dark:border-stone-800/80 hover:border-pizza-500/40 dark:hover:border-pizza-500/40 hover:shadow-xl hover:shadow-pizza-950/5 transition-all duration-300 flex flex-col justify-between">
-      <div>
-        {/* Image Container */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100 dark:bg-stone-800">
-          <Image
-            src={product.imageUrl}
-            alt={language === "ar" ? product.nameAr : product.nameEn}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            referrerPolicy="no-referrer"
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <div className="group bg-[#14181f] rounded-2xl overflow-hidden border border-[#222934] hover:border-[#e45a38]/60 hover:shadow-2xl hover:shadow-black/60 transition-all duration-300 flex flex-col justify-between p-4 relative text-center">
+      {/* Top action row: Wishlist Heart & Availability/Featured Badges */}
+      <div className="flex items-center justify-between w-full mb-2 z-10">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsLiked(!isLiked);
+          }}
+          className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+            isLiked
+              ? "text-[#e45a38] bg-[#e45a38]/15"
+              : "text-stone-400 hover:text-[#e45a38] hover:bg-[#1a202a]"
+          }`}
+          title={language === "ar" ? "إضافة للمفضلة" : "Add to favorites"}
+          aria-label="Favorite"
+        >
+          <Heart className={`w-3.5 h-3.5 ${isLiked ? "fill-[#e45a38]" : ""}`} />
+        </button>
 
-          {/* Badges */}
-          <div className="absolute top-3 start-3 flex flex-col gap-1.5">
-            {!product.isAvailable ? (
-              <span className="bg-stone-900/90 text-red-300 backdrop-blur-md text-[10px] font-bold px-2 py-0.5 rounded-lg border border-red-800/40 shadow-sm">
-                {dict.menu.soldOut}
-              </span>
-            ) : product.basePrice >= 5000 ? (
-              <span className="bg-amber-400 text-stone-950 text-[10px] font-black px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1">
-                <Star className="w-3 h-3 fill-stone-950" />
-                <span>{dict.menu.featured}</span>
-              </span>
-            ) : (
-              <span className="bg-stone-900/80 backdrop-blur-md text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1 border border-stone-700/50">
-                <Flame className="w-3 h-3 text-orange-400" />
-                <span>{language === "ar" ? "خبز حجري: 15 د" : "Stone-baked: 15m"}</span>
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Info */}
-        <div className="p-4 sm:p-5 space-y-2">
-          <h3 className="text-base sm:text-lg font-bold text-stone-900 dark:text-white group-hover:text-pizza-700 dark:group-hover:text-pizza-400 transition-colors font-cairo">
-            {language === "ar" ? product.nameAr : product.nameEn}
-          </h3>
-          <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-2 leading-relaxed">
-            {language === "ar" ? product.descriptionAr : product.descriptionEn}
-          </p>
+        <div className="flex items-center gap-1">
+          {!product.isAvailable ? (
+            <span className="bg-red-950/80 text-red-300 backdrop-blur-md text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-800/40">
+              {dict.menu.soldOut}
+            </span>
+          ) : product.basePrice >= 5000 ? (
+            <span className="bg-[#e45a38] text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 font-outfit uppercase">
+              <Star className="w-2.5 h-2.5 fill-white" />
+              <span>SALE</span>
+            </span>
+          ) : (
+            <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800/40 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+              <Flame className="w-2.5 h-2.5" />
+              <span>{language === "ar" ? "15 دقيقة" : "15m"}</span>
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Footer / Price & CTA */}
-      <div className="p-4 sm:p-5 pt-0 flex items-center justify-between border-t border-stone-100 dark:border-stone-800/60 mt-2">
-        <div>
-          <span className="text-[11px] text-stone-400 block font-cairo">
-            {dict.menu.fromPrice}
-          </span>
-          <div className="text-lg font-black text-stone-900 dark:text-white font-outfit">
+      {/* Product Image */}
+      <div
+        onClick={() => product.isAvailable && onCustomize(product)}
+        className="relative w-full aspect-square max-w-[190px] mx-auto overflow-hidden rounded-full bg-[#101318] cursor-pointer mb-3 border border-[#1f2530]"
+      >
+        <Image
+          src={product.imageUrl}
+          alt={language === "ar" ? product.nameAr : product.nameEn}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          referrerPolicy="no-referrer"
+          className="object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
+
+      {/* Star Ratings */}
+      <div className="flex items-center justify-center gap-1 mb-1.5 text-amber-400">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="w-3 h-3 fill-amber-400" />
+        ))}
+      </div>
+
+      {/* Product Title & Info */}
+      <div
+        onClick={() => product.isAvailable && onCustomize(product)}
+        className="cursor-pointer space-y-1 mb-4"
+      >
+        <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-[#e45a38] transition-colors font-cairo line-clamp-1">
+          {language === "ar" ? product.nameAr : product.nameEn}
+        </h3>
+        <p className="text-[11px] text-stone-400 line-clamp-1 leading-relaxed">
+          {language === "ar" ? product.descriptionAr : product.descriptionEn}
+        </p>
+      </div>
+
+      {/* Footer / Price & Add to Cart Button */}
+      <div className="pt-2 border-t border-[#1f2530] flex items-center justify-between mt-auto">
+        <div className="text-start">
+          <div className="text-sm sm:text-base font-black text-white font-outfit">
             {product.basePrice.toLocaleString()}{" "}
-            <span className="text-xs font-semibold text-pizza-700 dark:text-pizza-400 font-cairo">
+            <span className="text-[11px] font-bold text-[#e45a38] font-cairo">
               {dict.menu.currency}
             </span>
           </div>
         </div>
 
         <button
+          type="button"
           onClick={() => onCustomize(product)}
           disabled={!product.isAvailable}
-          className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all active:scale-95 ${
+          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all active:scale-90 ${
             product.isAvailable
-              ? "bg-pizza-700 hover:bg-pizza-800 text-white shadow-pizza-700/20"
-              : "bg-stone-200 dark:bg-stone-800 text-stone-400 cursor-not-allowed shadow-none"
+              ? "bg-[#1c222b] hover:bg-[#e45a38] text-white border border-[#2b3544] hover:border-[#e45a38] shadow-sm"
+              : "bg-stone-900 text-stone-600 cursor-not-allowed border border-transparent"
           }`}
+          title={dict.menu.customize}
+          aria-label={dict.menu.customize}
         >
-          <Plus className="w-3.5 h-3.5" />
-          <span>{dict.menu.customize}</span>
+          <ShoppingBag className="w-4 h-4" />
         </button>
       </div>
     </div>
