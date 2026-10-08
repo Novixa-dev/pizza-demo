@@ -104,7 +104,7 @@ export default function HeroSection({
       reviews: "1.2k",
       descEn: "White truffle crema, sautéed forest mushrooms, fior di latte & fresh thyme",
       descAr: "كريمة الترفل البيضاء، فطر بري مشوي على الحجر، موزاريلا فاخرة وزعتر بري",
-      image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=85",
+      image: "/images/aura/truffle-mushroom.jpg",
       badge: "CHEF'S SIGNATURE",
       badgeAr: "اختيار الشيف",
     },
@@ -119,7 +119,7 @@ export default function HeroSection({
       reviews: "2.4k",
       descEn: "Double crispy cupped beef pepperoni, spicy hot honey drizzle & molten mozzarella",
       descAr: "شرائح بيبروني بقري مضاعفة مقرمشة، لمسة عسل حار، وجبنة موزاريلا تمط",
-      image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=500&auto=format&fit=crop&q=85",
+      image: "/images/aura/double-pepperoni.jpg",
       badge: "MOST POPULAR",
       badgeAr: "الأكثر طلباً",
     },
@@ -134,7 +134,7 @@ export default function HeroSection({
       reviews: "950",
       descEn: "San Marzano D.O.P. sauce, artisanal fresh mozzarella, Genovese basil & EVOO",
       descAr: "صلصة سان مارزانو، موزاريلا طازجة، ريحان جينوفيزي وزيت زيتون بكر ممتاز",
-      image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&auto=format&fit=crop&q=85",
+      image: "/images/aura/margherita-craft.jpg",
       badge: "CLASSIC ARTISAN",
       badgeAr: "كلاسيك إيطالي",
     },
@@ -149,7 +149,7 @@ export default function HeroSection({
       reviews: "820",
       descEn: "Whole creamy artisanal burrata crown, spicy chili crisp crunch & herb oil",
       descAr: "كرة جبنة بوراتا كريمية كاملة، صوص فلفل حار كرانشي، وزيت أعشاب فاخر",
-      image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&auto=format&fit=crop&q=85",
+      image: "/images/aura/spicy-burrata.jpg",
       badge: "GOURMET LUXURY",
       badgeAr: "إصدار فاخر",
     },
@@ -333,26 +333,30 @@ export default function HeroSection({
 
             {/* Pizza Lifted Out of Stone Oven with Molten Cheese Pull */}
             <div
-              className="relative z-10 w-[310px] sm:w-[410px] xl:w-[440px] aspect-square flex items-center justify-center"
+              className="relative z-10 w-full max-w-[360px] sm:max-w-[420px] aspect-[4/3] rounded-3xl overflow-hidden border-2 border-amber-500/40 shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_50px_rgba(245,158,11,0.25)] group"
               style={{
                 transform: `translate3d(${mouseOffset.x}px, ${mouseOffset.y}px, 0)`,
                 transition: "transform 0.25s cubic-bezier(0.2, 0, 0.2, 1)",
               }}
             >
               <Image
-                src="/hero-pizza-pull.png"
-                alt="Wood-fired pizza cheese pull from stone oven - AURA PIZZA"
-                width={520}
-                height={460}
+                src="/images/aura/wood-fired-hero.jpg"
+                alt="Wood-fired pizza cheese pull from blazing stone oven - AURA PIZZA"
+                fill
                 priority
-                className="pizza-hero-img-floating select-none pointer-events-none object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)]"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (!target.src.includes("pizza-hero-cutout.png")) {
-                    target.src = "/pizza-hero-cutout.png";
-                  }
-                }}
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
+              {/* Oven glow overlay & gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none" />
+
+              {/* Badge on the frame */}
+              <div className="absolute bottom-3 start-3 end-3 flex items-center justify-between text-[11px] text-amber-300 font-bold bg-black/60 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-amber-500/30">
+                <span className="flex items-center gap-1.5 font-cairo">
+                  <Flame className="w-3.5 h-3.5 text-[#ff8c00] fill-amber-400 animate-pulse" />
+                  {language === "ar" ? "خَبز حجري حي (450° مئوية)" : "Live Wood-Fired Hearth (450°C)"}
+                </span>
+                <span className="text-emerald-400 font-cairo">● {language === "ar" ? "طازج ومقرمش" : "Crisp & Hot"}</span>
+              </div>
             </div>
 
             {/* Floating Ingredient 1: San Marzano Tomato */}
