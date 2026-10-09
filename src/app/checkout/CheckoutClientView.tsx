@@ -650,7 +650,7 @@ export default function CheckoutClientView({
                   !restaurantStatus.canOrderImmediate &&
                   !restaurantStatus.canOrderScheduled)
                   ? "bg-stone-300 dark:bg-stone-700 text-stone-500 cursor-not-allowed shadow-none"
-                  : "bg-gradient-to-r from-pizza-700 via-pizza-600 to-pizza-700 hover:from-pizza-800 hover:to-pizza-800 text-white shadow-pizza-700/25"
+                  : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 shadow-xl shadow-amber-950/40"
               }`}
             >
               {isSubmitting ? (

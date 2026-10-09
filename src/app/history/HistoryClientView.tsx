@@ -455,7 +455,7 @@ export default function HistoryClientView() {
           <div className="flex flex-wrap items-center gap-3 self-start md:self-center">
             <Link
               href="/menu"
-              className="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg transition-transform active:scale-95"
+              className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-amber-950/40 transition-transform active:scale-95"
             >
               <ShoppingBag className="w-4 h-4" />
               <span>{dict.hero.primaryCta}</span>
@@ -550,7 +550,7 @@ export default function HistoryClientView() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="bg-pizza-700 hover:bg-pizza-800 disabled:opacity-50 text-white font-bold px-7 py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 shadow-md shadow-pizza-700/20 active:scale-95 transition-all"
+                className="bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold disabled:opacity-50 px-7 py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-950/40 active:scale-95 transition-all"
               >
                 <Search className="w-4 h-4" />
                 <span>
@@ -1264,7 +1264,7 @@ export default function HistoryClientView() {
           </div>
           <Link
             href="/menu"
-            className="inline-flex items-center gap-2 bg-pizza-700 hover:bg-pizza-800 text-white font-bold px-6 py-3 rounded-2xl text-xs shadow-md transition-all active:scale-95"
+            className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-6 py-3 rounded-2xl text-xs shadow-md shadow-amber-950/40 transition-all active:scale-95"
           >
             <ShoppingBag className="w-4 h-4" />
             <span>{dict.history.orderNow}</span>

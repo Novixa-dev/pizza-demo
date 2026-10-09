@@ -59,7 +59,7 @@ export default function FloatingCartBar() {
 
             <Link
               href="/checkout"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-pizza-600 to-pizza-700 hover:from-pizza-700 hover:to-pizza-800 text-white px-5 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-pizza-600/30 transition-all active:scale-95"
+              className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-amber-950/40 transition-all active:scale-95"
             >
               <span>{language === "ar" ? "إتمام الطلب" : "Checkout"}</span>
               {language === "ar" ? (
@@ -80,7 +80,7 @@ export default function FloatingCartBar() {
       <div className="fixed bottom-4 inset-x-4 z-40 sm:hidden">
         <Link
           href="/menu"
-          className="w-full bg-gradient-to-r from-pizza-700 via-pizza-600 to-pizza-700 text-white p-3.5 rounded-2xl shadow-xl shadow-pizza-900/30 border border-pizza-500/30 flex items-center justify-between font-bold text-xs"
+          className="w-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] p-3.5 rounded-2xl shadow-xl shadow-amber-950/50 border border-[#EFCC80]/30 flex items-center justify-between font-bold text-xs"
         >
           <div className="flex items-center gap-2.5">
             <Utensils className="w-4 h-4 text-amber-300" />

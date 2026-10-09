@@ -112,7 +112,7 @@ export default function QuickReorderHeroCard() {
         <button
           type="button"
           onClick={handleInstantReorder}
-          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-pizza-600 hover:bg-pizza-700 text-white font-bold px-5 py-2.5 rounded-2xl text-xs shadow-md shadow-pizza-600/20 active:scale-95 transition-all"
+          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-5 py-2.5 rounded-2xl text-xs shadow-md shadow-amber-950/40 active:scale-95 transition-all"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>

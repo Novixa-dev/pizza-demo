@@ -297,7 +297,7 @@ export default function HomeClientView({
                 const el = document.getElementById("collection-carousel");
                 if (el) el.scrollBy({ left: 200, behavior: "smooth" });
               }}
-              className="w-9 h-9 rounded-full bg-[#e45a38] text-white flex items-center justify-center hover:bg-[#d24e2e] transition-colors shadow-md shadow-orange-950/50"
+              className="w-9 h-9 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center hover:brightness-105 transition-all shadow-md shadow-amber-950/50 font-bold"
               aria-label="Next Collection"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -357,9 +357,9 @@ export default function HomeClientView({
             <Link
               key={col.id}
               href={`/menu?category=${col.slug}`}
-              className="group shrink-0 flex flex-col items-center gap-3 bg-[#14181f] hover:bg-[#1a202a] border border-[#222934] hover:border-[#e45a38]/80 rounded-2xl p-4 sm:p-5 transition-all duration-300 w-36 sm:w-44 text-center shadow-lg hover:-translate-y-1"
+              className="group shrink-0 flex flex-col items-center gap-3 bg-[#14181f] hover:bg-[#1a202a] border border-[#222934] hover:border-[#EFCC80]/80 rounded-2xl p-4 sm:p-5 transition-all duration-300 w-36 sm:w-44 text-center shadow-lg hover:-translate-y-1"
             >
-              <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-[#0c0e12] border-2 border-[#2a3342] group-hover:border-[#e45a38] transition-colors p-1 shadow-md">
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-[#0c0e12] border-2 border-[#2a3342] group-hover:border-[#EFCC80] transition-colors p-1 shadow-md">
                 <Image
                   src={col.img}
                   alt={col.nameAr}
@@ -368,7 +368,7 @@ export default function HomeClientView({
                   className="object-cover rounded-full group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-stone-200 group-hover:text-[#e45a38] transition-colors font-cairo">
+              <span className="text-xs sm:text-sm font-bold text-stone-200 group-hover:text-[#EFCC80] transition-colors font-cairo">
                 {language === "ar" ? col.nameAr : col.nameEn}
               </span>
             </Link>
@@ -383,9 +383,9 @@ export default function HomeClientView({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Card 1: Pizza Is The Favorite Food Here */}
-          <div className="relative rounded-2xl bg-[#14181f] border border-[#222934] p-6 sm:p-8 overflow-hidden group hover:border-[#e45a38]/60 transition-colors shadow-xl flex flex-col justify-between">
+          <div className="relative rounded-2xl bg-[#14181f] border border-[#222934] p-6 sm:p-8 overflow-hidden group hover:border-[#EFCC80]/60 transition-colors shadow-xl flex flex-col justify-between">
             <div className="relative z-10 space-y-3 max-w-[65%]">
-              <span className="text-[11px] font-bold text-[#e45a38] uppercase tracking-wider font-outfit">
+              <span className="text-[11px] font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
                 {language === "ar" ? "أكثر طلباً في المكلا" : "TOP RATED SIGNATURE"}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white font-cairo leading-snug">
@@ -401,7 +401,7 @@ export default function HomeClientView({
               <div className="pt-2">
                 <Link
                   href="/menu"
-                  className="inline-flex items-center gap-2 bg-[#e45a38] hover:bg-[#d24e2e] text-white px-5 py-2.5 rounded-[4px] font-bold text-xs uppercase tracking-wider shadow-md shadow-orange-950/50 transition-all active:scale-95"
+                  className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[4px] font-bold text-xs uppercase tracking-wider shadow-md shadow-amber-950/50 transition-all active:scale-95"
                 >
                   <span>SHOP NOW</span>
                   <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
@@ -422,9 +422,9 @@ export default function HomeClientView({
           </div>
 
           {/* Card 2: For The Whole Family */}
-          <div className="relative rounded-2xl bg-[#14181f] border border-[#222934] p-6 sm:p-8 overflow-hidden group hover:border-[#e45a38]/60 transition-colors shadow-xl flex flex-col justify-between">
+          <div className="relative rounded-2xl bg-[#14181f] border border-[#222934] p-6 sm:p-8 overflow-hidden group hover:border-[#EFCC80]/60 transition-colors shadow-xl flex flex-col justify-between">
             <div className="relative z-10 space-y-3 max-w-[65%]">
-              <span className="text-[11px] font-bold text-[#e45a38] uppercase tracking-wider font-outfit">
+              <span className="text-[11px] font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
                 {language === "ar" ? "وجبات التوفير العائلي" : "FAMILY COMBOS & SHARING"}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white font-cairo leading-snug">
@@ -440,7 +440,7 @@ export default function HomeClientView({
               <div className="pt-2">
                 <Link
                   href="/menu"
-                  className="inline-flex items-center gap-2 bg-[#e45a38] hover:bg-[#d24e2e] text-white px-5 py-2.5 rounded-[4px] font-bold text-xs uppercase tracking-wider shadow-md shadow-orange-950/50 transition-all active:scale-95"
+                  className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[4px] font-bold text-xs uppercase tracking-wider shadow-md shadow-amber-950/50 transition-all active:scale-95"
                 >
                   <span>SHOP NOW</span>
                   <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
@@ -496,7 +496,7 @@ export default function HomeClientView({
                 onClick={() => setActiveCategoryTab(tab.id)}
                 className={`px-4 py-2 rounded-full text-xs font-bold font-cairo transition-all whitespace-nowrap ${
                   activeCategoryTab === tab.id
-                    ? "bg-gradient-to-r from-[#ff8c00] to-[#dc2626] text-white shadow-md shadow-orange-950/60 border border-amber-300/30"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/40 border border-[#EFCC80]/40 font-bold"
                     : "bg-[#11141c] text-stone-300 hover:text-white border border-white/10 hover:border-amber-500/30"
                 }`}
               >
@@ -545,7 +545,7 @@ export default function HomeClientView({
                 className="object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-transparent to-[#14181f]/80 pointer-events-none" />
-              <div className="absolute top-4 start-4 bg-[#e45a38] text-white text-[11px] font-black px-3 py-1 rounded font-outfit uppercase shadow-lg">
+              <div className="absolute top-4 start-4 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-[11px] font-black px-3 py-1 rounded font-outfit uppercase shadow-lg">
                 HOT DEAL
               </div>
             </div>
@@ -553,7 +553,7 @@ export default function HomeClientView({
             {/* Content & Live Countdown Timer */}
             <div className="lg:col-span-6 p-6 sm:p-10 space-y-6 text-start">
               <div className="space-y-2">
-                <span className="text-xs font-bold text-[#e45a38] uppercase tracking-wider font-outfit">
+                <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
                   LIMITED TIME EXCLUSIVE
                 </span>
                 <h3 className="text-2xl sm:text-4xl font-black text-white font-cairo">
@@ -568,7 +568,7 @@ export default function HomeClientView({
 
               {/* Price Display */}
               <div className="flex items-baseline gap-3">
-                <span className="text-2xl sm:text-3xl font-black text-[#e45a38] font-outfit">
+                <span className="text-2xl sm:text-3xl font-black text-[#EFCC80] font-outfit">
                   4,200 YER
                 </span>
                 <span className="text-sm font-bold text-stone-500 line-through font-outfit">
@@ -605,9 +605,9 @@ export default function HomeClientView({
               <div className="pt-2">
                 <Link
                   href="/menu"
-                  className="inline-flex items-center gap-2.5 bg-[#e45a38] hover:bg-[#d24e2e] text-white px-8 py-3.5 rounded-[6px] font-black text-xs sm:text-sm tracking-wider uppercase shadow-xl shadow-orange-950/60 active:scale-95 transition-all"
+                  className="inline-flex items-center gap-2.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-8 py-3.5 rounded-[12px] font-black text-xs sm:text-sm tracking-wider uppercase shadow-xl shadow-amber-950/60 active:scale-95 transition-all font-cairo"
                 >
-                  <ShoppingBag className="w-4 h-4" />
+                  <ShoppingBag className="w-4 h-4 text-[#2C1A04]" />
                   <span>{language === "ar" ? "اطلب العرض الآن واستلم فوراً" : "SHOP NOW"}</span>
                 </Link>
               </div>
@@ -621,7 +621,7 @@ export default function HomeClientView({
       ========================================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-2">
-          <span className="text-xs font-bold text-[#e45a38] uppercase tracking-wider font-outfit">
+          <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
             AUTHENTIC STONE OVEN KITCHEN
           </span>
           <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo">
@@ -638,9 +638,9 @@ export default function HomeClientView({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Column 1: Pizzas */}
           <div className="bg-[#14181f] border border-[#222934] rounded-2xl p-5 sm:p-7 space-y-6 shadow-xl">
-            <h3 className="text-base sm:text-lg font-bold text-[#e45a38] border-b border-[#222934] pb-3 flex items-center justify-between font-cairo">
+            <h3 className="text-base sm:text-lg font-bold text-[#EFCC80] border-b border-[#222934] pb-3 flex items-center justify-between font-cairo">
               <span>{language === "ar" ? "أطباق البيتزا الحجرية" : "Artisan Pizzas"}</span>
-              <Pizza className="w-5 h-5 text-[#e45a38]" />
+              <Pizza className="w-5 h-5 text-[#C69843]" />
             </h3>
 
             <div className="space-y-5">
@@ -658,7 +658,7 @@ export default function HomeClientView({
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2">
-                      <h4 className="text-xs sm:text-sm font-bold text-white font-cairo group-hover:text-[#e45a38] transition-colors truncate">
+                      <h4 className="text-xs sm:text-sm font-bold text-white font-cairo group-hover:text-[#EFCC80] transition-colors truncate">
                         {language === "ar" ? item.nameAr : item.nameEn}
                       </h4>
                       <div className="flex-1 border-b border-dotted border-stone-600/60 mx-2" />
@@ -673,7 +673,7 @@ export default function HomeClientView({
 
                   <Link
                     href="/menu"
-                    className="w-7 h-7 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-300 group-hover:bg-[#e45a38] group-hover:text-white flex items-center justify-center transition-colors shrink-0"
+                    className="w-7 h-7 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-300 group-hover:bg-gradient-to-b group-hover:from-[#EFCC80] group-hover:to-[#C69843] group-hover:text-[#2C1A04] flex items-center justify-center transition-colors shrink-0"
                     title="اطلب الآن"
                   >
                     <Plus className="w-3.5 h-3.5" />
@@ -685,9 +685,9 @@ export default function HomeClientView({
 
           {/* Column 2: Pastries & Sides */}
           <div className="bg-[#14181f] border border-[#222934] rounded-2xl p-5 sm:p-7 space-y-6 shadow-xl">
-            <h3 className="text-base sm:text-lg font-bold text-[#e45a38] border-b border-[#222934] pb-3 flex items-center justify-between font-cairo">
+            <h3 className="text-base sm:text-lg font-bold text-[#EFCC80] border-b border-[#222934] pb-3 flex items-center justify-between font-cairo">
               <span>{language === "ar" ? "الفطائر والمعجنات والمقبلات" : "Pastries & Sides"}</span>
-              <Utensils className="w-5 h-5 text-[#e45a38]" />
+              <Utensils className="w-5 h-5 text-[#C69843]" />
             </h3>
 
             <div className="space-y-5">
@@ -705,7 +705,7 @@ export default function HomeClientView({
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2">
-                      <h4 className="text-xs sm:text-sm font-bold text-white font-cairo group-hover:text-[#e45a38] transition-colors truncate">
+                      <h4 className="text-xs sm:text-sm font-bold text-white font-cairo group-hover:text-[#EFCC80] transition-colors truncate">
                         {language === "ar" ? item.nameAr : item.nameEn}
                       </h4>
                       <div className="flex-1 border-b border-dotted border-stone-600/60 mx-2" />
@@ -720,7 +720,7 @@ export default function HomeClientView({
 
                   <Link
                     href="/menu"
-                    className="w-7 h-7 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-300 group-hover:bg-[#e45a38] group-hover:text-white flex items-center justify-center transition-colors shrink-0"
+                    className="w-7 h-7 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-300 group-hover:bg-gradient-to-b group-hover:from-[#EFCC80] group-hover:to-[#C69843] group-hover:text-[#2C1A04] flex items-center justify-center transition-colors shrink-0"
                     title="اطلب الآن"
                   >
                     <Plus className="w-3.5 h-3.5" />
@@ -750,10 +750,10 @@ export default function HomeClientView({
           <div className="relative z-10 text-center space-y-4 px-4">
             <Link
               href="/menu"
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#e45a38] hover:bg-[#d24e2e] text-white mx-auto flex items-center justify-center shadow-[0_0_35px_rgba(228,90,56,0.8)] active:scale-95 transition-all group-hover:scale-110"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 mx-auto flex items-center justify-center shadow-[0_0_35px_rgba(239,204,128,0.5)] active:scale-95 transition-all group-hover:scale-110"
               aria-label="Artisan Video Showcase"
             >
-              <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white ms-1" />
+              <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-[#2C1A04] text-[#2C1A04] ms-1" />
             </Link>
             <h3 className="text-xl sm:text-3xl font-black text-white font-cairo">
               {language === "ar"
@@ -776,35 +776,35 @@ export default function HomeClientView({
         <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-xl sm:text-3xl font-black tracking-widest text-white/90 uppercase font-outfit">
           <span className="flex items-center gap-4">
             <span>A Personal Touch</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span className="font-cairo">بيتزا هاوس المكلا</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span>Stone-Baked Daily</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span className="font-cairo">عجين يومي طازج</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span>A Personal Touch</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span className="font-cairo">استلام فوري 15 دقيقة</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span>Italian Mozzarella</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
           </span>
           <span className="flex items-center gap-4">
             <span>A Personal Touch</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span className="font-cairo">بيتزا هاوس المكلا</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span>Stone-Baked Daily</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span className="font-cairo">عجين يومي طازج</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span>A Personal Touch</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span className="font-cairo">استلام فوري 15 دقيقة</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
             <span>Italian Mozzarella</span>
-            <span className="text-[#e45a38]">✦</span>
+            <span className="text-[#EFCC80]">✦</span>
           </span>
         </div>
       </section>
@@ -815,7 +815,7 @@ export default function HomeClientView({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-xs font-bold text-[#e45a38] uppercase tracking-wider font-outfit">
+            <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
               CUSTOMER REVIEWS & PRAISE
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo">
@@ -831,7 +831,7 @@ export default function HomeClientView({
               <ChevronRight className="w-4 h-4" />
             </button>
             <button
-              className="w-9 h-9 rounded-full bg-[#e45a38] text-white flex items-center justify-center hover:bg-[#d24e2e] transition-colors shadow-md shadow-orange-950/50"
+              className="w-9 h-9 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center hover:brightness-105 transition-all shadow-md shadow-amber-950/50 font-bold"
               aria-label="Next Testimonial"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -869,7 +869,7 @@ export default function HomeClientView({
           ].map((item) => (
             <div
               key={item.id}
-              className="bg-[#14181f] border border-[#222934] rounded-2xl p-6 space-y-4 shadow-xl hover:border-[#e45a38]/60 transition-colors"
+              className="bg-[#14181f] border border-[#222934] rounded-2xl p-6 space-y-4 shadow-xl hover:border-[#EFCC80]/60 transition-colors"
             >
               <div className="flex items-center gap-1 text-amber-400">
                 {[...Array(item.rating)].map((_, i) => (
@@ -903,14 +903,14 @@ export default function HomeClientView({
       <section className="w-full space-y-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold text-stone-400">
-            <Instagram className="w-4 h-4 text-[#e45a38]" />
+            <Instagram className="w-4 h-4 text-[#EFCC80]" />
             <span>@pizza_house66 • معرض صور بيتزا هاوس</span>
           </div>
           <a
             href="https://www.instagram.com/pizza_house66/"
             target="_blank"
             rel="noreferrer"
-            className="text-xs font-bold text-[#e45a38] hover:underline"
+            className="text-xs font-bold text-[#EFCC80] hover:underline"
           >
             تابعنا على إنستغرام
           </a>
@@ -942,7 +942,7 @@ export default function HomeClientView({
                 className="object-cover group-hover:scale-110 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-[#0c0e12]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <Instagram className="w-6 h-6 text-[#e45a38]" />
+                <Instagram className="w-6 h-6 text-[#EFCC80]" />
               </div>
             </a>
           ))}
@@ -959,7 +959,7 @@ export default function HomeClientView({
         <div id="branches" className="bg-[#14181f] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-[#222934] shadow-2xl relative overflow-hidden scroll-mt-24">
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
-              <span className="text-xs bg-[#e45a38] text-white font-bold px-3 py-1 rounded-full uppercase tracking-wider font-outfit">
+              <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-bold px-3 py-1 rounded-full uppercase tracking-wider font-outfit">
                 Fuwa Branch • فرع فوه
               </span>
               <h3 className="text-2xl sm:text-3xl font-black font-cairo">
@@ -977,7 +977,7 @@ export default function HomeClientView({
                   href="tel:05375561"
                   className="inline-flex items-center gap-2 bg-[#0c0e12] hover:bg-[#1a202a] text-white text-xs font-bold px-4 py-2.5 rounded-full border border-[#222934] transition-colors"
                 >
-                  <Phone className="w-3.5 h-3.5 text-[#e45a38]" />
+                  <Phone className="w-3.5 h-3.5 text-[#C69843]" />
                   <span>05375561</span>
                 </a>
                 <a
@@ -994,7 +994,7 @@ export default function HomeClientView({
 
             <div className="bg-[#0c0e12] p-5 rounded-2xl border border-[#222934] space-y-3">
               <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#e45a38]" />
+                <Clock className="w-4 h-4 text-[#C69843]" />
                 <span>{language === "ar" ? "جدول الدوام المعتمد" : "Official Working Hours"}</span>
               </h4>
               <div className="space-y-2 text-xs text-stone-300">

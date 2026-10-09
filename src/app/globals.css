@@ -44,12 +44,12 @@
   }
 
   ::selection {
-    background-color: #e45a38;
-    color: #ffffff;
+    background-color: #C69843;
+    color: #2C1A04;
   }
 
   *:focus-visible {
-    outline: 2px solid #e45a38;
+    outline: 2px solid #C69843;
     outline-offset: 2px;
   }
 }
@@ -67,7 +67,7 @@
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #e45a38;
+  background: #C69843;
 }
 
 /* Pulse badge animation */
@@ -397,6 +397,17 @@
 .glass-panel-luxury:hover {
   border-color: rgba(245, 158, 11, 0.35);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Gold Luxury Button Gradient */
+.btn-gold-luxury {
+  background: linear-gradient(180deg, #EFCC80 0%, #C69843 100%);
+  color: #2C1A04;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.btn-gold-luxury:hover {
+  filter: brightness(1.05);
 }
 
 

@@ -196,7 +196,7 @@ export default function CartDrawer() {
               <a
                 href="/checkout"
                 onClick={() => setIsCartOpen(false)}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-pizza-700 via-pizza-600 to-pizza-700 hover:from-pizza-800 hover:to-pizza-800 text-white py-3 px-4 rounded-xl text-base font-bold shadow-lg shadow-pizza-700/25 active:scale-[0.99] transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 py-3.5 px-4 rounded-xl text-base font-bold shadow-lg shadow-amber-950/30 active:scale-[0.99] transition-all font-cairo"
               >
                 <span>{dict.cart.checkout}</span>
                 {language === "ar" ? (

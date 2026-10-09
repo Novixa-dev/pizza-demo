@@ -44,7 +44,7 @@ export default function Footer() {
                 href="https://www.instagram.com/pizza_house66/"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-[#14181f] border border-[#222934] hover:bg-[#e45a38] hover:border-[#e45a38] text-stone-300 hover:text-white flex items-center justify-center transition-colors shadow-sm"
+                className="w-8 h-8 rounded-lg bg-[#14181f] border border-[#222934] hover:bg-gradient-to-b hover:from-[#EFCC80] hover:to-[#C69843] hover:border-[#EFCC80] text-stone-300 hover:text-[#2C1A04] flex items-center justify-center transition-all shadow-sm"
                 aria-label="Instagram @pizza_house66"
               >
                 <Instagram className="w-4 h-4" />
@@ -64,7 +64,7 @@ export default function Footer() {
           {/* Col 2: Operating Hours */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5 font-cairo">
-              <Clock className="w-4 h-4 text-[#e45a38]" />
+              <Clock className="w-4 h-4 text-[#C69843]" />
               <span>{language === "ar" ? "أوقات العمل الرسمية" : "Operating Hours"}</span>
             </h4>
             <ul className="text-xs text-stone-400 space-y-2">
@@ -86,7 +86,7 @@ export default function Footer() {
           {/* Col 3: Location & Contacts */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5 font-cairo">
-              <MapPin className="w-4 h-4 text-[#e45a38]" />
+              <MapPin className="w-4 h-4 text-[#C69843]" />
               <span>{language === "ar" ? "العنوان والتواصل" : "Location & Contact"}</span>
             </h4>
             <div className="text-xs text-stone-400 space-y-2">
@@ -97,7 +97,7 @@ export default function Footer() {
               </p>
               <p className="font-outfit text-stone-200">
                 {language === "ar" ? "هاتف أرضي: " : "Landline: "}
-                <span className="text-[#e45a38] font-bold">05375561</span>
+                <span className="text-[#C69843] font-bold">05375561</span>
               </p>
               <p className="font-outfit text-stone-200">
                 {language === "ar" ? "واتساب / جوال: " : "WhatsApp / Mobile: "}
@@ -113,28 +113,28 @@ export default function Footer() {
             </h4>
             <ul className="text-xs space-y-2 text-stone-400">
               <li>
-                <a href="/menu" className="hover:text-[#e45a38] transition-colors">
+                <a href="/menu" className="hover:text-[#EFCC80] transition-colors">
                   {dict.nav.menu}
                 </a>
               </li>
               <li>
-                <a href="/history" className="hover:text-[#e45a38] transition-colors">
+                <a href="/history" className="hover:text-[#EFCC80] transition-colors">
                   {dict.nav.orderHistory}
                 </a>
               </li>
               <li>
-                <a href="/track" className="hover:text-[#e45a38] transition-colors">
+                <a href="/track" className="hover:text-[#EFCC80] transition-colors">
                   {dict.nav.trackOrder}
                 </a>
               </li>
               <li>
-                <a href="/kitchen" className="hover:text-[#e45a38] transition-colors flex items-center gap-1">
+                <a href="/kitchen" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
                   <span>{dict.kitchen.title}</span>
                   <ExternalLink className="w-3 h-3 text-stone-500" />
                 </a>
               </li>
               <li>
-                <a href="/admin" className="hover:text-[#e45a38] transition-colors flex items-center gap-1">
+                <a href="/admin" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
                   <span>{dict.admin.title}</span>
                   <ExternalLink className="w-3 h-3 text-stone-500" />
                 </a>
@@ -156,7 +156,7 @@ export default function Footer() {
                 ? "مدعوم بواسطة منصة العمليات الرقمية للمطاعم"
                 : "Powered by Digital Restaurant Platform"}
             </span>
-            <span className="font-bold text-[#e45a38] font-outfit">Novixa Restaurant</span>
+            <span className="font-bold text-[#C69843] font-outfit">Novixa Restaurant</span>
           </div>
         </div>
       </div>

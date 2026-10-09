@@ -373,7 +373,7 @@ export default function OrderFeedbackCard({
           <button
             type="submit"
             disabled={isPending}
-            className="flex-1 inline-flex items-center justify-center gap-2 bg-pizza-600 hover:bg-pizza-700 disabled:opacity-50 text-white font-bold py-3.5 px-6 rounded-2xl text-xs sm:text-sm shadow-md shadow-pizza-600/25 active:scale-95 transition-all"
+            className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 disabled:opacity-50 font-bold py-3.5 px-6 rounded-2xl text-xs sm:text-sm shadow-md shadow-amber-950/40 active:scale-95 transition-all"
           >
             <Send className="w-4 h-4" />
             <span>

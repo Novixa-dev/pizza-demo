@@ -89,7 +89,7 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
           onClick={() => setActiveCategorySlug("all")}
           className={`flex-shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
             activeCategorySlug === "all"
-              ? "bg-pizza-700 text-white shadow-md shadow-pizza-700/20"
+              ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/30"
               : "bg-white dark:bg-stone-850 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 hover:bg-stone-50"
           }`}
         >
@@ -102,7 +102,7 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
             onClick={() => setActiveCategorySlug(cat.slug)}
             className={`flex-shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeCategorySlug === cat.slug
-                ? "bg-pizza-700 text-white shadow-md shadow-pizza-700/20"
+                ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/30"
                 : "bg-white dark:bg-stone-850 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 hover:bg-stone-50"
             }`}
           >

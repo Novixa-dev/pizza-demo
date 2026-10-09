@@ -107,7 +107,7 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
           disabled={!product.isAvailable}
           className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all active:scale-90 ${
             product.isAvailable
-              ? "bg-gradient-to-br from-[#ff8c00] to-[#dc2626] hover:shadow-[0_0_15px_rgba(255,140,0,0.6)] text-white shadow-md shadow-orange-950/50"
+              ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 shadow-[0_4px_14px_rgba(198,152,67,0.35)]"
               : "bg-stone-900 text-stone-600 cursor-not-allowed border border-transparent"
           }`}
           title={dict.menu.customize}

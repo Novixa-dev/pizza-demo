@@ -180,7 +180,7 @@ Direct tracking link:`;
           <button
             type="button"
             onClick={handlePrimaryShare}
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-pizza-600 hover:from-amber-600 hover:to-pizza-700 text-white font-bold px-4 py-2.5 rounded-2xl text-xs shadow-md shadow-pizza-600/20 active:scale-95 transition-all"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-4 py-2.5 rounded-2xl text-xs shadow-md shadow-amber-950/40 active:scale-95 transition-all"
           >
             <Share2 className="w-4 h-4" />
             <span>{language === "ar" ? "مشاركة الرابط 📲" : "Share Progress 📲"}</span>
@@ -298,7 +298,7 @@ Direct tracking link:`;
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="px-3 py-2.5 bg-pizza-600 hover:bg-pizza-700 text-white rounded-xl text-xs font-bold shrink-0 transition-colors"
+                  className="px-3 py-2.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 rounded-xl text-xs font-bold shrink-0 transition-all"
                 >
                   {isCopied
                     ? language === "ar"

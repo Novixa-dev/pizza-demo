@@ -280,7 +280,7 @@ export default function RecurringReminderModal({
               type="button"
               disabled={isSimulating}
               onClick={handleTestNotification}
-              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-pizza-600 hover:from-amber-600 hover:to-pizza-700 text-white font-bold py-3 px-4 rounded-2xl text-xs sm:text-sm shadow-md transition-transform active:scale-95 disabled:opacity-50"
+              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold py-3 px-4 rounded-2xl text-xs sm:text-sm shadow-md shadow-amber-950/40 transition-transform active:scale-95 disabled:opacity-50"
             >
               <Send className="w-4 h-4" />
               <span>

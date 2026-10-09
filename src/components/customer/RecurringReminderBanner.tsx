@@ -70,7 +70,7 @@ export default function RecurringReminderBanner() {
               <div className="flex items-center gap-2 pt-2">
                 <Link
                   href="/menu"
-                  className="inline-flex items-center gap-1.5 bg-pizza-600 hover:bg-pizza-700 text-white font-bold px-3.5 py-1.5 rounded-xl text-xs shadow-md transition-all active:scale-95"
+                  className="inline-flex items-center gap-1.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-3.5 py-1.5 rounded-xl text-xs shadow-md shadow-amber-950/40 transition-all active:scale-95"
                 >
                   <span>{language === "ar" ? "اطلبها الآن" : "Order Now"}</span>
                   {language === "ar" ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}

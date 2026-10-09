@@ -183,12 +183,11 @@ export default function Header() {
 
           {/* Actions & Utilities */}
           <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Prominent Golden-Orange CTA Button: "Order Now / اطلب الآن" */}
             <Link
               href="/menu"
-              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#ff8c00] via-[#f59e0b] to-[#dc3c14] hover:shadow-[0_0_22px_rgba(255,140,0,0.6)] text-white px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-orange-950/50 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold shadow-[0_4px_16px_rgba(198,152,67,0.35)] active:scale-95 transition-all font-cairo"
             >
-              <Pizza className="w-4 h-4" />
+              <Pizza className="w-4 h-4 text-[#2C1A04]" />
               <span>{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
             </Link>
 

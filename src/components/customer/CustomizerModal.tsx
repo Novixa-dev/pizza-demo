@@ -319,7 +319,7 @@ export default function CustomizerModal({
           {/* Add CTA */}
           <button
             onClick={handleAddToCart}
-            className="flex-1 flex items-center justify-between bg-gradient-to-r from-pizza-700 to-pizza-600 hover:from-pizza-800 hover:to-pizza-700 text-white py-3 px-5 rounded-2xl font-bold text-sm shadow-lg shadow-pizza-700/20 active:scale-[0.99] transition-all"
+            className="flex-1 flex items-center justify-between bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 py-3.5 px-5 rounded-2xl font-bold text-sm shadow-lg shadow-amber-950/30 active:scale-[0.99] transition-all font-cairo"
           >
             <span>{dict.customizer.confirmAdd}</span>
             <span className="font-outfit text-base font-black">
