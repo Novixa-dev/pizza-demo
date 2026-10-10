@@ -153,7 +153,7 @@ export default function HeroSection({
         {/* Hero Content Section */}
         <section
           id="home"
-          className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 w-full"
+          className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 w-full"
         >
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-6 w-full">
             
@@ -319,7 +319,7 @@ export default function HeroSection({
       {/* =========================================================================
           "التواقيع الحرفية" - SIGNATURE PIZZAS SECTION (100% Matching Specification)
       ========================================================================= */}
-      <section className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto w-full font-cairo overflow-visible">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo overflow-visible">
         {/* Environmental Floating Particles (Basil, Chili Flakes, Flour Specks) */}
         <FloatingParticles />
 

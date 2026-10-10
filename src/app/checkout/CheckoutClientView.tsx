@@ -175,23 +175,25 @@ export default function CheckoutClientView({
 
   if (cart.length === 0) {
     return (
-      <div className="max-w-xl mx-auto px-4 py-20 text-center space-y-4">
-        <h2 className="text-2xl font-bold text-stone-900 dark:text-white">
-          {dict.cart.emptyTitle}
-        </h2>
-        <p className="text-sm text-stone-500">{dict.cart.emptyDesc}</p>
-        <a
-          href="/menu"
-          className="inline-flex items-center gap-2 bg-pizza-700 text-white px-6 py-3 rounded-2xl font-bold text-sm"
-        >
-          <span>{dict.cart.continueShopping}</span>
-        </a>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-cairo">
+        <div className="max-w-xl mx-auto py-16 text-center space-y-4">
+          <h2 className="text-2xl font-bold text-white font-cairo">
+            {dict.cart.emptyTitle}
+          </h2>
+          <p className="text-sm text-stone-400">{dict.cart.emptyDesc}</p>
+          <a
+            href="/menu"
+            className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-6 py-3 rounded-2xl font-bold text-sm shadow-md"
+          >
+            <span>{dict.cart.continueShopping}</span>
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-cairo text-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-cairo text-white">
       <div className="text-center space-y-2 mb-8">
         <h1 className="text-2xl sm:text-3xl font-black text-white font-cairo">
           {dict.checkout.title}

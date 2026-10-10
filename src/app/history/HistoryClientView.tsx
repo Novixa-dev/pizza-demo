@@ -425,7 +425,7 @@ export default function HistoryClientView() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 font-sans">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 font-cairo">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 start-1/2 -translate-x-1/2 z-50 bg-stone-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-pizza-500/40 flex items-center gap-3 text-sm font-bold animate-in fade-in slide-in-from-bottom-4 duration-300">

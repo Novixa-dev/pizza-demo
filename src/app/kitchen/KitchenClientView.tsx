@@ -115,12 +115,13 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
   };
 
   return (
-    <div className="min-h-[calc(100vh-5rem)] bg-[#0c0e12] text-white p-4 sm:p-6 space-y-6 relative overflow-hidden font-cairo">
+    <div className="min-h-[calc(100vh-5rem)] bg-[#0c0e12] text-white py-8 sm:py-12 relative overflow-hidden font-cairo">
       {/* Background Ambience */}
       <div className="absolute top-0 end-1/4 w-96 h-96 bg-[#EFCC80]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 start-10 w-80 h-80 bg-amber-600/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* KDS Control Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 relative z-10">
+        {/* KDS Control Header */}
       <div className="relative z-10 flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-[#14181f]/90 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-[#C69843]/30 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] flex items-center justify-center text-[#2C1A04] shadow-lg shadow-[#EFCC80]/20 flex-shrink-0">
@@ -319,6 +320,7 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

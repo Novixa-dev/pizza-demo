@@ -306,7 +306,7 @@ export default function HomeClientView({
       {/* =========================================================================
           2. THREE MIDDLE HIGHLIGHT CARDS (Three Large Glowing Boxes)
       ========================================================================= */}
-      <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 sm:my-12 relative z-20 font-cairo">
+      <section id="features" className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {/* Box 1: Fast Delivery & Takeout */}
           <div className="bg-[#14161f]/90 backdrop-blur-md rounded-2xl p-6 sm:p-7 border border-[#C69843]/35 hover:border-[#EFCC80] shadow-[0_10px_30px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] transition-all duration-300 flex items-center gap-5 group">
@@ -358,7 +358,7 @@ export default function HomeClientView({
       {/* =========================================================================
           3. SHOP BY COLLECTION - "تسوق حسب التصنيف" (Matches Specification)
       ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <div className="flex items-center justify-between">
           <div className="space-y-1 text-start">
             <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
@@ -470,7 +470,7 @@ export default function HomeClientView({
       {/* =========================================================================
           4. TOP PROMOTION SECTION (Two Large Horizontal Banners Side-by-Side)
       ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 font-cairo">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Right Banner (First in RTL): الأكثر طلباً في المكلا */}
           <div className="relative rounded-2xl bg-[#14161f]/90 backdrop-blur-md border border-[#C69843]/35 hover:border-[#EFCC80] p-6 sm:p-8 overflow-hidden group transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] flex flex-col justify-between min-h-[220px]">
@@ -704,7 +704,7 @@ export default function HomeClientView({
       {/* =========================================================================
           6. DEAL OF THE DAY SPOTLIGHT WITH COUNTDOWN (Matches Mockup)
       ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <div className="relative rounded-2xl sm:rounded-3xl bg-[#14181f] border border-[#222934] overflow-hidden shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             {/* Visual: Cheesy Pizza on Board with Garlic and Peppers */}
@@ -788,7 +788,7 @@ export default function HomeClientView({
       {/* =========================================================================
           7. MENU CARD - TWO-COLUMN TABULAR PRICE LIST (Matches Mockup)
       ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo">
             {language === "ar" ? "قائمة أسعار أطباقنا (Menu Card)" : "Menu Card"}
@@ -901,7 +901,7 @@ export default function HomeClientView({
       {/* =========================================================================
           8. ARTISANAL CRAFTSMANSHIP / VIDEO SPOTLIGHT BANNER (Matches Mockup)
       ========================================================================= */}
-      <section id="about" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+      <section id="about" className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <div className="relative rounded-2xl w-full sm:rounded-3xl overflow-hidden aspect-[16/8] sm:aspect-[21/9] max-h-[420px] bg-[#14181f] border border-[#222934] flex items-center justify-center group shadow-2xl">
           <Image
             src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=1200&q=85"
@@ -978,7 +978,7 @@ export default function HomeClientView({
       {/* =========================================================================
           10. CUSTOMER TESTIMONIALS (Customer Reviews & Praise - 100% Matching)
       ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 font-cairo">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         {/* Header Row: Title on the Right, Navigation on the Top Left in RTL */}
         <div className="flex items-center justify-between gap-4">
           {/* Title on the Right in RTL */}
@@ -1099,7 +1099,7 @@ export default function HomeClientView({
       {/* =========================================================================
           11. INSTAGRAM PIZZA GALLERY (6 Square High-Resolution Photos Seamless Row)
       ========================================================================= */}
-      <section className="w-full space-y-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-cairo">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         {/* Section Header */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-3">
           <div className="flex items-center gap-2.5 text-xs sm:text-sm">
@@ -1179,7 +1179,7 @@ export default function HomeClientView({
       {/* =========================================================================
           12. RETURNING CUSTOMER QUICK REORDER & BRANCH LOCATION / HOURS
       ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <QuickReorderHeroCard />
 
         {/* Verified Branch Location & Hours Banner */}

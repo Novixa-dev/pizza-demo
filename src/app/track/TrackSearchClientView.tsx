@@ -16,8 +16,9 @@ export default function TrackSearchClientView() {
   };
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-6 font-cairo">
-      <div className="bg-[#14181f]/90 backdrop-blur-xl border border-[#C69843]/30 rounded-3xl p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-cairo">
+      <div className="max-w-lg mx-auto text-center space-y-6">
+        <div className="bg-[#14181f]/90 backdrop-blur-xl border border-[#C69843]/30 rounded-3xl p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] space-y-6">
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center mx-auto shadow-lg shadow-amber-950/40">
           <Pizza className="w-8 h-8 fill-current" />
         </div>
@@ -80,5 +81,6 @@ export default function TrackSearchClientView() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

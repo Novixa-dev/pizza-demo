@@ -111,8 +111,9 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
   );
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8 font-cairo">
-      {/* Top Card: Order Reference & Refresh */}
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-cairo">
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* Top Card: Order Reference & Refresh */}
       <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
@@ -460,6 +461,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

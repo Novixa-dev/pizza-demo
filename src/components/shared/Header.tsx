@@ -25,6 +25,9 @@ import {
   LayoutGrid,
   User,
   Heart,
+  History,
+  Truck,
+  MessageSquare,
 } from "lucide-react";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 import RecurringReminderModal from "@/components/customer/RecurringReminderModal";
@@ -140,11 +143,11 @@ export default function Header() {
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-xl sm:text-2xl font-black tracking-wider text-white font-playfair">
-                  AURA PIZZA
+                <span className="text-lg sm:text-2xl font-black text-white font-cairo">
+                  {language === "ar" ? "بيتزا هاوس" : "Pizza House"}
                 </span>
-                <span className="text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded-full font-bold font-cairo">
-                  {language === "ar" ? "بيتزا هاوس" : "Mukalla"}
+                <span className="text-[10px] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-1.5 py-0.5 rounded-full font-bold font-cairo">
+                  {language === "ar" ? "المكلا" : "Mukalla"}
                 </span>
               </div>
               <p className="text-[10px] sm:text-[11px] text-amber-200/60 hidden sm:block font-cairo">
@@ -181,16 +184,27 @@ export default function Header() {
           </form>
 
           {/* Actions & Utilities */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
+            {/* Order Now Button */}
             <Link
               href="/menu"
-              className="inline-flex items-center gap-1.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold shadow-[0_4px_16px_rgba(198,152,67,0.35)] active:scale-95 transition-all font-cairo"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold shadow-[0_4px_16px_rgba(198,152,67,0.35)] active:scale-95 transition-all font-cairo"
             >
               <Pizza className="w-4 h-4 text-[#2C1A04]" />
-              <span>{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
+              <span className="hidden xs:inline">{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
             </Link>
 
-            {/* Orange Pill Button: "سجل طلباتي" */}
+            {/* Quick Call on mobile */}
+            <a
+              href="tel:05375561"
+              className="p-2 sm:hidden rounded-full bg-[#141720] border border-white/10 text-[#EFCC80] hover:bg-[#1a202c] transition-colors"
+              title="اتصال فوري"
+              aria-label="Call"
+            >
+              <PhoneCall className="w-4 h-4" />
+            </a>
+
+            {/* Orange Pill Button: "سجل طلباتي" (Desktop only) */}
             <Link
               href="/history"
               className="hidden lg:inline-flex items-center gap-1.5 bg-[#141720] hover:bg-[#1c212d] border border-white/10 hover:border-amber-500/30 text-stone-300 px-3 py-2 rounded-full text-xs font-semibold active:scale-95 transition-all"
@@ -199,10 +213,10 @@ export default function Header() {
               <span>{language === "ar" ? "سجل طلباتي" : "My Orders"}</span>
             </Link>
 
-            {/* Recurring Order Reminders / Wishlist Bell */}
+            {/* Recurring Order Reminders Bell (Desktop only) */}
             <button
               onClick={() => setIsReminderModalOpen(true)}
-              className="p-2.5 rounded-full bg-[#141720] border border-white/10 text-stone-300 hover:text-amber-400 hover:border-amber-500/40 relative transition-colors"
+              className="hidden md:flex p-2.5 rounded-full bg-[#141720] border border-white/10 text-stone-300 hover:text-amber-400 hover:border-amber-500/40 relative transition-colors"
               title={
                 language === "ar"
                   ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
@@ -217,7 +231,7 @@ export default function Header() {
             {/* Cart Trigger with Circular Badge */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center justify-center p-2.5 rounded-full bg-[#141720] border border-white/10 hover:border-amber-500/40 text-stone-200 hover:text-white transition-all"
+              className="relative flex items-center justify-center p-2 sm:p-2.5 rounded-full bg-[#141720] border border-white/10 hover:border-amber-500/40 text-stone-200 hover:text-white transition-all cursor-pointer"
               aria-label="Open Shopping Cart"
             >
               <ShoppingBag className="w-4 h-4 text-[#ff8c00]" />
@@ -228,9 +242,9 @@ export default function Header() {
               )}
             </button>
 
-            {/* Global Language Toggle */}
+            {/* Global Language Toggle (Desktop only) */}
             <div
-              className="flex items-center bg-stone-100 dark:bg-stone-800 p-0.5 rounded-full border border-stone-200/80 dark:border-stone-700/80"
+              className="hidden md:flex items-center bg-stone-100 dark:bg-stone-800 p-0.5 rounded-full border border-stone-200/80 dark:border-stone-700/80"
               role="group"
               aria-label="Language selection"
             >
@@ -260,10 +274,10 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Dark / Light Mode Toggle */}
+            {/* Dark / Light Mode Toggle (Desktop only) */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+              className="hidden md:flex p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
               title="تبديل المظهر"
               aria-label="Toggle Theme"
             >
@@ -274,16 +288,16 @@ export default function Header() {
               )}
             </button>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 md:hidden text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-lg"
+              className="p-2 md:hidden text-white bg-[#141720] border border-amber-500/25 hover:border-amber-500/50 rounded-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center"
               aria-label="Open Mobile Menu"
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 text-[#EFCC80]" />
               ) : (
-                <MenuIcon className="w-6 h-6" />
+                <MenuIcon className="w-5 h-5 text-[#EFCC80]" />
               )}
             </button>
           </div>
@@ -380,53 +394,54 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-amber-500/20 bg-[#0c0e14]/95 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-3 shadow-2xl">
-          {/* Mobile Language Switcher Row */}
-          <div className="p-3 bg-[#14181f] rounded-2xl border border-white/10 space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-white flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-[#C69843]" />
-                <span>{language === "ar" ? "لغة الواجهة" : "Interface Language"}</span>
-              </span>
-              <span className="text-[11px] text-stone-400 font-bold uppercase font-outfit">
-                {language === "ar" ? "العربية (RTL)" : "English (LTR)"}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2 text-xs font-bold">
+        <div className="md:hidden border-t border-amber-500/20 bg-[#090b10]/98 backdrop-blur-2xl px-4 pt-4 pb-8 space-y-4 shadow-2xl max-h-[calc(100dvh-65px)] overflow-y-auto overscroll-contain animate-in fade-in slide-in-from-top-2 duration-200 font-cairo">
+          {/* 1. Mobile Quick Search */}
+          <form
+            onSubmit={(e) => {
+              handleSearchSubmit(e);
+              setIsMobileMenuOpen(false);
+            }}
+            className="relative w-full"
+          >
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={
+                language === "ar"
+                  ? "ابحث عن البيتزا أو الوجبة المفضلة..."
+                  : "Search pizzas, fatayer, sides..."
+              }
+              className="w-full pl-10 pr-10 py-2.5 bg-[#141822] border border-amber-500/25 rounded-2xl text-xs sm:text-sm text-white placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#ff8c00]/50 focus:border-[#ff8c00] transition-all font-cairo shadow-inner"
+            />
+            <button
+              type="submit"
+              className="absolute end-3 top-1/2 -translate-y-1/2 p-1 text-stone-400 hover:text-[#EFCC80] transition-colors"
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+            {searchQuery && (
               <button
                 type="button"
-                onClick={() => setLanguage("ar")}
-                className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-all ${
-                  language === "ar"
-                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
-                    : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
-                }`}
+                onClick={() => setSearchQuery("")}
+                className="absolute start-3 top-1/2 -translate-y-1/2 p-1 text-stone-400 hover:text-white"
+                aria-label="Clear Search"
               >
-                <span>🇾🇪 العربية</span>
+                <X className="w-3.5 h-3.5" />
               </button>
-              <button
-                type="button"
-                onClick={() => setLanguage("en")}
-                className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-all font-outfit ${
-                  language === "en"
-                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
-                    : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
-                }`}
-              >
-                <span>🇬🇧 English</span>
-              </button>
-            </div>
-          </div>
+            )}
+          </form>
 
-          {/* Real-time Branch Status in Mobile Drawer */}
-          <div className="p-3 mb-2 bg-[#14181f] rounded-2xl border border-white/10 text-xs space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-white">
-                {language === "ar" ? "حالة الفرع الآن:" : "Branch Status:"}
-              </span>
+          {/* 2. Real-time Branch Status & Quick Contacts */}
+          <div className="p-3.5 bg-gradient-to-b from-[#141822] to-[#0e1118] rounded-2xl border border-amber-500/20 text-xs space-y-2.5 shadow-md">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1.5 font-bold text-white">
+                <Clock className="w-4 h-4 text-[#C69843]" />
+                <span>{language === "ar" ? "حالة الفرع الآن:" : "Branch Status:"}</span>
+              </div>
               <span
-                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-bold text-[11px] ${
+                className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold text-[11px] ${
                   opStatus.status === "OPEN_FOR_ORDERING"
                     ? "text-emerald-300 bg-emerald-950/80 border border-emerald-500/30"
                     : opStatus.status === "CLOSING_SOON"
@@ -436,77 +451,325 @@ export default function Header() {
                     : "text-red-300 bg-red-950/80 border border-red-500/30"
                 }`}
               >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    opStatus.status === "OPEN_FOR_ORDERING"
+                      ? "bg-emerald-400 animate-pulse"
+                      : opStatus.status === "CLOSING_SOON"
+                      ? "bg-amber-400 animate-ping"
+                      : opStatus.status === "SCHEDULED_ONLY"
+                      ? "bg-sky-400"
+                      : "bg-red-400"
+                  }`}
+                />
                 {language === "ar" ? opStatus.badgeLabelAr : opStatus.badgeLabelEn}
               </span>
             </div>
-            <p className="text-[11px] text-stone-400">
+
+            <p className="text-[11px] text-stone-300">
               {language === "ar" ? opStatus.descriptionAr : opStatus.descriptionEn}
             </p>
+
+            {/* Quick 1-tap Calling & WhatsApp Buttons */}
+            <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/5">
+              <a
+                href="tel:05375561"
+                className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-[#1a202c] hover:bg-[#222a3a] border border-amber-500/30 text-[#EFCC80] font-bold text-xs active:scale-95 transition-all font-outfit"
+              >
+                <PhoneCall className="w-3.5 h-3.5 text-[#C69843]" />
+                <span>05375561</span>
+              </a>
+              <a
+                href="https://wa.me/967772207788"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/50 border border-emerald-500/30 text-emerald-300 font-bold text-xs active:scale-95 transition-all font-outfit"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+                <span>772207788</span>
+              </a>
+            </div>
           </div>
 
-          <div className="space-y-1">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all ${
-                    isActive
-                      ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
-                      : "text-stone-200 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span>{link.label}</span>
-                    {link.badge && (
-                      <span
-                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-outfit ${
-                          isActive
-                            ? "bg-[#2C1A04] text-[#EFCC80]"
-                            : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
-                        }`}
-                      >
-                        {link.badge}
-                      </span>
-                    )}
+          {/* 3. Core Primary Actions (2x2 Grid) */}
+          <div>
+            <div className="text-[11px] font-bold text-stone-400 mb-1.5 px-1 font-cairo">
+              {language === "ar" ? "الوصول السريع" : "Quick Actions"}
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                href="/menu"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`p-3 rounded-2xl border transition-all flex flex-col gap-1.5 active:scale-95 ${
+                  pathname === "/menu"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] shadow-md shadow-amber-950/40"
+                    : "bg-[#141822] text-stone-200 border-white/10 hover:border-amber-500/30 hover:bg-[#1a202c]"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <Pizza className={`w-5 h-5 ${pathname === "/menu" ? "text-[#2C1A04]" : "text-[#EFCC80]"}`} />
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-cairo ${
+                    pathname === "/menu" ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
+                  }`}>
+                    {language === "ar" ? "المنيو" : "Menu"}
+                  </span>
+                </div>
+                <div>
+                  <div className="font-bold text-xs font-cairo">
+                    {language === "ar" ? "قائمة الطعام" : "Food Menu"}
                   </div>
-                </Link>
-              );
-            })}
+                  <div className={`text-[10px] ${pathname === "/menu" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
+                    {language === "ar" ? "تصفح كل الوجبات" : "Browse all items"}
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/history"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`p-3 rounded-2xl border transition-all flex flex-col gap-1.5 active:scale-95 ${
+                  pathname === "/history"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] shadow-md shadow-amber-950/40"
+                    : "bg-[#141822] text-stone-200 border-white/10 hover:border-amber-500/30 hover:bg-[#1a202c]"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <History className={`w-5 h-5 ${pathname === "/history" ? "text-[#2C1A04]" : "text-[#EFCC80]"}`} />
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-cairo ${
+                    pathname === "/history" ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
+                  }`}>
+                    {language === "ar" ? "طلباتي" : "Orders"}
+                  </span>
+                </div>
+                <div>
+                  <div className="font-bold text-xs font-cairo">
+                    {language === "ar" ? "سجل طلباتي" : "Order History"}
+                  </div>
+                  <div className={`text-[10px] ${pathname === "/history" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
+                    {language === "ar" ? "الطلبات السابقة" : "Previous orders"}
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/track"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`p-3 rounded-2xl border transition-all flex flex-col gap-1.5 active:scale-95 ${
+                  pathname.startsWith("/track")
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] shadow-md shadow-amber-950/40"
+                    : "bg-[#141822] text-stone-200 border-white/10 hover:border-amber-500/30 hover:bg-[#1a202c]"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <Truck className={`w-5 h-5 ${pathname.startsWith("/track") ? "text-[#2C1A04]" : "text-[#EFCC80]"}`} />
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-cairo ${
+                    pathname.startsWith("/track") ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
+                  }`}>
+                    {language === "ar" ? "تتبع" : "Track"}
+                  </span>
+                </div>
+                <div>
+                  <div className="font-bold text-xs font-cairo">
+                    {language === "ar" ? "تتبع طلبك" : "Track Order"}
+                  </div>
+                  <div className={`text-[10px] ${pathname.startsWith("/track") ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
+                    {language === "ar" ? "متابعة مسار التوصيل" : "Live delivery status"}
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/kitchen"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`p-3 rounded-2xl border transition-all flex flex-col gap-1.5 active:scale-95 ${
+                  pathname === "/kitchen"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] shadow-md shadow-amber-950/40"
+                    : "bg-[#141822] text-stone-200 border-white/10 hover:border-amber-500/30 hover:bg-[#1a202c]"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <ChefHat className={`w-5 h-5 ${pathname === "/kitchen" ? "text-[#2C1A04]" : "text-[#EFCC80]"}`} />
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-outfit ${
+                    pathname === "/kitchen" ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
+                  }`}>
+                    KDS
+                  </span>
+                </div>
+                <div>
+                  <div className="font-bold text-xs font-cairo">
+                    {language === "ar" ? "شاشة المطبخ" : "Kitchen Display"}
+                  </div>
+                  <div className={`text-[10px] ${pathname === "/kitchen" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
+                    {language === "ar" ? "نظام KDS الحي" : "Live orders screen"}
+                  </div>
+                </div>
+              </Link>
+            </div>
           </div>
 
-          {/* Mobile Recurring Reminders Button */}
+          {/* 4. Quick Categories Pills */}
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between text-[11px] font-bold text-stone-400 px-1 font-cairo">
+              <span className="flex items-center gap-1">
+                <LayoutGrid className="w-3.5 h-3.5 text-[#C69843]" />
+                <span>{language === "ar" ? "أقسام القائمة السريعة" : "Menu Categories"}</span>
+              </span>
+              <Link
+                href="/menu"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-[#EFCC80] hover:underline"
+              >
+                {language === "ar" ? "عرض الكل ←" : "View all →"}
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {quickCategories.map((cat) => (
+                <Link
+                  key={cat.slug}
+                  href={`/menu?category=${cat.slug}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-3 py-1.5 rounded-xl bg-[#141822] hover:bg-[#1f2536] border border-white/5 hover:border-amber-500/30 text-stone-300 hover:text-[#EFCC80] text-xs font-semibold active:scale-95 transition-all font-cairo"
+                >
+                  {language === "ar" ? cat.nameAr : cat.nameEn}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* 5. Additional Navigation Links */}
+          <div className="p-2 bg-[#141822]/80 rounded-2xl border border-white/5 space-y-1">
+            <Link
+              href="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                pathname === "/"
+                  ? "bg-amber-500/15 text-[#EFCC80] border border-amber-500/30"
+                  : "text-stone-300 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <span>{dict.nav.home}</span>
+              <span className="text-[10px] text-stone-500">🏠</span>
+            </Link>
+            <Link
+              href="/#branches"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-stone-300 hover:text-white hover:bg-white/5 transition-all"
+            >
+              <span>{dict.nav.branches}</span>
+              <MapPin className="w-3.5 h-3.5 text-stone-400" />
+            </Link>
+            <Link
+              href="/#about"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-stone-300 hover:text-white hover:bg-white/5 transition-all"
+            >
+              <span>{dict.nav.about}</span>
+              <Info className="w-3.5 h-3.5 text-stone-400" />
+            </Link>
+            <Link
+              href="/admin"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                pathname === "/admin"
+                  ? "bg-amber-500/15 text-[#EFCC80] border border-amber-500/30"
+                  : "text-stone-300 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#C69843]" />
+                <span>{dict.nav.admin}</span>
+              </span>
+              <span className="text-[10px] bg-red-950/80 text-red-300 border border-red-500/30 px-1.5 py-0.5 rounded font-bold font-cairo">
+                {language === "ar" ? "لوحة التحكم" : "Admin Panel"}
+              </span>
+            </Link>
+          </div>
+
+          {/* 6. Recurring Reminders Trigger */}
           <button
             type="button"
             onClick={() => {
               setIsMobileMenuOpen(false);
               setIsReminderModalOpen(true);
             }}
-            className="w-full mt-2 p-3 rounded-2xl bg-[#14181f] border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center justify-between transition-colors shadow-sm"
+            className="w-full p-3 rounded-2xl bg-[#141822] border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center justify-between hover:bg-[#1a202c] active:scale-95 transition-all shadow-sm font-cairo"
           >
             <span className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-[#C69843]" />
+              <Bell className="w-4 h-4 text-[#C69843] animate-bounce" />
               <span>
                 {language === "ar"
                   ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
-                  : "Meal Reminders (2 Weeks)"}
+                  : "Meal Reminders (Every 2 Weeks)"}
               </span>
             </span>
             <span className="text-[10px] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-2.5 py-1 rounded-full font-bold">
-              {language === "ar" ? "ضبط" : "Setup"}
+              {language === "ar" ? "ضبط التنبيه" : "Configure"}
             </span>
           </button>
 
-          <div className="pt-3 border-t border-stone-200 dark:border-stone-800 text-xs text-stone-500 space-y-1">
-            <p className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-pizza-600" />
-              <span>{dict.brand.masaken}</span>
+          {/* 7. Interface Preferences: Language & Theme */}
+          <div className="p-3 bg-[#141822] rounded-2xl border border-white/10 space-y-2.5">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-white flex items-center gap-1.5 font-cairo">
+                <Globe className="w-3.5 h-3.5 text-[#C69843]" />
+                <span>{language === "ar" ? "لغة التطبيق والمظهر" : "Language & Theme"}</span>
+              </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setLanguage("ar")}
+                className={`py-2 px-2 rounded-xl border flex items-center justify-center gap-1 transition-all ${
+                  language === "ar"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
+                    : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
+                }`}
+              >
+                <span>🇾🇪 العربية</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`py-2 px-2 rounded-xl border flex items-center justify-center gap-1 transition-all font-outfit ${
+                  language === "en"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
+                    : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
+                }`}
+              >
+                <span>🇬🇧 English</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="py-2 px-2 rounded-xl border bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white flex items-center justify-center gap-1.5 transition-all font-cairo"
+              >
+                {theme === "light" ? (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-stone-300" />
+                    <span>داكن</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-amber-400" />
+                    <span>فاتح</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* 8. Branch Location & Official Operating Hours */}
+          <div className="p-3 rounded-2xl bg-[#0e1118] border border-white/5 text-[11px] text-stone-400 space-y-1.5 font-cairo">
+            <p className="flex items-start gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-[#C69843] shrink-0 mt-0.5" />
+              <span>{dict.brand.masaken} ({dict.brand.landmarks})</span>
             </p>
-            <p className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-crust-500" />
-              <span>8:00 ص - 12:00 م | 4:00 م - 11:30 م</span>
+            <p className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span>4:00 م - 11:30 م (فترة المساء)</span>
             </p>
           </div>
         </div>
