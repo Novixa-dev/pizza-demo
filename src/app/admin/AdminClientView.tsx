@@ -258,7 +258,11 @@ export default function AdminClientView({
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#C69843]/30 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
           <div>
             <span className="text-xs font-bold text-[#EFCC80] font-cairo">
-              {language === "ar" ? "عمليات وإدارة بيتزا هاوس" : "Pizza House Operations"}
+              {language === "ar"
+                ? "عمليات وإدارة بيتزا هاوس"
+                : language === "id"
+                ? "Operasi & Manajemen Pizza House"
+                : "Pizza House Operations"}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white font-cairo">
               {dict.admin.title}
@@ -271,7 +275,13 @@ export default function AdminClientView({
               className="inline-flex items-center gap-2 bg-[#0c0e12] hover:bg-[#1a202c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors w-fit"
             >
               <RotateCw className="w-3.5 h-3.5 text-[#EFCC80]" />
-              <span>تحديث البيانات</span>
+              <span>
+                {language === "ar"
+                  ? "تحديث البيانات"
+                  : language === "id"
+                  ? "Perbarui Data"
+                  : "Refresh Data"}
+              </span>
             </button>
 
             <button
@@ -280,10 +290,18 @@ export default function AdminClientView({
                 window.location.reload();
               }}
               className="inline-flex items-center gap-1.5 bg-red-950/40 hover:bg-red-900/60 text-red-300 border border-red-500/30 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors"
-              title="تسجيل الخروج"
+              title={
+                language === "ar"
+                  ? "تسجيل الخروج"
+                  : language === "id"
+                  ? "Keluar"
+                  : "Sign Out"
+              }
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">خروج</span>
+              <span className="hidden sm:inline">
+                {language === "ar" ? "خروج" : language === "id" ? "Keluar" : "Logout"}
+              </span>
             </button>
           </div>
         </div>
@@ -302,7 +320,12 @@ export default function AdminClientView({
             },
             {
               id: "feedback",
-              label: language === "ar" ? "تقييمات العملاء" : "Customer Reviews",
+              label:
+                language === "ar"
+                  ? "تقييمات العملاء"
+                  : language === "id"
+                  ? "Ulasan Pelanggan"
+                  : "Customer Reviews",
               icon: Star,
               count: ordersWithFeedback.length,
               highlight: ordersWithFeedback.length > 0,
@@ -410,7 +433,11 @@ export default function AdminClientView({
               >
                 <div className="flex justify-between items-center text-stone-400">
                   <span className="text-xs font-bold font-cairo">
-                    {language === "ar" ? "رضا العملاء والتقييم" : "Customer Rating"}
+                    {language === "ar"
+                      ? "رضا العملاء والتقييم"
+                      : language === "id"
+                      ? "Kepuasan & Rating Pelanggan"
+                      : "Customer Rating"}
                   </span>
                   <Star className="w-5 h-5 text-[#EFCC80] fill-[#EFCC80]" />
                 </div>
@@ -420,7 +447,11 @@ export default function AdminClientView({
                 </div>
                 <p className="text-[11px] text-stone-400">
                   {ordersWithFeedback.length}{" "}
-                  {language === "ar" ? "تقييم مسجل" : "reviews received"}
+                  {language === "ar"
+                    ? "تقييم مسجل"
+                    : language === "id"
+                    ? "ulasan tercatat"
+                    : "reviews received"}
                 </p>
               </div>
             </div>
@@ -429,13 +460,22 @@ export default function AdminClientView({
             <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
               <div className="flex justify-between items-center">
                 <h3 className="text-base font-bold text-white font-cairo">
-                  أحدث الطلبات الواردة
+                  {language === "ar"
+                    ? "أحدث الطلبات الواردة"
+                    : language === "id"
+                    ? "Pesanan Terbaru"
+                    : "Recent Orders"}
                 </h3>
                 <button
                   onClick={() => setActiveTab("orders")}
                   className="text-xs font-bold text-[#EFCC80] hover:text-[#f7dda0] transition-colors"
                 >
-                  عرض كل الطلبات ({orders.length})
+                  {language === "ar"
+                    ? "عرض كل الطلبات"
+                    : language === "id"
+                    ? "Lihat Semua Pesanan"
+                    : "View All Orders"}{" "}
+                  ({orders.length})
                 </button>
               </div>
 
@@ -443,12 +483,24 @@ export default function AdminClientView({
                 <table className="w-full text-xs text-start">
                   <thead className="border-b border-[#222934] text-[#EFCC80]/80 uppercase font-outfit">
                     <tr>
-                      <th className="py-2.5 px-3 text-start">رقم الطلب</th>
-                      <th className="py-2.5 px-3 text-start">العميل</th>
-                      <th className="py-2.5 px-3 text-start">وقت الاستلام</th>
-                      <th className="py-2.5 px-3 text-start">الإجمالي</th>
-                      <th className="py-2.5 px-3 text-start">طريقة الدفع</th>
-                      <th className="py-2.5 px-3 text-start">الحالة</th>
+                      <th className="py-2.5 px-3 text-start">
+                        {language === "ar" ? "رقم الطلب" : language === "id" ? "No. Pesanan" : "Order #"}
+                      </th>
+                      <th className="py-2.5 px-3 text-start">
+                        {language === "ar" ? "العميل" : language === "id" ? "Pelanggan" : "Customer"}
+                      </th>
+                      <th className="py-2.5 px-3 text-start">
+                        {language === "ar" ? "وقت الاستلام" : language === "id" ? "Waktu Ambil" : "Pickup Time"}
+                      </th>
+                      <th className="py-2.5 px-3 text-start">
+                        {language === "ar" ? "الإجمالي" : language === "id" ? "Total" : "Total"}
+                      </th>
+                      <th className="py-2.5 px-3 text-start">
+                        {language === "ar" ? "طريقة الدفع" : language === "id" ? "Metode Pembayaran" : "Payment"}
+                      </th>
+                      <th className="py-2.5 px-3 text-start">
+                        {language === "ar" ? "الحالة" : language === "id" ? "Status" : "Status"}
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#222934]">
@@ -465,7 +517,7 @@ export default function AdminClientView({
                         </td>
                         <td className="py-3 px-3 font-outfit text-stone-300">
                           {new Date(o.requestedPickupTime).toLocaleTimeString(
-                            language === "ar" ? "ar-YE" : "en-US",
+                            language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
                             { hour: "2-digit", minute: "2-digit" }
                           )}
                         </td>
@@ -474,8 +526,16 @@ export default function AdminClientView({
                         </td>
                         <td className="py-3 px-3 text-stone-300">
                           {o.payment?.method === "PAY_AT_PICKUP"
-                            ? "الدفع عند الاستلام"
-                            : "تحويل إلكتروني"}
+                            ? language === "ar"
+                              ? "الدفع عند الاستلام"
+                              : language === "id"
+                              ? "Bayar saat ambil"
+                              : "Pay at pickup"
+                            : language === "ar"
+                            ? "تحويل إلكتروني"
+                            : language === "id"
+                            ? "Transfer bank"
+                            : "Bank transfer"}
                         </td>
                         <td className="py-3 px-3">
                           <span
@@ -552,24 +612,33 @@ export default function AdminClientView({
 
                   <div className="text-xs text-stone-400 flex flex-wrap gap-3">
                     <span>
-                      موعد الاستلام:{" "}
+                      {language === "ar" ? "موعد الاستلام:" : language === "id" ? "Waktu Pengambilan:" : "Pickup Time:"}{" "}
                       <b className="font-outfit text-stone-200">
                         {new Date(order.requestedPickupTime).toLocaleTimeString(
-                          language === "ar" ? "ar-YE" : "en-US",
+                          language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
                           { hour: "2-digit", minute: "2-digit" }
                         )}
                       </b>
                     </span>
                     <span>
-                      الإجمالي:{" "}
+                      {language === "ar" ? "الإجمالي:" : language === "id" ? "Total:" : "Total:"}{" "}
                       <b className="font-outfit text-[#EFCC80]">
                         {order.total.toLocaleString()} {dict.menu.currency}
                       </b>
                     </span>
                     <span>
-                      الأصناف:{" "}
+                      {language === "ar" ? "الأصناف:" : language === "id" ? "Item:" : "Items:"}{" "}
                       {order.items
-                        .map((i: any) => `${i.quantity}x ${i.productNameAr}`)
+                        .map(
+                          (i: any) =>
+                            `${i.quantity}x ${
+                              language === "ar"
+                                ? i.productNameAr
+                                : language === "id" && i.nameId
+                                ? i.nameId
+                                : i.productNameEn
+                            }`
+                        )
                         .join("، ")}
                     </span>
                   </div>
@@ -581,7 +650,13 @@ export default function AdminClientView({
                     target="_blank"
                     rel="noreferrer"
                     className="p-2 text-stone-400 hover:text-white rounded-lg hover:bg-[#1a202c] transition-colors"
-                    title="معاينة صفحة التتبع"
+                    title={
+                      language === "ar"
+                        ? "معاينة صفحة التتبع"
+                        : language === "id"
+                        ? "Lihat Halaman Pelacakan"
+                        : "Preview Tracking Page"
+                    }
                   >
                     <ExternalLink className="w-4 h-4" />
                   </a>
@@ -663,10 +738,14 @@ export default function AdminClientView({
                         </span>
                       )}
                       <span>
-                        الموعد المفضل:{" "}
+                        {language === "ar"
+                          ? "الموعد المفضل:"
+                          : language === "id"
+                          ? "Waktu Pilihan:"
+                          : "Target Pickup:"}{" "}
                         <b className="font-outfit text-stone-200">
                           {new Date(order.requestedPickupTime).toLocaleTimeString(
-                            language === "ar" ? "ar-YE" : "en-US",
+                            language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
                             { hour: "2-digit", minute: "2-digit" }
                           )}
                         </b>
@@ -678,21 +757,31 @@ export default function AdminClientView({
                     {order.payment?.receipt?.fileUrl ? (
                       <button
                         onClick={() => setSelectedReceiptOrder(order)}
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-[#14181f] hover:bg-[#1c222c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 rounded-xl text-xs font-bold transition-colors shadow-sm"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-[#14181f] hover:bg-[#1c222c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 rounded-xl text-xs font-bold transition-colors shadow-sm cursor-pointer"
                       >
                         <Eye className="w-3.5 h-3.5 text-[#EFCC80]" />
-                        <span>معاينة الإشعار</span>
+                        <span>
+                          {language === "ar"
+                            ? "معاينة الإشعار"
+                            : language === "id"
+                            ? "Lihat Bukti"
+                            : "View Receipt"}
+                        </span>
                       </button>
                     ) : (
                       <span className="text-xs text-red-400 font-bold">
-                        لم يُرفق صورة
+                        {language === "ar"
+                          ? "لم يُرفق صورة"
+                          : language === "id"
+                          ? "Tidak ada bukti"
+                          : "No receipt attached"}
                       </span>
                     )}
 
                     <button
                       onClick={() => handleVerifyPayment(order.id, true)}
                       disabled={isProcessing}
-                      className="px-4 py-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] text-xs font-black rounded-xl shadow-md shadow-[#EFCC80]/20 transition-all"
+                      className="px-4 py-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] text-xs font-black rounded-xl shadow-md shadow-[#EFCC80]/20 transition-all cursor-pointer"
                     >
                       {dict.admin.approve}
                     </button>
@@ -701,14 +790,18 @@ export default function AdminClientView({
                       onClick={() => {
                         const reason = prompt(
                           dict.admin.rejectReasonPrompt,
-                          "المبلغ غير مطابق للإجمالي"
+                          language === "ar"
+                            ? "المبلغ غير مطابق للإجمالي"
+                            : language === "id"
+                            ? "Jumlah transfer tidak sesuai total"
+                            : "Transferred amount does not match total"
                         );
                         if (reason) {
                           handleVerifyPayment(order.id, false, reason);
                         }
                       }}
                       disabled={isProcessing}
-                      className="px-3.5 py-2 bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300 text-xs font-bold rounded-xl transition-colors"
+                      className="px-3.5 py-2 bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300 text-xs font-bold rounded-xl transition-colors cursor-pointer"
                     >
                       {dict.admin.reject}
                     </button>
@@ -729,7 +822,11 @@ export default function AdminClientView({
                 {dict.admin.menuMgmt}
               </h3>
               <p className="text-xs text-stone-400">
-                التحكم بتوفر الأصناف فوراً (متوفر / نفدت الكمية)
+                {language === "ar"
+                  ? "التحكم بتوفر الأصناف فوراً (متوفر / نفدت الكمية)"
+                  : language === "id"
+                  ? "Kontrol ketersediaan menu secara langsung (Tersedia / Habis)"
+                  : "Instantly toggle item availability (Available / Sold Out)"}
               </p>
             </div>
           </div>
@@ -744,7 +841,13 @@ export default function AdminClientView({
                   <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 bg-[#14181f] border border-[#222934]">
                     <Image
                       src={prod.imageUrl}
-                      alt={prod.nameAr}
+                      alt={
+                        language === "ar"
+                          ? prod.nameAr
+                          : language === "id" && prod.nameId
+                          ? prod.nameId
+                          : prod.nameEn
+                      }
                       fill
                       sizes="48px"
                       referrerPolicy="no-referrer"
@@ -753,7 +856,11 @@ export default function AdminClientView({
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-white">
-                      {prod.nameAr}
+                      {language === "ar"
+                        ? prod.nameAr
+                        : language === "id" && prod.nameId
+                        ? prod.nameId
+                        : prod.nameEn}
                     </h4>
                     <span className="text-[11px] font-outfit text-[#EFCC80] font-bold">
                       {prod.basePrice.toLocaleString()} {dict.menu.currency}
@@ -784,7 +891,11 @@ export default function AdminClientView({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-1">
               <span className="text-xs font-bold text-stone-400">
-                {language === "ar" ? "متوسط تقييم جودة الوجبات" : "Average Food Rating"}
+                {language === "ar"
+                  ? "متوسط تقييم جودة الوجبات"
+                  : language === "id"
+                  ? "Rata-rata Rating Makanan"
+                  : "Average Food Rating"}
               </span>
               <div className="flex items-center gap-2">
                 <span className="text-3xl font-black font-outfit text-[#EFCC80]">
@@ -807,7 +918,11 @@ export default function AdminClientView({
 
             <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-1">
               <span className="text-xs font-bold text-stone-400">
-                {language === "ar" ? "متوسط تقييم سرعة الخدمة" : "Average Service Speed"}
+                {language === "ar"
+                  ? "متوسط تقييم سرعة الخدمة"
+                  : language === "id"
+                  ? "Rata-rata Rating Kecepatan Layanan"
+                  : "Average Service Speed"}
               </span>
               <div className="flex items-center gap-2">
                 <span className="text-3xl font-black font-outfit text-emerald-400">
@@ -830,7 +945,11 @@ export default function AdminClientView({
 
             <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-1">
               <span className="text-xs font-bold text-stone-400">
-                {language === "ar" ? "إجمالي التقييمات المستلمة" : "Total Reviews"}
+                {language === "ar"
+                  ? "إجمالي التقييمات المستلمة"
+                  : language === "id"
+                  ? "Total Ulasan Diterima"
+                  : "Total Reviews"}
               </span>
               <div className="text-3xl font-black font-outfit text-white">
                 {ordersWithFeedback.length}
@@ -841,13 +960,23 @@ export default function AdminClientView({
           {/* Reviews List */}
           <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
             <h3 className="text-base font-bold text-white font-cairo">
-              {language === "ar" ? "آراء وتقييمات زبائن بيتزا هاوس" : "Customer Reviews & Feedback"}
+              {language === "ar"
+                ? "آراء وتقييمات زبائن بيتزا هاوس"
+                : language === "id"
+                ? "Ulasan & Masukan Pelanggan Pizza House"
+                : "Customer Reviews & Feedback"}
             </h3>
 
             {ordersWithFeedback.length === 0 ? (
               <div className="py-12 text-center text-xs text-stone-500 space-y-2">
                 <Star className="w-8 h-8 text-stone-600 mx-auto" />
-                <p>{language === "ar" ? "لا توجد تقييمات مسجلة حتى الآن." : "No reviews registered yet."}</p>
+                <p>
+                  {language === "ar"
+                    ? "لا توجد تقييمات مسجلة حتى الآن."
+                    : language === "id"
+                    ? "Belum ada ulasan terdaftar hingga saat ini."
+                    : "No reviews registered yet."}
+                </p>
               </div>
             ) : (
               <div className="divide-y divide-[#222934] space-y-4">
@@ -867,13 +996,21 @@ export default function AdminClientView({
                           </span>
                         </div>
                         <span className="text-[11px] text-stone-400 font-outfit">
-                          {new Date(fb.createdAt).toLocaleDateString("ar-YE")}
+                          {new Date(fb.createdAt).toLocaleDateString(
+                            language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US"
+                          )}
                         </span>
                       </div>
 
                       <div className="flex flex-wrap items-center gap-4 text-[11px]">
                         <div className="flex items-center gap-1">
-                          <span className="text-stone-400">جودة الوجبة:</span>
+                          <span className="text-stone-400">
+                            {language === "ar"
+                              ? "جودة الوجبة:"
+                              : language === "id"
+                              ? "Kualitas Makanan:"
+                              : "Food Quality:"}
+                          </span>
                           <div className="flex text-[#EFCC80]">
                             {[1, 2, 3, 4, 5].map((s: number) => (
                               <Star
@@ -887,7 +1024,13 @@ export default function AdminClientView({
                         </div>
 
                         <div className="flex items-center gap-1">
-                          <span className="text-stone-400">سرعة الخدمة:</span>
+                          <span className="text-stone-400">
+                            {language === "ar"
+                              ? "سرعة الخدمة:"
+                              : language === "id"
+                              ? "Kecepatan Layanan:"
+                              : "Service Speed:"}
+                          </span>
                           <div className="flex text-[#EFCC80]">
                             {[1, 2, 3, 4, 5].map((s: number) => (
                               <Star

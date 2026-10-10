@@ -12,6 +12,7 @@ interface CategoryWithProducts {
   id: string;
   nameAr: string;
   nameEn: string;
+  nameId?: string;
   slug: string;
   products: any[];
 }
@@ -42,10 +43,12 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
         !q ||
-        product.nameAr.toLowerCase().includes(q) ||
-        product.nameEn.toLowerCase().includes(q) ||
-        product.descriptionAr.toLowerCase().includes(q) ||
-        product.descriptionEn.toLowerCase().includes(q);
+        product.nameAr?.toLowerCase().includes(q) ||
+        product.nameEn?.toLowerCase().includes(q) ||
+        (product.nameId && product.nameId.toLowerCase().includes(q)) ||
+        product.descriptionAr?.toLowerCase().includes(q) ||
+        product.descriptionEn?.toLowerCase().includes(q) ||
+        (product.descriptionId && product.descriptionId.toLowerCase().includes(q));
 
       return matchesCategory && matchesSearch;
     });
@@ -57,15 +60,19 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
       <div className="relative text-center space-y-3 max-w-2xl mx-auto pt-2">
         <div className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80]/15 to-[#C69843]/10 border border-[#C69843]/30 px-3.5 py-1 rounded-full text-xs font-bold text-[#EFCC80] shadow-[0_0_15px_rgba(239,204,128,0.15)]">
           <Pizza className="w-3.5 h-3.5 text-[#EFCC80]" />
-          <span>{language === "ar" ? "قائمة أطباق الفرن الحجري الفاخرة" : "Stone-Oven Craft Menu"}</span>
+          <span>
+            {language === "ar"
+              ? "قائمة أطباق الفرن الحجري الفاخرة"
+              : language === "id"
+              ? "Menu Pilihan Oven Batu Spesial"
+              : "Stone-Oven Craft Menu"}
+          </span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-black text-white font-cairo tracking-tight">
           {dict.menu.title}
         </h1>
         <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-          {language === "ar"
-            ? "مخبوزة طازجة على الحجر الطبيعي بعجينة يومية فاخرة وجبن الموزاريلا الإيطالي الأصيل"
-            : dict.menu.subtitle}
+          {dict.menu.subtitle}
         </p>
       </div>
 
@@ -84,7 +91,7 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
             onClick={() => setSearchQuery("")}
             className="absolute top-3.5 end-3 text-xs text-[#EFCC80] hover:text-white transition-colors"
           >
-            مسح
+            {language === "ar" ? "مسح" : language === "id" ? "Hapus" : "Clear"}
           </button>
         )}
       </div>
@@ -112,7 +119,12 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
                 : "bg-[#14181f] text-stone-300 border border-[#222934] hover:border-[#EFCC80]/40 hover:text-white"
             }`}
           >
-            {language === "ar" ? cat.nameAr : cat.nameEn} ({cat.products.length})
+            {language === "ar"
+              ? cat.nameAr
+              : (language === "id" && cat.nameId)
+              ? cat.nameId
+              : cat.nameEn}{" "}
+            ({cat.products.length})
           </button>
         ))}
       </div>
@@ -127,7 +139,11 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
             {dict.menu.emptyCategory}
           </h3>
           <p className="text-xs text-stone-400">
-            {language === "ar" ? "جرب البحث عن أصناف أخرى أو تصفح كامل القائمة" : "Try searching for other items or browse all"}
+            {language === "ar"
+              ? "جرب البحث عن أصناف أخرى أو تصفح كامل القائمة"
+              : language === "id"
+              ? "Coba cari menu lain atau jelajahi seluruh menu kami"
+              : "Try searching for other items or browse all"}
           </p>
         </div>
       ) : (

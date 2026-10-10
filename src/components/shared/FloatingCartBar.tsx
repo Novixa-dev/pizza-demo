@@ -47,7 +47,7 @@ export default function FloatingCartBar() {
 
             <div>
               <span className="text-[11px] text-stone-400 block font-cairo">
-                {language === "ar" ? "سلة الطلب الحالية:" : "Your Current Cart:"}
+                {language === "ar" ? "سلة الطلب الحالية:" : language === "id" ? "Keranjang Anda Saat Ini:" : "Your Current Cart:"}
               </span>
               <span className="text-base font-black text-[#EFCC80] font-outfit">
                 {cartTotal.toLocaleString()} {dict.menu.currency}
@@ -62,14 +62,14 @@ export default function FloatingCartBar() {
               onClick={() => setIsCartOpen(true)}
               className="text-xs text-stone-300 hover:text-[#EFCC80] px-2 py-1.5 hidden sm:inline-block font-bold transition-colors"
             >
-              {language === "ar" ? "معاينة السلة" : "View"}
+              {language === "ar" ? "معاينة السلة" : language === "id" ? "Lihat" : "View"}
             </button>
 
             <Link
               href="/checkout"
               className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 px-5 py-2.5 rounded-2xl text-xs font-black shadow-lg shadow-[#EFCC80]/20 transition-all active:scale-95"
             >
-              <span>{language === "ar" ? "إتمام الطلب" : "Checkout"}</span>
+              <span>{language === "ar" ? "إتمام الطلب" : language === "id" ? "Bayar" : "Checkout"}</span>
               {language === "ar" ? (
                 <ArrowLeft className="w-4 h-4" />
               ) : (
@@ -93,7 +93,7 @@ export default function FloatingCartBar() {
             className="flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] py-2.5 px-2 rounded-xl text-xs font-black shadow-md shadow-amber-950/40 active:scale-95 transition-all text-center"
           >
             <Utensils className="w-3.5 h-3.5 text-[#2C1A04] shrink-0" />
-            <span className="truncate">{language === "ar" ? "قائمة الطعام" : "Menu"}</span>
+            <span className="truncate">{language === "ar" ? "قائمة الطعام" : language === "id" ? "Menu Makanan" : "Menu"}</span>
           </Link>
 
           {/* 2. Map & Location */}
@@ -105,7 +105,7 @@ export default function FloatingCartBar() {
             title="Google Maps"
           >
             <MapPin className="w-3.5 h-3.5 text-[#C69843] shrink-0" />
-            <span>{language === "ar" ? "الخريطة" : "Map"}</span>
+            <span>{language === "ar" ? "الخريطة" : language === "id" ? "Peta" : "Map"}</span>
           </a>
 
           {/* 3. WhatsApp Ordering */}
@@ -117,7 +117,7 @@ export default function FloatingCartBar() {
             title="WhatsApp Orders"
           >
             <MessageCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span>{language === "ar" ? "واتساب" : "WhatsApp"}</span>
+            <span>{language === "ar" ? "واتساب" : language === "id" ? "WhatsApp" : "WhatsApp"}</span>
           </a>
 
           {/* 4. Direct Call */}

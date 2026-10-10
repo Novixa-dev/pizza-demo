@@ -30,6 +30,8 @@ export default function TrackSearchClientView() {
           <p className="text-xs sm:text-sm text-stone-300">
             {language === "ar"
               ? "أدخل رقم الطلب لمعرفة مرحلة الخبز والتجهيز الحالية في الفرع الحجري"
+              : language === "id"
+              ? "Masukkan nomor pesanan untuk melacak proses pemanggangan di oven batu secara langsung"
               : "Enter your order number to track stone oven baking in real-time"}
           </p>
         </div>
@@ -39,15 +41,27 @@ export default function TrackSearchClientView() {
             type="text"
             value={orderQuery}
             onChange={(e) => setOrderQuery(e.target.value)}
-            placeholder="مثلاً: PH-1024 أو رقم الطلب"
+            placeholder={
+              language === "ar"
+                ? "مثلاً: PH-1024 أو رقم الطلب"
+                : language === "id"
+                ? "Contoh: PH-1024 atau nomor pesanan"
+                : "e.g. PH-1024 or order number"
+            }
             className="w-full text-center text-sm p-4 rounded-2xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#C69843] focus:ring-2 focus:ring-[#C69843]/30 font-outfit transition-all shadow-inner"
           />
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(198,152,67,0.35)] active:scale-95 transition-all cursor-pointer"
+            className="w-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(198,152,67,0.35)] active:scale-95 transition-all cursor-pointer font-cairo"
           >
-            <span>{language === "ar" ? "تتبع حالة الطلب الآن" : "Track Order Now"}</span>
+            <span>
+              {language === "ar"
+                ? "تتبع حالة الطلب الآن"
+                : language === "id"
+                ? "Lacak Status Pesanan Sekarang"
+                : "Track Order Now"}
+            </span>
             {language === "ar" ? (
               <ArrowLeft className="w-4 h-4" />
             ) : (
@@ -61,6 +75,8 @@ export default function TrackSearchClientView() {
           <p className="text-stone-400">
             {language === "ar"
               ? "هل تبحث عن جميع طلباتك السابقة أو نسيت رقم الطلب؟"
+              : language === "id"
+              ? "Mencari semua pesanan sebelumnya atau lupa nomor pesanan?"
               : "Looking for all your past orders or forgot your order #?"}
           </p>
           <a
@@ -70,6 +86,8 @@ export default function TrackSearchClientView() {
             <span>
               {language === "ar"
                 ? "استعراض سجل الطلبات برقم الهاتف"
+                : language === "id"
+                ? "Lihat Riwayat Pesanan dengan Nomor HP"
                 : "View Order History by Phone"}
             </span>
             {language === "ar" ? (

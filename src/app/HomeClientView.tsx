@@ -75,10 +75,16 @@ export default function HomeClientView({
       id: "oven-pepperoni",
       nameAr: "بيتزا ببروني كلاسيك",
       nameEn: "Classic Pepperoni Pizza",
+      nameId: "Pizza Pepperoni Klasik",
       descAr: "شرائح ببروني بقري فاخر مع جبنة موزاريلا ذائبة وصلصة الطماطم...",
       descEn: "Premium beef pepperoni slices, melted mozzarella & tomato sauce",
-      prepTime: "⏱️ 15 دقيقة",
-      priceText: "4,500 ر.ي",
+      descId: "Irisan pepperoni sapi premium dengan keju mozzarella leleh dan saus tomat khas...",
+      prepTimeAr: "⏱️ 15 دقيقة",
+      prepTimeEn: "⏱️ 15 mins",
+      prepTimeId: "⏱️ 15 mnt",
+      priceTextAr: "4,500 ر.ي",
+      priceTextEn: "4,500 YER",
+      priceTextId: "4.500 YER",
       numericPrice: 4500,
       category: "pizzas",
       image: "/images/aura/menu-pepperoni.jpg",
@@ -88,10 +94,16 @@ export default function HomeClientView({
       id: "oven-kraft-fatayer",
       nameAr: "فطيرة جبن كرافت بالعسل",
       nameEn: "Kraft Cheese & Honey Fatayer",
+      nameId: "Fatayer Keju Kraft & Madu",
       descAr: "فطيرة ساخنة ومحشوة بجبنة كرافت الأصلية الغنية ومغطاة...",
       descEn: "Hot artisanal pastry loaded with rich Kraft cheese & sweet honey",
-      prepTime: "⏱️ 13 دقيقة",
-      priceText: "2,000 ر.ي",
+      descId: "Kue pastry hangat berisi keju Kraft asli yang melimpah dan lumuran madu manis...",
+      prepTimeAr: "⏱️ 13 دقيقة",
+      prepTimeEn: "⏱️ 13 mins",
+      prepTimeId: "⏱️ 13 mnt",
+      priceTextAr: "2,000 ر.ي",
+      priceTextEn: "2,000 YER",
+      priceTextId: "2.000 YER",
       numericPrice: 2000,
       category: "fatayer",
       image: "/images/aura/menu-kraft-fatayer.jpg",
@@ -101,10 +113,16 @@ export default function HomeClientView({
       id: "oven-garlic-bread",
       nameAr: "خبز بالثوم وجبنة الموزاريلا",
       nameEn: "Garlic Bread with Mozzarella",
+      nameId: "Roti Bawang Putih & Mozzarella",
       descAr: "قطع خبز فرنسي مقرمش مدهونة بزبدة الثوم والأعشاب...",
       descEn: "Crispy French loaf brushed with herb garlic butter & melted cheese",
-      prepTime: "⏱️ 15 دقيقة",
-      priceText: "1,800 ر.ي",
+      descId: "Roti Prancis renyah berbalut mentega bawang putih harum dengan keju meleleh...",
+      prepTimeAr: "⏱️ 15 دقيقة",
+      prepTimeEn: "⏱️ 15 mins",
+      prepTimeId: "⏱️ 15 mnt",
+      priceTextAr: "1,800 ر.ي",
+      priceTextEn: "1,800 YER",
+      priceTextId: "1.800 YER",
       numericPrice: 1800,
       category: "sides",
       image: "/images/aura/menu-garlic-bread.jpg",
@@ -114,10 +132,16 @@ export default function HomeClientView({
       id: "oven-nutella-fatayer",
       nameAr: "فطيرة النوتيلا والموز الدافئة",
       nameEn: "Warm Nutella & Banana Fatayer",
+      nameId: "Fatayer Hangat Nutella & Pisang",
       descAr: "عجينة بيتزا طازجة ومحشوة بشوكولاتة النوتيلا الغنية مع شرائح...",
       descEn: "Fresh sweet dough stuffed with rich Nutella chocolate & banana slices",
-      prepTime: "⏱️ 13 دقيقة",
-      priceText: "2,500 ر.ي",
+      descId: "Adonan manis segar berisi lelehan cokelat Nutella melimpah dan irisan pisang manis...",
+      prepTimeAr: "⏱️ 13 دقيقة",
+      prepTimeEn: "⏱️ 13 mins",
+      prepTimeId: "⏱️ 13 mnt",
+      priceTextAr: "2,500 ر.ي",
+      priceTextEn: "2,500 YER",
+      priceTextId: "2.500 YER",
       numericPrice: 2500,
       category: "fatayer",
       image: "/images/aura/menu-nutella-fatayer.jpg",
@@ -221,36 +245,44 @@ export default function HomeClientView({
       id: "mc-1",
       nameAr: "بيتزا مارجريتا كلاسيك",
       nameEn: "Classic Margherita Pizza",
+      nameId: "Pizza Margherita Klasik",
       descAr: "صلصة طماطم إيطالية غنية، جبنة موزاريلا فاخرة، ريحان طازج",
       descEn: "Rich Italian tomato sauce, premium mozzarella, fresh basil",
-      price: "3,500 YER",
+      descId: "Saus tomat Italia kaya rasa, keju mozzarella premium, daun kemangi segar",
+      numericPrice: 3500,
       img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=160&q=80",
     },
     {
       id: "mc-2",
       nameAr: "بيتزا ببروني إيطالية",
       nameEn: "Italian Pepperoni Pizza",
+      nameId: "Pizza Pepperoni Italia",
       descAr: "شرائح ببروني بقري مدخن، جبنة موزاريلا ذائبة، بهارات حارة خفيفة",
       descEn: "Smoked beef pepperoni slices, melted mozzarella, special spices",
-      price: "4,200 YER",
+      descId: "Irisan pepperoni sapi asap, keju mozzarella leleh, rempah gurih pilihan",
+      numericPrice: 4200,
       img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=160&q=80",
     },
     {
       id: "mc-3",
       nameAr: "بيتزا سوبريم فرن حجري",
       nameEn: "Stone Oven Supreme Pizza",
+      nameId: "Pizza Supreme Oven Batu",
       descAr: "لحم مفروم، فطر طازج، فلفل ألوان، زيتون أسود، وجبنة موزاريلا",
       descEn: "Minced beef, fresh mushrooms, bell peppers, black olives, mozzarella",
-      price: "4,800 YER",
+      descId: "Daging cincang, jamur segar, paprika warna-warni, zaitun hitam, keju mozzarella",
+      numericPrice: 4800,
       img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=160&q=80",
     },
     {
       id: "mc-4",
       nameAr: "بيتزا تشيكن رانش بالثوم",
       nameEn: "Chicken Ranch Garlic Pizza",
+      nameId: "Pizza Ayam Ranch & Bawang Putih",
       descAr: "دجاج متبل مشوي، صوص رانش فاخر، ثومية خفيفة، وأطراف محمرة",
       descEn: "Seasoned grilled chicken, gourmet ranch drizzle, garlic crust",
-      price: "4,500 YER",
+      descId: "Ayam panggang berbumbu, saus ranch gurih, aroma bawang putih lembut, pinggiran renyah",
+      numericPrice: 4500,
       img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=160&q=80",
     },
   ];
@@ -260,36 +292,44 @@ export default function HomeClientView({
       id: "mc-5",
       nameAr: "فطيرة لحم بالجبن البلدي",
       nameEn: "Meat & Melted Cheese Fatayer",
+      nameId: "Fatayer Daging & Keju Leleh",
       descAr: "لحم بقري مفروم بالبهارات الشرقية مع مزيج جبنة قشقوان وموزاريلا",
       descEn: "Spiced minced beef with melted kashkaval & mozzarella cheese",
-      price: "2,500 YER",
+      descId: "Daging sapi cincang rempah dengan kombinasi keju kashkaval dan mozzarella",
+      numericPrice: 2500,
       img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Fatayer.jpg/960px-Fatayer.jpg",
     },
     {
       id: "mc-6",
       nameAr: "فطيرة دجاج شاورما خاصة",
       nameEn: "Chicken Shawarma Fatayer",
+      nameId: "Fatayer Shawarma Ayam Spesial",
       descAr: "دجاج متبل بخلطة الشيف مع مايونيز بالثوم ومخلل خيار مقرمش",
       descEn: "Special seasoned chicken with garlic mayo and crisp pickles",
-      price: "2,200 YER",
+      descId: "Ayam marinasi bumbu khas koki dengan saus mayones bawang putih dan acar renyah",
+      numericPrice: 2200,
       img: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=160&q=80",
     },
     {
       id: "mc-7",
       nameAr: "أصابع الموزاريلا المقرمشة",
       nameEn: "Crispy Mozzarella Sticks",
+      nameId: "Stik Mozzarella Krispi",
       descAr: "5 أصابع مقرمشة محشوة بجبنة موزاريلا تمط مع صوص مارينارا",
       descEn: "5 golden breaded mozzarella sticks with tangy marinara dip",
-      price: "2,000 YER",
+      descId: "5 stik keju mozzarella goreng keemasan dengan cocolan saus marinara segar",
+      numericPrice: 2000,
       img: "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=160&q=80",
     },
     {
       id: "mc-8",
       nameAr: "بطاطس ودجز إيطالية متبلة",
       nameEn: "Seasoned Potato Wedges",
+      nameId: "Kentang Wedges Rempah Italia",
       descAr: "بطاطس ودجز عريضة مخبوزة بأعشاب إيطالية وبارميزان ناعم",
       descEn: "Thick cut potato wedges baked with Italian herbs & parmesan",
-      price: "1,500 YER",
+      descId: "Potongan kentang wedges tebal dipanggang dengan rempah herba Italia & keju parmesan",
+      numericPrice: 1500,
       img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=160&q=80",
     },
   ];
@@ -319,10 +359,18 @@ export default function HomeClientView({
             </div>
             <div className="text-start">
               <h3 className="text-base sm:text-lg font-bold text-white font-cairo">
-                {language === "ar" ? "استلام فوري وتوصيل سريع" : "Fast Delivery & Instant Takeout"}
+                {language === "ar"
+                  ? "استلام فوري وتوصيل سريع"
+                  : language === "id"
+                  ? "Ambil di Toko & Pengantaran Cepat"
+                  : "Fast Delivery & Instant Takeout"}
               </h3>
               <p className="text-xs sm:text-sm text-stone-400 mt-1 font-cairo leading-relaxed">
-                {language === "ar" ? "تجهيز فوري خلال 15 دقيقة بدون انتظار" : "Prepared fresh in 15 mins zero wait"}
+                {language === "ar"
+                  ? "تجهيز فوري خلال 15 دقيقة بدون انتظار"
+                  : language === "id"
+                  ? "Disiapkan segar dalam 15 menit tanpa antre"
+                  : "Prepared fresh in 15 mins zero wait"}
               </p>
             </div>
           </div>
@@ -334,10 +382,18 @@ export default function HomeClientView({
             </div>
             <div className="text-start">
               <h3 className="text-base sm:text-lg font-bold text-white font-cairo">
-                {language === "ar" ? "فرن حجري 100% طازج" : "100% Fresh Stone Oven"}
+                {language === "ar"
+                  ? "فرن حجري 100% طازج"
+                  : language === "id"
+                  ? "100% Oven Batu Alami Segar"
+                  : "100% Fresh Stone Oven"}
               </h3>
               <p className="text-xs sm:text-sm text-stone-400 mt-1 font-cairo leading-relaxed">
-                {language === "ar" ? "عجين يومي مخبوز على الحجر الطبيعي" : "Artisanal dough baked on natural stone"}
+                {language === "ar"
+                  ? "عجين يومي مخبوز على الحجر الطبيعي"
+                  : language === "id"
+                  ? "Adonan harian dipanggang di atas batu alami"
+                  : "Artisanal dough baked on natural stone"}
               </p>
             </div>
           </div>
@@ -349,10 +405,18 @@ export default function HomeClientView({
             </div>
             <div className="text-start">
               <h3 className="text-base sm:text-lg font-bold text-white font-cairo">
-                {language === "ar" ? "دفع محلي آمن ومرن" : "Secure Local Payment"}
+                {language === "ar"
+                  ? "دفع محلي آمن ومرن"
+                  : language === "id"
+                  ? "Pembayaran Lokal Aman & Fleksibel"
+                  : "Secure Local Payment"}
               </h3>
               <p className="text-xs sm:text-sm text-stone-400 mt-1 font-cairo leading-relaxed">
-                {language === "ar" ? "كريمي، العمقي، البسيري، والدفع نقداً" : "Kuraimi, Amqi, Busairi & Cash"}
+                {language === "ar"
+                  ? "كريمي، العمقي، البسيري، والدفع نقداً"
+                  : language === "id"
+                  ? "Kuraimi, Al-Amqi, Al-Busairi & Tunai"
+                  : "Kuraimi, Amqi, Busairi & Cash"}
               </p>
             </div>
           </div>
@@ -366,11 +430,17 @@ export default function HomeClientView({
         <div className="flex items-center justify-between">
           <div className="space-y-1 text-start">
             <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
-              {language === "ar" ? "تسوق حسب التصنيف" : "Shop By Category"}
+              {language === "ar"
+                ? "تسوق حسب التصنيف"
+                : language === "id"
+                ? "Belanja Berdasarkan Kategori"
+                : "Shop By Category"}
             </h2>
             <p className="text-xs sm:text-sm text-stone-400 font-cairo">
               {language === "ar"
                 ? "اختر تشكيلتك المفضلة من أصناف البيتزا والمعجنات الإيطالية"
+                : language === "id"
+                ? "Pilih kategori favorit Anda dari pizza Italia dan aneka pastry lezat"
                 : "Explore our artisan categories crafted daily"}
             </p>
           </div>
@@ -410,6 +480,7 @@ export default function HomeClientView({
               id: "col-1",
               nameAr: "بيتزا ببروني",
               nameEn: "Pepperoni Pizza",
+              nameId: "Pizza Pepperoni",
               img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=300&q=80",
               slug: "pizzas",
             },
@@ -417,6 +488,7 @@ export default function HomeClientView({
               id: "col-2",
               nameAr: "بيتزا مارجريتا",
               nameEn: "Margherita Pizza",
+              nameId: "Pizza Margherita",
               img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=300&q=80",
               slug: "pizzas",
             },
@@ -424,6 +496,7 @@ export default function HomeClientView({
               id: "col-3",
               nameAr: "بيتزا تشيكن رانش",
               nameEn: "Chicken Ranch",
+              nameId: "Pizza Ayam Ranch",
               img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&q=80",
               slug: "pizzas",
             },
@@ -431,6 +504,7 @@ export default function HomeClientView({
               id: "col-4",
               nameAr: "بيتزا سوبريم",
               nameEn: "Supreme Pizza",
+              nameId: "Pizza Supreme",
               img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=80",
               slug: "pizzas",
             },
@@ -438,6 +512,7 @@ export default function HomeClientView({
               id: "col-5",
               nameAr: "فطائر ومعجنات",
               nameEn: "Pastries & Fatayer",
+              nameId: "Fatayer & Pastri",
               img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Fatayer.jpg/960px-Fatayer.jpg",
               slug: "fatayer",
             },
@@ -445,6 +520,7 @@ export default function HomeClientView({
               id: "col-6",
               nameAr: "مقبلات وأصابع",
               nameEn: "Appetizers & Sides",
+              nameId: "Menu Pendamping",
               img: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=300&q=80",
               slug: "sides",
             },
@@ -457,14 +533,14 @@ export default function HomeClientView({
               <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-[#0c0e12] border-2 border-[#C69843]/60 group-hover:border-[#EFCC80] transition-all p-1 shadow-[0_0_15px_rgba(239,204,128,0.2)] group-hover:shadow-[0_0_25px_rgba(239,204,128,0.45)]">
                 <Image
                   src={col.img}
-                  alt={col.nameAr}
+                  alt={language === "ar" ? col.nameAr : language === "id" ? col.nameId : col.nameEn}
                   fill
                   sizes="120px"
                   className="object-cover rounded-full group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
               <span className="text-xs sm:text-sm font-bold text-stone-200 group-hover:text-[#EFCC80] transition-colors font-cairo">
-                {language === "ar" ? col.nameAr : col.nameEn}
+                {language === "ar" ? col.nameAr : language === "id" ? col.nameId : col.nameEn}
               </span>
             </Link>
           ))}
@@ -480,16 +556,24 @@ export default function HomeClientView({
           <div className="relative rounded-2xl bg-[#14161f]/90 backdrop-blur-md border border-[#C69843]/35 hover:border-[#EFCC80] p-6 sm:p-8 overflow-hidden group transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] flex flex-col justify-between min-h-[220px]">
             <div className="relative z-10 space-y-3 max-w-[62%] sm:max-w-[65%] text-start">
               <span className="text-xs font-bold text-[#EFCC80] font-cairo block">
-                {language === "ar" ? "الأكثر طلباً في المكلا" : "Most Popular in Mukalla"}
+                {language === "ar"
+                  ? "الأكثر طلباً في المكلا"
+                  : language === "id"
+                  ? "Paling Favorit di Mukalla"
+                  : "Most Popular in Mukalla"}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white font-cairo leading-snug">
                 {language === "ar"
                   ? "البيتزا الإيطالية الأكثر تفضيلاً هنا"
+                  : language === "id"
+                  ? "Pizza Italia Paling Disukai di Sini"
                   : "The Most Loved Italian Pizza Here"}
               </h3>
               <p className="text-xs text-stone-400 font-cairo leading-relaxed">
                 {language === "ar"
                   ? "جبن موزاريلا ذائب وأطراف مقرمشة ساخنة مخبوزة على الحجر الطبيعي."
+                  : language === "id"
+                  ? "Keju mozzarella meleleh dengan pinggiran garing panas dipanggang di atas batu alami."
                   : "Melted mozzarella with crisp stone-baked edges freshly prepared on natural stone."}
               </p>
               <div className="pt-2">
@@ -498,7 +582,13 @@ export default function HomeClientView({
                   className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[10px] font-black text-xs shadow-md shadow-amber-950/50 transition-all active:scale-95 font-cairo"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
-                  <span>{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
+                  <span>
+                    {language === "ar"
+                      ? "اطلب الآن"
+                      : language === "id"
+                      ? "Pesan Sekarang"
+                      : "Order Now"}
+                  </span>
                 </Link>
               </div>
             </div>
@@ -508,7 +598,7 @@ export default function HomeClientView({
               <div className="relative w-full h-full rounded-full overflow-hidden">
                 <Image
                   src="/images/aura/banner-favorite-pizza.jpg"
-                  alt="البيتزا الإيطالية الأكثر تفضيلاً هنا"
+                  alt={language === "ar" ? "البيتزا الإيطالية الأكثر تفضيلاً هنا" : language === "id" ? "Pizza Italia Terfavorit" : "Most Loved Pizza"}
                   fill
                   sizes="250px"
                   className="object-cover rounded-full"
@@ -521,16 +611,24 @@ export default function HomeClientView({
           <div className="relative rounded-2xl bg-[#14161f]/90 backdrop-blur-md border border-[#C69843]/35 hover:border-[#EFCC80] p-6 sm:p-8 overflow-hidden group transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] flex flex-col justify-between min-h-[220px]">
             <div className="relative z-10 space-y-3 max-w-[62%] sm:max-w-[65%] text-start">
               <span className="text-xs font-bold text-[#EFCC80] font-cairo block">
-                {language === "ar" ? "وجبات التوفير العائلي" : "Family Savings Meals"}
+                {language === "ar"
+                  ? "وجبات التوفير العائلي"
+                  : language === "id"
+                  ? "Paket Hemat Keluarga"
+                  : "Family Savings Meals"}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white font-cairo leading-snug">
                 {language === "ar"
                   ? "وجبات عائلية متكاملة لجميع الأحبة"
+                  : language === "id"
+                  ? "Paket Makanan Lengkap untuk Seluruh Keluarga"
                   : "Complete Family Meals for Loved Ones"}
               </h3>
               <p className="text-xs text-stone-400 font-cairo leading-relaxed">
                 {language === "ar"
                   ? "عروض التوفير الكبرى على أحجام البيتزا الكبيرة مع المقبلات والمشروبات."
+                  : language === "id"
+                  ? "Promo hemat besar untuk pizza ukuran besar lengkap dengan makanan pendamping dan minuman."
                   : "Major savings deals on large pizzas bundled with appetizers and drinks."}
               </p>
               <div className="pt-2">
@@ -539,7 +637,13 @@ export default function HomeClientView({
                   className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[10px] font-black text-xs shadow-md shadow-amber-950/50 transition-all active:scale-95 font-cairo"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
-                  <span>{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
+                  <span>
+                    {language === "ar"
+                      ? "اطلب الآن"
+                      : language === "id"
+                      ? "Pesan Sekarang"
+                      : "Order Now"}
+                  </span>
                 </Link>
               </div>
             </div>
@@ -549,7 +653,7 @@ export default function HomeClientView({
               <div className="relative w-full h-full rounded-full overflow-hidden">
                 <Image
                   src="/images/aura/banner-family-combo.jpg"
-                  alt="وجبات عائلية متكاملة"
+                  alt={language === "ar" ? "وجبات عائلية متكاملة" : language === "id" ? "Paket Hemat Keluarga" : "Family Combo"}
                   fill
                   sizes="250px"
                   className="object-cover rounded-full"
@@ -572,11 +676,17 @@ export default function HomeClientView({
           {/* On the Right in RTL: Section Title */}
           <div className="text-start space-y-1">
             <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
-              {language === "ar" ? "أطباق الفرن الحجري المخبوزة طازجة" : "Fresh Stone-Oven Dishes"}
+              {language === "ar"
+                ? "أطباق الفرن الحجري المخبوزة طازجة"
+                : language === "id"
+                ? "Menu Oven Batu Panggang Segar"
+                : "Fresh Stone-Oven Dishes"}
             </h2>
             <p className="text-xs sm:text-sm text-stone-400 font-cairo max-w-xl">
               {language === "ar"
                 ? "أشهى أنواع البيتزا والفطائر المخبوزة طازجة عند الطلب بأيدي شيف متخصص"
+                : language === "id"
+                ? "Pizza dan fatayer artisanal lezat dipanggang segar saat dipesan oleh koki ahli"
                 : "Handcrafted stone-baked pizzas and pastries baked fresh to order"}
             </p>
           </div>
@@ -584,11 +694,11 @@ export default function HomeClientView({
           {/* On the Left in RTL: Horizontal Filter Tags */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
             {[
-              { id: "all", label: "الكل" },
-              { id: "pizzas", label: "البيتزا الإيطالية" },
-              { id: "fatayer", label: "فطائر ومعجنات" },
-              { id: "sides", label: "المقبلات" },
-              { id: "drinks", label: "المشروبات" },
+              { id: "all", label: language === "ar" ? "الكل" : language === "id" ? "Semua" : "All" },
+              { id: "pizzas", label: language === "ar" ? "البيتزا الإيطالية" : language === "id" ? "Pizza Italia" : "Italian Pizzas" },
+              { id: "fatayer", label: language === "ar" ? "فطائر ومعجنات" : language === "id" ? "Fatayer & Pastri" : "Pastries & Pies" },
+              { id: "sides", label: language === "ar" ? "المقبلات" : language === "id" ? "Menu Pendamping" : "Sides & Appetizers" },
+              { id: "drinks", label: language === "ar" ? "المشروبات" : language === "id" ? "Minuman" : "Drinks" },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -630,7 +740,7 @@ export default function HomeClientView({
 
                 {/* Left in RTL: Orange/Gold Prep-Time Badge */}
                 <span className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-[#EFCC80] border border-[#EFCC80]/40 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1 font-cairo">
-                  <span>{item.prepTime}</span>
+                  <span>{language === "ar" ? item.prepTimeAr : language === "id" ? item.prepTimeId : item.prepTimeEn}</span>
                 </span>
               </div>
 
@@ -639,7 +749,7 @@ export default function HomeClientView({
                 <div className="relative w-full h-full rounded-full overflow-hidden">
                   <Image
                     src={item.image}
-                    alt={item.nameAr}
+                    alt={language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn}
                     fill
                     unoptimized
                     sizes="180px"
@@ -664,10 +774,10 @@ export default function HomeClientView({
               {/* Bold White Title & Small Muted Description */}
               <div className="text-center space-y-1 mb-4 flex-1">
                 <h3 className="text-base sm:text-lg font-bold text-white font-cairo group-hover:text-[#EFCC80] transition-colors line-clamp-1">
-                  {item.nameAr}
+                  {language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn}
                 </h3>
                 <p className="text-[11px] sm:text-xs text-stone-400 font-cairo line-clamp-2 leading-relaxed">
-                  {item.descAr}
+                  {language === "ar" ? item.descAr : language === "id" ? item.descId : item.descEn}
                 </p>
               </div>
 
@@ -675,7 +785,7 @@ export default function HomeClientView({
               <div className="pt-3 border-t border-white/5 flex items-center justify-between w-full mt-auto">
                 {/* Right in RTL: Price in Gold "X,XXX ر.ي" */}
                 <span className="text-sm sm:text-base font-black text-[#EFCC80] font-cairo tracking-wide">
-                  {item.priceText}
+                  {language === "ar" ? item.priceTextAr : language === "id" ? item.priceTextId : item.priceTextEn}
                 </span>
 
                 {/* Left in RTL: Amber Round "+" Button */}
@@ -683,8 +793,8 @@ export default function HomeClientView({
                   type="button"
                   onClick={() => handleAddOvenSpecialty(item)}
                   className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black flex items-center justify-center text-lg shadow-[0_2px_12px_rgba(198,152,67,0.4)] active:scale-90 transition-all cursor-pointer"
-                  title="أضف إلى السلة"
-                  aria-label={`Add ${item.nameAr} to cart`}
+                  title={language === "ar" ? "أضف إلى السلة" : language === "id" ? "Tambah ke Keranjang" : "Add to cart"}
+                  aria-label={`Add ${language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn} to cart`}
                 >
                   +
                 </button>
@@ -699,7 +809,13 @@ export default function HomeClientView({
             href="/menu"
             className="inline-flex items-center gap-2 bg-[#14161f] hover:bg-[#1a1e2b] text-[#EFCC80] border border-[#C69843]/40 hover:border-[#EFCC80] px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold transition-all shadow-lg active:scale-95 group font-cairo"
           >
-            <span>{language === "ar" ? "استعراض كامل القائمة الإيطالية (Menu)" : "View Complete Menu"}</span>
+            <span>
+              {language === "ar"
+                ? "استعراض كامل القائمة الإيطالية (Menu)"
+                : language === "id"
+                ? "Lihat Semua Menu Italia"
+                : "View Complete Menu"}
+            </span>
             <ArrowLeft className="w-4 h-4 rtl:rotate-0 ltr:rotate-180 text-[#EFCC80]" />
           </Link>
         </div>
@@ -722,7 +838,11 @@ export default function HomeClientView({
               />
               <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-transparent to-[#14181f]/80 pointer-events-none" />
               <div className="absolute top-4 start-4 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-xs font-black px-3.5 py-1 rounded-full shadow-lg font-cairo">
-                {language === "ar" ? "عرض حصري" : "Special Offer"}
+                {language === "ar"
+                  ? "عرض حصري"
+                  : language === "id"
+                  ? "Penawaran Spesial"
+                  : "Special Offer"}
               </div>
             </div>
 
@@ -730,11 +850,17 @@ export default function HomeClientView({
             <div className="lg:col-span-6 p-6 sm:p-10 space-y-6 text-start">
               <div className="space-y-2">
                 <h3 className="text-2xl sm:text-4xl font-black text-white font-cairo">
-                  {language === "ar" ? "عرض اليوم التوفيري المميز" : "Deal of The Day"}
+                  {language === "ar"
+                    ? "عرض اليوم التوفيري المميز"
+                    : language === "id"
+                    ? "Promo Hemat Hari Ini"
+                    : "Deal of The Day"}
                 </h3>
                 <p className="text-xs sm:text-sm text-stone-300 leading-relaxed max-w-lg">
                   {language === "ar"
                     ? "بيتزا سوبريم حجرية كبيرة + أصابع جبنة موزاريلا مقرمشة + بيبسي عائلي مثلج بخصم خاص واستلام فوري بدون أي انتظار!"
+                    : language === "id"
+                    ? "Pizza Supreme besar oven batu + Stik mozzarella renyah + Minuman dingin keluarga dengan diskon spesial & ambil langsung!"
                     : "Large Stone-Baked Supreme Pizza + Crispy Mozzarella Sticks + Family Beverage at an exclusive discount for instant pickup!"}
                 </p>
               </div>
@@ -748,17 +874,17 @@ export default function HomeClientView({
                   5,500 YER
                 </span>
                 <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[11px] font-bold px-2 py-0.5 rounded font-outfit">
-                  SAVE 1,300 YER
+                  {language === "ar" ? "وفر 1,300 ر.ي" : language === "id" ? "HEMAT 1.300 YER" : "SAVE 1,300 YER"}
                 </span>
               </div>
 
               {/* 4-Box Countdown Timer (Matches Mockup) */}
               <div className="grid grid-cols-4 gap-2.5 sm:gap-3 max-w-sm">
                 {[
-                  { value: String(timeLeft.days).padStart(2, "0"), labelAr: "يوم", labelEn: "DAYS" },
-                  { value: String(timeLeft.hours).padStart(2, "0"), labelAr: "ساعة", labelEn: "HOURS" },
-                  { value: String(timeLeft.minutes).padStart(2, "0"), labelAr: "دقيقة", labelEn: "MINS" },
-                  { value: String(timeLeft.seconds).padStart(2, "0"), labelAr: "ثانية", labelEn: "SECS" },
+                  { value: String(timeLeft.days).padStart(2, "0"), labelAr: "يوم", labelEn: "DAYS", labelId: "HARI" },
+                  { value: String(timeLeft.hours).padStart(2, "0"), labelAr: "ساعة", labelEn: "HOURS", labelId: "JAM" },
+                  { value: String(timeLeft.minutes).padStart(2, "0"), labelAr: "دقيقة", labelEn: "MINS", labelId: "MENIT" },
+                  { value: String(timeLeft.seconds).padStart(2, "0"), labelAr: "ثانية", labelEn: "SECS", labelId: "DETIK" },
                 ].map((item, idx) => (
                   <div
                     key={idx}
@@ -768,7 +894,7 @@ export default function HomeClientView({
                       {item.value}
                     </span>
                     <span className="text-[10px] sm:text-[11px] font-bold text-stone-400 font-outfit tracking-wider">
-                      {language === "ar" ? item.labelAr : item.labelEn}
+                      {language === "ar" ? item.labelAr : language === "id" ? item.labelId : item.labelEn}
                     </span>
                   </div>
                 ))}
@@ -781,7 +907,13 @@ export default function HomeClientView({
                   className="inline-flex items-center gap-2.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-8 py-3.5 rounded-[12px] font-black text-xs sm:text-sm tracking-wider uppercase shadow-xl shadow-amber-950/60 active:scale-95 transition-all font-cairo"
                 >
                   <ShoppingBag className="w-4 h-4 text-[#2C1A04]" />
-                  <span>{language === "ar" ? "اطلب العرض الآن واستلم فوراً" : "SHOP NOW"}</span>
+                  <span>
+                    {language === "ar"
+                      ? "اطلب العرض الآن واستلم فوراً"
+                      : language === "id"
+                      ? "Pesan Promo Sekarang"
+                      : "SHOP NOW"}
+                  </span>
                 </Link>
               </div>
             </div>
@@ -795,11 +927,17 @@ export default function HomeClientView({
       <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo">
-            {language === "ar" ? "قائمة أسعار أطباقنا (Menu Card)" : "Menu Card"}
+            {language === "ar"
+              ? "قائمة أسعار أطباقنا (Menu Card)"
+              : language === "id"
+              ? "Daftar Harga Menu Pilihan"
+              : "Menu Card"}
           </h2>
           <p className="text-xs text-stone-400 max-w-lg mx-auto">
             {language === "ar"
               ? "مختارات فاخرة محضرة من مكونات طازجة يومياً بأيدي أمهر الطهاة في المكلا"
+              : language === "id"
+              ? "Pilihan istimewa dibuat dari bahan segar setiap hari oleh koki terbaik di Mukalla"
               : "Signature oven selections with verified pricing and fresh daily dough"}
           </p>
         </div>
@@ -809,7 +947,7 @@ export default function HomeClientView({
           {/* Column 1: Pizzas */}
           <div className="bg-[#14181f] border border-[#222934] rounded-2xl p-5 sm:p-7 space-y-6 shadow-xl">
             <h3 className="text-base sm:text-lg font-bold text-[#EFCC80] border-b border-[#222934] pb-3 flex items-center justify-between font-cairo">
-              <span>{language === "ar" ? "أطباق البيتزا الحجرية" : "Artisan Pizzas"}</span>
+              <span>{language === "ar" ? "أطباق البيتزا الحجرية" : language === "id" ? "Menu Pizza Oven Batu" : "Artisan Pizzas"}</span>
               <Pizza className="w-5 h-5 text-[#C69843]" />
             </h3>
 
@@ -819,7 +957,7 @@ export default function HomeClientView({
                   <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-[#222934] bg-[#0c0e12]">
                     <Image
                       src={item.img}
-                      alt={item.nameAr}
+                      alt={language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn}
                       fill
                       sizes="50px"
                       className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -829,22 +967,22 @@ export default function HomeClientView({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2">
                       <h4 className="text-xs sm:text-sm font-bold text-white font-cairo group-hover:text-[#EFCC80] transition-colors truncate">
-                        {language === "ar" ? item.nameAr : item.nameEn}
+                        {language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn}
                       </h4>
                       <div className="flex-1 border-b border-dotted border-stone-600/60 mx-2" />
                       <span className="text-xs sm:text-sm font-bold text-amber-300 font-outfit whitespace-nowrap">
-                        {item.price}
+                        {language === "ar" ? `${item.numericPrice.toLocaleString()} ر.ي` : `${item.numericPrice.toLocaleString()} YER`}
                       </span>
                     </div>
                     <p className="text-[11px] text-stone-400 truncate mt-0.5">
-                      {language === "ar" ? item.descAr : item.descEn}
+                      {language === "ar" ? item.descAr : language === "id" ? item.descId : item.descEn}
                     </p>
                   </div>
 
                   <Link
                     href="/menu"
                     className="w-7 h-7 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-300 group-hover:bg-gradient-to-b group-hover:from-[#EFCC80] group-hover:to-[#C69843] group-hover:text-[#2C1A04] flex items-center justify-center transition-colors shrink-0"
-                    title="اطلب الآن"
+                    title={language === "ar" ? "اطلب الآن" : language === "id" ? "Pesan Sekarang" : "Order Now"}
                   >
                     <Plus className="w-3.5 h-3.5" />
                   </Link>
@@ -856,7 +994,7 @@ export default function HomeClientView({
           {/* Column 2: Pastries & Sides */}
           <div className="bg-[#14181f] border border-[#222934] rounded-2xl p-5 sm:p-7 space-y-6 shadow-xl">
             <h3 className="text-base sm:text-lg font-bold text-[#EFCC80] border-b border-[#222934] pb-3 flex items-center justify-between font-cairo">
-              <span>{language === "ar" ? "الفطائر والمعجنات والمقبلات" : "Pastries & Sides"}</span>
+              <span>{language === "ar" ? "الفطائر والمعجنات والمقبلات" : language === "id" ? "Fatayer, Pastri & Pendamping" : "Pastries & Sides"}</span>
               <Utensils className="w-5 h-5 text-[#C69843]" />
             </h3>
 
@@ -866,7 +1004,7 @@ export default function HomeClientView({
                   <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-[#222934] bg-[#0c0e12]">
                     <Image
                       src={item.img}
-                      alt={item.nameAr}
+                      alt={language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn}
                       fill
                       sizes="50px"
                       className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -876,22 +1014,22 @@ export default function HomeClientView({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2">
                       <h4 className="text-xs sm:text-sm font-bold text-white font-cairo group-hover:text-[#EFCC80] transition-colors truncate">
-                        {language === "ar" ? item.nameAr : item.nameEn}
+                        {language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn}
                       </h4>
                       <div className="flex-1 border-b border-dotted border-stone-600/60 mx-2" />
                       <span className="text-xs sm:text-sm font-bold text-amber-300 font-outfit whitespace-nowrap">
-                        {item.price}
+                        {language === "ar" ? `${item.numericPrice.toLocaleString()} ر.ي` : `${item.numericPrice.toLocaleString()} YER`}
                       </span>
                     </div>
                     <p className="text-[11px] text-stone-400 truncate mt-0.5">
-                      {language === "ar" ? item.descAr : item.descEn}
+                      {language === "ar" ? item.descAr : language === "id" ? item.descId : item.descEn}
                     </p>
                   </div>
 
                   <Link
                     href="/menu"
                     className="w-7 h-7 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-300 group-hover:bg-gradient-to-b group-hover:from-[#EFCC80] group-hover:to-[#C69843] group-hover:text-[#2C1A04] flex items-center justify-center transition-colors shrink-0"
-                    title="اطلب الآن"
+                    title={language === "ar" ? "اطلب الآن" : language === "id" ? "Pesan Sekarang" : "Order Now"}
                   >
                     <Plus className="w-3.5 h-3.5" />
                   </Link>
@@ -928,11 +1066,15 @@ export default function HomeClientView({
             <h3 className="text-xl sm:text-3xl font-black text-white font-cairo">
               {language === "ar"
                 ? "فن صناعة البيتزا الحجرية في المكلا"
+                : language === "id"
+                ? "Seni Pembuatan Pizza Oven Batu di Mukalla"
                 : "Artisan Stone Oven Craftsmanship"}
             </h3>
             <p className="text-xs sm:text-sm text-stone-300 max-w-md mx-auto">
               {language === "ar"
                 ? "مخبوزة يومياً بأيدي أمهر الطهاة بأسرار العجينة الإيطالية الطبيعية"
+                : language === "id"
+                ? "Dipanggang setiap hari oleh koki berbakat dengan resep adonan alami Italia"
                 : "Baked daily on authentic stone oven using time-honored recipes"}
             </p>
           </div>
@@ -988,7 +1130,11 @@ export default function HomeClientView({
           {/* Title on the Right in RTL */}
           <div className="text-start space-y-1">
             <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
-              {language === "ar" ? "ماذا يقول عملاؤنا في المكلا؟" : "What Our Customers Say in Mukalla"}
+              {language === "ar"
+                ? "ماذا يقول عملاؤنا في المكلا؟"
+                : language === "id"
+                ? "Apa Kata Pelanggan Kami di Mukalla?"
+                : "What Our Customers Say in Mukalla"}
             </h2>
           </div>
 

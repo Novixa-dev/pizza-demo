@@ -171,7 +171,13 @@ export default function CustomizerModal({
         <div className="relative h-44 sm:h-52 w-full flex-shrink-0 bg-[#0c0e12]">
           <Image
             src={product.imageUrl}
-            alt={language === "ar" ? product.nameAr : product.nameEn}
+            alt={
+              language === "ar"
+                ? product.nameAr
+                : language === "id" && (product as any).nameId
+                ? (product as any).nameId
+                : product.nameEn
+            }
             fill
             sizes="(max-width: 640px) 100vw, 600px"
             referrerPolicy="no-referrer"
@@ -190,10 +196,18 @@ export default function CustomizerModal({
           {/* Product Title on Image */}
           <div className="absolute bottom-3 start-4 end-4">
             <h3 className="text-xl sm:text-2xl font-black text-white drop-shadow-md">
-              {language === "ar" ? product.nameAr : product.nameEn}
+              {language === "ar"
+                ? product.nameAr
+                : language === "id" && (product as any).nameId
+                ? (product as any).nameId
+                : product.nameEn}
             </h3>
             <p className="text-xs text-stone-300 line-clamp-1 mt-0.5 drop-shadow">
-              {language === "ar" ? product.descriptionAr : product.descriptionEn}
+              {language === "ar"
+                ? product.descriptionAr
+                : language === "id" && (product as any).descriptionId
+                ? (product as any).descriptionId
+                : product.descriptionEn}
             </p>
           </div>
         </div>
@@ -206,10 +220,20 @@ export default function CustomizerModal({
               <div key={group.id} className="space-y-3">
                 <div className="flex justify-between items-center">
                   <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                    <span>{language === "ar" ? group.nameAr : group.nameEn}</span>
+                    <span>
+                      {language === "ar"
+                        ? group.nameAr
+                        : language === "id" && (group as any).nameId
+                        ? (group as any).nameId
+                        : group.nameEn}
+                    </span>
                     {group.isRequired && (
                       <span className="text-[10px] text-[#EFCC80] bg-[#EFCC80]/15 border border-[#EFCC80]/30 px-2.5 py-0.5 rounded-full font-bold">
-                        {language === "ar" ? "إجباري" : "Required"}
+                        {language === "ar"
+                          ? "إجباري"
+                          : language === "id"
+                          ? "Wajib"
+                          : "Required"}
                       </span>
                     )}
                   </h4>
@@ -217,6 +241,8 @@ export default function CustomizerModal({
                     <span className="text-[11px] text-stone-400">
                       {language === "ar"
                         ? `اختر حتى ${group.maxSelect}`
+                        : language === "id"
+                        ? `Pilih hingga ${group.maxSelect}`
                         : `Up to ${group.maxSelect}`}
                     </span>
                   )}
@@ -263,7 +289,11 @@ export default function CustomizerModal({
                             {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                           </div>
                           <span className="text-xs font-bold">
-                            {language === "ar" ? opt.nameAr : opt.nameEn}
+                            {language === "ar"
+                              ? opt.nameAr
+                              : language === "id" && (opt as any).nameId
+                              ? (opt as any).nameId
+                              : opt.nameEn}
                           </span>
                         </div>
 

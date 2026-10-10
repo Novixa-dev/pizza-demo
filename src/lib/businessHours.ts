@@ -14,8 +14,10 @@ export interface RestaurantStatusResult {
   canOrderScheduled: boolean;
   badgeLabelAr: string;
   badgeLabelEn: string;
+  badgeLabelId: string;
   descriptionAr: string;
   descriptionEn: string;
+  descriptionId: string;
   nextShiftOpensAt?: string;
   activeShiftName?: string;
   cutoffTime?: string;
@@ -65,7 +67,7 @@ function toMinutes(timeStr: string): number {
 /**
  * Formats time from decimal minutes to 12-hour display string.
  */
-function formatMinutesTo12h(minutes: number, lang: "ar" | "en" = "ar"): string {
+function formatMinutesTo12h(minutes: number, lang: "ar" | "en" | "id" = "ar"): string {
   const h24 = Math.floor(minutes / 60) % 24;
   const m = minutes % 60;
   const periodAr = h24 >= 12 ? "م" : "ص";
@@ -73,6 +75,9 @@ function formatMinutesTo12h(minutes: number, lang: "ar" | "en" = "ar"): string {
   const h12 = h24 % 12 || 12;
   const mm = String(m).padStart(2, "0");
 
+  if (lang === "id") {
+    return `${String(h24).padStart(2, "0")}:${mm}`;
+  }
   return lang === "ar" ? `${h12}:${mm} ${periodAr}` : `${h12}:${mm} ${periodEn}`;
 }
 
@@ -103,12 +108,15 @@ export function calculateRestaurantStatus({
       canOrderScheduled: false,
       badgeLabelAr: "الطلبات متوقفة مؤقتاً",
       badgeLabelEn: "Ordering Paused",
+      badgeLabelId: "Pemesanan Dijeda Sementara",
       descriptionAr:
         pauseMessageAr ||
         "نعتذر! تم إيقاف استقبال الطلبات الجديدة مؤقتاً بسبب ضغط العمل في المطبخ.",
       descriptionEn:
         pauseMessageEn ||
         "Online ordering is temporarily paused due to kitchen rush. Please check back shortly.",
+      descriptionId:
+        "Mohon maaf! Pemesanan online dijeda sementara karena dapur sedang padat. Silakan periksa kembali sebentar lagi.",
     };
   }
 
@@ -142,8 +150,10 @@ export function calculateRestaurantStatus({
       canOrderScheduled: true,
       badgeLabelAr: "مغلق اليوم",
       badgeLabelEn: "Closed Today",
+      badgeLabelId: "Tutup Hari Ini",
       descriptionAr: "المطعم في عطلة اليوم. يمكنك جدولة طلبك مسبقاً للأيام القادمة.",
       descriptionEn: "Restaurant is closed today. You can pre-order for upcoming days.",
+      descriptionId: "Restoran libur hari ini. Anda dapat menjadwalkan pesanan untuk hari berikutnya.",
     };
   }
 
@@ -172,8 +182,10 @@ export function calculateRestaurantStatus({
           cutoffTime: formatMinutesTo12h(cutoffMins),
           badgeLabelAr: "يغلق قريباً",
           badgeLabelEn: "Closing Soon",
+          badgeLabelId: "Segera Tutup",
           descriptionAr: `الفرع يغلق خلال نصف ساعة (${formatMinutesTo12h(closeMins, "ar")}). الطلبات الفورية متوقفة، ولكن يمكنك جدولة طلبك للفترة القادمة.`,
           descriptionEn: `Branch is closing soon (${formatMinutesTo12h(closeMins, "en")}). Immediate orders closed, but you can schedule for the next shift.`,
+          descriptionId: `Cabang akan tutup dalam 30 menit (${formatMinutesTo12h(closeMins, "id")}). Pesanan langsung ditutup, silakan jadwalkan untuk sesi berikutnya.`,
         };
       }
 
@@ -186,8 +198,10 @@ export function calculateRestaurantStatus({
         activeShiftName: shift.shiftName,
         badgeLabelAr: "مفتوح الآن للطلب",
         badgeLabelEn: "Open for Ordering",
+        badgeLabelId: "Buka Sekarang untuk Dipesan",
         descriptionAr: `مفتوح الآن (${shift.shiftName === "Morning" ? "الفترة الصباحية" : "الفترة المسائية"}) — يمكنك الطلب الفوري أو المجدول بدون انتظار.`,
         descriptionEn: `Open Now (${shift.shiftName} shift) — Immediate pickup & scheduled orders available without waiting.`,
+        descriptionId: `Buka Sekarang (${shift.shiftName === "Morning" ? "Sesi Pagi" : "Sesi Sore"}) — Pesan langsung atau terjadwal tanpa antre.`,
       };
     }
   }
@@ -209,8 +223,10 @@ export function calculateRestaurantStatus({
         nextShiftOpensAt: formatMinutesTo12h(nextOpenMins),
         badgeLabelAr: "مغلق حالياً",
         badgeLabelEn: "Currently Closed",
+        badgeLabelId: "Tutup Saat Ini",
         descriptionAr: `المطعم مغلق حالياً. نفتح ${formatMinutesTo12h(nextOpenMins, "ar")} — يمكنك جدولة موعد استلامك مسبقاً.`,
         descriptionEn: `Restaurant is currently closed. Reopens at ${formatMinutesTo12h(nextOpenMins, "en")} — You can pre-schedule your pickup.`,
+        descriptionId: `Restoran sedang tutup. Buka pukul ${formatMinutesTo12h(nextOpenMins, "id")} — Anda dapat menjadwalkan waktu pengambilan terlebih dahulu.`,
       };
     }
 
@@ -223,8 +239,10 @@ export function calculateRestaurantStatus({
       nextShiftOpensAt: formatMinutesTo12h(nextOpenMins),
       badgeLabelAr: "جدولة فقط (استراحة)",
       badgeLabelEn: "Scheduled Orders Only",
+      badgeLabelId: "Hanya Pesanan Terjadwal (Istirahat)",
       descriptionAr: `الفرع في فترة استراحة بين الشفتين. نفتح ${formatMinutesTo12h(nextOpenMins, "ar")} — يمكنك طلب وجدول حجزك الآن!`,
       descriptionEn: `In between shifts. Reopens at ${formatMinutesTo12h(nextOpenMins, "en")} — You can pre-schedule your order now!`,
+      descriptionId: `Istirahat pergantian shift. Buka pukul ${formatMinutesTo12h(nextOpenMins, "id")} — Anda dapat memesan dan menjadwalkan sekarang!`,
     };
   }
 
@@ -236,7 +254,9 @@ export function calculateRestaurantStatus({
     canOrderScheduled: true,
     badgeLabelAr: "مغلق حالياً",
     badgeLabelEn: "Currently Closed",
+    badgeLabelId: "Tutup Saat Ini",
     descriptionAr: "انتهت فترات العمل لهذا اليوم. نفتح غداً الساعة 8:00 صباحاً (الجمعة 4:00 عصراً). يمكنك جدولة طلبك مسبقاً.",
     descriptionEn: "Closed for today. Reopens tomorrow at 8:00 AM (Friday at 4:00 PM). Pre-orders accepted.",
+    descriptionId: "Jam operasional hari ini telah selesai. Buka besok pukul 08:00 (Jumat 16:00). Pesanan terjadwal diterima.",
   };
 }

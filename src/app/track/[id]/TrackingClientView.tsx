@@ -46,10 +46,23 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
         setShowCancelModal(false);
         router.refresh();
       } else {
-        setCancelError(res.error || "تعذر إلغاء الطلب.");
+        setCancelError(
+          res.error ||
+            (language === "ar"
+              ? "تعذر إلغاء الطلب."
+              : language === "id"
+              ? "Gagal membatalkan pesanan."
+              : "Failed to cancel order.")
+        );
       }
     } catch {
-      setCancelError("حدث خطأ أثناء الاتصال بالخادم.");
+      setCancelError(
+        language === "ar"
+          ? "حدث خطأ أثناء الاتصال بالخادم."
+          : language === "id"
+          ? "Terjadi kesalahan saat menghubungi server."
+          : "An error occurred connecting to the server."
+      );
     } finally {
       setIsCancelling(false);
     }
@@ -72,8 +85,18 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
   const steps = [
     {
       key: "CONFIRMED",
-      label: "تم الاستلام والحجز",
-      desc: "تم تسجيل الطلب في النظام",
+      label:
+        language === "ar"
+          ? "تم الاستلام والحجز"
+          : language === "id"
+          ? "Pesanan Diterima & Masuk Antrean"
+          : "Order Confirmed & Queued",
+      desc:
+        language === "ar"
+          ? "تم تسجيل الطلب في النظام"
+          : language === "id"
+          ? "Pesanan tercatat rapi dalam sistem"
+          : "Order registered in system",
       isComplete: [
         "CONFIRMED",
         "QUEUED",
@@ -84,22 +107,52 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
     },
     {
       key: "PREPARING",
-      label: "في الفرن (جاري التحضير)",
-      desc: "يتم فرد العجينة وخبز البيتزا حالياً",
+      label:
+        language === "ar"
+          ? "في الفرن (جاري التحضير)"
+          : language === "id"
+          ? "Sedang Dipanggang di Oven Batu"
+          : "Baking in Stone Oven",
+      desc:
+        language === "ar"
+          ? "يتم فرد العجينة وخبز البيتزا حالياً"
+          : language === "id"
+          ? "Adonan dibentangkan & dipanggang di oven batu"
+          : "Dough hand-stretched & baking",
       isComplete: ["PREPARING", "READY", "COMPLETED"].includes(order.status),
       isActive: order.status === "PREPARING",
     },
     {
       key: "READY",
-      label: "جاهز للاستلام!",
-      desc: "الطلب ساخن وجاهز في فرع فوه",
+      label:
+        language === "ar"
+          ? "جاهز للاستلام!"
+          : language === "id"
+          ? "Siap Diambil!"
+          : "Ready for Pickup!",
+      desc:
+        language === "ar"
+          ? "الطلب ساخن وجاهز في فرع فوه"
+          : language === "id"
+          ? "Pesanan panas siap di cabang Fuwah"
+          : "Hot & ready at Fuwah branch",
       isComplete: ["READY", "COMPLETED"].includes(order.status),
       isActive: order.status === "READY",
     },
     {
       key: "COMPLETED",
-      label: "تم التسليم بنجاح",
-      desc: "بالهناء والشفاء!",
+      label:
+        language === "ar"
+          ? "تم التسليم بنجاح"
+          : language === "id"
+          ? "Pesanan Telah Selesai"
+          : "Completed Successfully",
+      desc:
+        language === "ar"
+          ? "بالهناء والشفاء!"
+          : language === "id"
+          ? "Selamat menikmati hidangan lezat!"
+          : "Enjoy your meal!",
       isComplete: order.status === "COMPLETED",
     },
   ];
@@ -108,11 +161,14 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
     if (!order.requestedPickupTime) return "";
     try {
       const pickupDate = new Date(order.requestedPickupTime);
-      return pickupDate.toLocaleTimeString(language === "ar" ? "ar-YE" : "en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        timeZone: "Asia/Aden",
-      });
+      return pickupDate.toLocaleTimeString(
+        language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "Asia/Aden",
+        }
+      );
     } catch {
       return "";
     }
@@ -141,7 +197,13 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
               <RotateCw
                 className={`w-3.5 h-3.5 text-[#C69843] ${isRefreshing ? "animate-spin" : ""}`}
               />
-              <span>تحديث الحالة</span>
+              <span>
+                {language === "ar"
+                  ? "تحديث الحالة"
+                  : language === "id"
+                  ? "Perbarui Status"
+                  : "Refresh Status"}
+              </span>
             </button>
 
             <span
@@ -156,18 +218,46 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
               }`}
             >
               {order.status === "READY"
-                ? "جاهز للاستلام الآن!"
+                ? language === "ar"
+                  ? "جاهز للاستلام الآن!"
+                  : language === "id"
+                  ? "Siap diambil sekarang!"
+                  : "Ready for pickup now!"
                 : order.status === "PREPARING"
-                ? "في الفرن (جاري التحضير)"
+                ? language === "ar"
+                  ? "في الفرن (جاري التحضير)"
+                  : language === "id"
+                  ? "Sedang dipanggang di oven batu"
+                  : "Baking in stone oven"
                 : order.status === "QUEUED"
-                ? "مجدول بانتظار وقت الخبز"
+                ? language === "ar"
+                  ? "مجدول بانتظار وقت الخبز"
+                  : language === "id"
+                  ? "Terjadwal menunggu antrean"
+                  : "Scheduled in queue"
                 : order.status === "PAYMENT_PENDING"
-                ? "بانتظار التحقق من الإشعار"
+                ? language === "ar"
+                  ? "بانتظار التحقق من الإشعار"
+                  : language === "id"
+                  ? "Menunggu verifikasi bukti transfer"
+                  : "Pending transfer verification"
                 : order.status === "REJECTED"
-                ? "تم رفض الإشعار"
+                ? language === "ar"
+                  ? "تم رفض الإشعار"
+                  : language === "id"
+                  ? "Bukti transfer ditolak"
+                  : "Transfer rejected"
                 : order.status === "COMPLETED"
-                ? "تم الاستلام بنجاح"
-                : "تم تأكيد الطلب"}
+                ? language === "ar"
+                  ? "تم الاستلام بنجاح"
+                  : language === "id"
+                  ? "Pesanan telah selesai"
+                  : "Successfully completed"
+                : language === "ar"
+                ? "تم تأكيد الطلب"
+                : language === "id"
+                ? "Pesanan dikonfirmasi"
+                : "Order confirmed"}
             </span>
           </div>
         </div>
@@ -180,15 +270,36 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
             </div>
             <div>
               <span className="text-[11px] text-stone-400 block font-cairo">
-                موعد الاستلام المحدد من الفرع:
+                {language === "ar"
+                  ? "موعد الاستلام المحدد من الفرع:"
+                  : language === "id"
+                  ? "Waktu Pengambilan di Cabang:"
+                  : "Scheduled Pickup Time:"}
               </span>
               <span suppressHydrationWarning className="text-base font-black text-[#EFCC80] font-outfit">
-                {formattedPickupTime} ({order.pickupMode === "ASAP" ? "أسرع وقت" : "طلب مجدول"})
+                {formattedPickupTime}{" "}
+                (
+                {order.pickupMode === "ASAP"
+                  ? language === "ar"
+                    ? "أسرع وقت"
+                    : language === "id"
+                    ? "Secepatnya"
+                    : "ASAP"
+                  : language === "ar"
+                  ? "طلب مجدول"
+                  : language === "id"
+                  ? "Terjadwal"
+                  : "Scheduled"}
+                )
               </span>
             </div>
           </div>
           <span className="text-xs font-bold text-[#EFCC80] font-cairo hidden sm:inline">
-            فرع فوه - حي المساكن
+            {language === "ar"
+              ? "فرع فوه - حي المساكن"
+              : language === "id"
+              ? "Cabang Fuwah - Al-Masaken"
+              : "Fuwah Branch - Al-Masaken"}
           </span>
         </div>
 
@@ -197,13 +308,33 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           <div className="p-4 rounded-2xl bg-red-950/60 border border-red-800 text-red-300 text-xs sm:text-sm space-y-1">
             <p className="font-bold flex items-center gap-2">
               <AlertCircle className="w-4 h-4 text-red-400" />
-              <span>نعتذر، لم يتم تأكيد إشعار التحويل.</span>
+              <span>
+                {language === "ar"
+                  ? "نعتذر، لم يتم تأكيد إشعار التحويل."
+                  : language === "id"
+                  ? "Mohon maaf, bukti transfer tidak dapat diverifikasi."
+                  : "Sorry, the transfer receipt could not be verified."}
+              </span>
             </p>
             <p className="text-stone-400 text-xs">
-              سبب الرفض: {order.payment?.rejectReason || "الإشعار غير مطابق."}
+              {language === "ar"
+                ? "سبب الرفض: "
+                : language === "id"
+                ? "Alasan penolakan: "
+                : "Reject reason: "}
+              {order.payment?.rejectReason ||
+                (language === "ar"
+                  ? "الإشعار غير مطابق."
+                  : language === "id"
+                  ? "Bukti transfer tidak sesuai."
+                  : "Receipt mismatch.")}
             </p>
             <p className="pt-2 text-xs font-bold">
-              يرجى التواصل معنا عبر واتساب لمعالجة الطلب أو الدفع عند الاستلام نقداً في الفرع.
+              {language === "ar"
+                ? "يرجى التواصل معنا عبر واتساب لمعالجة الطلب أو الدفع عند الاستلام نقداً في الفرع."
+                : language === "id"
+                ? "Silakan hubungi kami via WhatsApp untuk memproses pesanan atau bayar tunai langsung di cabang."
+                : "Please contact us via WhatsApp to resolve your order or pay cash upon pickup at the branch."}
             </p>
           </div>
         )}
@@ -229,7 +360,13 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-6">
         <h3 className="text-base font-bold text-white font-cairo flex items-center gap-2">
           <Flame className="w-4 h-4 text-[#C69843]" />
-          <span>مراحل تجهيز طلبك في الفرن الحجري</span>
+          <span>
+            {language === "ar"
+              ? "مراحل تجهيز طلبك في الفرن الحجري"
+              : language === "id"
+              ? "Tahapan Pesanan di Oven Batu"
+              : "Stone Oven Order Stages"}
+          </span>
         </h3>
 
         <div className="space-y-6">
@@ -292,8 +429,17 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       {/* Order Item Details Card */}
       <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-7 rounded-3xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
         <h3 className="text-base font-bold text-white border-b border-white/10 pb-3 flex items-center justify-between">
-          <span>تفاصيل الأصناف المطلوبة</span>
-          <span className="text-xs text-[#EFCC80] font-normal">{order.items?.length || 0} أصناف</span>
+          <span>
+            {language === "ar"
+              ? "تفاصيل الأصناف المطلوبة"
+              : language === "id"
+              ? "Rincian Item Pesanan"
+              : "Order Item Details"}
+          </span>
+          <span className="text-xs text-[#EFCC80] font-normal">
+            {order.items?.length || 0}{" "}
+            {language === "ar" ? "أصناف" : language === "id" ? "item" : "items"}
+          </span>
         </h3>
 
         <div className="space-y-3">
@@ -304,12 +450,23 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
             >
               <div>
                 <span className="font-bold text-white text-sm">
-                  {item.quantity}x {language === "ar" ? item.productNameAr : item.productNameEn}
+                  {item.quantity}x{" "}
+                  {language === "ar"
+                    ? item.productNameAr
+                    : (language === "id" && item.productNameId)
+                    ? item.productNameId
+                    : item.productNameEn}
                 </span>
                 {item.options && item.options.length > 0 && (
                   <p className="text-[11px] text-[#EFCC80] mt-0.5">
                     {item.options
-                      .map((o: any) => (language === "ar" ? o.nameAr : o.nameEn))
+                      .map((o: any) =>
+                        language === "ar"
+                          ? o.nameAr
+                          : (language === "id" && o.nameId)
+                          ? o.nameId
+                          : o.nameEn
+                      )
                       .join(" • ")}
                   </p>
                 )}
@@ -328,7 +485,13 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
         </div>
 
         <div className="flex justify-between items-center text-base font-black text-white pt-2 border-t border-white/10">
-          <span>إجمالي المبلغ:</span>
+          <span>
+            {language === "ar"
+              ? "إجمالي المبلغ:"
+              : language === "id"
+              ? "Total Pembayaran:"
+              : "Total Amount:"}
+          </span>
           <span className="text-xl sm:text-2xl text-[#EFCC80] font-outfit">
             {order.total.toLocaleString()} {dict.menu.currency}
           </span>
@@ -339,11 +502,15 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <a
           href={`https://wa.me/967772207788?text=${encodeURIComponent(
-            `مرحباً بيتزا هاوس، بخصوص طلبي رقم ${order.orderNumber}`
+            language === "ar"
+              ? `مرحباً بيتزا هاوس، بخصوص طلبي رقم ${order.orderNumber}`
+              : language === "id"
+              ? `Halo Pizza House, mengenai pesanan saya nomor ${order.orderNumber}`
+              : `Hello Pizza House, regarding my order #${order.orderNumber}`
           )}`}
           target="_blank"
           rel="noreferrer"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3.5 rounded-2xl text-xs font-bold shadow-md shadow-emerald-600/30 transition-all cursor-pointer"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3.5 rounded-2xl text-xs font-bold shadow-md shadow-emerald-600/30 transition-all cursor-pointer font-cairo"
         >
           <Phone className="w-4 h-4" />
           <span>{dict.tracking.helpWhatsApp}</span>
@@ -351,15 +518,21 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
 
         <Link
           href={`/history?phone=${encodeURIComponent(order.customerPhone.replace(/\D/g, ""))}`}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#14181f] hover:bg-[#1c212d] text-stone-200 hover:text-white px-6 py-3.5 rounded-2xl text-xs font-bold transition-all border border-[#222934] hover:border-[#EFCC80]/40"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#14181f] hover:bg-[#1c212d] text-stone-200 hover:text-white px-6 py-3.5 rounded-2xl text-xs font-bold transition-all border border-[#222934] hover:border-[#EFCC80]/40 font-cairo"
         >
           <Clock className="w-4 h-4 text-[#C69843]" />
-          <span>{language === "ar" ? "سجل طلباتي السابقة" : "My Order History"}</span>
+          <span>
+            {language === "ar"
+              ? "سجل طلباتي السابقة"
+              : language === "id"
+              ? "Riwayat Pesanan Saya"
+              : "My Order History"}
+          </span>
         </Link>
 
         <Link
           href="/menu"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black px-6 py-3.5 rounded-2xl text-xs shadow-md shadow-amber-950/40 transition-all active:scale-95"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black px-6 py-3.5 rounded-2xl text-xs shadow-md shadow-amber-950/40 transition-all active:scale-95 font-cairo"
         >
           <Pizza className="w-4 h-4 fill-current" />
           <span>{dict.tracking.backToMenu}</span>
@@ -374,33 +547,43 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
             const nextMock = order.status === "PREPARING" ? "READY" : "PREPARING";
             (window as any).__triggerTestOrderToast?.(nextMock);
           }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-800/60 font-bold transition-colors text-[11px]"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-800/60 font-bold transition-colors text-[11px] font-cairo"
         >
           <Bell className="w-3.5 h-3.5 text-amber-500" />
-          <span>{language === "ar" ? "تجربة صوت وتنبيه التحديث الفوري 🔔" : "Test Live Toast & Chime Alert 🔔"}</span>
+          <span>
+            {language === "ar"
+              ? "تجربة صوت وتنبيه التحديث الفوري 🔔"
+              : language === "id"
+              ? "Tes Notifikasi & Suara 🔔"
+              : "Test Live Toast & Chime Alert 🔔"}
+          </span>
         </button>
 
         {order.status !== "COMPLETED" && (
           <button
             type="button"
             onClick={() => setPreviewFeedback(!previewFeedback)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 font-bold transition-colors text-[11px]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 font-bold transition-colors text-[11px] font-cairo"
           >
             <span>⭐</span>
             <span>
               {previewFeedback
                 ? language === "ar"
                   ? "إخفاء نموذج التقييم"
+                  : language === "id"
+                  ? "Sembunyikan Formulir Ulasan"
                   : "Hide Feedback Form"
                 : language === "ar"
                 ? "معاينة نموذج تقييم الخدمة ⭐"
+                : language === "id"
+                ? "Beri Ulasan Layanan ⭐"
                 : "Preview Feedback Form ⭐"}
             </span>
           </button>
         )}
       </div>
 
-      <div className="text-center">
+      <div className="text-center font-cairo">
         {isOwner && order.trackingToken && ["PENDING", "PAYMENT_PENDING", "QUEUED"].includes(order.status) && (
           <div className="pt-2">
             {cancelError && (
@@ -411,7 +594,17 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
               disabled={isCancelling}
               className="text-xs text-red-600 dark:text-red-400 hover:underline font-bold disabled:opacity-50"
             >
-              {isCancelling ? "جاري الإلغاء..." : "إلغاء هذا الطلب"}
+              {isCancelling
+                ? language === "ar"
+                  ? "جاري الإلغاء..."
+                  : language === "id"
+                  ? "Membatalkan..."
+                  : "Cancelling..."
+                : language === "ar"
+                ? "إلغاء هذا الطلب"
+                : language === "id"
+                ? "Batalkan pesanan ini"
+                : "Cancel this order"}
             </button>
           </div>
         )}
@@ -427,11 +620,17 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
 
             <div className="space-y-1">
               <h3 className="text-base font-bold text-white font-cairo">
-                {language === "ar" ? "تأكيد إلغاء الطلب" : "Cancel Order Confirmation"}
+                {language === "ar"
+                  ? "تأكيد إلغاء الطلب"
+                  : language === "id"
+                  ? "Konfirmasi Pembatalan Pesanan"
+                  : "Cancel Order Confirmation"}
               </h3>
               <p className="text-xs text-stone-400">
                 {language === "ar"
                   ? "هل أنت متأكد من رغبتك في إلغاء هذا الطلب؟ لا يمكن التراجع بعد الإلغاء."
+                  : language === "id"
+                  ? "Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini tidak dapat dibatalkan."
                   : "Are you sure you want to cancel this order? This cannot be undone."}
               </p>
             </div>
@@ -449,7 +648,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
                 disabled={isCancelling}
                 className="flex-1 py-2.5 px-4 rounded-xl border border-[#222934] bg-[#0c0e12] text-xs font-bold text-stone-300 hover:text-white transition-colors"
               >
-                {language === "ar" ? "تراجع" : "Keep Order"}
+                {language === "ar" ? "تراجع" : language === "id" ? "Kembali" : "Keep Order"}
               </button>
               <button
                 type="button"
@@ -460,9 +659,13 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
                 {isCancelling
                   ? language === "ar"
                     ? "جاري الإلغاء..."
+                    : language === "id"
+                    ? "Membatalkan..."
                     : "Cancelling..."
                   : language === "ar"
                   ? "نعم، إلغاء الطلب"
+                  : language === "id"
+                  ? "Ya, Batalkan Pesanan"
                   : "Yes, Cancel"}
               </button>
             </div>

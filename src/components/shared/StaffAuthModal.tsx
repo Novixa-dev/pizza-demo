@@ -10,8 +10,10 @@ interface StaffAuthModalProps {
   requiredRole: StaffRole;
   titleAr: string;
   titleEn: string;
+  titleId?: string;
   descriptionAr: string;
   descriptionEn: string;
+  descriptionId?: string;
   onSuccess?: () => void;
 }
 
@@ -19,8 +21,10 @@ export default function StaffAuthModal({
   requiredRole,
   titleAr,
   titleEn,
+  titleId,
   descriptionAr,
   descriptionEn,
+  descriptionId,
   onSuccess,
 }: StaffAuthModalProps) {
   const { language } = useApp();
@@ -33,7 +37,13 @@ export default function StaffAuthModal({
     setError(null);
 
     if (!pin.trim()) {
-      setError(language === "ar" ? "يرجى إدخال الرمز السري." : "Please enter PIN.");
+      setError(
+        language === "ar"
+          ? "يرجى إدخال الرمز السري."
+          : language === "id"
+          ? "Silakan masukkan kode PIN."
+          : "Please enter PIN."
+      );
       return;
     }
 
@@ -47,10 +57,23 @@ export default function StaffAuthModal({
           window.location.reload();
         }
       } else {
-        setError(res.error || "رمز الدخول غير صحيح.");
+        setError(
+          res.error ||
+            (language === "ar"
+              ? "رمز الدخول غير صحيح."
+              : language === "id"
+              ? "Kode PIN salah."
+              : "Invalid PIN code.")
+        );
       }
     } catch {
-      setError("حدث خطأ أثناء الاتصال بالخادم.");
+      setError(
+        language === "ar"
+          ? "حدث خطأ أثناء الاتصال بالخادم."
+          : language === "id"
+          ? "Terjadi kesalahan koneksi server."
+          : "Connection error occurred."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -65,10 +88,10 @@ export default function StaffAuthModal({
 
         <div className="space-y-1.5">
           <h2 className="text-xl font-black text-white font-cairo">
-            {language === "ar" ? titleAr : titleEn}
+            {language === "ar" ? titleAr : (language === "id" && titleId) ? titleId : titleEn}
           </h2>
           <p className="text-xs text-stone-400">
-            {language === "ar" ? descriptionAr : descriptionEn}
+            {language === "ar" ? descriptionAr : (language === "id" && descriptionId) ? descriptionId : descriptionEn}
           </p>
         </div>
 
@@ -103,9 +126,13 @@ export default function StaffAuthModal({
               {isLoading
                 ? language === "ar"
                   ? "جاري التحقق..."
+                  : language === "id"
+                  ? "Memverifikasi..."
                   : "Verifying..."
                 : language === "ar"
                 ? "تأكيد الدخول"
+                : language === "id"
+                ? "Konfirmasi Akses"
                 : "Unlock Access"}
             </span>
             {language === "ar" ? (
@@ -121,7 +148,7 @@ export default function StaffAuthModal({
             href="/"
             className="text-xs text-[#EFCC80]/70 hover:text-[#EFCC80] transition-colors"
           >
-            {language === "ar" ? "العودة للرئيسية" : "Back to Home"}
+            {language === "ar" ? "العودة للرئيسية" : language === "id" ? "Kembali ke Beranda" : "Back to Home"}
           </a>
         </div>
       </div>

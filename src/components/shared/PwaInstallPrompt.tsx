@@ -51,6 +51,8 @@ export default function PwaInstallPrompt() {
       alert(
         language === "ar"
           ? "لتثبيت التطبيق على جهازك: اضغط على زر المشاركة في متصفحك ثم اختر 'إضافة إلى الشاشة الرئيسية' 📲"
+          : language === "id"
+          ? "Untuk menginstal aplikasi: Ketuk tombol Bagikan di browser Anda lalu pilih 'Tambahkan ke Layar Utama' 📲"
           : "To install: Tap the Share button in your browser and select 'Add to Home Screen' 📲"
       );
       return;
@@ -80,12 +82,14 @@ export default function PwaInstallPrompt() {
           <div>
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-bold font-cairo text-white">
-                {language === "ar" ? "تطبيق بيتزا هاوس" : "Pizza House App"}
+                {language === "ar" ? "تطبيق بيتزا هاوس" : language === "id" ? "Aplikasi Pizza House" : "Pizza House App"}
               </span>
             </div>
             <p className="text-[11px] text-stone-300">
               {language === "ar"
                 ? "ثبّت التطبيق للطلب السريع والتنبيهات المباشرة"
+                : language === "id"
+                ? "Instal aplikasi untuk pemesanan cepat & notifikasi langsung"
                 : "Install for 1-tap ordering & fast pickup"}
             </p>
           </div>
@@ -98,7 +102,7 @@ export default function PwaInstallPrompt() {
             className="inline-flex items-center gap-1 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-3 py-1.5 rounded-xl text-xs shadow-md shadow-amber-950/40 transition-all active:scale-95"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>{language === "ar" ? "تثبيت" : "Install"}</span>
+            <span>{language === "ar" ? "تثبيت" : language === "id" ? "Instal" : "Install"}</span>
           </button>
 
           <button

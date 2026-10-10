@@ -47,16 +47,24 @@ export default function StoneOvenLiveView({
             </div>
             <div>
               <span className="text-xs font-bold text-[#EFCC80] font-cairo block">
-                {language === "ar" ? "فرن الحجر الطبيعي المباشر" : "Live Traditional Stone Oven"}
+                {language === "ar"
+                  ? "فرن الحجر الطبيعي المباشر"
+                  : language === "id"
+                  ? "Oven Batu Tradisional Langsung"
+                  : "Live Traditional Stone Oven"}
               </span>
               <h4 className="text-sm font-black font-cairo text-white flex items-center gap-1.5">
                 <span>
                   {isReady
                     ? language === "ar"
                       ? "خرجت البيتزا ساخنة من الفرن! 🍕"
+                      : language === "id"
+                      ? "Pizza Baru Matang Segar dari Oven! 🍕"
                       : "Pizza Baked to Perfection! 🍕"
                     : language === "ar"
                     ? "طلبك في الفرن الحجري الآن 🔥"
+                    : language === "id"
+                    ? "Pesanan Anda Sedang Dipanggang di Oven Batu 🔥"
                     : "Your Order is in the Stone Oven 🔥"}
                 </span>
               </h4>
@@ -67,7 +75,9 @@ export default function StoneOvenLiveView({
             <div className="bg-[#0c0e12] px-3 py-1.5 rounded-xl border border-[#222934] text-xs font-bold flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#EFCC80] animate-ping" />
               <span className="text-white font-outfit font-black">{ovenTemp}°C</span>
-              <span className="text-[10px] text-stone-400">{language === "ar" ? "حرارة الفرن" : "Oven Temp"}</span>
+              <span className="text-[10px] text-stone-400">
+                {language === "ar" ? "حرارة الفرن" : language === "id" ? "Suhu Oven" : "Oven Temp"}
+              </span>
             </div>
           </div>
         </div>
@@ -88,15 +98,21 @@ export default function StoneOvenLiveView({
                   {isReady
                     ? language === "ar"
                       ? "مستوى النضج: 100% مقرمشة وموزاريللا ذائبة"
+                      : language === "id"
+                      ? "Kematangan: 100% Mozzarella Meleleh & Pinggiran Renyah"
                       : "Bake Level: 100% Melted Mozzarella & Crispy Crust"
                     : language === "ar"
                     ? "مستوى النضج: جاري تحمير الأطراف وإذابة الجبن"
-                      : "Bake Level: Melting Cheese & Stone Crust"}
+                    : language === "id"
+                    ? "Kematangan: Proses Melelehkan Keju & Memanggang Pinggiran"
+                    : "Bake Level: Melting Cheese & Stone Crust"}
                 </span>
               </div>
               <p className="text-[11px] text-stone-400">
                 {language === "ar"
                   ? "تُخبز عجينة بيتزا هاوس المخمرة طبيعياً على أرضية حجرية لتمنحك النكهة المقرمشة والطرية."
+                  : language === "id"
+                  ? "Adonan fermentasi alami Pizza House dipanggang langsung di atas batu untuk kerenyahan khas dan tekstur lembut."
                   : "Baked directly on volcanic stone floor for our signature artisan crunch and airy crumb."}
               </p>
             </div>
@@ -104,7 +120,9 @@ export default function StoneOvenLiveView({
 
           <div className="w-full sm:w-48 space-y-1.5 shrink-0">
             <div className="flex justify-between text-[11px] font-black">
-              <span className="text-stone-400">{language === "ar" ? "تقدم الخبز:" : "Bake Progress:"}</span>
+              <span className="text-stone-400">
+                {language === "ar" ? "تقدم الخبز:" : language === "id" ? "Progres Pemanggangan:" : "Bake Progress:"}
+              </span>
               <span className="text-[#EFCC80] font-outfit">{isReady ? "100%" : `${bakingProgress}%`}</span>
             </div>
             <div className="w-full bg-[#14181f] h-2.5 rounded-full overflow-hidden border border-[#222934]">
@@ -119,7 +137,11 @@ export default function StoneOvenLiveView({
             </div>
             {pickupTimeText && (
               <span className="text-[10px] text-stone-400 block text-end font-bold">
-                {language === "ar" ? `الاستلام: ${pickupTimeText}` : `Pickup: ${pickupTimeText}`}
+                {language === "ar"
+                  ? `الاستلام: ${pickupTimeText}`
+                  : language === "id"
+                  ? `Pengambilan: ${pickupTimeText}`
+                  : `Pickup: ${pickupTimeText}`}
               </span>
             )}
           </div>

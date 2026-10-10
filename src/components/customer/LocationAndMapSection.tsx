@@ -79,6 +79,7 @@ export default function LocationAndMapSection() {
       icon: Users,
       badgeAr: "عوائل ونساء",
       badgeEn: "Families",
+      badgeId: "Keluarga & Wanita",
     },
     {
       id: "youth",
@@ -87,6 +88,7 @@ export default function LocationAndMapSection() {
       icon: Building2,
       badgeAr: "صالة شباب",
       badgeEn: "Youth Hall",
+      badgeId: "Ruang Pemuda",
     },
     {
       id: "outdoor",
@@ -95,6 +97,7 @@ export default function LocationAndMapSection() {
       icon: Compass,
       badgeAr: "جلسات خارجية",
       badgeEn: "Outdoor",
+      badgeId: "Area Terbuka",
     },
     {
       id: "pickup",
@@ -103,31 +106,32 @@ export default function LocationAndMapSection() {
       icon: Store,
       badgeAr: "استلام فوري",
       badgeEn: "Fast Pickup",
+      badgeId: "Ambil Cepat",
     },
   ];
 
   const phones = [
     {
-      label: language === "ar" ? "الهاتف الثابت" : "Landline",
+      label: language === "ar" ? "الهاتف الثابت" : language === "id" ? "Telepon Rumah" : "Landline",
       number: "05-375561",
       href: "tel:05375561",
       network: "Landline",
     },
     {
-      label: language === "ar" ? "واتساب ويمن موبايل" : "WhatsApp / Yemen Mobile",
+      label: language === "ar" ? "واتساب ويمن موبايل" : language === "id" ? "WhatsApp / Yemen Mobile" : "WhatsApp / Yemen Mobile",
       number: "772207788",
       href: "https://wa.me/967772207788",
       network: "WhatsApp & Mobile",
       primary: true,
     },
     {
-      label: language === "ar" ? "شبكة يو (MTN)" : "YOU Network",
+      label: language === "ar" ? "شبكة يو (MTN)" : language === "id" ? "Jaringan YOU" : "YOU Network",
       number: "738227788",
       href: "tel:0738227788",
       network: "YOU",
     },
     {
-      label: language === "ar" ? "شبكة سبأفون" : "Sabafon",
+      label: language === "ar" ? "شبكة سبأفون" : language === "id" ? "Jaringan Sabafon" : "Sabafon",
       number: "711227788",
       href: "tel:0711227788",
       network: "Sabafon",
@@ -136,18 +140,18 @@ export default function LocationAndMapSection() {
 
   const instagramPosts = [
     {
-      title: language === "ar" ? "بيتزا سوبر سوبريم إيطالية" : "Super Supreme Stone Pizza",
-      desc: language === "ar" ? "مخبوزة بجبنة موزاريلا فاخرة وخضار طازجة" : "Baked with fine mozzarella and fresh veg",
+      title: language === "ar" ? "بيتزا سوبر سوبريم إيطالية" : language === "id" ? "Pizza Super Supreme Italia" : "Super Supreme Stone Pizza",
+      desc: language === "ar" ? "مخبوزة بجبنة موزاريلا فاخرة وخضار طازجة" : language === "id" ? "Dipanggang dengan keju mozzarella premium & sayuran segar" : "Baked with fine mozzarella and fresh veg",
       img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80",
     },
     {
-      title: language === "ar" ? "فطيرة دجاج وجبن عكاوي" : "Chicken & Akawi Fatayer",
-      desc: language === "ar" ? "عجينة مقرمشة من أفران الصباح الباكر" : "Golden dough from our morning ovens",
+      title: language === "ar" ? "فطيرة دجاج وجبن عكاوي" : language === "id" ? "Fatayer Ayam & Keju Akawi" : "Chicken & Akawi Fatayer",
+      desc: language === "ar" ? "عجينة مقرمشة من أفران الصباح الباكر" : language === "id" ? "Adonan renyah dari oven pagi hari kami" : "Golden dough from our morning ovens",
       img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80",
     },
     {
-      title: language === "ar" ? "الصلصات المميزة والرانش" : "Signature Sauces & Dips",
-      desc: language === "ar" ? "ثومية كريمية، هلابينو حار، صوص فرنسي" : "Creamy garlic, spicy jalapeno, ranch",
+      title: language === "ar" ? "الصلصات المميزة والرانش" : language === "id" ? "Saus Khas & Cocolan Ranch" : "Signature Sauces & Dips",
+      desc: language === "ar" ? "ثومية كريمية، هلابينو حار، صوص فرنسي" : language === "id" ? "Bawang putih krimi, jalapeno pedas, saus ranch" : "Creamy garlic, spicy jalapeno, ranch",
       img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80",
     },
   ];
@@ -204,13 +208,13 @@ export default function LocationAndMapSection() {
               <>
                 <Check className="w-4 h-4 text-emerald-400" />
                 <span className="text-emerald-400 font-bold">
-                  {language === "ar" ? "تم النسخ" : "Copied"}
+                  {language === "ar" ? "تم النسخ" : language === "id" ? "Tersalin" : "Copied"}
                 </span>
               </>
             ) : (
               <>
                 <Copy className="w-4 h-4 text-stone-400" />
-                <span>{language === "ar" ? "نسخ" : "Copy"}</span>
+                <span>{language === "ar" ? "نسخ" : language === "id" ? "Salin" : "Copy"}</span>
               </>
             )}
           </button>
@@ -225,13 +229,13 @@ export default function LocationAndMapSection() {
               <>
                 <Check className="w-4 h-4 text-emerald-400" />
                 <span className="text-emerald-400 font-bold">
-                  {language === "ar" ? "تم نسخ الرابط" : "Link Copied"}
+                  {language === "ar" ? "تم نسخ الرابط" : language === "id" ? "Tautan Tersalin" : "Link Copied"}
                 </span>
               </>
             ) : (
               <>
                 <Share2 className="w-4 h-4 text-stone-400" />
-                <span>{language === "ar" ? "مشاركة" : "Share"}</span>
+                <span>{language === "ar" ? "مشاركة" : language === "id" ? "Bagikan" : "Share"}</span>
               </>
             )}
           </button>
@@ -268,6 +272,8 @@ export default function LocationAndMapSection() {
                   <p className="text-[11px] text-stone-300 font-cairo">
                     {language === "ar"
                       ? "حي المساكن - بعد جامعة الأحقاف ومستوصف النور"
+                      : language === "id"
+                      ? "Distrik Al-Masaken - dekat Univ. Al-Ahgaff & Klinik Al-Noor"
                       : "Al-Masaken - near Al-Ahgaff Univ & Al-Noor"}
                   </p>
                 </div>
@@ -289,11 +295,13 @@ export default function LocationAndMapSection() {
             <Compass className="w-5 h-5 text-[#C69843] shrink-0 mt-0.5" />
             <div>
               <span className="font-bold text-white block mb-0.5">
-                {language === "ar" ? "إرشادات الوصول السريع:" : "Quick Route Guidance:"}
+                {language === "ar" ? "إرشادات الوصول السريع:" : language === "id" ? "Petunjuk Arah Cepat:" : "Quick Route Guidance:"}
               </span>
               <span>
                 {language === "ar"
                   ? "عند الدخول إلى فوه من الخط الدائري العام باتجاه حي المساكن، تجاوز مجمع كليات جامعة الأحقاف، وبمجرد الوصول إلى مستوصف النور انعطف يميناً مباشرة لتجد المطعم بواجهته المميزة ومواقف السيارات المريحة."
+                  : language === "id"
+                  ? "Saat memasuki Fuwah menuju distrik Al-Masaken, lewati kampus Universitas Al-Ahgaff, tepat setelah Klinik Al-Noor belok kanan langsung untuk menemukan Pizza House dengan tempat parkir yang nyaman."
                   : "Entering Fuwa via the main artery towards Al-Masaken district, pass Al-Ahgaff University campus; right after Al-Noor Dispensary take an immediate right turn to find Pizza House with convenient parking."}
               </span>
             </div>
@@ -344,49 +352,49 @@ export default function LocationAndMapSection() {
           <div className="bg-[#14181f] rounded-3xl p-6 border border-[#222934] shadow-xl space-y-4 font-cairo">
             <h3 className="text-base font-bold text-white font-cairo flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-400" />
-              <span>{language === "ar" ? "جدول الفترات المعتمد" : "Official Operating Hours"}</span>
+              <span>{language === "ar" ? "جدول الفترات المعتمد" : language === "id" ? "Jadwal Jam Kerja Resmi" : "Official Operating Hours"}</span>
             </h3>
 
             <div className="space-y-2.5 text-xs">
               <div className="flex justify-between items-center p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934]">
                 <div className="space-y-0.5">
                   <span className="font-bold text-white block">
-                    {language === "ar" ? "السبت – الخميس (الفترة الصباحية)" : "Sat – Thu (Morning Shift)"}
+                    {language === "ar" ? "السبت – الخميس (الفترة الصباحية)" : language === "id" ? "Sabtu – Kamis (Sesi Pagi)" : "Sat – Thu (Morning Shift)"}
                   </span>
                   <span className="text-[11px] text-stone-400">
-                    {language === "ar" ? "فطائر طازجة، معجنات، فطور" : "Fresh Fatayer & breakfast bakes"}
+                    {language === "ar" ? "فطائر طازجة، معجنات، فطور" : language === "id" ? "Fatayer segar, pastri & sarapan" : "Fresh Fatayer & breakfast bakes"}
                   </span>
                 </div>
                 <span className="font-outfit font-bold text-[#EFCC80] text-xs">
-                  8:00 ص – 12:00 م
+                  {language === "ar" ? "8:00 ص – 12:00 م" : "8:00 AM – 12:00 PM"}
                 </span>
               </div>
 
               <div className="flex justify-between items-center p-2.5 rounded-xl bg-[#0c0e12] border border-amber-500/20">
                 <div className="space-y-0.5">
                   <span className="font-bold text-[#EFCC80] block">
-                    {language === "ar" ? "السبت – الخميس (الفترة المسائية)" : "Sat – Thu (Evening Shift)"}
+                    {language === "ar" ? "السبت – الخميس (الفترة المسائية)" : language === "id" ? "Sabtu – Kamis (Sesi Sore)" : "Sat – Thu (Evening Shift)"}
                   </span>
                   <span className="text-[11px] text-stone-400">
-                    {language === "ar" ? "بيتزا الفرن الحجري، عشاء، كالتشوني" : "Stone-oven pizza, calzones, dinner"}
+                    {language === "ar" ? "بيتزا الفرن الحجري، عشاء، كالتشوني" : language === "id" ? "Pizza oven batu, makan malam, calzone" : "Stone-oven pizza, calzones, dinner"}
                   </span>
                 </div>
                 <span className="font-outfit font-bold text-[#EFCC80] text-xs">
-                  4:00 م – 11:30 م
+                  {language === "ar" ? "4:00 م – 11:30 م" : "4:00 PM – 11:30 PM"}
                 </span>
               </div>
 
               <div className="flex justify-between items-center p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934]">
                 <div className="space-y-0.5">
                   <span className="font-bold text-white block">
-                    {language === "ar" ? "يوم الجمعة (مساءً فقط)" : "Friday (Evening Only)"}
+                    {language === "ar" ? "يوم الجمعة (مساءً فقط)" : language === "id" ? "Hari Jumat (Sore Saja)" : "Friday (Evening Only)"}
                   </span>
                   <span className="text-[11px] text-stone-400">
-                    {language === "ar" ? "خدمة العشاء والبيتزا" : "Evening dinner & pizza service"}
+                    {language === "ar" ? "خدمة العشاء والبيتزا" : language === "id" ? "Layanan makan malam & pizza" : "Evening dinner & pizza service"}
                   </span>
                 </div>
                 <span className="font-outfit font-bold text-[#EFCC80] text-xs">
-                  4:00 م – 11:30 م
+                  {language === "ar" ? "4:00 م – 11:30 م" : "4:00 PM – 11:30 PM"}
                 </span>
               </div>
             </div>
@@ -412,7 +420,7 @@ export default function LocationAndMapSection() {
                     <Icon className="w-5 h-5 text-[#C69843]" />
                   </div>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#0c0e12] text-[#EFCC80] border border-[#222934]">
-                    {language === "ar" ? item.badgeAr : item.badgeEn}
+                    {language === "ar" ? item.badgeAr : language === "id" ? item.badgeId : item.badgeEn}
                   </span>
                 </div>
                 <h4 className="text-sm font-bold text-white font-cairo">

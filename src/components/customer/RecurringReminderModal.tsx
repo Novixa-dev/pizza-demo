@@ -22,10 +22,10 @@ interface RecurringReminderModalProps {
 }
 
 const INTERVAL_OPTIONS = [
-  { days: 7, labelAr: "كل أسبوع (7 أيام)", labelEn: "Every Week (7 days)" },
-  { days: 14, labelAr: "كل أسبوعين (14 يوماً - الموصى به)", labelEn: "Every 2 Weeks (14 days - Recommended)", isRecommended: true },
-  { days: 21, labelAr: "كل 3 أسابيع (21 يوماً)", labelEn: "Every 3 Weeks (21 days)" },
-  { days: 30, labelAr: "كل شهر (30 يوماً)", labelEn: "Monthly (30 days)" },
+  { days: 7, labelAr: "كل أسبوع (7 أيام)", labelEn: "Every Week (7 days)", labelId: "Setiap Minggu (7 hari)" },
+  { days: 14, labelAr: "كل أسبوعين (14 يوماً - الموصى به)", labelEn: "Every 2 Weeks (14 days - Recommended)", labelId: "Setiap 2 Minggu (14 hari - Disarankan)", isRecommended: true },
+  { days: 21, labelAr: "كل 3 أسابيع (21 يوماً)", labelEn: "Every 3 Weeks (21 days)", labelId: "Setiap 3 Minggu (21 hari)" },
+  { days: 30, labelAr: "كل شهر (30 يوماً)", labelEn: "Monthly (30 days)", labelId: "Setiap Bulan (30 hari)" },
 ];
 
 const POPULAR_MEALS = [
@@ -69,6 +69,8 @@ export default function RecurringReminderModal({
         setTestResult(
           language === "ar"
             ? "يرجى السماح بالإشعارات من إعدادات المتصفح."
+            : language === "id"
+            ? "Harap izinkan notifikasi di pengaturan browser Anda."
             : "Please allow notifications in browser permissions."
         );
       }
@@ -82,12 +84,16 @@ export default function RecurringReminderModal({
       setTestResult(
         language === "ar"
           ? "تم إرسال إشعار المتصفح بنجاح! تفقد شريط التنبيهات لديك."
+          : language === "id"
+          ? "Notifikasi push berhasil dikirim! Periksa bar notifikasi perangkat Anda."
           : "Push notification sent! Check your device notifications."
       );
     } else {
       setTestResult(
         language === "ar"
           ? "لم يتم إرسال الإشعار. تأكد من منح الإذن للإشعارات في المتصفح."
+          : language === "id"
+          ? "Notifikasi tidak dapat ditampilkan. Pastikan izin notifikasi browser telah diaktifkan."
           : "Notification could not be displayed. Ensure browser notifications are allowed."
       );
     }
@@ -117,7 +123,7 @@ export default function RecurringReminderModal({
             </div>
             <div>
               <span className="text-xs font-bold text-[#EFCC80] font-cairo">
-                {language === "ar" ? "تنبيهات دورية ذكية" : "Smart Recurring Reminders"}
+                {language === "ar" ? "تنبيهات دورية ذكية" : language === "id" ? "Pengingat Berkala Pintar" : "Smart Recurring Reminders"}
               </span>
               <h2
                 id="reminder-modal-title"
@@ -125,6 +131,8 @@ export default function RecurringReminderModal({
               >
                 {language === "ar"
                   ? "تنبيهات الوجبة المفضلة (أسبوعين)"
+                  : language === "id"
+                  ? "Pengingat Menu Favorit (2 Minggu)"
                   : "Favorite Meal Reminders (2 Weeks)"}
               </h2>
             </div>
@@ -133,6 +141,8 @@ export default function RecurringReminderModal({
           <p className="text-xs text-stone-400 mt-2 leading-relaxed">
             {language === "ar"
               ? "نرسل لك إشعاراً لطيفاً عبر المتصفح إذا مر أسبوعان دون طلب، لتتذكر وجبتك المفضلة وتستمتع بها طازجة من الفرن الحجري!"
+              : language === "id"
+              ? "Kami akan mengirimkan notifikasi browser jika sudah 2 minggu Anda tidak memesan, agar Anda tidak lupa menikmati menu favorit hangat dari oven batu!"
               : "Receive a browser push reminder when it has been 2 weeks since your last order, so you never miss your favorite stone-baked meal!"}
           </p>
         </div>
@@ -143,19 +153,25 @@ export default function RecurringReminderModal({
           <div className="p-4 rounded-2xl bg-[#0c0e12] border border-[#222934] flex items-center justify-between">
             <div className="space-y-0.5">
               <span className="text-xs font-bold text-white block">
-                {language === "ar" ? "تفعيل إشعارات المتصفح التذكيرية" : "Enable Browser Reminders"}
+                {language === "ar" ? "تفعيل إشعارات المتصفح التذكيرية" : language === "id" ? "Aktifkan Pengingat Browser" : "Enable Browser Reminders"}
               </span>
               <span className="text-[11px] text-stone-400">
                 {permission === "granted"
                   ? language === "ar"
                     ? "الإذن مفعّل في المتصفح ✅"
+                    : language === "id"
+                    ? "Izin browser telah aktif ✅"
                     : "Browser permission granted ✅"
                   : permission === "denied"
                   ? language === "ar"
                     ? "الإشعارات محظورة في إعدادات المتصفح ❌"
+                    : language === "id"
+                    ? "Notifikasi diblokir di pengaturan browser ❌"
                     : "Notifications blocked in browser ❌"
                   : language === "ar"
                   ? "يتطلب الموافقة على إذن المتصفح"
+                  : language === "id"
+                  ? "Memerlukan izin notifikasi browser"
                   : "Requires browser permission prompt"}
               </span>
             </div>
@@ -181,7 +197,7 @@ export default function RecurringReminderModal({
           <div className="space-y-2">
             <label className="text-xs font-bold text-white flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-[#EFCC80]" />
-              <span>{language === "ar" ? "فترة التذكير عند الانقطاع عن الطلب:" : "Inactivity Reminder Period:"}</span>
+              <span>{language === "ar" ? "فترة التذكير عند الانقطاع عن الطلب:" : language === "id" ? "Periode Pengingat Saat Tidak Memesan:" : "Inactivity Reminder Period:"}</span>
             </label>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -198,7 +214,7 @@ export default function RecurringReminderModal({
                         : "bg-[#0c0e12] border-[#222934] text-stone-300 hover:border-stone-600"
                     }`}
                   >
-                    <span>{language === "ar" ? opt.labelAr : opt.labelEn}</span>
+                    <span>{language === "ar" ? opt.labelAr : language === "id" ? opt.labelId : opt.labelEn}</span>
                     {isSelected && <CheckCircle2 className="w-4 h-4 text-[#EFCC80] shrink-0" />}
                   </button>
                 );
@@ -210,7 +226,7 @@ export default function RecurringReminderModal({
           <div className="space-y-2">
             <label className="text-xs font-bold text-white flex items-center gap-1.5">
               <Pizza className="w-4 h-4 text-[#EFCC80]" />
-              <span>{language === "ar" ? "وجبتك المفضلة للتذكير:" : "Your Favorite Meal to Remind You With:"}</span>
+              <span>{language === "ar" ? "وجبتك المفضلة للتذكير:" : language === "id" ? "Menu Favorit untuk Diingatkan:" : "Your Favorite Meal to Remind You With:"}</span>
             </label>
 
             <div className="space-y-1.5">
@@ -218,13 +234,13 @@ export default function RecurringReminderModal({
                 type="text"
                 value={preferences.favoriteMeal}
                 onChange={(e) => updateFavoriteMeal(e.target.value)}
-                placeholder="اسم البيتزا أو الفطيرة المفضلة..."
+                placeholder={language === "ar" ? "اسم البيتزا أو الفطيرة المفضلة..." : language === "id" ? "Nama pizza atau fatayer favorit..." : "Favorite pizza or meal name..."}
                 className="w-full text-xs p-3 rounded-2xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80] font-bold placeholder:text-stone-600"
               />
 
               <div className="flex flex-wrap gap-1.5 pt-1">
                 <span className="text-[11px] text-stone-500 self-center">
-                  {language === "ar" ? "مقترحات سريعة:" : "Quick picks:"}
+                  {language === "ar" ? "مقترحات سريعة:" : language === "id" ? "Pilihan cepat:" : "Quick picks:"}
                 </span>
                 {POPULAR_MEALS.slice(0, 3).map((meal) => (
                   <button
@@ -243,9 +259,9 @@ export default function RecurringReminderModal({
           {/* Status Tracker */}
           <div className="p-3.5 bg-[#0c0e12] rounded-2xl border border-[#222934] space-y-1 text-xs">
             <div className="flex justify-between items-center text-[#EFCC80] font-bold">
-              <span>{language === "ar" ? "حالة الانقطاع عن الطلب:" : "Inactivity Status:"}</span>
+              <span>{language === "ar" ? "حالة الانقطاع عن الطلب:" : language === "id" ? "Status Waktu Sejak Terakhir Pesan:" : "Inactivity Status:"}</span>
               <span className="font-outfit text-white">
-                {eligibility.daysSinceLastOrder} {language === "ar" ? "يوم مضى" : "days elapsed"}
+                {eligibility.daysSinceLastOrder} {language === "ar" ? "يوم مضى" : language === "id" ? "hari berlalu" : "days elapsed"}
               </span>
             </div>
             <div className="w-full bg-[#14181f] h-2 rounded-full overflow-hidden border border-[#222934]">
@@ -262,6 +278,8 @@ export default function RecurringReminderModal({
             <p className="text-[11px] text-stone-400 pt-0.5">
               {language === "ar"
                 ? `سيتم إرسال تنبيه بالمتصفح عند وصول العداد إلى ${preferences.intervalDays} يوماً.`
+                : language === "id"
+                ? `Notifikasi browser akan dikirim saat waktu mencapai ${preferences.intervalDays} hari.`
                 : `A browser notification will trigger once elapsed days reach ${preferences.intervalDays}.`}
             </p>
           </div>
@@ -286,15 +304,21 @@ export default function RecurringReminderModal({
                 {isSimulating
                   ? language === "ar"
                     ? "جاري إرسال التنبيه التجريبي..."
+                    : language === "id"
+                    ? "Mengirim notifikasi uji coba..."
                     : "Sending Test Notification..."
                   : language === "ar"
                   ? "اختبار إرسال إشعار المتصفح فوراً 🚀"
+                  : language === "id"
+                  ? "Uji Coba Kirim Notifikasi Browser Sekarang 🚀"
                   : "Send Test Browser Notification Now 🚀"}
               </span>
             </button>
             <p className="text-[11px] text-center text-stone-500 mt-1.5">
               {language === "ar"
                 ? "انقر لتجربة شكل ونص الإشعار التذكيري على جهازك الآن."
+                : language === "id"
+                ? "Klik untuk melihat pratinjau teks dan tampilan notifikasi di perangkat Anda sekarang."
                 : "Click to preview the recurring reminder notification on your device immediately."}
             </p>
           </div>
@@ -307,7 +331,7 @@ export default function RecurringReminderModal({
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 text-xs font-black transition-all shadow-md shadow-[#EFCC80]/20 active:scale-95 font-cairo"
           >
-            {language === "ar" ? "حفظ وإغلاق" : "Save & Close"}
+            {language === "ar" ? "حفظ وإغلاق" : language === "id" ? "Simpan & Tutup" : "Save & Close"}
           </button>
         </div>
       </div>

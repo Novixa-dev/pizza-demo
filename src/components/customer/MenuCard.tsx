@@ -15,6 +15,20 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
   const { language, dict } = useApp();
   const [isLiked, setIsLiked] = useState(false);
 
+  const prodName =
+    language === "ar"
+      ? product.nameAr
+      : language === "id" && (product as any).nameId
+      ? (product as any).nameId
+      : product.nameEn;
+
+  const prodDesc =
+    language === "ar"
+      ? product.descriptionAr
+      : language === "id" && (product as any).descriptionId
+      ? (product as any).descriptionId
+      : product.descriptionEn;
+
   return (
     <div className="group bg-[#14181f]/90 backdrop-blur-md rounded-3xl overflow-hidden border border-white/10 hover:border-[#EFCC80]/60 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] transition-all duration-300 flex flex-col justify-between p-4 relative text-center">
       {/* Top action row: Wishlist Heart & Availability/Featured Badges */}
@@ -30,7 +44,7 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
               ? "text-[#EFCC80] bg-[#EFCC80]/15"
               : "text-stone-400 hover:text-[#EFCC80] hover:bg-white/5"
           }`}
-          title={language === "ar" ? "إضافة للمفضلة" : "Add to favorites"}
+          title={language === "ar" ? "إضافة للمفضلة" : language === "id" ? "Tambah ke Favorit" : "Add to favorites"}
           aria-label="Favorite"
         >
           <Heart className={`w-3.5 h-3.5 ${isLiked ? "fill-[#EFCC80]" : ""}`} />
@@ -44,12 +58,12 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
           ) : product.basePrice >= 5000 ? (
             <span className="bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1 font-cairo">
               <Star className="w-2.5 h-2.5 fill-current" />
-              <span>{language === "ar" ? "طبق مميز" : "Signature"}</span>
+              <span>{language === "ar" ? "طبق مميز" : language === "id" ? "Istimewa" : "Signature"}</span>
             </span>
           ) : (
             <span className="bg-amber-950/80 text-[#EFCC80] border border-amber-800/40 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 font-cairo">
               <span>⏱️</span>
-              <span>{language === "ar" ? "15 دقيقة" : "15m"}</span>
+              <span>{language === "ar" ? "15 دقيقة" : language === "id" ? "15 mnt" : "15m"}</span>
             </span>
           )}
         </div>
@@ -62,7 +76,7 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
       >
         <Image
           src={product.imageUrl}
-          alt={language === "ar" ? product.nameAr : product.nameEn}
+          alt={prodName}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           referrerPolicy="no-referrer"
@@ -84,10 +98,10 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
         className="cursor-pointer space-y-1 mb-4"
       >
         <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-amber-400 transition-colors font-cairo line-clamp-1">
-          {language === "ar" ? product.nameAr : product.nameEn}
+          {prodName}
         </h3>
         <p className="text-[11px] text-stone-400 line-clamp-1 leading-relaxed font-cairo">
-          {language === "ar" ? product.descriptionAr : product.descriptionEn}
+          {prodDesc}
         </p>
       </div>
 

@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Cairo, Outfit } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
 import Header from "@/components/shared/Header";
@@ -11,20 +10,6 @@ import RecurringReminderBanner from "@/components/customer/RecurringReminderBann
 import PwaInstallPrompt from "@/components/shared/PwaInstallPrompt";
 import { siteMetadata, siteViewport, jsonLdRestaurantData } from "@/lib/seoConfig";
 
-const cairo = Cairo({
-  subsets: ["arabic", "latin"],
-  variable: "--font-cairo",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
 export const metadata: Metadata = siteMetadata;
 export const viewport: Viewport = siteViewport;
 
@@ -34,8 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} ${outfit.variable}`}>
+    <html lang="ar" dir="rtl">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdRestaurantData) }}

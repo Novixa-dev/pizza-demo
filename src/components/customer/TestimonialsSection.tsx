@@ -33,6 +33,7 @@ export interface TestimonialItem {
     items?: Array<{
       productNameAr: string;
       productNameEn: string;
+      productNameId?: string;
       quantity?: number;
     }>;
   } | null;
@@ -94,13 +95,17 @@ export default function TestimonialsSection({
         if (diffDays === 2) return "منذ يومين";
         if (diffDays <= 10) return `منذ ${diffDays} أيام`;
         return `منذ ${diffDays} يوماً`;
+      } else if (language === "id") {
+        if (diffDays <= 0) return diffHours <= 1 ? "1 jam lalu" : `${diffHours} jam lalu`;
+        if (diffDays === 1) return "Kemarin";
+        return `${diffDays} hari lalu`;
       } else {
         if (diffDays <= 0) return diffHours <= 1 ? "1h ago" : `${diffHours}h ago`;
         if (diffDays === 1) return "Yesterday";
         return `${diffDays} days ago`;
       }
     } catch {
-      return language === "ar" ? "مؤخراً" : "Recently";
+      return language === "ar" ? "مؤخراً" : language === "id" ? "Baru-baru ini" : "Recently";
     }
   };
 
@@ -182,7 +187,7 @@ export default function TestimonialsSection({
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-1.5">
                         <h4 className="text-sm font-bold text-white font-cairo">
-                          {item.customerName || (language === "ar" ? "عميل بيتزا هاوس" : "Pizza House Patron")}
+                          {item.customerName || (language === "ar" ? "عميل بيتزا هاوس" : language === "id" ? "Pelanggan Pizza House" : "Pizza House Patron")}
                         </h4>
                         <span title={t.verifiedPatron} className="inline-flex">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -192,7 +197,7 @@ export default function TestimonialsSection({
                       <div className="text-[11px] text-stone-400 flex items-center gap-1.5 font-cairo">
                         <span>{formatRelativeTime(item.createdAt)}</span>
                         <span>·</span>
-                        <span>{language === "ar" ? "فوه المساكن" : "Fuwa District"}</span>
+                        <span>{language === "ar" ? "فوه المساكن" : language === "id" ? "Distrik Fuwah" : "Fuwa District"}</span>
                       </div>
                     </div>
 
@@ -213,7 +218,7 @@ export default function TestimonialsSection({
 
                   {/* Customer Review Comment */}
                   <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-cairo">
-                    &ldquo;{item.comment || (language === "ar" ? "تجربة ممتازة وبيتزا طازجة ولذيذة جداً!" : "Great pizza and fast service!")}&rdquo;
+                    &ldquo;{item.comment || (language === "ar" ? "تجربة ممتازة وبيتزا طازجة ولذيذة جداً!" : language === "id" ? "Pizza lezat dan pelayanan cepat memuaskan!" : "Great pizza and fast service!")}&rdquo;
                   </p>
                 </div>
 
@@ -223,7 +228,7 @@ export default function TestimonialsSection({
                     <div className="flex items-center gap-1.5 text-xs text-[#EFCC80] font-bold font-cairo">
                       <Pizza className="w-3.5 h-3.5 text-[#C69843] shrink-0" />
                       <span className="truncate">
-                        {language === "ar" ? orderedItem.productNameAr : orderedItem.productNameEn}
+                        {language === "ar" ? orderedItem.productNameAr : (language === "id" && orderedItem.productNameId) ? orderedItem.productNameId : orderedItem.productNameEn}
                       </span>
                     </div>
                   )}
@@ -266,6 +271,8 @@ export default function TestimonialsSection({
             <p className="text-xs text-stone-300 leading-relaxed max-w-xl font-cairo">
               {language === "ar"
                 ? "رأيك يهمنا في تطوير جودة الخبز وسرعة الخدمة! يمكنك الدخول إلى سجل طلباتك ومشاركتنا تقييمك لطلبك السابق بنقرة واحدة."
+                : language === "id"
+                ? "Masukan Anda sangat berharga untuk menyempurnakan cita rasa dan kecepatan layanan kami! Buka riwayat pesanan Anda untuk memberikan ulasan."
                 : "Your feedback helps us continuously perfect our stone-baked recipes! Check your order history to rate past meals."}
             </p>
           </div>

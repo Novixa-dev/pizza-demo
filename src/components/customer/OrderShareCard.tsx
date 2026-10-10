@@ -44,29 +44,59 @@ export default function OrderShareCard({
   const getStatusLabel = () => {
     switch (orderStatus) {
       case "READY":
-        return language === "ar" ? "جاهز للاستلام الآن! 🍕" : "Ready for Pickup! 🍕";
+        return language === "ar"
+          ? "جاهز للاستلام الآن! 🍕"
+          : language === "id"
+          ? "Siap Diambil Sekarang! 🍕"
+          : "Ready for Pickup! 🍕";
       case "PREPARING":
-        return language === "ar" ? "في الفرن (جاري التحضير) 🔥" : "Baking in Oven 🔥";
+        return language === "ar"
+          ? "في الفرن (جاري التحضير) 🔥"
+          : language === "id"
+          ? "Sedang Dipanggang di Oven 🔥"
+          : "Baking in Oven 🔥";
       case "QUEUED":
-        return language === "ar" ? "مجدول بانتظار الخبز ⏱️" : "Queued for Baking ⏱️";
+        return language === "ar"
+          ? "مجدول بانتظار الخبز ⏱️"
+          : language === "id"
+          ? "Dalam Antrean Pemanggangan ⏱️"
+          : "Queued for Baking ⏱️";
       case "COMPLETED":
-        return language === "ar" ? "تم الاستلام بنجاح ✅" : "Completed ✅";
+        return language === "ar"
+          ? "تم الاستلام بنجاح ✅"
+          : language === "id"
+          ? "Pesanan Selesai Diterima ✅"
+          : "Completed ✅";
       default:
-        return language === "ar" ? "تم تأكيد الطلب 📋" : "Confirmed 📋";
+        return language === "ar"
+          ? "تم تأكيد الطلب 📋"
+          : language === "id"
+          ? "Pesanan Dikonfirmasi 📋"
+          : "Confirmed 📋";
     }
   };
 
   const getShareText = () => {
     const statusText = getStatusLabel();
-    const timeText = pickupTimeText ? ` | موعد الاستلام: ${pickupTimeText}` : "";
+    const timeText = pickupTimeText
+      ? language === "ar"
+        ? ` | موعد الاستلام: ${pickupTimeText}`
+        : language === "id"
+        ? ` | Waktu Pengambilan: ${pickupTimeText}`
+        : ` | Pickup Time: ${pickupTimeText}`
+      : "";
 
     if (language === "ar") {
       return `🍕 تابع معي تجهيز طلبنا من بيتزا هاوس المكلا (${orderNumber})!
 الحالة الحالية: ${statusText}${timeText}
 رابط المتابعة المباشر:`;
+    } else if (language === "id") {
+      return `🍕 Lacak bersama proses pesanan kami dari Pizza House Mukalla (${orderNumber})!
+Status Terkini: ${statusText}${timeText}
+Tautan pelacakan langsung:`;
     } else {
       return `🍕 Track our Pizza House Mukalla order (${orderNumber})!
-Current Status: ${statusText}
+Current Status: ${statusText}${timeText}
 Direct tracking link:`;
     }
   };
@@ -162,6 +192,8 @@ Direct tracking link:`;
               <h4 className="text-xs sm:text-sm font-black text-white font-cairo">
                 {language === "ar"
                   ? "مشاركة رابط التتبع مع العائلة أو الأصدقاء"
+                  : language === "id"
+                  ? "Bagikan Tautan Pelacakan dengan Teman atau Keluarga"
                   : "Share Order Tracking with Family or Friends"}
               </h4>
               <Users className="w-3.5 h-3.5 text-[#EFCC80]" />
@@ -169,6 +201,8 @@ Direct tracking link:`;
             <p className="text-[11px] text-stone-400">
               {language === "ar"
                 ? "يمكن لأصدقائك متابعة مراحل الخبز والاستلام في الفرن الحجري لحظة بلحظة."
+                : language === "id"
+                ? "Teman atau keluarga Anda dapat memantau tahapan pemanggangan dan pengambilan di oven batu secara langsung."
                 : "Allow friends to track stone-oven baking progress and pickup time live."}
             </p>
           </div>
@@ -182,7 +216,13 @@ Direct tracking link:`;
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black px-4 py-2.5 rounded-2xl text-xs shadow-md shadow-[#EFCC80]/20 active:scale-95 transition-all font-cairo"
           >
             <Share2 className="w-4 h-4" />
-            <span>{language === "ar" ? "مشاركة الرابط 📲" : "Share Progress 📲"}</span>
+            <span>
+              {language === "ar"
+                ? "مشاركة الرابط 📲"
+                : language === "id"
+                ? "Bagikan Tautan 📲"
+                : "Share Progress 📲"}
+            </span>
           </button>
 
           {/* Quick Copy Button */}
@@ -190,19 +230,27 @@ Direct tracking link:`;
             type="button"
             onClick={handleCopyLink}
             className="inline-flex items-center justify-center gap-1.5 bg-[#0c0e12] hover:bg-[#1a202c] text-stone-300 hover:text-white font-bold px-3.5 py-2.5 rounded-2xl text-xs border border-[#222934] transition-colors"
-            title={language === "ar" ? "نسخ الرابط المباشر" : "Copy Link"}
+            title={
+              language === "ar"
+                ? "نسخ الرابط المباشر"
+                : language === "id"
+                ? "Salin Tautan Langsung"
+                : "Copy Link"
+            }
           >
             {isCopied ? (
               <>
                 <Check className="w-4 h-4 text-emerald-400" />
                 <span className="text-emerald-400 font-bold">
-                  {language === "ar" ? "تم النسخ!" : "Copied!"}
+                  {language === "ar" ? "تم النسخ!" : language === "id" ? "Tersalin!" : "Copied!"}
                 </span>
               </>
             ) : (
               <>
                 <Copy className="w-4 h-4 text-stone-400" />
-                <span>{language === "ar" ? "نسخ" : "Copy"}</span>
+                <span>
+                  {language === "ar" ? "نسخ" : language === "id" ? "Salin" : "Copy"}
+                </span>
               </>
             )}
           </button>
@@ -212,7 +260,13 @@ Direct tracking link:`;
             type="button"
             onClick={() => setShowQrModal(true)}
             className="p-2.5 rounded-2xl bg-[#0c0e12] hover:bg-[#1a202c] text-stone-300 hover:text-[#EFCC80] border border-[#222934] transition-colors"
-            title={language === "ar" ? "رمز الاستجابة السريعة QR" : "Show QR Code"}
+            title={
+              language === "ar"
+                ? "رمز الاستجابة السريعة QR"
+                : language === "id"
+                ? "Tampilkan Kode QR"
+                : "Show QR Code"
+            }
             aria-label="Show QR Code"
           >
             <QrCode className="w-4 h-4" />
@@ -235,7 +289,11 @@ Direct tracking link:`;
                 </div>
                 <div>
                   <h3 className="text-sm font-black text-white font-cairo">
-                    {language === "ar" ? "مشاركة تتبع الطلب" : "Share Order Tracking"}
+                    {language === "ar"
+                      ? "مشاركة تتبع الطلب"
+                      : language === "id"
+                      ? "Bagikan Pelacakan Pesanan"
+                      : "Share Order Tracking"}
                   </h3>
                   <span className="text-[11px] text-[#EFCC80] font-outfit">
                     {orderNumber}
@@ -255,6 +313,8 @@ Direct tracking link:`;
             <p className="text-xs text-stone-400 leading-relaxed">
               {language === "ar"
                 ? "اختر التطبيق لمشاركة رابط التتبع المباشر مع عائلتك أو أصدقائك:"
+                : language === "id"
+                ? "Pilih aplikasi untuk membagikan tautan pelacakan langsung dengan keluarga atau teman:"
                 : "Choose an app to share the live tracking link with family or friends:"}
             </p>
 
@@ -285,7 +345,11 @@ Direct tracking link:`;
             {/* Link Preview and Copy Input */}
             <div className="pt-2 border-t border-[#222934] space-y-1.5">
               <label className="text-[11px] font-bold text-stone-400 block">
-                {language === "ar" ? "أو انسخ الرابط المباشر:" : "Or copy direct link:"}
+                {language === "ar"
+                  ? "أو انسخ الرابط المباشر:"
+                  : language === "id"
+                  ? "Atau salin tautan langsung:"
+                  : "Or copy direct link:"}
               </label>
               <div className="flex items-center gap-2">
                 <input
@@ -302,9 +366,13 @@ Direct tracking link:`;
                   {isCopied
                     ? language === "ar"
                       ? "تم!"
+                      : language === "id"
+                      ? "Tersalin!"
                       : "Copied!"
                     : language === "ar"
                     ? "نسخ"
+                    : language === "id"
+                    ? "Salin"
                     : "Copy"}
                 </button>
               </div>
@@ -331,7 +399,11 @@ Direct tracking link:`;
 
             <div className="space-y-1 pt-2">
               <h3 className="text-sm font-black text-white font-cairo">
-                {language === "ar" ? "مسح رمز التتبع (QR Code)" : "Scan to Track (QR Code)"}
+                {language === "ar"
+                  ? "مسح رمز التتبع (QR Code)"
+                  : language === "id"
+                  ? "Pindai Kode QR Pelacakan"
+                  : "Scan to Track (QR Code)"}
               </h3>
               <p className="text-xs text-[#EFCC80] font-outfit">{orderNumber}</p>
             </div>
@@ -350,6 +422,8 @@ Direct tracking link:`;
             <p className="text-[11px] text-stone-400 leading-relaxed">
               {language === "ar"
                 ? "امسح الرمز بكاميرا الجوال لمتابعة حالة الطلب مباشرة دون الحاجة لنسخ الرابط."
+                : language === "id"
+                ? "Pindai kode QR dengan kamera ponsel untuk langsung melacak pesanan tanpa perlu menyalin tautan."
                 : "Scan with your phone camera to track this order instantly."}
             </p>
 
@@ -358,7 +432,7 @@ Direct tracking link:`;
               onClick={() => setShowQrModal(false)}
               className="w-full py-2.5 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 text-xs font-black transition-all shadow-md shadow-[#EFCC80]/20 font-cairo"
             >
-              {language === "ar" ? "إغلاق" : "Close"}
+              {language === "ar" ? "إغلاق" : language === "id" ? "Tutup" : "Close"}
             </button>
           </div>
         </div>

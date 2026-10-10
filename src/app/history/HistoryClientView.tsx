@@ -147,7 +147,13 @@ export default function HistoryClientView() {
     (phoneToSearch: string) => {
       const trimmed = phoneToSearch.trim();
       if (!trimmed) {
-        setError(language === "ar" ? "يرجى كتابة رقم الهاتف" : "Please enter a phone number");
+        setError(
+          language === "ar"
+            ? "يرجى كتابة رقم الهاتف"
+            : language === "id"
+            ? "Silakan masukkan nomor telepon"
+            : "Please enter a phone number"
+        );
         return;
       }
 
@@ -156,7 +162,14 @@ export default function HistoryClientView() {
         const res = await getCustomerOrderHistoryAction(trimmed);
         setSearched(true);
         if (!res.success) {
-          setError(res.error || (language === "ar" ? "تعذر العثور على طلبات" : "No orders found"));
+          setError(
+            res.error ||
+              (language === "ar"
+                ? "تعذر العثور على طلبات"
+                : language === "id"
+                ? "Tidak ada pesanan ditemukan"
+                : "No orders found")
+          );
           setOrders([]);
           setStats(null);
         } else {
@@ -262,10 +275,12 @@ export default function HistoryClientView() {
       notes: item.itemNotes || undefined,
     });
 
-    const itemName = language === "ar" ? item.productNameAr : item.productNameEn;
+    const itemName = language === "ar" ? item.productNameAr : (language === "id" && (item as any).nameId ? (item as any).nameId : item.productNameEn);
     setToastMessage(
       language === "ar"
         ? `تمت إضافة (${item.quantity}x ${itemName}) إلى سلتك!`
+        : language === "id"
+        ? `Ditambahkan (${item.quantity}x ${itemName}) ke keranjang Anda!`
         : `Added (${item.quantity}x ${itemName}) to your cart!`
     );
     setTimeout(() => setToastMessage(null), 4000);
@@ -337,49 +352,84 @@ export default function HistoryClientView() {
     switch (status) {
       case "PENDING":
         return {
-          label: language === "ar" ? "قيد المراجعة" : "Pending",
+          label:
+            language === "ar"
+              ? "قيد المراجعة"
+              : language === "id"
+              ? "Sedang Ditinjau"
+              : "Pending",
           bg: "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 border-amber-300 dark:border-amber-800",
           dot: "bg-amber-500",
           progressIndex: 1,
         };
       case "PAYMENT_PENDING":
         return {
-          label: language === "ar" ? "مراجعة إشعار التحويل" : "Payment Verification",
+          label:
+            language === "ar"
+              ? "مراجعة إشعار التحويل"
+              : language === "id"
+              ? "Verifikasi Bukti Transfer"
+              : "Payment Verification",
           bg: "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 border-amber-300 dark:border-amber-800",
           dot: "bg-amber-500 animate-pulse",
           progressIndex: 1,
         };
       case "CONFIRMED":
         return {
-          label: language === "ar" ? "مؤكد ومجدول" : "Confirmed",
+          label:
+            language === "ar"
+              ? "مؤكد ومجدول"
+              : language === "id"
+              ? "Dikonfirmasi & Terjadwal"
+              : "Confirmed",
           bg: "bg-blue-100 text-blue-800 dark:bg-blue-950/70 dark:text-blue-300 border-blue-300 dark:border-blue-800",
           dot: "bg-blue-500",
           progressIndex: 2,
         };
       case "QUEUED":
         return {
-          label: language === "ar" ? "مجدول بانتظار الخبز" : "Scheduled",
+          label:
+            language === "ar"
+              ? "مجدول بانتظار الخبز"
+              : language === "id"
+              ? "Terjadwal Antrean Oven"
+              : "Scheduled",
           bg: "bg-indigo-100 text-indigo-800 dark:bg-indigo-950/70 dark:text-indigo-300 border-indigo-300 dark:border-indigo-800",
           dot: "bg-indigo-500",
           progressIndex: 2,
         };
       case "PREPARING":
         return {
-          label: language === "ar" ? "في الفرن الآن 🔥" : "Baking in Oven 🔥",
+          label:
+            language === "ar"
+              ? "في الفرن الآن 🔥"
+              : language === "id"
+              ? "Di Oven Batu Sekarang 🔥"
+              : "Baking in Oven 🔥",
           bg: "bg-orange-100 text-orange-800 dark:bg-orange-950/70 dark:text-orange-300 border-orange-300 dark:border-orange-800",
           dot: "bg-orange-500 animate-ping",
           progressIndex: 3,
         };
       case "READY":
         return {
-          label: language === "ar" ? "جاهز للاستلام 🍕" : "Ready for Pickup 🍕",
+          label:
+            language === "ar"
+              ? "جاهز للاستلام 🍕"
+              : language === "id"
+              ? "Siap Diambil 🍕"
+              : "Ready for Pickup 🍕",
           bg: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800",
           dot: "bg-emerald-500 animate-pulse",
           progressIndex: 4,
         };
       case "COMPLETED":
         return {
-          label: language === "ar" ? "تم التسليم بنجاح" : "Completed",
+          label:
+            language === "ar"
+              ? "تم التسليم بنجاح"
+              : language === "id"
+              ? "Selesai & Diserahkan"
+              : "Completed",
           bg: "bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300 border-stone-300 dark:border-stone-700",
           dot: "bg-emerald-600",
           progressIndex: 5,
@@ -387,7 +437,12 @@ export default function HistoryClientView() {
       case "CANCELLED":
       case "REJECTED":
         return {
-          label: language === "ar" ? "ملغي / مرفوض" : "Cancelled",
+          label:
+            language === "ar"
+              ? "ملغي / مرفوض"
+              : language === "id"
+              ? "Dibatalkan / Ditolak"
+              : "Cancelled",
           bg: "bg-red-100 text-red-800 dark:bg-red-950/70 dark:text-red-300 border-red-300 dark:border-red-800",
           dot: "bg-red-500",
           progressIndex: 0,
@@ -405,23 +460,74 @@ export default function HistoryClientView() {
   const getPaymentMethodLabel = (method?: string) => {
     switch (method) {
       case "PAY_AT_PICKUP":
-        return language === "ar" ? "دفع عند الاستلام (كاش / شبكة)" : "Pay at Pickup";
+        return language === "ar"
+          ? "دفع عند الاستلام (كاش / شبكة)"
+          : language === "id"
+          ? "Bayar saat Pengambilan (Tunai / POS)"
+          : "Pay at Pickup (Cash / POS)";
       case "TRANSFER_KURAIMI":
-        return language === "ar" ? "تحويل بنك الكريمي (حاسب)" : "Kuraimi Transfer";
+        return language === "ar"
+          ? "تحويل بنك الكريمي (حاسب)"
+          : language === "id"
+          ? "Transfer Bank Kuraimi (Haseeb)"
+          : "Kuraimi Transfer (Haseeb)";
       case "TRANSFER_AMQI":
-        return language === "ar" ? "تحويل شركة العمقي" : "Al-Amqi Transfer";
+        return language === "ar"
+          ? "تحويل شركة العمقي"
+          : language === "id"
+          ? "Transfer Al-Amqi"
+          : "Al-Amqi Transfer";
       case "TRANSFER_BUSAIRI":
-        return language === "ar" ? "تحويل شركة البسيري" : "Al-Busairi Transfer";
+        return language === "ar"
+          ? "تحويل شركة البسيري"
+          : language === "id"
+          ? "Transfer Al-Busairi"
+          : "Al-Busairi Transfer";
       default:
         return method || "—";
     }
   };
 
   const getCustomerTier = (totalOrders: number) => {
-    if (totalOrders >= 10) return { label: language === "ar" ? "عميل بلاتيني ⭐⭐⭐" : "Platinum Member ⭐⭐⭐", color: "from-amber-400 to-amber-600" };
-    if (totalOrders >= 5) return { label: language === "ar" ? "عميل ذهبي ⭐⭐" : "Gold Member ⭐⭐", color: "from-amber-500 to-amber-700" };
-    if (totalOrders >= 2) return { label: language === "ar" ? "عميل فضي ⭐" : "Silver Member ⭐", color: "from-stone-400 to-stone-600" };
-    return { label: language === "ar" ? "عميل جديد" : "New Customer", color: "from-pizza-500 to-pizza-700" };
+    if (totalOrders >= 10)
+      return {
+        label:
+          language === "ar"
+            ? "عميل بلاتيني ⭐⭐⭐"
+            : language === "id"
+            ? "Pelanggan Platinum ⭐⭐⭐"
+            : "Platinum Member ⭐⭐⭐",
+        color: "from-amber-400 to-amber-600",
+      };
+    if (totalOrders >= 5)
+      return {
+        label:
+          language === "ar"
+            ? "عميل ذهبي ⭐⭐"
+            : language === "id"
+            ? "Pelanggan Emas ⭐⭐"
+            : "Gold Member ⭐⭐",
+        color: "from-amber-500 to-amber-700",
+      };
+    if (totalOrders >= 2)
+      return {
+        label:
+          language === "ar"
+            ? "عميل فضي ⭐"
+            : language === "id"
+            ? "Pelanggan Perak ⭐"
+            : "Silver Member ⭐",
+        color: "from-stone-400 to-stone-600",
+      };
+    return {
+      label:
+        language === "ar"
+          ? "عميل جديد"
+          : language === "id"
+          ? "Pelanggan Baru"
+          : "New Customer",
+      color: "from-pizza-500 to-pizza-700",
+    };
   };
 
   return (
@@ -441,7 +547,9 @@ export default function HistoryClientView() {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 bg-[#0c0e12]/80 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-[#EFCC80] border border-[#C69843]/30 shadow-xs">
               <Pizza className="w-3.5 h-3.5 text-[#EFCC80]" />
-              <span>{dict.brand.name} · المكلا - فوه - حي المساكن</span>
+              <span>
+                {dict.brand.name} · {language === "ar" ? "المكلا - فوه - حي المساكن" : language === "id" ? "Mukalla - Fuwah - Al-Masakin" : "Mukalla - Fuwah - Al-Masakin"}
+              </span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-black font-cairo tracking-tight text-white">
               {dict.history.title}
@@ -481,10 +589,22 @@ export default function HistoryClientView() {
               </div>
               <p className="text-xs text-stone-300">
                 {currentActiveOrder.status === "PREPARING"
-                  ? (language === "ar" ? "البيتزا في الفرن الآن ويتم خبزها على الحجر بعناية." : "Your pizza is actively baking in the stone oven.")
+                  ? (language === "ar"
+                      ? "البيتزا في الفرن الآن ويتم خبزها على الحجر بعناية."
+                      : language === "id"
+                      ? "Pizza sedang dipanggang di oven batu dengan teliti."
+                      : "Your pizza is actively baking in the stone oven.")
                   : currentActiveOrder.status === "READY"
-                  ? (language === "ar" ? "طلبك جاهز وساخن للاستلام من فرع فوه!" : "Your order is hot and ready for pickup at Fuwa branch!")
-                  : (language === "ar" ? "طلبك مجدول وجاري تجهيز المكونات." : "Your scheduled order is being prepared.")}
+                  ? (language === "ar"
+                      ? "طلبك جاهز وساخن للاستلام من فرع فوه!"
+                      : language === "id"
+                      ? "Pesanan Anda siap dan hangat untuk diambil di cabang Fuwah!"
+                      : "Your order is hot and ready for pickup at Fuwa branch!")
+                  : (language === "ar"
+                      ? "طلبك مجدول وجاري تجهيز المكونات."
+                      : language === "id"
+                      ? "Pesanan Anda terjadwal dan bahan-bahannya sedang disiapkan."
+                      : "Your scheduled order is being prepared.")}
               </p>
             </div>
           </div>
@@ -497,10 +617,22 @@ export default function HistoryClientView() {
                 (window as any).__triggerTestOrderToast?.(nextMock);
               }}
               className="inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-[#1a202a] text-stone-200 border border-[#222934] font-bold px-3.5 py-3 rounded-2xl text-xs shadow-xs transition-colors"
-              title="تجربة صوت وتنبيه التحديث"
+              title={
+                language === "ar"
+                  ? "تجربة صوت وتنبيه التحديث"
+                  : language === "id"
+                  ? "Uji suara & pemberitahuan pembaruan"
+                  : "Test alert sound & notification"
+              }
             >
               <Bell className="w-3.5 h-3.5 text-[#EFCC80]" />
-              <span>{language === "ar" ? "تجربة التنبيه 🔔" : "Test Alert 🔔"}</span>
+              <span>
+                {language === "ar"
+                  ? "تجربة التنبيه 🔔"
+                  : language === "id"
+                  ? "Uji Peringatan 🔔"
+                  : "Test Alert 🔔"}
+              </span>
             </button>
 
             <Link
@@ -553,7 +685,9 @@ export default function HistoryClientView() {
               >
                 <Search className="w-4 h-4" />
                 <span>
-                  {isPending ? (language === "ar" ? "جاري البحث..." : "Searching...") : dict.history.searchBtn}
+                  {isPending
+                    ? (language === "ar" ? "جاري البحث..." : language === "id" ? "Mencari..." : "Searching...")
+                    : dict.history.searchBtn}
                 </span>
               </button>
             </div>
@@ -609,7 +743,12 @@ export default function HistoryClientView() {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-black text-white font-cairo">
-                    {stats.latestCustomerName || (language === "ar" ? "عميل بيتزا هاوس" : "Pizza House Customer")}
+                    {stats.latestCustomerName ||
+                      (language === "ar"
+                        ? "عميل بيتزا هاوس"
+                        : language === "id"
+                        ? "Pelanggan Pizza House"
+                        : "Pizza House Customer")}
                   </h3>
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-[#EFCC80]/15 text-[#EFCC80] px-2.5 py-0.5 rounded-full border border-[#C69843]/30">
                     <Award className="w-3.5 h-3.5 text-[#EFCC80]" />
@@ -688,11 +827,15 @@ export default function HistoryClientView() {
                 <span className="text-xs font-bold text-white block font-cairo">
                   {language === "ar"
                     ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
+                    : language === "id"
+                    ? "Pengingat Hidangan Favorit (Setiap 2 Minggu)"
                     : "Favorite Meal Reminders (Every 2 Weeks)"}
                 </span>
                 <p className="text-[11px] text-stone-400">
                   {language === "ar"
                     ? "إشعار متصفح يذكرك بطلب وجبتك المفضلة إذا مر أسبوعان دون طلب."
+                    : language === "id"
+                    ? "Pemberitahuan browser yang mengingatkan Anda untuk memesan hidangan favorit jika lewat 2 minggu."
                     : "Browser push notification reminding you to order your favorite meal after 2 weeks of inactivity."}
                 </p>
               </div>
@@ -704,7 +847,13 @@ export default function HistoryClientView() {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black text-xs shadow-md shadow-amber-950/40 transition-colors shrink-0 cursor-pointer"
             >
               <Bell className="w-3.5 h-3.5" />
-              <span>{language === "ar" ? "ضبط التنبيهات 🔔" : "Setup Reminders 🔔"}</span>
+              <span>
+                {language === "ar"
+                  ? "ضبط التنبيهات 🔔"
+                  : language === "id"
+                  ? "Atur Pengingat 🔔"
+                  : "Setup Reminders 🔔"}
+              </span>
             </button>
           </div>
         </div>
@@ -838,7 +987,7 @@ export default function HistoryClientView() {
           {statusFilter === "IN_PROGRESS" && counts.inProgress > 0 && (
             <div className="flex items-center gap-2 p-2 bg-[#0c0e12] rounded-2xl border border-[#222934] text-xs">
               <span className="text-[#EFCC80] font-bold ps-2">
-                {language === "ar" ? "تصفية المرحلة:" : "Filter Stage:"}
+                {language === "ar" ? "تصفية المرحلة:" : language === "id" ? "Filter Tahap:" : "Filter Stage:"}
               </span>
               <button
                 type="button"
@@ -849,7 +998,7 @@ export default function HistoryClientView() {
                     : "bg-[#14181f] text-stone-300 border border-[#222934] hover:text-white"
                 }`}
               >
-                {language === "ar" ? "الكل النشط" : "All Active"}
+                {language === "ar" ? "الكل النشط" : language === "id" ? "Semua Aktif" : "All Active"}
               </button>
               <button
                 type="button"
@@ -906,6 +1055,8 @@ export default function HistoryClientView() {
             <span>
               {language === "ar"
                 ? `عرض ${filteredAndSortedOrders.length} من إجمالي ${orders.length} طلب`
+                : language === "id"
+                ? `Menampilkan ${filteredAndSortedOrders.length} dari ${orders.length} pesanan`
                 : `Showing ${filteredAndSortedOrders.length} of ${orders.length} orders`}
             </span>
             {(statusFilter !== "ALL" || activeSubFilter !== "ALL" || queryFilter.trim()) && (
@@ -928,11 +1079,17 @@ export default function HistoryClientView() {
             <div className="text-center py-16 bg-[#14181f]/90 backdrop-blur-md rounded-3xl border border-[#222934] p-8 space-y-3 shadow-xl">
               <Pizza className="w-12 h-12 text-[#EFCC80] mx-auto" />
               <h4 className="text-base font-bold text-white">
-                {language === "ar" ? "لا توجد طلبات مطابقة لهذا الفلتر" : "No orders matching this filter"}
+                {language === "ar"
+                  ? "لا توجد طلبات مطابقة لهذا الفلتر"
+                  : language === "id"
+                  ? "Tidak ada pesanan yang sesuai dengan filter ini"
+                  : "No orders matching this filter"}
               </h4>
               <p className="text-xs text-stone-400 max-w-sm mx-auto">
                 {language === "ar"
                   ? "جرب اختيار تبويب فلاتر آخر، أو قم بمسح عبارة البحث للعثور على جميع طلباتك السابقة."
+                  : language === "id"
+                  ? "Coba pilih tab filter lain, atau hapus kata kunci pencarian untuk melihat semua pesanan Anda sebelumnya."
                   : "Try selecting another status tab or clear your search query to see all past orders."}
               </p>
               <div className="pt-2">
@@ -955,8 +1112,9 @@ export default function HistoryClientView() {
               {filteredAndSortedOrders.map((order) => {
                 const statusBadge = getStatusBadge(order.status);
                 const isExpanded = expandedOrderId === order.id;
+                const orderLocale = language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US";
                 const orderDate = new Date(order.createdAt).toLocaleDateString(
-                  language === "ar" ? "ar-YE" : "en-US",
+                  orderLocale,
                   {
                     year: "numeric",
                     month: "short",
@@ -967,7 +1125,7 @@ export default function HistoryClientView() {
                   }
                 );
                 const pickupTime = new Date(order.requestedPickupTime).toLocaleTimeString(
-                  language === "ar" ? "ar-YE" : "en-US",
+                  orderLocale,
                   { hour: "numeric", minute: "2-digit", timeZone: "Asia/Aden" }
                 );
 
@@ -1092,8 +1250,16 @@ export default function HistoryClientView() {
                           >
                             <span>
                               {isExpanded
-                                ? (language === "ar" ? "إخفاء التفاصيل" : "Hide Details")
-                                : (language === "ar" ? "عرض تفاصيل الطلب" : "View Details")}
+                                ? (language === "ar"
+                                    ? "إخفاء التفاصيل"
+                                    : language === "id"
+                                    ? "Sembunyikan Detail"
+                                    : "Hide Details")
+                                : (language === "ar"
+                                    ? "عرض تفاصيل الطلب"
+                                    : language === "id"
+                                    ? "Lihat Detail Pesanan"
+                                    : "View Details")}
                             </span>
                             {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                           </button>
@@ -1108,12 +1274,22 @@ export default function HistoryClientView() {
                                 className="group inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-[#171c26] text-stone-200 ps-2.5 pe-1 py-1 rounded-xl text-xs font-medium border border-[#222934] transition-colors"
                               >
                                 <span className="font-bold text-[#EFCC80] font-outfit">{it.quantity}x</span>
-                                <span>{language === "ar" ? it.productNameAr : it.productNameEn}</span>
+                                <span>
+                                  {language === "ar"
+                                    ? it.productNameAr
+                                    : (language === "id" && (it as any).nameId ? (it as any).nameId : it.productNameEn)}
+                                </span>
                                 <button
                                   type="button"
                                   onClick={(e) => handleReorderItem(it, e)}
                                   className="inline-flex items-center gap-1 bg-[#14181f] hover:bg-gradient-to-b hover:from-[#EFCC80] hover:to-[#C69843] hover:text-[#2C1A04] text-[#EFCC80] px-2 py-0.5 rounded-lg text-[10px] font-bold border border-white/5 transition-all ms-1 active:scale-90 cursor-pointer"
-                                  title={language === "ar" ? `إعادة طلب ${it.productNameAr}` : `Re-order ${it.productNameEn}`}
+                                  title={
+                                    language === "ar"
+                                      ? `إعادة طلب ${it.productNameAr}`
+                                      : language === "id"
+                                      ? `Pesan ulang ${it.productNameEn}`
+                                      : `Re-order ${it.productNameEn}`
+                                  }
                                 >
                                   <Plus className="w-3 h-3" />
                                   <span>{dict.history.reorderItem}</span>
@@ -1134,7 +1310,9 @@ export default function HistoryClientView() {
                                       {it.quantity}
                                     </span>
                                     <span className="font-bold text-white">
-                                      {language === "ar" ? it.productNameAr : it.productNameEn}
+                                      {language === "ar"
+                                        ? it.productNameAr
+                                        : (language === "id" && (it as any).nameId ? (it as any).nameId : it.productNameEn)}
                                     </span>
                                   </div>
 
@@ -1143,7 +1321,14 @@ export default function HistoryClientView() {
                                     <div className="text-[11px] text-[#EFCC80] ps-7 space-y-0.5">
                                       {it.options.map((opt) => (
                                         <div key={opt.id} className="flex items-center gap-1">
-                                          <span>• {language === "ar" ? opt.nameAr : opt.nameEn}</span>
+                                          <span>
+                                            •{" "}
+                                            {language === "ar"
+                                              ? opt.nameAr
+                                              : (opt as any).nameId && language === "id"
+                                              ? (opt as any).nameId
+                                              : opt.nameEn}
+                                          </span>
                                           {opt.priceDelta > 0 && (
                                             <span className="text-stone-400 font-outfit">
                                               (+{opt.priceDelta.toLocaleString()} {dict.menu.currency})
@@ -1171,7 +1356,13 @@ export default function HistoryClientView() {
                                     type="button"
                                     onClick={(e) => handleReorderItem(it, e)}
                                     className="inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-gradient-to-b hover:from-[#EFCC80] hover:to-[#C69843] hover:text-[#2C1A04] text-[#EFCC80] px-3 py-1.5 rounded-xl text-xs font-bold border border-[#222934] transition-all active:scale-95 cursor-pointer"
-                                    title={language === "ar" ? `إعادة طلب ${it.productNameAr} إلى السلة` : `Re-order ${it.productNameEn}`}
+                                    title={
+                                      language === "ar"
+                                        ? `إعادة طلب ${it.productNameAr} إلى السلة`
+                                        : language === "id"
+                                        ? `Pesan ulang ${it.productNameEn} ke keranjang`
+                                        : `Re-order ${it.productNameEn}`
+                                    }
                                   >
                                     <Plus className="w-3.5 h-3.5" />
                                     <span>{dict.history.reorderItem}</span>
@@ -1229,7 +1420,11 @@ export default function HistoryClientView() {
                         {/* WhatsApp support */}
                         <a
                           href={`https://wa.me/967772207788?text=${encodeURIComponent(
-                            `مرحباً مطعم بيتزا هاوس، بخصوص طلبي رقم ${order.orderNumber} باسم ${order.customerName}`
+                            language === "ar"
+                              ? `مرحباً مطعم بيتزا هاوس، بخصوص طلبي رقم ${order.orderNumber} باسم ${order.customerName}`
+                              : language === "id"
+                              ? `Halo Pizza House, mengenai pesanan saya nomor ${order.orderNumber} atas nama ${order.customerName}`
+                              : `Hello Pizza House, regarding my order ${order.orderNumber} under name ${order.customerName}`
                           )}`}
                           target="_blank"
                           rel="noreferrer"
@@ -1292,7 +1487,11 @@ export default function HistoryClientView() {
                 {dict.brand.name}
               </h2>
               <p className="text-xs text-stone-500">
-                المكلا - فوه - حي المساكن | هاتف: 05375561
+                {language === "ar"
+                  ? "المكلا - فوه - حي المساكن | هاتف: 05375561"
+                  : language === "id"
+                  ? "Mukalla - Fuwah - Al-Masakin | Telp: 05375561"
+                  : "Mukalla - Fuwah - Al-Masakin | Phone: 05375561"}
               </p>
               <p className="text-xs font-black font-outfit text-pizza-800 pt-1">
                 {activeReceiptOrder.orderNumber}
@@ -1302,27 +1501,40 @@ export default function HistoryClientView() {
             {/* Receipt Meta */}
             <div className="text-xs space-y-1.5 text-stone-600 border-b border-dashed border-stone-300 pb-4 font-outfit">
               <div className="flex justify-between">
-                <span>العميل:</span>
+                <span>{language === "ar" ? "العميل:" : language === "id" ? "Pelanggan:" : "Customer:"}</span>
                 <span className="font-bold text-stone-900">{activeReceiptOrder.customerName}</span>
               </div>
               <div className="flex justify-between">
-                <span>الهاتف:</span>
+                <span>{language === "ar" ? "الهاتف:" : language === "id" ? "Telepon:" : "Phone:"}</span>
                 <span className="font-bold text-stone-900" dir="ltr">{activeReceiptOrder.customerPhone}</span>
               </div>
               <div className="flex justify-between">
-                <span>التاريخ:</span>
-                <span>{new Date(activeReceiptOrder.createdAt).toLocaleString("ar-YE")}</span>
+                <span>{language === "ar" ? "التاريخ:" : language === "id" ? "Tanggal:" : "Date:"}</span>
+                <span>
+                  {new Date(activeReceiptOrder.createdAt).toLocaleString(
+                    language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US"
+                  )}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span>طريقة الدفع:</span>
+                <span>{language === "ar" ? "طريقة الدفع:" : language === "id" ? "Metode Pembayaran:" : "Payment Method:"}</span>
                 <span>{getPaymentMethodLabel(activeReceiptOrder.payment?.method)}</span>
               </div>
               <div className="flex justify-between">
-                <span>طريقة الاستلام:</span>
+                <span>{language === "ar" ? "طريقة الاستلام:" : language === "id" ? "Metode Pengambilan:" : "Pickup Mode:"}</span>
                 <span>
                   {activeReceiptOrder.pickupMode === "ASAP"
-                    ? "استلام فوري (فور الجاهزية)"
-                    : `مجدول (${new Date(activeReceiptOrder.requestedPickupTime).toLocaleTimeString("ar-YE", { hour: "numeric", minute: "2-digit" })})`}
+                    ? (language === "ar"
+                        ? "استلام فوري (فور الجاهزية)"
+                        : language === "id"
+                        ? "Segera (saat siap)"
+                        : "Immediate (when ready)")
+                    : `${language === "ar" ? "مجدول" : language === "id" ? "Terjadwal" : "Scheduled"} (${new Date(
+                        activeReceiptOrder.requestedPickupTime
+                      ).toLocaleTimeString(language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })})`}
                 </span>
               </div>
             </div>
@@ -1332,14 +1544,29 @@ export default function HistoryClientView() {
               {activeReceiptOrder.items.map((it) => (
                 <div key={it.id} className="flex justify-between items-start">
                   <div>
-                    <span className="font-bold">{it.quantity}x {it.productNameAr}</span>
+                    <span className="font-bold">
+                      {it.quantity}x{" "}
+                      {language === "ar"
+                        ? it.productNameAr
+                        : (language === "id" && (it as any).nameId ? (it as any).nameId : it.productNameEn)}
+                    </span>
                     {it.options && it.options.length > 0 && (
                       <p className="text-[10px] text-stone-500">
-                        {it.options.map((o) => o.nameAr).join(", ")}
+                        {it.options
+                          .map((o) =>
+                            language === "ar"
+                              ? o.nameAr
+                              : (o as any).nameId && language === "id"
+                              ? (o as any).nameId
+                              : o.nameEn
+                          )
+                          .join(", ")}
                       </p>
                     )}
                   </div>
-                  <span className="font-bold font-outfit">{it.subtotal.toLocaleString()} ر.ي</span>
+                  <span className="font-bold font-outfit">
+                    {it.subtotal.toLocaleString()} {dict.menu.currency}
+                  </span>
                 </div>
               ))}
             </div>
@@ -1347,12 +1574,16 @@ export default function HistoryClientView() {
             {/* Totals */}
             <div className="text-xs space-y-1.5 border-b border-dashed border-stone-300 pb-4 font-outfit">
               <div className="flex justify-between text-stone-500">
-                <span>المجموع الفرعي:</span>
-                <span>{activeReceiptOrder.subtotal.toLocaleString()} ر.ي</span>
+                <span>{language === "ar" ? "المجموع الفرعي:" : language === "id" ? "Subtotal:" : "Subtotal:"}</span>
+                <span>
+                  {activeReceiptOrder.subtotal.toLocaleString()} {dict.menu.currency}
+                </span>
               </div>
               <div className="flex justify-between text-base font-black text-stone-900 pt-1">
-                <span>الإجمالي النهائي:</span>
-                <span className="text-pizza-700">{activeReceiptOrder.total.toLocaleString()} ر.ي</span>
+                <span>{language === "ar" ? "الإجمالي النهائي:" : language === "id" ? "Total Akhir:" : "Final Total:"}</span>
+                <span className="text-pizza-700">
+                  {activeReceiptOrder.total.toLocaleString()} {dict.menu.currency}
+                </span>
               </div>
             </div>
 
@@ -1361,17 +1592,23 @@ export default function HistoryClientView() {
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="flex-1 bg-stone-900 hover:bg-stone-800 text-white font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md"
+                className="flex-1 bg-stone-900 hover:bg-stone-800 text-white font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md cursor-pointer"
               >
                 <Printer className="w-4 h-4" />
-                <span>طباعة الفاتورة</span>
+                <span>
+                  {language === "ar"
+                    ? "طباعة الفاتورة"
+                    : language === "id"
+                    ? "Cetak Struk"
+                    : "Print Receipt"}
+                </span>
               </button>
               <button
                 type="button"
                 onClick={() => setActiveReceiptOrder(null)}
-                className="px-5 py-3 rounded-2xl border border-stone-200 text-stone-600 font-bold text-xs"
+                className="px-5 py-3 rounded-2xl border border-stone-200 text-stone-600 font-bold text-xs cursor-pointer hover:bg-stone-50"
               >
-                إغلاق
+                {language === "ar" ? "إغلاق" : language === "id" ? "Tutup" : "Close"}
               </button>
             </div>
           </div>

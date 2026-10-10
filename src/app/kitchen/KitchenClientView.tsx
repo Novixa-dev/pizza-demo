@@ -131,11 +131,11 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
             <h1 className="text-lg font-black font-cairo flex items-center gap-2">
               <span className="text-white">{dict.kitchen.title}</span>
               <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-2.5 py-0.5 rounded-full font-cairo font-bold shadow-sm">
-                {language === "ar" ? "مباشر" : "LIVE"}
+                {language === "ar" ? "مباشر" : language === "id" ? "LANGSUNG" : "LIVE"}
               </span>
             </h1>
             <p className="text-xs text-[#EFCC80]/80 font-outfit font-bold">
-              {currentTime.toLocaleTimeString(language === "ar" ? "ar-YE" : "en-US", {
+              {currentTime.toLocaleTimeString(language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US", {
                 hour: "2-digit",
                 minute: "2-digit",
                 second: "2-digit",
@@ -173,11 +173,11 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
               await logoutStaffAction();
               window.location.reload();
             }}
-            className="p-2.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300 flex items-center gap-1.5 text-xs font-bold transition-colors"
-            title="تسجيل الخروج"
+            className="p-2.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300 flex items-center gap-1.5 text-xs font-bold transition-colors cursor-pointer"
+            title={language === "ar" ? "تسجيل الخروج" : language === "id" ? "Keluar" : "Log out"}
           >
             <LogOut className="w-4 h-4" />
-            <span className="hidden sm:inline">خروج</span>
+            <span className="hidden sm:inline">{language === "ar" ? "خروج" : language === "id" ? "Keluar" : "Exit"}</span>
           </button>
         </div>
       </div>
@@ -339,13 +339,14 @@ function TicketCard({
   isUpdating: boolean;
   onAction: () => void;
 }) {
+  const ticketLocale = language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US";
   const pickupTimeStr = new Date(order.requestedPickupTime).toLocaleTimeString(
-    language === "ar" ? "ar-YE" : "en-US",
+    ticketLocale,
     { hour: "2-digit", minute: "2-digit" }
   );
 
   const releaseTimeStr = new Date(order.plannedPrepStartTime).toLocaleTimeString(
-    language === "ar" ? "ar-YE" : "en-US",
+    ticketLocale,
     { hour: "2-digit", minute: "2-digit" }
   );
 
@@ -386,14 +387,25 @@ function TicketCard({
           <div key={item.id} className="space-y-0.5">
             <div className="flex items-center justify-between font-bold text-stone-100">
               <span>
-                {item.quantity}x {language === "ar" ? item.productNameAr : item.productNameEn}
+                {item.quantity}x{" "}
+                {language === "ar"
+                  ? item.productNameAr
+                  : language === "id" && item.nameId
+                  ? item.nameId
+                  : item.productNameEn}
               </span>
             </div>
 
             {item.options?.length > 0 && (
               <div className="text-[11px] text-[#EFCC80] font-medium ps-2">
                 {item.options
-                  .map((o: any) => (language === "ar" ? o.nameAr : o.nameEn))
+                  .map((o: any) =>
+                    language === "ar"
+                      ? o.nameAr
+                      : language === "id" && o.nameId
+                      ? o.nameId
+                      : o.nameEn
+                  )
                   .join(" + ")}
               </div>
             )}
@@ -409,7 +421,14 @@ function TicketCard({
         {order.notes && (
           <div className="pt-1.5 border-t border-[#222934] text-[11px] text-red-400 font-bold flex items-center gap-1">
             <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
-            <span>ملاحظة: {order.notes}</span>
+            <span>
+              {language === "ar"
+                ? "ملاحظة:"
+                : language === "id"
+                ? "Catatan:"
+                : "Note:"}{" "}
+              {order.notes}
+            </span>
           </div>
         )}
       </div>
@@ -417,16 +436,26 @@ function TicketCard({
       {/* Footer Action Button */}
       <div className="pt-2 border-t border-[#222934] flex items-center justify-between gap-2">
         <span className="text-[10px] text-stone-400 font-outfit">
-          {order.pickupMode === "ASAP" ? "فوري (ASAP)" : `بدء: ${releaseTimeStr}`}
+          {order.pickupMode === "ASAP"
+            ? language === "ar"
+              ? "فوري (ASAP)"
+              : language === "id"
+              ? "Segera (ASAP)"
+              : "ASAP"
+            : `${language === "ar" ? "بدء:" : language === "id" ? "Mulai:" : "Start:"} ${releaseTimeStr}`}
         </span>
 
         {type === "upcoming" ? (
           <button
             onClick={onAction}
             disabled={isUpdating}
-            className="px-3 py-1.5 bg-[#14181f] hover:bg-[#1a202c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 rounded-xl text-xs font-bold transition-colors"
+            className="px-3 py-1.5 bg-[#14181f] hover:bg-[#1a202c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 rounded-xl text-xs font-bold transition-colors cursor-pointer"
           >
-            تقديم البدء
+            {language === "ar"
+              ? "تقديم البدء"
+              : language === "id"
+              ? "Mulai Lebih Awal"
+              : "Expedite"}
           </button>
         ) : type === "readyToPrep" ? (
           <button

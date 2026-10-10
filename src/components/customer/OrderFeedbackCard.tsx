@@ -20,12 +20,12 @@ interface OrderFeedbackCardProps {
 }
 
 const QUICK_TAGS = [
-  { id: "HOT_CRISPY", labelAr: "ساخنة ومقرمشة 🔥", labelEn: "Hot & Crispy 🔥" },
-  { id: "ON_TIME", labelAr: "في الموعد تماماً ⏱️", labelEn: "Right on Time ⏱️" },
-  { id: "GREAT_DOUGH", labelAr: "عجينة إيطالية هشة 🍕", labelEn: "Great Italian Dough 🍕" },
-  { id: "GENEROUS_CHEESE", labelAr: "جبنة ومكونات وفيرة 🧀", labelEn: "Generous Toppings 🧀" },
-  { id: "EXCELLENT_PACKAGING", labelAr: "تغليف نظيف وممتاز 📦", labelEn: "Clean Packaging 📦" },
-  { id: "FRIENDLY_STAFF", labelAr: "تعامل لطيف وسريع 😊", labelEn: "Friendly Staff 😊" },
+  { id: "HOT_CRISPY", labelAr: "ساخنة ومقرمشة 🔥", labelEn: "Hot & Crispy 🔥", labelId: "Panas & Renyah 🔥" },
+  { id: "ON_TIME", labelAr: "في الموعد تماماً ⏱️", labelEn: "Right on Time ⏱️", labelId: "Tepat Waktu ⏱️" },
+  { id: "GREAT_DOUGH", labelAr: "عجينة إيطالية هشة 🍕", labelEn: "Great Italian Dough 🍕", labelId: "Adonan Khas Italia Lezat 🍕" },
+  { id: "GENEROUS_CHEESE", labelAr: "جبنة ومكونات وفيرة 🧀", labelEn: "Generous Toppings 🧀", labelId: "Keju & Topping Melimpah 🧀" },
+  { id: "EXCELLENT_PACKAGING", labelAr: "تغليف نظيف وممتاز 📦", labelEn: "Clean Packaging 📦", labelId: "Kemasan Bersih & Rapi 📦" },
+  { id: "FRIENDLY_STAFF", labelAr: "تعامل لطيف وسريع 😊", labelEn: "Friendly Staff 😊", labelId: "Pelayanan Ramah & Cepat 😊" },
 ];
 
 export default function OrderFeedbackCard({
@@ -60,15 +60,35 @@ export default function OrderFeedbackCard({
   const getMealLabel = (rating: number) => {
     switch (rating) {
       case 5:
-        return language === "ar" ? "ممتازة جداً ولذيذة! 🍕" : "Outstanding & Delicious! 🍕";
+        return language === "ar"
+          ? "ممتازة جداً ولذيذة! 🍕"
+          : language === "id"
+          ? "Luar Biasa & Sangat Lezat! 🍕"
+          : "Outstanding & Delicious! 🍕";
       case 4:
-        return language === "ar" ? "جيدة جداً وممتعة 👍" : "Very Good 👍";
+        return language === "ar"
+          ? "جيدة جداً وممتعة 👍"
+          : language === "id"
+          ? "Sangat Baik 👍"
+          : "Very Good 👍";
       case 3:
-        return language === "ar" ? "عادية ومقبولة 😐" : "Average 😐";
+        return language === "ar"
+          ? "عادية ومقبولة 😐"
+          : language === "id"
+          ? "Biasa Saja 😐"
+          : "Average 😐";
       case 2:
-        return language === "ar" ? "أقل من المتوقع 🙁" : "Below Expectation 🙁";
+        return language === "ar"
+          ? "أقل من المتوقع 🙁"
+          : language === "id"
+          ? "Di Bawah Harapan 🙁"
+          : "Below Expectation 🙁";
       case 1:
-        return language === "ar" ? "تحتاج لتحسين كبير ⚠️" : "Needs Improvement ⚠️";
+        return language === "ar"
+          ? "تحتاج لتحسين كبير ⚠️"
+          : language === "id"
+          ? "Perlu Ditingkatkan ⚠️"
+          : "Needs Improvement ⚠️";
       default:
         return "";
     }
@@ -77,15 +97,35 @@ export default function OrderFeedbackCard({
   const getServiceLabel = (rating: number) => {
     switch (rating) {
       case 5:
-        return language === "ar" ? "سريعة وفي الموعد تماماً! ⚡" : "Fast & Right on Time! ⚡";
+        return language === "ar"
+          ? "سريعة وفي الموعد تماماً! ⚡"
+          : language === "id"
+          ? "Cepat & Tepat Waktu! ⚡"
+          : "Fast & Right on Time! ⚡";
       case 4:
-        return language === "ar" ? "تجهيز ممتاز وسلس ⏱️" : "Smooth & Prompt ⏱️";
+        return language === "ar"
+          ? "تجهيز ممتاز وسلس ⏱️"
+          : language === "id"
+          ? "Pelayanan Lancar & Cepat ⏱️"
+          : "Smooth & Prompt ⏱️";
       case 3:
-        return language === "ar" ? "معقولة ومقبولة ⏳" : "Fair Speed ⏳";
+        return language === "ar"
+          ? "معقولة ومقبولة ⏳"
+          : language === "id"
+          ? "Cukup Baik ⏳"
+          : "Fair Speed ⏳";
       case 2:
-        return language === "ar" ? "تأخرت قليلاً ⌛" : "Slight Delay ⌛";
+        return language === "ar"
+          ? "تأخرت قليلاً ⌛"
+          : language === "id"
+          ? "Sedikit Terlambat ⌛"
+          : "Slight Delay ⌛";
       case 1:
-        return language === "ar" ? "تأخر غير مقبول ⚠️" : "Unacceptable Delay ⚠️";
+        return language === "ar"
+          ? "تأخر غير مقبول ⚠️"
+          : language === "id"
+          ? "Keterlambatan Tidak Wajar ⚠️"
+          : "Unacceptable Delay ⚠️";
       default:
         return "";
     }
@@ -109,7 +149,14 @@ export default function OrderFeedbackCard({
         setIsSubmitted(true);
         setIsEditing(false);
       } else {
-        setErrorMsg(res.error || "تعذر إرسال التقييم.");
+        setErrorMsg(
+          res.error ||
+            (language === "ar"
+              ? "تعذر إرسال التقييم."
+              : language === "id"
+              ? "Gagal mengirimkan ulasan."
+              : "Failed to submit review.")
+        );
       }
     });
   };
@@ -126,12 +173,18 @@ export default function OrderFeedbackCard({
             <div>
               <div className="flex items-center justify-center sm:justify-start">
                 <h3 className="text-base sm:text-lg font-black text-white font-cairo">
-                  {language === "ar" ? "شكراً لتقييمك ومشاركتنا رأيك!" : "Thank You for Your Feedback!"}
+                  {language === "ar"
+                    ? "شكراً لتقييمك ومشاركتنا رأيك!"
+                    : language === "id"
+                    ? "Terima kasih atas ulasan & masukan Anda!"
+                    : "Thank You for Your Feedback!"}
                 </h3>
               </div>
               <p className="text-xs text-stone-300">
                 {language === "ar"
                   ? "رأيك يساهم في الحفاظ على أعلى معايير الجودة لبيتزا هاوس بالمكلا."
+                  : language === "id"
+                  ? "Ulasan Anda membantu menjaga standar mutu tertinggi dan layanan cepat Pizza House Mukalla."
                   : "Your review helps Pizza House Mukalla maintain top quality and fast service."}
               </p>
             </div>
@@ -143,7 +196,9 @@ export default function OrderFeedbackCard({
             className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-300 hover:text-white bg-[#0c0e12] border border-[#222934] hover:border-[#EFCC80]/40 px-3.5 py-2 rounded-xl transition-all"
           >
             <Edit3 className="w-3.5 h-3.5 text-[#EFCC80]" />
-            <span>{language === "ar" ? "تعديل تقييمي" : "Edit Review"}</span>
+            <span>
+              {language === "ar" ? "تعديل تقييمي" : language === "id" ? "Ubah Ulasan" : "Edit Review"}
+            </span>
           </button>
         </div>
 
@@ -151,7 +206,11 @@ export default function OrderFeedbackCard({
         <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div className="p-3 bg-[#0c0e12] rounded-2xl border border-[#222934] space-y-1">
             <span className="text-[11px] text-stone-400 block">
-              {language === "ar" ? "تقييم الوجبة والبيتزا:" : "Meal Quality:"}
+              {language === "ar"
+                ? "تقييم الوجبة والبيتزا:"
+                : language === "id"
+                ? "Kualitas Makanan & Pizza:"
+                : "Meal Quality:"}
             </span>
             <div className="flex items-center gap-1.5">
               <div className="flex items-center text-[#EFCC80]">
@@ -172,7 +231,11 @@ export default function OrderFeedbackCard({
 
           <div className="p-3 bg-[#0c0e12] rounded-2xl border border-[#222934] space-y-1">
             <span className="text-[11px] text-stone-400 block">
-              {language === "ar" ? "تقييم سرعة الخدمة والتجهيز:" : "Service & Speed:"}
+              {language === "ar"
+                ? "تقييم سرعة الخدمة والتجهيز:"
+                : language === "id"
+                ? "Kecepatan Layanan & Penyajian:"
+                : "Service & Speed:"}
             </span>
             <div className="flex items-center gap-1.5">
               <div className="flex items-center text-[#EFCC80]">
@@ -212,6 +275,8 @@ export default function OrderFeedbackCard({
             <h3 className="text-base sm:text-lg font-black text-white font-cairo">
               {language === "ar"
                 ? "كيف كانت تجربتك مع طلبك اليوم؟"
+                : language === "id"
+                ? "Bagaimana pengalaman pesanan Anda hari ini?"
                 : "How was your meal and service today?"}
             </h3>
             <span className="text-xs bg-[#0c0e12] border border-[#222934] text-[#EFCC80] px-2.5 py-0.5 rounded-full font-bold font-outfit">
@@ -221,6 +286,8 @@ export default function OrderFeedbackCard({
           <p className="text-xs text-stone-400">
             {language === "ar"
               ? "يسعدنا معرفة رأيك في مذاق البيتزا وسرعة التجهيز لمساعدتنا على تقديم أفضل تجربة دائماً."
+              : language === "id"
+              ? "Kami sangat senang mengetahui pendapat Anda tentang rasa pizza dan kecepatan penyajian untuk terus menyempurnakan hidangan kami."
               : "Tell us about your pizza quality and service speed to help us continuously elevate our craft."}
           </p>
         </div>
@@ -231,7 +298,14 @@ export default function OrderFeedbackCard({
         <div className="space-y-2 p-4 bg-[#0c0e12] rounded-2xl border border-[#222934]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <label className="text-xs font-bold text-white flex items-center gap-1.5">
-              <span>🍕 {language === "ar" ? "تقييم جودة البيتزا والوجبة" : "Pizza & Food Quality"}</span>
+              <span>
+                🍕{" "}
+                {language === "ar"
+                  ? "تقييم جودة البيتزا والوجبة"
+                  : language === "id"
+                  ? "Kualitas Makanan & Pizza"
+                  : "Pizza & Food Quality"}
+              </span>
               <span className="text-[#EFCC80]">*</span>
             </label>
             <span className="text-xs font-bold text-[#EFCC80]">
@@ -269,7 +343,14 @@ export default function OrderFeedbackCard({
         <div className="space-y-2 p-4 bg-[#0c0e12] rounded-2xl border border-[#222934]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <label className="text-xs font-bold text-white flex items-center gap-1.5">
-              <span>⚡ {language === "ar" ? "تقييم سرعة التجهيز والخدمة" : "Service & Prep Speed"}</span>
+              <span>
+                ⚡{" "}
+                {language === "ar"
+                  ? "تقييم سرعة التجهيز والخدمة"
+                  : language === "id"
+                  ? "Kecepatan Layanan & Penyajian"
+                  : "Service & Prep Speed"}
+              </span>
               <span className="text-[#EFCC80]">*</span>
             </label>
             <span className="text-xs font-bold text-[#EFCC80]">
@@ -306,7 +387,11 @@ export default function OrderFeedbackCard({
         {/* Quick Tag Pills */}
         <div className="space-y-2">
           <label className="text-xs font-bold text-stone-300 block">
-            {language === "ar" ? "ما الذي أعجبك أكثر؟ (اختياري)" : "What did you like most? (Optional)"}
+            {language === "ar"
+              ? "ما الذي أعجبك أكثر؟ (اختياري)"
+              : language === "id"
+              ? "Apa yang paling Anda sukai? (Opsional)"
+              : "What did you like most? (Optional)"}
           </label>
           <div className="flex flex-wrap gap-2">
             {QUICK_TAGS.map((tag) => {
@@ -322,7 +407,11 @@ export default function OrderFeedbackCard({
                       : "bg-[#0c0e12] hover:bg-[#1a202c] text-stone-300 border-[#222934]"
                   }`}
                 >
-                  {language === "ar" ? tag.labelAr : tag.labelEn}
+                  {language === "ar"
+                    ? tag.labelAr
+                    : (language === "id" && tag.labelId)
+                    ? tag.labelId
+                    : tag.labelEn}
                 </button>
               );
             })}
@@ -336,6 +425,8 @@ export default function OrderFeedbackCard({
             <span>
               {language === "ar"
                 ? "ملاحظاتك واقتراحاتك لتطوير الخدمة (اختياري)"
+                : language === "id"
+                ? "Komentar atau saran perbaikan (Opsional)"
                 : "Comments or Suggestions (Optional)"}
             </span>
           </label>
@@ -347,6 +438,8 @@ export default function OrderFeedbackCard({
             placeholder={
               language === "ar"
                 ? "شاركنا أي ملاحظة حول الطعم، حرارة البيتزا، أو مستوى الخدمة..."
+                : language === "id"
+                ? "Tuliskan pendapat Anda tentang rasa, suhu pizza, atau pelayanan..."
                 : "Share any thoughts on taste, temperature, or service..."
             }
             className="w-full px-4 py-3 rounded-2xl bg-[#0c0e12] border border-[#222934] focus:outline-none focus:border-[#EFCC80] text-xs sm:text-sm text-white transition-all placeholder:text-stone-600 font-bold"
@@ -355,6 +448,8 @@ export default function OrderFeedbackCard({
             <span>
               {language === "ar"
                 ? "تصل الملاحظات مباشرة إلى إدارة بيتزا هاوس"
+                : language === "id"
+                ? "Masukan langsung diterima oleh manajemen Pizza House"
                 : "Feedback goes directly to management"}
             </span>
             <span className="font-outfit">{comment.length}/500</span>
@@ -379,9 +474,13 @@ export default function OrderFeedbackCard({
               {isPending
                 ? language === "ar"
                   ? "جاري إرسال التقييم..."
+                  : language === "id"
+                  ? "Mengirimkan Ulasan..."
                   : "Submitting Review..."
                 : language === "ar"
                 ? "إرسال التقييم"
+                : language === "id"
+                ? "Kirimkan Ulasan"
                 : "Submit Feedback"}
             </span>
           </button>
@@ -392,7 +491,7 @@ export default function OrderFeedbackCard({
               onClick={() => setIsEditing(false)}
               className="px-5 py-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12] text-stone-300 hover:text-white text-xs font-bold hover:bg-[#1a202c] transition-colors"
             >
-              {language === "ar" ? "إلغاء" : "Cancel"}
+              {language === "ar" ? "إلغاء" : language === "id" ? "Batal" : "Cancel"}
             </button>
           )}
         </div>

@@ -200,7 +200,13 @@ export default function CheckoutClientView({
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      setErrorMessage("حجم الصورة يجب ألا يتجاوز 5 ميجابايت.");
+      setErrorMessage(
+        language === "ar"
+          ? "حجم الصورة يجب ألا يتجاوز 5 ميجابايت."
+          : language === "id"
+          ? "Ukuran gambar tidak boleh melebihi 5 MB."
+          : "Image size must not exceed 5 MB."
+      );
       return;
     }
 
@@ -221,22 +227,46 @@ export default function CheckoutClientView({
     }
 
     if (!customerName.trim()) {
-      setErrorMessage("يرجى إدخال اسم العميل.");
+      setErrorMessage(
+        language === "ar"
+          ? "يرجى إدخال اسم العميل."
+          : language === "id"
+          ? "Silakan masukkan nama pelanggan."
+          : "Please enter your name."
+      );
       return;
     }
 
     if (!customerPhone.trim()) {
-      setErrorMessage("يرجى إدخال رقم الهاتف للتواصل.");
+      setErrorMessage(
+        language === "ar"
+          ? "يرجى إدخال رقم الهاتف للتواصل."
+          : language === "id"
+          ? "Silakan masukkan nomor telepon untuk konfirmasi."
+          : "Please enter your contact phone number."
+      );
       return;
     }
 
     if (pickupMode === "SCHEDULED" && !selectedSlot) {
-      setErrorMessage("يرجى اختيار وقت الاستلام المفضل.");
+      setErrorMessage(
+        language === "ar"
+          ? "يرجى اختيار وقت الاستلام المفضل."
+          : language === "id"
+          ? "Silakan pilih waktu pengambilan yang diinginkan."
+          : "Please select your preferred pickup time."
+      );
       return;
     }
 
     if (paymentMethod !== "PAY_AT_PICKUP" && !receiptBase64) {
-      setErrorMessage("يرجى إرفاق صورة إشعار التحويل لتوثيق الحجز.");
+      setErrorMessage(
+        language === "ar"
+          ? "يرجى إرفاق صورة إشعار التحويل لتوثيق الحجز."
+          : language === "id"
+          ? "Silakan lampirkan bukti transfer untuk verifikasi pesanan."
+          : "Please attach the transfer receipt to verify your order."
+      );
       return;
     }
 
@@ -265,7 +295,14 @@ export default function CheckoutClientView({
       const result = await createOrderAction(payload);
 
       if (!result.success) {
-        setErrorMessage(result.error || "تعذر إتمام الطلب.");
+        setErrorMessage(
+          result.error ||
+            (language === "ar"
+              ? "تعذر إتمام الطلب."
+              : language === "id"
+              ? "Gagal menyelesaikan pesanan."
+              : "Failed to place order.")
+        );
         setIsSubmitting(false);
         return;
       }
@@ -284,7 +321,13 @@ export default function CheckoutClientView({
       window.location.href = `/track/${result.orderId}?token=${result.trackingToken}`;
     } catch (err) {
       console.error("Order submission error:", err);
-      setErrorMessage("حدث خطأ أثناء الاتصال بالخادم. يرجى المحاولة مرة أخرى.");
+      setErrorMessage(
+        language === "ar"
+          ? "حدث خطأ أثناء الاتصال بالخادم. يرجى المحاولة مرة أخرى."
+          : language === "id"
+          ? "Terjadi kesalahan saat menghubungi server. Silakan coba lagi."
+          : "An error occurred connecting to server. Please try again."
+      );
       setIsSubmitting(false);
     }
   };
@@ -315,7 +358,11 @@ export default function CheckoutClientView({
           {dict.checkout.title}
         </h1>
         <p className="text-xs sm:text-sm text-[#EFCC80] font-bold">
-          فرع فوه - حي المساكن | استلام سريع ومجدول
+          {language === "ar"
+            ? "فرع فوه - حي المساكن | استلام سريع ومجدول"
+            : language === "id"
+            ? "Cabang Fuwah - Al-Masaken | Pesanan Cepat & Terjadwal"
+            : "Fuwah Branch - Al-Masaken | Instant & Scheduled Pickup"}
         </p>
       </div>
 
@@ -330,7 +377,14 @@ export default function CheckoutClientView({
         <div className="mb-6 p-4 rounded-2xl bg-[#14181f] border border-[#C69843]/40 text-[#EFCC80] text-xs sm:text-sm flex items-center gap-3">
           <Clock className="w-5 h-5 flex-shrink-0 text-[#EFCC80]" />
           <span>
-            {language === "ar" ? restaurantStatus.descriptionAr : restaurantStatus.descriptionEn} (تم توجيه الطلب تلقائياً إلى خيار &quot;الاستلام المجدول&quot;).
+            {language === "ar"
+              ? restaurantStatus.descriptionAr
+              : restaurantStatus.descriptionEn}
+            {language === "ar"
+              ? " (تم توجيه الطلب تلقائياً إلى خيار \"الاستلام المجدول\")."
+              : language === "id"
+              ? " (Pesanan diarahkan secara otomatis ke opsi \"Pengambilan Terjadwal\")."
+              : " (Order redirected automatically to \"Scheduled Pickup\")."}
           </span>
         </div>
       )}
@@ -356,19 +410,27 @@ export default function CheckoutClientView({
         <div className="grid grid-cols-4 gap-2 text-center text-xs">
           <div className="flex flex-col items-center gap-1.5">
             <span className="w-6 h-6 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black flex items-center justify-center text-xs font-outfit shadow-sm">1</span>
-            <span className="font-bold text-[#EFCC80] text-[11px] truncate">{language === "ar" ? "بيانات العميل" : "Customer"}</span>
+            <span className="font-bold text-[#EFCC80] text-[11px] truncate">
+              {language === "ar" ? "بيانات العميل" : language === "id" ? "Data Pelanggan" : "Customer"}
+            </span>
           </div>
           <div className="flex flex-col items-center gap-1.5">
             <span className="w-6 h-6 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black flex items-center justify-center text-xs font-outfit shadow-sm">2</span>
-            <span className="font-bold text-[#EFCC80] text-[11px] truncate">{language === "ar" ? "موعد الاستلام" : "Pickup Slot"}</span>
+            <span className="font-bold text-[#EFCC80] text-[11px] truncate">
+              {language === "ar" ? "موعد الاستلام" : language === "id" ? "Waktu Ambil" : "Pickup Slot"}
+            </span>
           </div>
           <div className="flex flex-col items-center gap-1.5">
             <span className="w-6 h-6 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black flex items-center justify-center text-xs font-outfit shadow-sm">3</span>
-            <span className="font-bold text-[#EFCC80] text-[11px] truncate">{language === "ar" ? "طريقة الدفع" : "Payment"}</span>
+            <span className="font-bold text-[#EFCC80] text-[11px] truncate">
+              {language === "ar" ? "طريقة الدفع" : language === "id" ? "Pembayaran" : "Payment"}
+            </span>
           </div>
           <div className="flex flex-col items-center gap-1.5">
             <span className="w-6 h-6 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-400 font-bold flex items-center justify-center text-xs font-outfit">4</span>
-            <span className="font-bold text-stone-400 text-[11px] truncate">{language === "ar" ? "التأكيد والاستلام" : "Confirm"}</span>
+            <span className="font-bold text-stone-400 text-[11px] truncate">
+              {language === "ar" ? "التأكيد والاستلام" : language === "id" ? "Konfirmasi" : "Confirm"}
+            </span>
           </div>
         </div>
       </div>
@@ -411,7 +473,11 @@ export default function CheckoutClientView({
                   className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] transition-colors font-outfit"
                 />
                 <p className="text-[10px] text-stone-400">
-                  {language === "ar" ? "أرقام يمن موبايل (77) / يو (73) / سبأفون (71) أو الهاتف الثابت" : "e.g. 771234567 or 73XXXXXXX"}
+                  {language === "ar"
+                    ? "أرقام يمن موبايل (77) / يو (73) / سبأفون (71) أو الهاتف الثابت"
+                    : language === "id"
+                    ? "Nomor telepon Yaman (77 / 73 / 71) atau WhatsApp aktif"
+                    : "Yemeni carriers (77 / 73 / 71) or active WhatsApp"}
                 </p>
               </div>
             </div>
@@ -454,7 +520,11 @@ export default function CheckoutClientView({
                 </div>
                 <p className="text-[11px] text-stone-400 mt-1">
                   {restaurantStatus && !restaurantStatus.canOrderImmediate
-                    ? "غير متاح حالياً (خارج ساعات العمل الفوري)"
+                    ? language === "ar"
+                      ? "غير متاح حالياً (خارج ساعات العمل الفوري)"
+                      : language === "id"
+                      ? "Tidak tersedia saat ini (di luar jam buka langsung)"
+                      : "Unavailable now (outside immediate hours)"
                     : dict.checkout.asapBadge}
                 </p>
               </button>
@@ -484,7 +554,11 @@ export default function CheckoutClientView({
                   </div>
                 </div>
                 <p className="text-[11px] text-stone-400 mt-1">
-                  حدد وقت وصولك لنجهزها طازجة فوراً
+                  {language === "ar"
+                    ? "حدد وقت وصولك لنجهزها طازجة فوراً"
+                    : language === "id"
+                    ? "Tentukan waktu kedatangan agar siap panas & segar"
+                    : "Pick your pickup time so it's baked fresh upon arrival"}
                 </p>
               </button>
             </div>
@@ -498,7 +572,11 @@ export default function CheckoutClientView({
 
                 {availableSlots.length === 0 ? (
                   <div className="p-4 rounded-xl bg-[#0c0e12] text-center text-xs text-stone-400 border border-[#222934]">
-                    لا توجد فترات حجز متبقية لليوم. يمكنك التواصل مع خدمة العملاء عبر الواتساب للتنسيق.
+                    {language === "ar"
+                      ? "لا توجد فترات حجز متبقية لليوم. يمكنك التواصل مع خدمة العملاء عبر الواتساب للتنسيق."
+                      : language === "id"
+                      ? "Tidak ada slot tersisa untuk hari ini. Silakan hubungi layanan pelanggan via WhatsApp untuk koordinasi."
+                      : "No slots remaining today. Contact customer service on WhatsApp for coordination."}
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-1">
@@ -519,6 +597,8 @@ export default function CheckoutClientView({
                         <div>
                           {language === "ar"
                             ? slot.displayLabelAr
+                            : (language === "id" && (slot as any).displayLabelId)
+                            ? (slot as any).displayLabelId
                             : slot.displayLabelEn}
                         </div>
                         {!slot.isAvailable && (
@@ -572,7 +652,11 @@ export default function CheckoutClientView({
                 />
                 <div>
                   <span className="text-xs sm:text-sm font-bold text-white block">
-                    تحويل عبر بنك الكريمي (حاسب / إم فلوس)
+                    {language === "ar"
+                      ? "تحويل عبر بنك الكريمي (حاسب / إم فلوس)"
+                      : language === "id"
+                      ? "Transfer via Bank Kuraimi (Haseb / M-Flous)"
+                      : "Transfer via Kuraimi Bank (Haseb / M-Flous)"}
                   </span>
                   <span className="text-[11px] text-[#EFCC80]/80 block mt-0.5">
                     {dict.checkout.kuraimiAcc}
@@ -591,7 +675,11 @@ export default function CheckoutClientView({
                 />
                 <div>
                   <span className="text-xs sm:text-sm font-bold text-white block">
-                    تحويل عبر شركة العمقي للصرافة
+                    {language === "ar"
+                      ? "تحويل عبر شركة العمقي للصرافة"
+                      : language === "id"
+                      ? "Transfer via Al-Amqi Exchange"
+                      : "Transfer via Al-Amqi Exchange"}
                   </span>
                   <span className="text-[11px] text-[#EFCC80]/80 block mt-0.5">
                     {dict.checkout.amqiAcc}
@@ -610,7 +698,11 @@ export default function CheckoutClientView({
                 />
                 <div>
                   <span className="text-xs sm:text-sm font-bold text-white block">
-                    تحويل عبر شركة البسيري للصرافة
+                    {language === "ar"
+                      ? "تحويل عبر شركة البسيري للصرافة"
+                      : language === "id"
+                      ? "Transfer via Al-Busairi Exchange"
+                      : "Transfer via Al-Busairi Exchange"}
                   </span>
                   <span className="text-[11px] text-[#EFCC80]/80 block mt-0.5">
                     {dict.checkout.busairiAcc}
@@ -641,11 +733,19 @@ export default function CheckoutClientView({
                       <Upload className="w-6 h-6 text-[#EFCC80]" />
                       <span className="text-xs font-bold text-stone-200">
                         {receiptBase64
-                          ? "تم اختيار صورة الإشعار (انقر للتغيير)"
+                          ? language === "ar"
+                            ? "تم اختيار صورة الإشعار (انقر للتغيير)"
+                            : language === "id"
+                            ? "Bukti transfer dipilih (klik untuk ganti)"
+                            : "Receipt selected (click to change)"
                           : dict.checkout.chooseFile}
                       </span>
                       <span className="text-[10px] text-stone-400">
-                        الحد الأقصى 5 ميجابايت (JPG, PNG)
+                        {language === "ar"
+                          ? "الحد الأقصى 5 ميجابايت (JPG, PNG)"
+                          : language === "id"
+                          ? "Maksimum 5 MB (JPG, PNG)"
+                          : "Max 5 MB (JPG, PNG)"}
                       </span>
                     </label>
 
@@ -661,7 +761,13 @@ export default function CheckoutClientView({
                           type="button"
                           onClick={() => setReceiptBase64("")}
                           className="absolute top-1.5 end-1.5 p-1 bg-black/80 hover:bg-red-600 text-white rounded-full transition-colors"
-                          title="حذف صورة الإشعار"
+                          title={
+                            language === "ar"
+                              ? "حذف صورة الإشعار"
+                              : language === "id"
+                              ? "Hapus bukti transfer"
+                              : "Delete receipt image"
+                          }
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
@@ -706,7 +812,13 @@ export default function CheckoutClientView({
         <div className="lg:col-span-5 space-y-6">
           <div className="bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4 sticky top-24">
             <h3 className="text-base font-bold text-white border-b border-[#222934] pb-3">
-              ملخص طلبك ({cart.length} أصناف)
+              {language === "ar"
+                ? "ملخص طلبك"
+                : language === "id"
+                ? "Ringkasan Pesanan"
+                : "Order Summary"}{" "}
+              ({cart.length}{" "}
+              {language === "ar" ? "أصناف" : language === "id" ? "item" : "items"})
             </h3>
 
             {/* Items scroll */}
@@ -718,12 +830,23 @@ export default function CheckoutClientView({
                 >
                   <div>
                     <span className="font-bold text-white">
-                      {item.quantity}x {language === "ar" ? item.nameAr : item.nameEn}
+                      {item.quantity}x{" "}
+                      {language === "ar"
+                        ? item.nameAr
+                        : (language === "id" && item.nameId)
+                        ? item.nameId
+                        : item.nameEn}
                     </span>
                     {item.selectedOptions?.length > 0 && (
                       <p className="text-[10px] text-stone-400 mt-0.5">
                         {item.selectedOptions
-                          .map((o) => (language === "ar" ? o.optionNameAr : o.optionNameEn))
+                          .map((o) =>
+                            language === "ar"
+                              ? o.optionNameAr
+                              : (language === "id" && o.optionNameId)
+                              ? o.optionNameId
+                              : o.optionNameEn
+                          )
                           .join(" • ")}
                       </p>
                     )}
@@ -753,7 +876,12 @@ export default function CheckoutClientView({
               <div className="p-3 rounded-xl bg-gradient-to-r from-amber-500/15 to-amber-700/10 border border-amber-500/30 text-amber-200 text-xs flex items-center gap-2">
                 <Award className="w-4 h-4 text-amber-400 flex-shrink-0" />
                 <span className="font-bold text-[11px]">
-                  {dict.checkout.loyaltyReward}: مؤهل لصنف مجاني من برنامج الولاء!
+                  {dict.checkout.loyaltyReward}:{" "}
+                  {language === "ar"
+                    ? "مؤهل لصنف مجاني من برنامج الولاء!"
+                    : language === "id"
+                    ? "Berhak atas item gratis dari program loyalitas!"
+                    : "Eligible for a free item from rewards program!"}
                 </span>
               </div>
             )}
@@ -776,8 +904,14 @@ export default function CheckoutClientView({
                       <p className="text-[10px] text-emerald-300">
                         {dict.checkout.couponApplied} (
                         {appliedCoupon.discountType === "PERCENTAGE" && `${appliedCoupon.discountValue}%`}
-                        {appliedCoupon.discountType === "FIXED" && `${appliedCoupon.discountValue} ر.ي`}
-                        {appliedCoupon.discountType === "FREE_ITEM" && "صنف مجاني"}
+                        {appliedCoupon.discountType === "FIXED" &&
+                          `${appliedCoupon.discountValue} ${dict.menu.currency}`}
+                        {appliedCoupon.discountType === "FREE_ITEM" &&
+                          (language === "ar"
+                            ? "صنف مجاني"
+                            : language === "id"
+                            ? "Item Gratis"
+                            : "Free Item")}
                         )
                       </p>
                     </div>
@@ -786,7 +920,13 @@ export default function CheckoutClientView({
                     type="button"
                     onClick={handleRemoveCoupon}
                     className="p-1 rounded-lg text-stone-400 hover:text-red-400 hover:bg-white/5 transition-colors"
-                    title="إزالة الكوبون"
+                    title={
+                      language === "ar"
+                        ? "إزالة الكوبون"
+                        : language === "id"
+                        ? "Hapus kupon"
+                        : "Remove coupon"
+                    }
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -824,7 +964,13 @@ export default function CheckoutClientView({
             {/* Totals */}
             <div className="pt-2 space-y-2 border-t border-[#222934] text-xs">
               <div className="flex justify-between text-stone-400">
-                <span>المجموع الفرعي:</span>
+                <span>
+                  {language === "ar"
+                    ? "المجموع الفرعي:"
+                    : language === "id"
+                    ? "Subtotal:"
+                    : "Subtotal:"}
+                </span>
                 <span className="font-outfit font-bold text-white">
                   {cartTotal.toLocaleString()} {dict.menu.currency}
                 </span>
@@ -840,7 +986,13 @@ export default function CheckoutClientView({
               )}
 
               <div className="flex justify-between text-base font-black text-white pt-2 border-t border-[#222934]">
-                <span>الإجمالي للدفع:</span>
+                <span>
+                  {language === "ar"
+                    ? "الإجمالي للدفع:"
+                    : language === "id"
+                    ? "Total Bayar:"
+                    : "Total Payable:"}
+                </span>
                 <span className="text-xl text-[#EFCC80] font-outfit font-black">
                   {finalPayableTotal.toLocaleString()} {dict.menu.currency}
                 </span>
@@ -864,13 +1016,19 @@ export default function CheckoutClientView({
                   !restaurantStatus.canOrderImmediate &&
                   !restaurantStatus.canOrderScheduled)
                   ? "bg-[#14181f] text-stone-500 cursor-not-allowed shadow-none border border-[#222934]"
-                  : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 text-[#2C1A04] font-black shadow-xl shadow-[#EFCC80]/20"
+                  : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 text-[#2C1A04] font-black shadow-xl shadow-[#EFCC80]/20 font-cairo cursor-pointer"
               }`}
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
                   <span className="w-4 h-4 rounded-full border-2 border-[#2C1A04] border-t-transparent animate-spin" />
-                  <span>جاري تأكيد وتسجيل الطلب...</span>
+                  <span>
+                    {language === "ar"
+                      ? "جاري تأكيد وتسجيل الطلب..."
+                      : language === "id"
+                      ? "Memproses dan mendaftarkan pesanan..."
+                      : "Confirming & recording order..."}
+                  </span>
                 </span>
               ) : (
                 <>

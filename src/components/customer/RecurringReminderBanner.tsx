@@ -29,7 +29,13 @@ export default function RecurringReminderBanner() {
     );
   }
 
-  const mealName = preferences.favoriteMeal || "وجبتك المفضلة";
+  const mealName =
+    preferences.favoriteMeal ||
+    (language === "ar"
+      ? "وجبتك المفضلة"
+      : language === "id"
+      ? "menu favorit Anda"
+      : "your favorite meal");
 
   return (
     <>
@@ -56,13 +62,19 @@ export default function RecurringReminderBanner() {
             <div className="space-y-1 pe-5">
               <div>
                 <span className="text-xs font-black text-[#EFCC80] font-cairo">
-                  {language === "ar" ? "اشتقنا لك في بيتزا هاوس!" : "We Miss You at Pizza House!"}
+                  {language === "ar"
+                    ? "اشتقنا لك في بيتزا هاوس!"
+                    : language === "id"
+                    ? "Kami Rindu Anda di Pizza House!"
+                    : "We Miss You at Pizza House!"}
                 </span>
               </div>
 
               <p className="text-xs text-stone-300 leading-relaxed">
                 {language === "ar"
                   ? `مرّ ${eligibility.daysSinceLastOrder || preferences.intervalDays} يوماً على آخر طلب. هل حان وقت الاستمتاع بـ (${mealName}) ساخنة من الفرن؟`
+                  : language === "id"
+                  ? `Sudah ${eligibility.daysSinceLastOrder || preferences.intervalDays} hari sejak pesanan terakhir Anda. Siap menikmati (${mealName}) hangat dari oven?`
                   : `It's been ${eligibility.daysSinceLastOrder || preferences.intervalDays} days since your last order. Ready for (${mealName})?`}
               </p>
 
@@ -71,7 +83,7 @@ export default function RecurringReminderBanner() {
                   href="/menu"
                   className="inline-flex items-center gap-1.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black px-4 py-2 rounded-xl text-xs shadow-md shadow-[#EFCC80]/20 transition-all active:scale-95 font-cairo"
                 >
-                  <span>{language === "ar" ? "اطلبها الآن" : "Order Now"}</span>
+                  <span>{language === "ar" ? "اطلبها الآن" : language === "id" ? "Pesan Sekarang" : "Order Now"}</span>
                   {language === "ar" ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                 </Link>
 
@@ -80,7 +92,7 @@ export default function RecurringReminderBanner() {
                   onClick={() => setIsModalOpen(true)}
                   className="text-xs text-stone-400 hover:text-[#EFCC80] px-2 py-1.5 transition-colors underline"
                 >
-                  {language === "ar" ? "ضبط التنبيهات" : "Settings"}
+                  {language === "ar" ? "ضبط التنبيهات" : language === "id" ? "Pengaturan" : "Settings"}
                 </button>
               </div>
             </div>

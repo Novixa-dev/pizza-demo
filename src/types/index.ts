@@ -27,9 +27,11 @@ export interface SelectedOptionPayload {
   groupId: string;
   groupNameAr: string;
   groupNameEn: string;
+  groupNameId?: string;
   optionId: string;
   optionNameAr: string;
   optionNameEn: string;
+  optionNameId?: string;
   priceDelta: number;
 }
 
@@ -38,6 +40,7 @@ export interface CartItem {
   productId: string;
   nameAr: string;
   nameEn: string;
+  nameId?: string;
   imageUrl: string;
   basePrice: number;
   unitPrice: number;
@@ -51,6 +54,7 @@ export interface TimeSlotOption {
   timeString: string;
   displayLabelAr: string;
   displayLabelEn: string;
+  displayLabelId?: string;
   isAvailable: boolean;
   reason?: string;
 }

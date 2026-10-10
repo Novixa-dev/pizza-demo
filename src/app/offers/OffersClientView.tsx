@@ -113,10 +113,23 @@ export default function OffersClientView({
       if (res.success && res.loyalty) {
         setLoyaltyResult(res.loyalty);
       } else {
-        setLoyaltyError(res.message || "تعذر العثور على سجلات ولاء لهذا الرقم");
+        setLoyaltyError(
+          res.message ||
+            (language === "ar"
+              ? "تعذر العثور على سجلات ولاء لهذا الرقم"
+              : language === "id"
+              ? "Catatan loyalitas tidak ditemukan untuk nomor ini"
+              : "No loyalty records found for this phone")
+        );
       }
-    } catch (err) {
-      setLoyaltyError("حدث خطأ أثناء فحص سجل الولاء");
+    } catch {
+      setLoyaltyError(
+        language === "ar"
+          ? "حدث خطأ أثناء فحص سجل الولاء"
+          : language === "id"
+          ? "Terjadi kesalahan saat memeriksa poin loyalitas"
+          : "An error occurred while checking loyalty stamps"
+      );
     } finally {
       setLoyaltyLoading(false);
     }
@@ -303,7 +316,11 @@ export default function OffersClientView({
                     ? coupon.titleId
                     : coupon.titleEn;
                 const desc =
-                  language === "ar" ? coupon.descriptionAr : coupon.descriptionEn;
+                  language === "ar"
+                    ? coupon.descriptionAr
+                    : language === "id"
+                    ? coupon.descriptionEn
+                    : coupon.descriptionEn;
                 const isCopied = copiedCode === coupon.code;
 
                 return (
@@ -316,12 +333,14 @@ export default function OffersClientView({
                       <div className="flex items-center justify-between gap-2">
                         <span className="px-2.5 py-1 rounded-lg bg-[#EFCC80]/15 text-[#EFCC80] text-[11px] font-bold border border-[#EFCC80]/30">
                           {coupon.discountType === "PERCENTAGE" &&
-                            `${coupon.discountValue}% ${language === "ar" ? "خصم" : "OFF"}`}
+                            `${coupon.discountValue}% ${language === "ar" ? "خصم" : language === "id" ? "Diskon" : "OFF"}`}
                           {coupon.discountType === "FIXED" &&
-                            `${coupon.discountValue.toLocaleString()} ر.ي ${language === "ar" ? "خصم" : "OFF"}`}
+                            `${coupon.discountValue.toLocaleString()} ${dict.menu.currency} ${language === "ar" ? "خصم" : language === "id" ? "Diskon" : "OFF"}`}
                           {coupon.discountType === "FREE_ITEM" &&
                             (language === "ar"
                               ? coupon.freeItemNameAr || "صنف مجاني"
+                              : language === "id"
+                              ? "Item Gratis"
                               : coupon.freeItemNameEn || "Free Side Item")}
                         </span>
 
@@ -350,7 +369,7 @@ export default function OffersClientView({
                       <div className="flex items-center justify-between gap-2 p-3 rounded-2xl bg-[#0c0e12] border border-[#222934] font-outfit">
                         <div className="flex flex-col">
                           <span className="text-[10px] text-stone-400 font-cairo">
-                            {language === "ar" ? "كود الخصم" : "Coupon Code"}
+                            {language === "ar" ? "كود الخصم" : language === "id" ? "Kode Kupon" : "Coupon Code"}
                           </span>
                           <span className="text-base font-black text-[#EFCC80] tracking-widest uppercase">
                             {coupon.code}
@@ -394,7 +413,7 @@ export default function OffersClientView({
                         {coupon.maxDiscount && (
                           <div className="flex justify-between">
                             <span>
-                              {language === "ar" ? "أقصى خصم:" : "Max Discount:"}
+                              {language === "ar" ? "أقصى خصم:" : language === "id" ? "Maks. Diskon:" : "Max Discount:"}
                             </span>
                             <span className="font-outfit font-bold text-stone-200">
                               {coupon.maxDiscount.toLocaleString()} {dict.menu.currency}
@@ -475,7 +494,7 @@ export default function OffersClientView({
                         {tierName}
                       </span>
                       <span className="text-xs font-bold text-stone-300">
-                        {language === "ar" ? "قيمة الطلب:" : "Order Spend:"}{" "}
+                        {language === "ar" ? "قيمة الطلب:" : language === "id" ? "Minimal Belanja:" : "Order Spend:"}{" "}
                         <span className="font-outfit text-[#EFCC80] font-black text-sm">
                           {gift.minSpend.toLocaleString()} {dict.menu.currency}
                         </span>
@@ -497,9 +516,9 @@ export default function OffersClientView({
                     {/* Progress representation */}
                     <div className="p-3 rounded-2xl bg-[#0c0e12] border border-[#222934] space-y-1.5">
                       <div className="flex justify-between text-[11px] text-stone-400">
-                        <span>{language === "ar" ? "مستوى الهدية" : "Gift Tier Threshold"}</span>
+                        <span>{language === "ar" ? "مستوى الهدية" : language === "id" ? "Batas Hadiah" : "Gift Tier Threshold"}</span>
                         <span className="text-emerald-400 font-bold font-outfit">
-                          {gift.minSpend.toLocaleString()} ر.ي
+                          {gift.minSpend.toLocaleString()} {dict.menu.currency}
                         </span>
                       </div>
                       <div className="w-full bg-[#1c222b] h-2 rounded-full overflow-hidden">
@@ -511,6 +530,8 @@ export default function OffersClientView({
                       <p className="text-[10px] text-stone-500">
                         {language === "ar"
                           ? "✓ تضاف الهدية تلقائياً للسلة بدون إدخال أي كود بمجرد وصول قيمة المشتريات للحد المطلوب"
+                          : language === "id"
+                          ? "✓ Hadiah otomatis masuk ke keranjang tanpa kupon begitu total belanja mencapai batas ini"
                           : "✓ Automatically unlocked and added to cart when cart reaches this value"}
                       </p>
                     </div>
@@ -587,7 +608,7 @@ export default function OffersClientView({
                   ) : (
                     <>
                       <Search className="w-3.5 h-3.5" />
-                      <span>{language === "ar" ? "فحص الأختام" : "Check Stamps"}</span>
+                      <span>{language === "ar" ? "فحص الأختام" : language === "id" ? "Cek Cap" : "Check Stamps"}</span>
                     </>
                   )}
                 </button>
@@ -604,7 +625,7 @@ export default function OffersClientView({
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#222934] pb-4">
                   <div>
                     <h3 className="text-base font-bold text-white flex items-center gap-2">
-                      <span>{language === "ar" ? "بطاقة أختام العميل" : "Customer Stamp Card"}</span>
+                      <span>{language === "ar" ? "بطاقة أختام العميل" : language === "id" ? "Kartu Cap Pelanggan" : "Customer Stamp Card"}</span>
                       <span className="font-outfit text-xs text-stone-400">
                         ({loyaltyResult.customerPhone})
                       </span>
@@ -612,6 +633,8 @@ export default function OffersClientView({
                     <p className="text-xs text-stone-400 mt-0.5">
                       {language === "ar"
                         ? `إجمالي الطلبات المكتملة: ${loyaltyResult.totalOrders} طلب`
+                        : language === "id"
+                        ? `Total pesanan selesai: ${loyaltyResult.totalOrders} pesanan`
                         : `Total completed orders: ${loyaltyResult.totalOrders}`}
                     </p>
                   </div>
@@ -625,6 +648,8 @@ export default function OffersClientView({
                     <span className="text-xs text-stone-400">
                       {language === "ar"
                         ? `متبقي ${5 - loyaltyResult.currentProgress} طلبات للمكافأة القادمة`
+                        : language === "id"
+                        ? `Tersisa ${5 - loyaltyResult.currentProgress} pesanan lagi menuju hadiah berikutnya`
                         : `${5 - loyaltyResult.currentProgress} orders left until next reward`}
                     </span>
                   )}
@@ -658,7 +683,7 @@ export default function OffersClientView({
                           <>
                             <Gift className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
                             <span className="text-[9px] font-bold mt-1">
-                              {language === "ar" ? "هدية" : "Reward"}
+                              {language === "ar" ? "هدية" : language === "id" ? "Hadiah" : "Reward"}
                             </span>
                           </>
                         ) : (
@@ -676,6 +701,8 @@ export default function OffersClientView({
                   <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-200 text-xs sm:text-sm text-center font-bold">
                     🎉 {language === "ar"
                       ? "تهانينا! لديك مكافأة صنف جانبي مجاني جاهزة! عند إتمام طلبك التالي بهذا الرقم، سيتم إضافة المكافأة تلقائياً."
+                      : language === "id"
+                      ? "Selamat! Anda memiliki hadiah gratis yang siap digunakan pada pesanan berikutnya dengan nomor ini!"
                       : "Congratulations! You have an earned reward ready for your next order!"}
                   </div>
                 )}

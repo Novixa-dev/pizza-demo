@@ -52,13 +52,15 @@ export default function QuickReorderHeroCard() {
           groupId: "size",
           groupNameAr: "الحجم",
           groupNameEn: "Size",
+          groupNameId: "Ukuran",
           optionId: "large",
           optionNameAr: "كبير (عائلي 14 بوصة)",
           optionNameEn: "Large (14 inch)",
+          optionNameId: "Besar (Keluarga 14 inci)",
           priceDelta: 0,
         },
       ],
-      notes: "إعادة طلب سريع - طازجة من الفرن الحجري",
+      notes: language === "ar" ? "إعادة طلب سريع - طازجة من الفرن الحجري" : language === "id" ? "Pesan ulang cepat - segar dari oven batu" : "Quick reorder - fresh from stone oven",
     });
 
     setIsAdded(true);
@@ -80,15 +82,19 @@ export default function QuickReorderHeroCard() {
               {customerName
                 ? language === "ar"
                   ? `مرحباً بعودتك ${customerName}!`
+                  : language === "id"
+                  ? `Selamat datang kembali, ${customerName}!`
                   : `Welcome back ${customerName}!`
                 : language === "ar"
                 ? "إعادة طلب سريعة"
+                : language === "id"
+                ? "Pesan Ulang Cepat"
                 : "Quick Reorder"}
             </span>
           </div>
 
           <h3 className="text-sm sm:text-base font-black text-white font-cairo">
-            {language === "ar" ? "وجبتك المفضلة:" : "Your Favorite Meal:"}{" "}
+            {language === "ar" ? "وجبتك المفضلة:" : language === "id" ? "Menu Favorit Anda:" : "Your Favorite Meal:"}{" "}
             <span className="text-[#EFCC80]">{favoriteMeal}</span>
           </h3>
 
@@ -98,9 +104,13 @@ export default function QuickReorderHeroCard() {
               {lastOrderDays !== null
                 ? language === "ar"
                   ? `آخر طلب لك كان قبل ${lastOrderDays} يوماً · مخبوزة على الحجر بدون انتظار`
+                  : language === "id"
+                  ? `Pesanan terakhir Anda ${lastOrderDays} hari lalu · Dipanggang batu oven tanpa menunggu`
                   : `Last ordered ${lastOrderDays} days ago · Stone baked with zero wait`
                 : language === "ar"
                 ? "الأكثر طلباً وتقييماً في فرع فوه المساكن"
+                : language === "id"
+                ? "Terlaris dan terfavorit di cabang Fuwah Al-Masaken"
                 : "Best-seller in Fuwah Al-Masaken"}
             </span>
           </p>
@@ -117,6 +127,8 @@ export default function QuickReorderHeroCard() {
           <span>
             {language === "ar"
               ? "اطلب وجبتك المفضلة طازجة 🍕"
+              : language === "id"
+              ? "Pesan Menu Favorit Segar 🍕"
               : "Reorder in 1-Click 🍕"}
           </span>
         </button>
@@ -125,7 +137,7 @@ export default function QuickReorderHeroCard() {
           href="/menu"
           className="inline-flex items-center justify-center gap-1 text-xs font-bold text-stone-300 hover:text-white px-3.5 py-2.5 rounded-2xl border border-[#222934] bg-[#0c0e12] hover:border-[#EFCC80]/30 transition-colors"
         >
-          <span>{language === "ar" ? "القائمة" : "Menu"}</span>
+          <span>{language === "ar" ? "القائمة" : language === "id" ? "Menu" : "Menu"}</span>
           {language === "ar" ? <ArrowLeft className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
         </Link>
       </div>

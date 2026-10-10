@@ -30,13 +30,15 @@ export default function Footer() {
                   AURA PIZZA
                 </span>
                 <span className="text-[10px] text-amber-400 font-bold font-cairo">
-                  {dict.brand.name} · المكلا
+                  {dict.brand.name} · {language === "ar" ? "المكلا" : "Mukalla"}
                 </span>
               </div>
             </div>
             <p className="text-xs text-stone-400 leading-relaxed">
               {language === "ar"
                 ? "متخصصون في عمل أشهى أنواع البيتزا الإيطالية والفطائر الطازجة في المكلا بعجينة يومية ومكونات فاخرة مخبوزة على الحجر."
+                : language === "id"
+                ? "Spesialis menyajikan pizza artisan khas Italia dan fatayer segar lezat di Mukalla dengan adonan harian dan bahan premium di atas batu alami."
                 : "Specializing in mouthwatering Italian stone-baked pizzas and fresh fatayer in Mukalla with artisanal dough and premium ingredients."}
             </p>
             <div className="flex flex-wrap items-center gap-2.5 pt-2">
@@ -67,19 +69,19 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-cairo">
               <Clock className="w-4 h-4 text-[#C69843]" />
-              <span>{language === "ar" ? "أوقات العمل الرسمية" : "Operating Hours"}</span>
+              <span>{language === "ar" ? "أوقات العمل الرسمية" : language === "id" ? "Jam Operasional Resmi" : "Operating Hours"}</span>
             </h4>
             <ul className="text-xs text-stone-400 space-y-2">
               <li className="flex justify-between border-b border-[#1a202a] pb-1.5">
-                <span>{language === "ar" ? "السبت – الخميس (صباحاً):" : "Sat – Thu (Morning):"}</span>
+                <span>{language === "ar" ? "السبت – الخميس (صباحاً):" : language === "id" ? "Sabtu – Kamis (Pagi):" : "Sat – Thu (Morning):"}</span>
                 <span className="text-stone-200 font-outfit">8:00 AM – 12:00 PM</span>
               </li>
               <li className="flex justify-between border-b border-[#1a202a] pb-1.5">
-                <span>{language === "ar" ? "السبت – الخميس (مساءً):" : "Sat – Thu (Evening):"}</span>
+                <span>{language === "ar" ? "السبت – الخميس (مساءً):" : language === "id" ? "Sabtu – Kamis (Sore):" : "Sat – Thu (Evening):"}</span>
                 <span className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
               </li>
               <li className="flex justify-between">
-                <span>{language === "ar" ? "الجمعة:" : "Friday:"}</span>
+                <span>{language === "ar" ? "الجمعة:" : language === "id" ? "Jumat:" : "Friday:"}</span>
                 <span className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
               </li>
             </ul>
@@ -89,12 +91,14 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-cairo">
               <MapPin className="w-4 h-4 text-[#C69843]" />
-              <span>{language === "ar" ? "العنوان والتواصل" : "Location & Contact"}</span>
+              <span>{language === "ar" ? "العنوان والتواصل" : language === "id" ? "Alamat & Kontak" : "Location & Contact"}</span>
             </h4>
             <div className="text-xs text-stone-400 space-y-2">
               <p className="leading-relaxed">
                 {language === "ar"
                   ? "حضرموت، المكلا، فوه، حي المساكن (بعد جامعة الأحقاف ومستوصف النور يمين الشارع العام)."
+                  : language === "id"
+                  ? "Hadhramaut, Mukalla, Fuwah, Distrik Al-Masaken (setelah Univ. Al-Ahgaff & Klinik Al-Noor, belok kanan)."
                   : "Hadhramaut, Mukalla, Fuwa, Al-Masaken (after Al-Ahgaff Univ & Al-Noor Clinic, right turn)."}
               </p>
               <div className="flex items-center gap-2 pt-0.5">
@@ -102,15 +106,15 @@ export default function Footer() {
                 <span className="font-outfit font-bold text-stone-200 text-xs">F2QV+HPW</span>
               </div>
               <p className="font-outfit text-stone-200">
-                {language === "ar" ? "هاتف ثابت: " : "Landline: "}
+                {language === "ar" ? "هاتف ثابت: " : language === "id" ? "Telepon Rumah: " : "Landline: "}
                 <a href="tel:05375561" className="text-[#EFCC80] hover:underline font-bold">05-375561</a>
               </p>
               <p className="font-outfit text-stone-200">
-                {language === "ar" ? "واتساب وطلبات: " : "WhatsApp & Mobile: "}
+                {language === "ar" ? "واتساب وطلبات: " : language === "id" ? "WhatsApp & Pesanan: " : "WhatsApp & Mobile: "}
                 <a href="https://wa.me/967772207788" target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline font-bold">+967 772207788</a>
               </p>
               <p className="font-outfit text-stone-300 text-[11px]">
-                {language === "ar" ? "شبكات إضافية: " : "Other lines: "}
+                {language === "ar" ? "شبكات إضافية: " : language === "id" ? "Nomor Lainnya: " : "Other lines: "}
                 <span>738227788 (YOU) · 711227788 (سبأفون)</span>
               </p>
               <div className="pt-2">
@@ -121,7 +125,7 @@ export default function Footer() {
                   className="inline-flex items-center gap-1.5 text-[#EFCC80] hover:text-white font-bold transition-colors text-xs"
                 >
                   <MapPin className="w-3.5 h-3.5 text-[#C69843]" />
-                  <span>{language === "ar" ? "عرض على خرائط Google" : "View on Google Maps"}</span>
+                  <span>{language === "ar" ? "عرض على خرائط Google" : language === "id" ? "Lihat di Google Maps" : "View on Google Maps"}</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
@@ -131,7 +135,7 @@ export default function Footer() {
           {/* Col 4: Quick Links & Platform */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white font-cairo">
-              {language === "ar" ? "روابط سريعة" : "Quick Links"}
+              {language === "ar" ? "روابط سريعة" : language === "id" ? "Tautan Cepat" : "Quick Links"}
             </h4>
             <ul className="text-xs space-y-2 text-stone-400">
               <li>
@@ -170,12 +174,16 @@ export default function Footer() {
           <p>
             {language === "ar"
               ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} مطعم بيتزا هاوس المكلا (Pizza House).`
+              : language === "id"
+              ? `Hak cipta dilindungi © ${new Date().getFullYear()} Restoran Pizza House Mukalla.`
               : `All rights reserved © ${new Date().getFullYear()} Pizza House Mukalla.`}
           </p>
           <div className="flex items-center gap-1.5">
             <span>
               {language === "ar"
                 ? "مدعوم بواسطة منصة العمليات الرقمية للمطاعم"
+                : language === "id"
+                ? "Didukung oleh Platform Operasi Digital Restoran"
                 : "Powered by Digital Restaurant Platform"}
             </span>
             <span className="font-bold text-[#C69843] font-outfit">Novixa Restaurant</span>

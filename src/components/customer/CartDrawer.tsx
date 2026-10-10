@@ -43,7 +43,7 @@ export default function CartDrawer() {
                   {dict.cart.title}
                 </h3>
                 <span className="text-xs text-[#EFCC80] font-bold">
-                  {cartCount} {language === "ar" ? "أصناف" : "items"}
+                  {cartCount} {language === "ar" ? "أصناف" : language === "id" ? "item" : "items"}
                 </span>
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function CartDrawer() {
                   <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-[#0c0e12] border border-[#222934]">
                     <Image
                       src={item.imageUrl}
-                      alt={language === "ar" ? item.nameAr : item.nameEn}
+                      alt={language === "ar" ? item.nameAr : (language === "id" && item.nameId) ? item.nameId : item.nameEn}
                       fill
                       sizes="80px"
                       referrerPolicy="no-referrer"
@@ -166,7 +166,7 @@ export default function CartDrawer() {
                     <div>
                       <div className="flex justify-between items-start">
                         <h4 className="text-sm font-bold text-white truncate">
-                          {language === "ar" ? item.nameAr : item.nameEn}
+                          {language === "ar" ? item.nameAr : (language === "id" && item.nameId) ? item.nameId : item.nameEn}
                         </h4>
                         <button
                           onClick={() => removeFromCart(item.cartItemId)}
@@ -180,7 +180,7 @@ export default function CartDrawer() {
                       {item.selectedOptions && item.selectedOptions.length > 0 && (
                         <div className="text-[11px] text-[#EFCC80] mt-1 line-clamp-2">
                           {item.selectedOptions
-                            .map((o) => (language === "ar" ? o.optionNameAr : o.optionNameEn))
+                            .map((o) => (language === "ar" ? o.optionNameAr : (language === "id" && o.optionNameId) ? o.optionNameId : o.optionNameEn))
                             .join(" • ")}
                         </div>
                       )}

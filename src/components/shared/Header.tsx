@@ -81,11 +81,11 @@ export default function Header() {
   ];
 
   const quickCategories = [
-    { nameAr: "البيتزا الإيطالية", nameEn: "Specialty Pizzas", slug: "pizzas" },
-    { nameAr: "الفطائر والمعجنات", nameEn: "Fatayer & Pies", slug: "fatayer" },
-    { nameAr: "المقبلات والإضافات", nameEn: "Appetizers & Sides", slug: "sides" },
-    { nameAr: "الحلويات", nameEn: "Desserts", slug: "desserts" },
-    { nameAr: "المشروبات المنعشة", nameEn: "Beverages", slug: "drinks" },
+    { nameAr: "البيتزا الإيطالية", nameEn: "Specialty Pizzas", nameId: "Pizza Spesial", slug: "pizzas" },
+    { nameAr: "الفطائر والمعجنات", nameEn: "Fatayer & Pies", nameId: "Fatayer & Kue Pastry", slug: "fatayer" },
+    { nameAr: "المقبلات والإضافات", nameEn: "Appetizers & Sides", nameId: "Hidangan Pembuka & Sampingan", slug: "sides" },
+    { nameAr: "الحلويات", nameEn: "Desserts", nameId: "Hidangan Penutup", slug: "desserts" },
+    { nameAr: "المشروبات المنعشة", nameEn: "Beverages", nameId: "Minuman Segar", slug: "drinks" },
   ];
 
   return (
@@ -212,7 +212,7 @@ export default function Header() {
               className="hidden lg:inline-flex items-center gap-1.5 bg-[#141720] hover:bg-[#1c212d] border border-white/10 hover:border-amber-500/30 text-stone-300 px-3 py-2 rounded-full text-xs font-semibold active:scale-95 transition-all"
             >
               <User className="w-3.5 h-3.5 text-amber-400" />
-              <span>{language === "ar" ? "سجل طلباتي" : "My Orders"}</span>
+              <span>{language === "ar" ? "سجل طلباتي" : language === "id" ? "Pesanan Saya" : "My Orders"}</span>
             </Link>
 
             {/* Recurring Order Reminders Bell (Desktop only) */}
@@ -222,6 +222,8 @@ export default function Header() {
               title={
                 language === "ar"
                   ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
+                  : language === "id"
+                  ? "Pengingat Menu Favorit (Tiap 2 Minggu)"
                   : "Favorite Meal Reminders (2 Weeks)"
               }
               aria-label="Recurring Order Reminders"
@@ -330,7 +332,7 @@ export default function Header() {
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold text-stone-200 hover:text-white hover:bg-white/5 border border-white/5 hover:border-amber-500/20 transition-colors"
               >
                 <LayoutGrid className="w-3.5 h-3.5 text-[#ff8c00]" />
-                <span>{language === "ar" ? "قائمة الأقسام (الفئات)" : "Categories"}</span>
+                <span>{language === "ar" ? "قائمة الأقسام (الفئات)" : language === "id" ? "Kategori Menu" : "Categories"}</span>
                 <ChevronDown className="w-3 h-3 text-stone-400" />
               </button>
 
@@ -346,7 +348,7 @@ export default function Header() {
                       onClick={() => setIsCategoryMenuOpen(false)}
                       className="block px-4 py-2.5 text-xs font-semibold text-stone-300 hover:bg-[#ff8c00]/15 hover:text-[#ff8c00] transition-colors"
                     >
-                      {language === "ar" ? cat.nameAr : cat.nameEn}
+                      {language === "ar" ? cat.nameAr : language === "id" ? cat.nameId : cat.nameEn}
                     </Link>
                   ))}
                   <div className="border-t border-white/10 my-1" />
@@ -355,7 +357,7 @@ export default function Header() {
                     onClick={() => setIsCategoryMenuOpen(false)}
                     className="block px-4 py-2 text-xs font-bold text-[#ff8c00] hover:underline"
                   >
-                    {language === "ar" ? "عرض كامل القائمة ←" : "View All Menu →"}
+                    {language === "ar" ? "عرض كامل القائمة ←" : language === "id" ? "Lihat Semua Menu →" : "View All Menu →"}
                   </Link>
                 </div>
               )}
@@ -399,7 +401,7 @@ export default function Header() {
               href="tel:05375561"
               className="flex items-center gap-1.5 hover:text-[#EFCC80] transition-colors font-semibold font-outfit"
             >
-              <span>{language === "ar" ? "خدمة العملاء: 05375561" : "Support: 05375561"}</span>
+              <span>{language === "ar" ? "خدمة العملاء: 05375561" : language === "id" ? "Layanan Pelanggan: 05375561" : "Support: 05375561"}</span>
               <PhoneCall className="w-3.5 h-3.5 text-[#C69843]" />
             </a>
           </div>
@@ -424,6 +426,8 @@ export default function Header() {
               placeholder={
                 language === "ar"
                   ? "ابحث عن البيتزا أو الوجبة المفضلة..."
+                  : language === "id"
+                  ? "Cari pizza, fatayer, hidangan..."
                   : "Search pizzas, fatayer, sides..."
               }
               className="w-full pl-10 pr-10 py-2.5 bg-[#141822] border border-amber-500/25 rounded-2xl text-xs sm:text-sm text-white placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#ff8c00]/50 focus:border-[#ff8c00] transition-all font-cairo shadow-inner"
@@ -452,7 +456,7 @@ export default function Header() {
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5 font-bold text-white">
                 <Clock className="w-4 h-4 text-[#C69843]" />
-                <span>{language === "ar" ? "حالة الفرع الآن:" : "Branch Status:"}</span>
+                <span>{language === "ar" ? "حالة الفرع الآن:" : language === "id" ? "Status Cabang Saat Ini:" : "Branch Status:"}</span>
               </div>
               <span
                 className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold text-[11px] ${
@@ -476,12 +480,12 @@ export default function Header() {
                       : "bg-red-400"
                   }`}
                 />
-                {language === "ar" ? opStatus.badgeLabelAr : opStatus.badgeLabelEn}
+                {language === "ar" ? opStatus.badgeLabelAr : language === "id" ? opStatus.badgeLabelId : opStatus.badgeLabelEn}
               </span>
             </div>
 
             <p className="text-[11px] text-stone-300">
-              {language === "ar" ? opStatus.descriptionAr : opStatus.descriptionEn}
+              {language === "ar" ? opStatus.descriptionAr : language === "id" ? opStatus.descriptionId : opStatus.descriptionEn}
             </p>
 
             {/* Quick 1-tap Calling & WhatsApp Buttons */}
@@ -508,7 +512,7 @@ export default function Header() {
           {/* 3. Core Primary Actions (2x2 Grid) */}
           <div>
             <div className="text-[11px] font-bold text-stone-400 mb-1.5 px-1 font-cairo">
-              {language === "ar" ? "الوصول السريع" : "Quick Actions"}
+              {language === "ar" ? "الوصول السريع" : language === "id" ? "Akses Cepat" : "Quick Actions"}
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Link
@@ -525,15 +529,15 @@ export default function Header() {
                   <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-cairo ${
                     pathname === "/menu" ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
                   }`}>
-                    {language === "ar" ? "المنيو" : "Menu"}
+                    {language === "ar" ? "المنيو" : language === "id" ? "Menu" : "Menu"}
                   </span>
                 </div>
                 <div>
                   <div className="font-bold text-xs font-cairo">
-                    {language === "ar" ? "قائمة الطعام" : "Food Menu"}
+                    {language === "ar" ? "قائمة الطعام" : language === "id" ? "Daftar Menu" : "Food Menu"}
                   </div>
                   <div className={`text-[10px] ${pathname === "/menu" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
-                    {language === "ar" ? "تصفح كل الوجبات" : "Browse all items"}
+                    {language === "ar" ? "تصفح كل الوجبات" : language === "id" ? "Jelajahi semua hidangan" : "Browse all items"}
                   </div>
                 </div>
               </Link>
@@ -552,15 +556,15 @@ export default function Header() {
                   <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-cairo ${
                     pathname === "/history" ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
                   }`}>
-                    {language === "ar" ? "طلباتي" : "Orders"}
+                    {language === "ar" ? "طلباتي" : language === "id" ? "Pesanan" : "Orders"}
                   </span>
                 </div>
                 <div>
                   <div className="font-bold text-xs font-cairo">
-                    {language === "ar" ? "سجل طلباتي" : "Order History"}
+                    {language === "ar" ? "سجل طلباتي" : language === "id" ? "Riwayat Pesanan" : "Order History"}
                   </div>
                   <div className={`text-[10px] ${pathname === "/history" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
-                    {language === "ar" ? "الطلبات السابقة" : "Previous orders"}
+                    {language === "ar" ? "الطلبات السابقة" : language === "id" ? "Pesanan sebelumnya" : "Previous orders"}
                   </div>
                 </div>
               </Link>
@@ -579,15 +583,15 @@ export default function Header() {
                   <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-cairo ${
                     pathname.startsWith("/track") ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
                   }`}>
-                    {language === "ar" ? "تتبع" : "Track"}
+                    {language === "ar" ? "تتبع" : language === "id" ? "Lacak" : "Track"}
                   </span>
                 </div>
                 <div>
                   <div className="font-bold text-xs font-cairo">
-                    {language === "ar" ? "تتبع طلبك" : "Track Order"}
+                    {language === "ar" ? "تتبع طلبك" : language === "id" ? "Lacak Pesanan" : "Track Order"}
                   </div>
                   <div className={`text-[10px] ${pathname.startsWith("/track") ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
-                    {language === "ar" ? "متابعة مسار التوصيل" : "Live delivery status"}
+                    {language === "ar" ? "متابعة مسار التوصيل" : language === "id" ? "Pantau status pesanan" : "Live delivery status"}
                   </div>
                 </div>
               </Link>
@@ -611,10 +615,10 @@ export default function Header() {
                 </div>
                 <div>
                   <div className="font-bold text-xs font-cairo">
-                    {language === "ar" ? "شاشة المطبخ" : "Kitchen Display"}
+                    {language === "ar" ? "شاشة المطبخ" : language === "id" ? "Layar Dapur" : "Kitchen Display"}
                   </div>
                   <div className={`text-[10px] ${pathname === "/kitchen" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
-                    {language === "ar" ? "نظام KDS الحي" : "Live orders screen"}
+                    {language === "ar" ? "نظام KDS الحي" : language === "id" ? "Sistem KDS Langsung" : "Live orders screen"}
                   </div>
                 </div>
               </Link>
@@ -626,14 +630,14 @@ export default function Header() {
             <div className="flex items-center justify-between text-[11px] font-bold text-stone-400 px-1 font-cairo">
               <span className="flex items-center gap-1">
                 <LayoutGrid className="w-3.5 h-3.5 text-[#C69843]" />
-                <span>{language === "ar" ? "أقسام القائمة السريعة" : "Menu Categories"}</span>
+                <span>{language === "ar" ? "أقسام القائمة السريعة" : language === "id" ? "Kategori Menu Cepat" : "Menu Categories"}</span>
               </span>
               <Link
                 href="/menu"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-[#EFCC80] hover:underline"
               >
-                {language === "ar" ? "عرض الكل ←" : "View all →"}
+                {language === "ar" ? "عرض الكل ←" : language === "id" ? "Lihat semua →" : "View all →"}
               </Link>
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -644,7 +648,7 @@ export default function Header() {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="px-3 py-1.5 rounded-xl bg-[#141822] hover:bg-[#1f2536] border border-white/5 hover:border-amber-500/30 text-stone-300 hover:text-[#EFCC80] text-xs font-semibold active:scale-95 transition-all font-cairo"
                 >
-                  {language === "ar" ? cat.nameAr : cat.nameEn}
+                  {language === "ar" ? cat.nameAr : language === "id" ? cat.nameId : cat.nameEn}
                 </Link>
               ))}
             </div>
@@ -694,7 +698,7 @@ export default function Header() {
                 <span>{dict.nav.admin}</span>
               </span>
               <span className="text-[10px] bg-red-950/80 text-red-300 border border-red-500/30 px-1.5 py-0.5 rounded font-bold font-cairo">
-                {language === "ar" ? "لوحة التحكم" : "Admin Panel"}
+                {language === "ar" ? "لوحة التحكم" : language === "id" ? "Panel Admin" : "Admin Panel"}
               </span>
             </Link>
           </div>
@@ -713,11 +717,13 @@ export default function Header() {
               <span>
                 {language === "ar"
                   ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
+                  : language === "id"
+                  ? "Pengingat Menu Favorit (Tiap 2 Minggu)"
                   : "Meal Reminders (Every 2 Weeks)"}
               </span>
             </span>
             <span className="text-[10px] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-2.5 py-1 rounded-full font-bold">
-              {language === "ar" ? "ضبط التنبيه" : "Configure"}
+              {language === "ar" ? "ضبط التنبيه" : language === "id" ? "Atur" : "Configure"}
             </span>
           </button>
 
@@ -726,7 +732,7 @@ export default function Header() {
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-white flex items-center gap-1.5 font-cairo">
                 <Globe className="w-3.5 h-3.5 text-[#C69843]" />
-                <span>{language === "ar" ? "لغة التطبيق والمظهر" : "Language & Theme"}</span>
+                <span>{language === "ar" ? "لغة التطبيق والمظهر" : language === "id" ? "Bahasa & Tema Tampilan" : "Language & Theme"}</span>
               </span>
             </div>
 
@@ -793,15 +799,18 @@ export default function Header() {
                 {theme === "light"
                   ? language === "ar"
                     ? "فاتح (Light)"
+                    : language === "id"
+                    ? "Terang (Light)"
                     : "Light"
                   : language === "ar"
                   ? "داكن (Dark)"
+                  : language === "id"
+                  ? "Gelap (Dark)"
                   : "Dark"}
               </span>
             </button>
           </div>
 
-          {/* 8. Branch Location & Official Operating Hours */}
           {/* 8. Mobile Quick Shortcuts: Google Maps & Instagram */}
           <div className="grid grid-cols-2 gap-2">
             <a
@@ -811,7 +820,7 @@ export default function Header() {
               className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#141822] hover:bg-[#1a202c] text-stone-300 hover:text-[#EFCC80] text-xs font-semibold border border-white/10 active:scale-95 transition-all font-cairo"
             >
               <MapPin className="w-3.5 h-3.5 text-[#C69843]" />
-              <span>{language === "ar" ? "خرائط Google" : "Google Maps"}</span>
+              <span>{language === "ar" ? "خرائط Google" : language === "id" ? "Google Maps" : "Google Maps"}</span>
             </a>
             <a
               href="https://www.instagram.com/pizza_house66/"
@@ -832,7 +841,7 @@ export default function Header() {
             </p>
             <p className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span>4:00 م - 11:30 م (فترة المساء)</span>
+              <span>{language === "ar" ? "4:00 م - 11:30 م (فترة المساء)" : language === "id" ? "16:00 - 23:30 (Sesi Sore)" : "4:00 PM - 11:30 PM (Evening Shift)"}</span>
             </p>
           </div>
         </div>
