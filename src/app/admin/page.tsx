@@ -53,11 +53,24 @@ export default async function AdminPage() {
     },
   });
 
+  const coupons = await prisma.coupon.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  const gifts = await prisma.automaticGift.findMany({
+    orderBy: { minSpend: "asc" },
+  });
+
+  const loyaltyCount = await prisma.customerLoyalty.count();
+
   return (
     <AdminClientView
       restaurant={restaurant}
       orders={orders}
       products={products}
+      initialCoupons={coupons}
+      initialGifts={gifts}
+      loyaltyCount={loyaltyCount}
     />
   );
 }

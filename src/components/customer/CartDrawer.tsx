@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useApp } from "@/context/AppContext";
-import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ArrowLeft } from "lucide-react";
+import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ArrowLeft, Gift, Sparkles } from "lucide-react";
 
 export default function CartDrawer() {
   const {
@@ -69,6 +69,58 @@ export default function CartDrawer() {
 
           {/* Items List */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3.5">
+            {/* Automatic Gift Tier Progress Tracker */}
+            {cart.length > 0 && (
+              <div className="p-3.5 rounded-2xl bg-[#141822] border border-amber-500/25 shadow-md space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold">
+                  <span className="flex items-center gap-1.5 text-[#EFCC80]">
+                    <Gift className="w-4 h-4 text-[#C69843]" />
+                    <span>
+                      {cartTotal >= 20000
+                        ? language === "ar"
+                          ? "🎉 تم فتح الهدية الكبرى: فطيرة نوتيلا مجاناً!"
+                          : language === "id"
+                          ? "🎉 Hadiah Utama Terbuka: Fatayer Nutella Gratis!"
+                          : "🎉 Top Tier Unlocked: Free Nutella Fatayer!"
+                        : cartTotal >= 12000
+                        ? language === "ar"
+                          ? "🎉 تم فتح هدية: خبز بالثوم والموزاريلا مجاناً!"
+                          : language === "id"
+                          ? "🎉 Hadiah Terbuka: Roti Bawang Putih Keju Gratis!"
+                          : "🎉 Unlocked: Free Cheesy Garlic Bread!"
+                        : language === "ar"
+                        ? `أضف ${(12000 - cartTotal).toLocaleString()} ر.ي لفتح هدية مجانية!`
+                        : language === "id"
+                        ? `Tambah ${(12000 - cartTotal).toLocaleString()} YER lagi untuk hadiah gratis!`
+                        : `Add ${(12000 - cartTotal).toLocaleString()} YER to unlock a free gift!`}
+                    </span>
+                  </span>
+                  <span className="font-outfit text-amber-300 text-[11px]">
+                    {cartTotal >= 20000
+                      ? "100%"
+                      : cartTotal >= 12000
+                      ? `${Math.round((cartTotal / 20000) * 100)}%`
+                      : `${Math.round((cartTotal / 12000) * 100)}%`}
+                  </span>
+                </div>
+                {/* Progress bar */}
+                <div className="w-full h-1.5 bg-[#0c0e12] rounded-full overflow-hidden border border-white/5">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#C69843] to-[#EFCC80] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(239,204,128,0.5)]"
+                    style={{
+                      width: `${
+                        cartTotal >= 20000
+                          ? 100
+                          : cartTotal >= 12000
+                          ? Math.min(100, Math.round(((cartTotal - 12000) / 8000) * 100))
+                          : Math.min(100, Math.round((cartTotal / 12000) * 100))
+                      }%`,
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             {cart.length === 0 ? (
               <div className="text-center py-16 px-4 space-y-3">
                 <div className="w-16 h-16 rounded-2xl bg-[#14181f] border border-[#222934] flex items-center justify-center mx-auto text-[#EFCC80] shadow-md">
@@ -173,6 +225,47 @@ export default function CartDrawer() {
                   </div>
                 </div>
               ))
+            )}
+
+            {/* Unlocked Free Gift Card */}
+            {cart.length > 0 && cartTotal >= 12000 && (
+              <div className="p-3 bg-gradient-to-r from-amber-950/40 via-[#181d28] to-amber-950/40 rounded-2xl border border-amber-500/40 flex items-center justify-between gap-3 shadow-md animate-in fade-in duration-300">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] flex items-center justify-center text-[#2C1A04] shadow-sm font-black shrink-0">
+                    <Gift className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs font-bold text-white">
+                        {cartTotal >= 20000
+                          ? language === "ar"
+                            ? "فطيرة نوتيلا بالموز الفاخرة"
+                            : language === "id"
+                            ? "Fatayer Nutella Pisang Premium"
+                            : "Premium Nutella & Banana Fatayer"
+                          : language === "ar"
+                          ? "خبز بالثوم والموزاريلا الساخن"
+                          : language === "id"
+                          ? "Roti Bawang Putih Keju Hangat"
+                          : "Hot Cheesy Garlic Bread"}
+                      </span>
+                    </div>
+                    <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" />
+                      <span>
+                        {language === "ar"
+                          ? "هدية تلقائية مجانية"
+                          : language === "id"
+                          ? "Hadiah Otomatis Gratis"
+                          : "Automatic Free Gift"}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div className="text-xs font-black text-emerald-400 px-2 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 font-outfit">
+                  0 {dict.menu.currency}
+                </div>
+              </div>
             )}
           </div>
 

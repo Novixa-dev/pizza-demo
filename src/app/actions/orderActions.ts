@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { CreateOrderSchema } from "@/lib/validation";
+import { validateCouponAction } from "./couponActions";
 import { calculateAuthoritativeOrder } from "@/lib/pricing";
 import {
   calculateEarliestPickup,
@@ -208,10 +209,28 @@ export async function createOrderAction(rawInput: unknown) {
       }
     }
 
-    // 5. Generate unique human-readable Order Number
+    // 5. Authoritative Coupon Validation & Discount
+    let couponDiscount = 0;
+    let appliedCouponCode: string | undefined = undefined;
+    if (data.couponCode) {
+      const couponValidation = await validateCouponAction({
+        code: data.couponCode,
+        subtotal: calculation.subtotal,
+        customerPhone: data.customerPhone,
+      });
+      if (couponValidation.success && couponValidation.discountAmount) {
+        couponDiscount = couponValidation.discountAmount;
+        appliedCouponCode = couponValidation.code;
+      }
+    }
+
+    const finalDiscount = calculation.discount + couponDiscount;
+    const finalTotal = Math.max(0, calculation.subtotal - finalDiscount);
+
+    // 6. Generate unique human-readable Order Number
     const orderNumber = await generateOrderNumber();
 
-    // 6. Atomic transaction creating order, items, options, and payment
+    // 7. Atomic transaction creating order, items, options, and payment
     const newOrder = await prisma.$transaction(async (tx) => {
       const order = await tx.order.create({
         data: {
@@ -224,8 +243,11 @@ export async function createOrderAction(rawInput: unknown) {
           plannedPrepStartTime,
           status: initialStatus,
           subtotal: calculation.subtotal,
-          discount: calculation.discount,
-          total: calculation.total,
+          discount: finalDiscount,
+          couponCode: appliedCouponCode,
+          couponDiscount,
+          giftItemName: data.giftItemName,
+          total: finalTotal,
           notes: data.notes,
           items: {
             create: calculation.items.map((item) => ({
@@ -251,7 +273,7 @@ export async function createOrderAction(rawInput: unknown) {
             create: {
               method: data.paymentMethod,
               status: paymentStatus,
-              amount: calculation.total,
+              amount: finalTotal,
               referenceNumber: data.referenceNumber,
               receipt: savedReceipt
                 ? {
@@ -267,6 +289,38 @@ export async function createOrderAction(rawInput: unknown) {
           },
         },
       });
+
+      // Increment coupon usage count if applied
+      if (appliedCouponCode) {
+        try {
+          await tx.coupon.update({
+            where: { code: appliedCouponCode },
+            data: { usedCount: { increment: 1 } },
+          });
+        } catch (couponErr) {
+          console.warn("Could not increment coupon usedCount:", couponErr);
+        }
+      }
+
+      // Track customer loyalty progress
+      try {
+        await tx.customerLoyalty.upsert({
+          where: { customerPhone: data.customerPhone },
+          create: {
+            customerPhone: data.customerPhone,
+            ordersCount: 1,
+            totalSpent: finalTotal,
+            lastOrderAt: now,
+          },
+          update: {
+            ordersCount: { increment: 1 },
+            totalSpent: { increment: finalTotal },
+            lastOrderAt: now,
+          },
+        });
+      } catch (loyaltyErr) {
+        console.warn("Could not upsert customer loyalty record:", loyaltyErr);
+      }
 
       // Audit Log
       await tx.auditLog.create({

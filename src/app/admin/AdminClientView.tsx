@@ -30,26 +30,62 @@ import {
   LogOut,
   Star,
   MessageSquare,
+  Tag,
+  Gift,
+  Award,
+  Plus,
+  Trash2,
+  Sparkles,
+  Percent,
 } from "lucide-react";
 import { logoutStaffAction } from "@/app/actions/orderActions";
+import {
+  toggleCouponStatusAction,
+  createCouponAction,
+  deleteCouponAction,
+} from "@/app/actions/couponActions";
 
 interface AdminClientViewProps {
   restaurant: any;
   orders: any[];
   products: any[];
+  initialCoupons?: any[];
+  initialGifts?: any[];
+  loyaltyCount?: number;
 }
 
 export default function AdminClientView({
   restaurant,
   orders,
   products,
+  initialCoupons = [],
+  initialGifts = [],
+  loyaltyCount = 0,
 }: AdminClientViewProps) {
   const { language, dict } = useApp();
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState<
-    "overview" | "orders" | "payments" | "feedback" | "menu" | "settings"
+    "overview" | "orders" | "payments" | "feedback" | "menu" | "offers" | "settings"
   >("overview");
+
+  const [couponsList, setCouponsList] = useState<any[]>(initialCoupons);
+  const [giftsList, setGiftsList] = useState<any[]>(initialGifts);
+  const [isCreateCouponOpen, setIsCreateCouponOpen] = useState(false);
+  const [couponActionLoading, setCouponActionLoading] = useState(false);
+  const [couponForm, setCouponForm] = useState({
+    code: "",
+    titleAr: "",
+    titleEn: "",
+    descriptionAr: "",
+    descriptionEn: "",
+    discountType: "PERCENTAGE" as "PERCENTAGE" | "FIXED" | "FREE_ITEM",
+    discountValue: 10,
+    minOrderAmount: 8000,
+    maxDiscount: 1000,
+    usageLimit: 100,
+    isFirstOrderOnly: false,
+  });
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedReceiptOrder, setSelectedReceiptOrder] = useState<any | null>(
@@ -151,6 +187,66 @@ export default function AdminClientView({
     router.refresh();
   };
 
+  const handleToggleCouponStatus = async (couponId: string, currentStatus: boolean) => {
+    setCouponActionLoading(true);
+    const res = await toggleCouponStatusAction(couponId, !currentStatus);
+    if (res.success && res.coupon) {
+      setCouponsList((prev) =>
+        prev.map((c) => (c.id === couponId ? { ...c, isActive: !currentStatus } : c))
+      );
+    }
+    setCouponActionLoading(false);
+  };
+
+  const handleDeleteCoupon = async (couponId: string) => {
+    if (!window.confirm("هل أنت متأكد من حذف هذا الكوبون نهائياً؟")) return;
+    setCouponActionLoading(true);
+    const res = await deleteCouponAction(couponId);
+    if (res.success) {
+      setCouponsList((prev) => prev.filter((c) => c.id !== couponId));
+    }
+    setCouponActionLoading(false);
+  };
+
+  const handleCreateCouponSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponForm.code.trim()) return;
+    setCouponActionLoading(true);
+    const res = await createCouponAction({
+      code: couponForm.code.trim().toUpperCase(),
+      titleAr: couponForm.titleAr.trim() || couponForm.code.toUpperCase(),
+      titleEn: couponForm.titleEn.trim() || couponForm.code.toUpperCase(),
+      descriptionAr: couponForm.descriptionAr.trim(),
+      descriptionEn: couponForm.descriptionEn.trim(),
+      discountType: couponForm.discountType,
+      discountValue: Number(couponForm.discountValue),
+      minOrderAmount: Number(couponForm.minOrderAmount) || 0,
+      maxDiscount: couponForm.maxDiscount ? Number(couponForm.maxDiscount) : undefined,
+      usageLimit: couponForm.usageLimit ? Number(couponForm.usageLimit) : undefined,
+      isFirstOrderOnly: couponForm.isFirstOrderOnly,
+    });
+    if (res.success && res.coupon) {
+      setCouponsList((prev) => [res.coupon, ...prev]);
+      setIsCreateCouponOpen(false);
+      setCouponForm({
+        code: "",
+        titleAr: "",
+        titleEn: "",
+        descriptionAr: "",
+        descriptionEn: "",
+        discountType: "PERCENTAGE",
+        discountValue: 10,
+        minOrderAmount: 8000,
+        maxDiscount: 1000,
+        usageLimit: 100,
+        isFirstOrderOnly: false,
+      });
+    } else {
+      alert(res.message || "تعذر إنشاء الكوبون");
+    }
+    setCouponActionLoading(false);
+  };
+
   return (
     <div className="min-h-screen bg-[#0c0e12] text-white py-8 sm:py-12 relative overflow-hidden font-cairo">
       {/* Ambient Glows */}
@@ -212,6 +308,12 @@ export default function AdminClientView({
               highlight: ordersWithFeedback.length > 0,
             },
             { id: "menu", label: dict.admin.menuMgmt, icon: ChefHat },
+            {
+              id: "offers",
+              label: dict.admin.offersMgmt || "العروض والكوبونات",
+              icon: Tag,
+              count: couponsList.length,
+            },
             { id: "settings", label: dict.admin.settings, icon: ShieldAlert },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -1034,6 +1136,403 @@ export default function AdminClientView({
                 <span className="text-[11px] text-stone-400">فرع فوه: بيتزا هاوس</span>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab 6: Offers & Coupons Management */}
+      {activeTab === "offers" && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          {/* Header Action Bar */}
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#EFCC80]/15 text-[#EFCC80] flex items-center justify-center flex-shrink-0">
+                <Tag className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-white">
+                  إدارة العروض والكوبونات وبرنامج الولاء
+                </h2>
+                <p className="text-xs text-stone-400">
+                  تحكم بكوبونات الخصم، ومتابعة الهدايا التلقائية، وبرنامج مكافآت الزبائن
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setIsCreateCouponOpen(true)}
+              className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] px-4 py-2.5 rounded-xl text-xs font-black shadow-md shadow-[#EFCC80]/20 transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>إضافة كوبون جديد</span>
+            </button>
+          </div>
+
+          {/* KPI Summary Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-4 rounded-2xl border border-[#222934] space-y-1">
+              <span className="text-[11px] text-stone-400 flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-[#EFCC80]" />
+                الكوبونات الفعالة
+              </span>
+              <span className="text-xl font-black text-white font-outfit block">
+                {couponsList.filter((c) => c.isActive).length} / {couponsList.length}
+              </span>
+            </div>
+
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-4 rounded-2xl border border-[#222934] space-y-1">
+              <span className="text-[11px] text-stone-400 flex items-center gap-1.5">
+                <Percent className="w-3.5 h-3.5 text-emerald-400" />
+                مرات الاستخدام
+              </span>
+              <span className="text-xl font-black text-emerald-400 font-outfit block">
+                {couponsList.reduce((acc, c) => acc + (c.usedCount || 0), 0)}
+              </span>
+            </div>
+
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-4 rounded-2xl border border-[#222934] space-y-1">
+              <span className="text-[11px] text-stone-400 flex items-center gap-1.5">
+                <Gift className="w-3.5 h-3.5 text-amber-400" />
+                مستويات الهدايا
+              </span>
+              <span className="text-xl font-black text-amber-400 font-outfit block">
+                {giftsList.length} مستويات
+              </span>
+            </div>
+
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-4 rounded-2xl border border-[#222934] space-y-1">
+              <span className="text-[11px] text-stone-400 flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-purple-400" />
+                عملاء برنامج الولاء
+              </span>
+              <span className="text-xl font-black text-purple-400 font-outfit block">
+                {loyaltyCount} عميل
+              </span>
+            </div>
+          </div>
+
+          {/* Coupons Table */}
+          <div className="bg-[#14181f]/90 backdrop-blur-md rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] overflow-hidden">
+            <div className="p-4 sm:p-5 border-b border-[#222934] flex justify-between items-center">
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <span>كوبونات الخصم المسجلة ({couponsList.length})</span>
+              </h3>
+            </div>
+
+            {couponsList.length === 0 ? (
+              <div className="p-8 text-center text-stone-400 text-xs sm:text-sm">
+                لا توجد كوبونات مسجلة حالياً. اضغط على زر &quot;إضافة كوبون جديد&quot; للبدء.
+              </div>
+            ) : (
+              <div className="divide-y divide-[#222934]/60">
+                {couponsList.map((coupon) => (
+                  <div
+                    key={coupon.id}
+                    className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#181d26]/40 transition-colors"
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="px-2.5 py-1 rounded-lg bg-[#0c0e12] border border-[#EFCC80]/40 text-[#EFCC80] font-black text-xs font-outfit uppercase tracking-wider">
+                          {coupon.code}
+                        </span>
+
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                            coupon.isActive
+                              ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                              : "bg-stone-800 text-stone-400 border border-stone-700"
+                          }`}
+                        >
+                          {coupon.isActive ? "نشط ومتاح للطلب" : "متوقف مؤقتاً"}
+                        </span>
+
+                        {coupon.isFirstOrderOnly && (
+                          <span className="px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30 text-[10px] font-bold">
+                            للطلب الأول فقط
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="text-xs text-stone-300">
+                        <span className="font-bold text-white">{coupon.titleAr}</span>
+                        {coupon.descriptionAr && (
+                          <span className="text-stone-400"> — {coupon.descriptionAr}</span>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-stone-400 pt-0.5 font-outfit">
+                        <span>
+                          الخصم:{" "}
+                          <strong className="text-white">
+                            {coupon.discountType === "PERCENTAGE" && `${coupon.discountValue}%`}
+                            {coupon.discountType === "FIXED" && `${coupon.discountValue.toLocaleString()} ر.ي`}
+                            {coupon.discountType === "FREE_ITEM" && "صنف مجاني"}
+                          </strong>
+                        </span>
+                        <span>•</span>
+                        <span>
+                          الحد الأدنى:{" "}
+                          <strong className="text-white">
+                            {coupon.minOrderAmount?.toLocaleString() || 0} ر.ي
+                          </strong>
+                        </span>
+                        <span>•</span>
+                        <span>
+                          الاستخدام:{" "}
+                          <strong className="text-[#EFCC80]">
+                            {coupon.usedCount || 0}
+                          </strong>
+                          {coupon.usageLimit ? ` / ${coupon.usageLimit}` : " (غير محدود)"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 self-end md:self-center">
+                      <button
+                        onClick={() => handleToggleCouponStatus(coupon.id, coupon.isActive)}
+                        disabled={couponActionLoading}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                          coupon.isActive
+                            ? "bg-amber-950/40 text-amber-300 hover:bg-amber-900/50 border-amber-500/30"
+                            : "bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/50 border-emerald-500/30"
+                        }`}
+                      >
+                        {coupon.isActive ? "إيقاف مؤقت" : "تفعيل الكوبون"}
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteCoupon(coupon.id)}
+                        disabled={couponActionLoading}
+                        className="p-2 rounded-xl bg-red-950/40 hover:bg-red-900/60 text-red-400 border border-red-500/30 transition-colors"
+                        title="حذف الكوبون"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Automatic Gifts & Loyalty Info Panels */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Automatic Gifts Panel */}
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-3">
+              <div className="flex items-center gap-2 border-b border-[#222934] pb-3">
+                <Gift className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-sm font-bold text-white">الهدايا التلقائية المفعلة</h3>
+              </div>
+
+              <div className="space-y-2 text-xs">
+                {giftsList.map((g) => (
+                  <div
+                    key={g.id}
+                    className="p-3 rounded-2xl bg-[#0c0e12] border border-[#222934] flex justify-between items-center"
+                  >
+                    <div>
+                      <span className="font-bold text-white block">{g.tierNameAr}</span>
+                      <span className="text-[11px] text-emerald-400">
+                        الهدية: {g.giftItemNameAr}
+                      </span>
+                    </div>
+                    <span className="font-outfit font-black text-[#EFCC80] text-xs">
+                      عند إنفاق {g.minSpend.toLocaleString()} ر.ي
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Loyalty Program Panel */}
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-3">
+              <div className="flex items-center gap-2 border-b border-[#222934] pb-3">
+                <Award className="w-5 h-5 text-amber-400" />
+                <h3 className="text-sm font-bold text-white">برنامج ولاء الزبائن</h3>
+              </div>
+
+              <div className="space-y-2 text-xs text-stone-300">
+                <p>
+                  نظام الأختام الرقمية يربط سجل العميل برقم هاتفه تلقائياً عند استلام كل طلب.
+                </p>
+                <div className="p-3 rounded-2xl bg-[#0c0e12] border border-[#222934] space-y-1">
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-stone-400">قاعدة المكافأة:</span>
+                    <strong className="text-white">5 طلبات مكتملة = صنف مجاني</strong>
+                  </div>
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-stone-400">العملاء النشطون في النظام:</span>
+                    <strong className="text-[#EFCC80] font-outfit">{loyaltyCount} عميل</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Create Coupon Modal */}
+      {isCreateCouponOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="bg-[#14181f] rounded-3xl max-w-lg w-full overflow-hidden border border-[#C69843]/40 shadow-2xl p-5 sm:p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b border-[#222934] pb-3">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Tag className="w-4 h-4 text-[#EFCC80]" />
+                <span>إضافة كوبون خصم جديد</span>
+              </h3>
+              <button
+                onClick={() => setIsCreateCouponOpen(false)}
+                className="text-stone-400 hover:text-white transition-colors"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateCouponSubmit} className="space-y-3 text-xs">
+              <div className="space-y-1">
+                <label className="text-stone-300 font-bold block">كود الكوبون (إنجليزي وأرقام)</label>
+                <input
+                  type="text"
+                  required
+                  value={couponForm.code}
+                  onChange={(e) => setCouponForm({ ...couponForm, code: e.target.value.toUpperCase() })}
+                  placeholder="مثلاً: PIZZA20"
+                  className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80] font-outfit uppercase tracking-wider"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-stone-300 font-bold block">العنوان بالعربي</label>
+                  <input
+                    type="text"
+                    required
+                    value={couponForm.titleAr}
+                    onChange={(e) => setCouponForm({ ...couponForm, titleAr: e.target.value })}
+                    placeholder="خصم 10% نهاية الأسبوع"
+                    className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-stone-300 font-bold block">العنوان بالإنجليزي</label>
+                  <input
+                    type="text"
+                    required
+                    value={couponForm.titleEn}
+                    onChange={(e) => setCouponForm({ ...couponForm, titleEn: e.target.value })}
+                    placeholder="10% Weekend Discount"
+                    className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80]"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-stone-300 font-bold block">الوصف بالعربي</label>
+                <input
+                  type="text"
+                  value={couponForm.descriptionAr}
+                  onChange={(e) => setCouponForm({ ...couponForm, descriptionAr: e.target.value })}
+                  placeholder="يسري العرض على جميع أصناف البيتزا"
+                  className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-stone-300 font-bold block">نوع الخصم</label>
+                  <select
+                    value={couponForm.discountType}
+                    onChange={(e) => setCouponForm({ ...couponForm, discountType: e.target.value as any })}
+                    className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80]"
+                  >
+                    <option value="PERCENTAGE">نسبة مئوية (%)</option>
+                    <option value="FIXED">مبلغ ثابت (ر.ي)</option>
+                    <option value="FREE_ITEM">صنف مجاني</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-stone-300 font-bold block">قيمة الخصم</label>
+                  <input
+                    type="number"
+                    required
+                    min={1}
+                    value={couponForm.discountValue}
+                    onChange={(e) => setCouponForm({ ...couponForm, discountValue: Number(e.target.value) })}
+                    className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80] font-outfit"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-stone-300 font-bold block">الحد الأدنى للطلب (ر.ي)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={couponForm.minOrderAmount}
+                    onChange={(e) => setCouponForm({ ...couponForm, minOrderAmount: Number(e.target.value) })}
+                    className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80] font-outfit"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-stone-300 font-bold block">أقصى مبلغ خصم (اختياري)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={couponForm.maxDiscount || ""}
+                    onChange={(e) => setCouponForm({ ...couponForm, maxDiscount: Number(e.target.value) })}
+                    placeholder="1000"
+                    className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80] font-outfit"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-stone-300 font-bold block">الحد الأقصى للاستخدام</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={couponForm.usageLimit || ""}
+                    onChange={(e) => setCouponForm({ ...couponForm, usageLimit: Number(e.target.value) })}
+                    placeholder="مثلاً: 100"
+                    className="w-full p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-white focus:outline-none focus:border-[#EFCC80] font-outfit"
+                  />
+                </div>
+
+                <div className="flex items-center gap-2 pt-6">
+                  <input
+                    type="checkbox"
+                    id="firstOrderOnly"
+                    checked={couponForm.isFirstOrderOnly}
+                    onChange={(e) => setCouponForm({ ...couponForm, isFirstOrderOnly: e.target.checked })}
+                    className="w-4 h-4 accent-[#EFCC80]"
+                  />
+                  <label htmlFor="firstOrderOnly" className="text-stone-300 font-bold cursor-pointer">
+                    مخصص للطلب الأول فقط
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3 border-t border-[#222934]">
+                <button
+                  type="button"
+                  onClick={() => setIsCreateCouponOpen(false)}
+                  className="px-4 py-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-stone-300 hover:text-white"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="submit"
+                  disabled={couponActionLoading}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black shadow-md hover:brightness-110 active:scale-95 disabled:opacity-50"
+                >
+                  {couponActionLoading ? "جاري الحفظ..." : "حفظ وتفعيل الكوبون"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

@@ -116,6 +116,9 @@ model Order {
   status              String      @default("PENDING") // PENDING, PAYMENT_PENDING, CONFIRMED, QUEUED, PREPARING, READY, COMPLETED, CANCELLED, REJECTED
   subtotal            Int         // in YER
   discount            Int         @default(0)
+  couponCode          String?
+  couponDiscount      Int         @default(0)
+  giftItemName        String?
   total               Int         // in YER
   notes               String?
   trackingToken       String      @default(cuid())
@@ -207,5 +210,57 @@ model OrderFeedback {
   customerName  String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model Coupon {
+  id                String    @id @default(cuid())
+  code              String    @unique
+  titleAr           String
+  titleEn           String
+  titleId           String?
+  descriptionAr     String
+  descriptionEn     String
+  descriptionId     String?
+  discountType      String    // "PERCENTAGE", "FIXED", "FREE_ITEM"
+  discountValue     Int       // e.g. 10 for 10% or 1000 for 1000 YER
+  minOrderAmount    Int       @default(0)
+  maxDiscount       Int?
+  freeItemNameAr    String?
+  freeItemNameEn    String?
+  startDate         DateTime  @default(now())
+  endDate           DateTime?
+  usageLimit        Int?
+  usedCount         Int       @default(0)
+  isActive          Boolean   @default(true)
+  isFirstOrderOnly  Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model AutomaticGift {
+  id            String   @id @default(cuid())
+  nameAr        String
+  nameEn        String
+  nameId        String?
+  descriptionAr String
+  descriptionEn String
+  minSpend      Int      // in YER threshold (e.g. 12000)
+  imageUrl      String?
+  isActive      Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model CustomerLoyalty {
+  id              String    @id @default(cuid())
+  customerPhone   String    @unique
+  ordersCount     Int       @default(0)
+  totalSpent      Int       @default(0)
+  rewardsEarned   Int       @default(0)
+  rewardsClaimed  Int       @default(0)
+  lastOrderAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 

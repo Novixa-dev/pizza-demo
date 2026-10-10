@@ -73,7 +73,8 @@ export default function Header() {
   const navLinks: Array<{ href: string; label: string; badge?: string }> = [
     { href: "/", label: dict.nav.home },
     { href: "/menu", label: dict.nav.menu },
-    { href: "/#reviews", label: language === "ar" ? "التقييمات" : "Reviews" },
+    { href: "/offers", label: dict.nav.offers, badge: language === "ar" ? "جديد" : language === "id" ? "Baru" : "New" },
+    { href: "/#reviews", label: language === "ar" ? "التقييمات" : language === "id" ? "Ulasan" : "Reviews" },
     { href: "/#branches", label: dict.nav.branches },
     { href: "/#about", label: dict.nav.about },
     { href: "/admin", label: dict.nav.admin },
@@ -272,6 +273,18 @@ export default function Header() {
                 title="English"
               >
                 EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("id")}
+                className={`px-2 py-1 rounded-full text-xs font-bold font-outfit transition-all ${
+                  language === "id"
+                    ? "bg-white dark:bg-stone-900 text-pizza-600 shadow-xs font-black"
+                    : "text-stone-500 hover:text-stone-900 dark:hover:text-stone-200"
+                }`}
+                title="Bahasa Indonesia"
+              >
+                ID
               </button>
             </div>
 
@@ -717,11 +730,12 @@ export default function Header() {
               </span>
             </div>
 
+            {/* Three Languages Grid */}
             <div className="grid grid-cols-3 gap-2 text-xs font-bold">
               <button
                 type="button"
                 onClick={() => setLanguage("ar")}
-                className={`py-2 px-2 rounded-xl border flex items-center justify-center gap-1 transition-all ${
+                className={`py-2 px-1.5 rounded-xl border flex items-center justify-center gap-1 transition-all ${
                   language === "ar"
                     ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
                     : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
@@ -733,7 +747,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setLanguage("en")}
-                className={`py-2 px-2 rounded-xl border flex items-center justify-center gap-1 transition-all font-outfit ${
+                className={`py-2 px-1.5 rounded-xl border flex items-center justify-center gap-1 transition-all font-outfit ${
                   language === "en"
                     ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
                     : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
@@ -744,22 +758,47 @@ export default function Header() {
 
               <button
                 type="button"
-                onClick={toggleTheme}
-                className="py-2 px-2 rounded-xl border bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white flex items-center justify-center gap-1.5 transition-all font-cairo"
+                onClick={() => setLanguage("id")}
+                className={`py-2 px-1.5 rounded-xl border flex items-center justify-center gap-1 transition-all font-outfit ${
+                  language === "id"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
+                    : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
+                }`}
               >
-                {theme === "light" ? (
-                  <>
-                    <Moon className="w-3.5 h-3.5 text-stone-300" />
-                    <span>داكن</span>
-                  </>
-                ) : (
-                  <>
-                    <Sun className="w-3.5 h-3.5 text-amber-400" />
-                    <span>فاتح</span>
-                  </>
-                )}
+                <span>🇮🇩 Indonesia</span>
               </button>
             </div>
+
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="w-full py-2 px-3 rounded-xl border bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white flex items-center justify-between text-xs font-bold transition-all font-cairo"
+            >
+              <span className="flex items-center gap-2">
+                {theme === "light" ? (
+                  <Moon className="w-4 h-4 text-stone-400" />
+                ) : (
+                  <Sun className="w-4 h-4 text-amber-400" />
+                )}
+                <span>
+                  {language === "ar"
+                    ? "مظهر الواجهة:"
+                    : language === "id"
+                    ? "Tema Tampilan:"
+                    : "Theme Mode:"}
+                </span>
+              </span>
+              <span className="text-amber-300">
+                {theme === "light"
+                  ? language === "ar"
+                    ? "فاتح (Light)"
+                    : "Light"
+                  : language === "ar"
+                  ? "داكن (Dark)"
+                  : "Dark"}
+              </span>
+            </button>
           </div>
 
           {/* 8. Branch Location & Official Operating Hours */}

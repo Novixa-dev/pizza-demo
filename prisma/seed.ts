@@ -746,6 +746,134 @@ async function main() {
   }
 
   console.log("✅ Seeded 5 completed orders with authentic customer feedback testimonials!");
+
+  // 6. Seed Coupons
+  await prisma.coupon.deleteMany();
+  await prisma.coupon.createMany({
+    data: [
+      {
+        code: "WELCOME10",
+        titleAr: "خصم 10% للطلب الأول",
+        titleEn: "10% Off First Order",
+        titleId: "Diskon 10% Pesanan Pertama",
+        descriptionAr: "خصم 10% عند طلبك بقيمة 8,000 ر.ي أو أكثر (حد أقصى للخصم 1,000 ر.ي)",
+        descriptionEn: "10% discount on orders of 8,000 YER or more (max discount 1,000 YER)",
+        descriptionId: "Diskon 10% untuk pesanan minimal 8.000 YER (maksimal diskon 1.000 YER)",
+        discountType: "PERCENTAGE",
+        discountValue: 10,
+        minOrderAmount: 8000,
+        maxDiscount: 1000,
+        isFirstOrderOnly: true,
+        isActive: true,
+        usageLimit: 500,
+        usedCount: 14,
+      },
+      {
+        code: "FAMILYBOX",
+        titleAr: "خبز بالثوم والموزاريلا مجاناً",
+        titleEn: "Free Cheesy Garlic Bread",
+        titleId: "Roti Bawang Putih Keju Gratis",
+        descriptionAr: "احصل على خبز بالثوم والموزاريلا مجاناً مع وجبات التوفير العائلية بقيمة 15,000 ر.ي فأكثر",
+        descriptionEn: "Receive free cheesy garlic bread on family feast orders of 15,000 YER or more",
+        descriptionId: "Dapatkan roti bawang putih keju gratis untuk pesanan 15.000 YER ke atas",
+        discountType: "FREE_ITEM",
+        discountValue: 0,
+        freeItemNameAr: "خبز بالثوم والموزاريلا مجاناً",
+        freeItemNameEn: "Free Cheesy Garlic Bread",
+        minOrderAmount: 15000,
+        isActive: true,
+        usageLimit: 300,
+        usedCount: 28,
+      },
+      {
+        code: "MUKALLA500",
+        titleAr: "خصم فوري 500 ر.ي",
+        titleEn: "Instant 500 YER Discount",
+        titleId: "Diskon Instan 500 YER",
+        descriptionAr: "خصم فوري 500 ر.ي على جميع طلبات البيتزا بقيمة 6,000 ر.ي فأكثر",
+        descriptionEn: "Instant 500 YER off on any order of 6,000 YER or more",
+        descriptionId: "Diskon instan 500 YER untuk semua pesanan mulai dari 6.000 YER",
+        discountType: "FIXED",
+        discountValue: 500,
+        minOrderAmount: 6000,
+        isActive: true,
+        usageLimit: 1000,
+        usedCount: 62,
+      },
+      {
+        code: "HADRAMOUT",
+        titleAr: "عرض رواد فوه والطلاب 15%",
+        titleEn: "15% Hadramout Community & Students Deal",
+        titleId: "Promo Komunitas & Mahasiswa 15%",
+        descriptionAr: "خصم 15% لطلاب جامعة الأحقاف وأهالي فوه لطلبات 10,000 ر.ي فأكثر (حد أقصى 2,000 ر.ي)",
+        descriptionEn: "15% discount for Al-Ahgaff students and Fuwa community on 10,000+ YER orders (max 2,000 YER)",
+        descriptionId: "Diskon 15% untuk mahasiswa Universitas Al-Ahgaff dan warga Fuwah untuk pesanan 10.000+ YER (maks 2.000 YER)",
+        discountType: "PERCENTAGE",
+        discountValue: 15,
+        minOrderAmount: 10000,
+        maxDiscount: 2000,
+        isActive: true,
+        usageLimit: 400,
+        usedCount: 45,
+      },
+    ],
+  });
+  console.log("✅ Seeded 4 promotional coupons!");
+
+  // 7. Seed Automatic Gifts
+  await prisma.automaticGift.deleteMany();
+  await prisma.automaticGift.createMany({
+    data: [
+      {
+        nameAr: "خبز بالثوم والموزاريلا الساخن",
+        nameEn: "Hot Cheesy Garlic Bread",
+        nameId: "Roti Bawang Putih Keju Hangat",
+        descriptionAr: "هدية مجانية تلقائية تضاف لسلتك عند تجاوز 12,000 ر.ي",
+        descriptionEn: "Automatically added to your cart when spending 12,000 YER or more",
+        minSpend: 12000,
+        imageUrl: "https://images.unsplash.com/photo-1619895092538-128341789043?w=600&q=80",
+        isActive: true,
+        sortOrder: 1,
+      },
+      {
+        nameAr: "فطيرة نوتيلا بالموز الفاخرة",
+        nameEn: "Premium Nutella & Banana Fatayer",
+        nameId: "Fatayer Nutella Pisang Premium",
+        descriptionAr: "هدية تحلية فاخرة تضاف تلقائياً للطلبات الكبيرة عند بلوغ 20,000 ر.ي",
+        descriptionEn: "A premium dessert gift automatically added on large orders of 20,000 YER or more",
+        minSpend: 20000,
+        imageUrl: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=600&q=80",
+        isActive: true,
+        sortOrder: 2,
+      },
+    ],
+  });
+  console.log("✅ Seeded 2 automatic gift tiers!");
+
+  // 8. Seed Customer Loyalty Records
+  await prisma.customerLoyalty.deleteMany();
+  await prisma.customerLoyalty.createMany({
+    data: [
+      {
+        customerPhone: "772207788",
+        ordersCount: 5,
+        totalSpent: 32000,
+        rewardsEarned: 1,
+        rewardsClaimed: 0,
+        lastOrderAt: now,
+      },
+      {
+        customerPhone: "771234567",
+        ordersCount: 3,
+        totalSpent: 18500,
+        rewardsEarned: 0,
+        rewardsClaimed: 0,
+        lastOrderAt: now,
+      },
+    ],
+  });
+  console.log("✅ Seeded customer loyalty records!");
+
   console.log("🎉 Database seeding completed successfully!");
 }
 

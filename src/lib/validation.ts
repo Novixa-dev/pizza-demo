@@ -39,6 +39,8 @@ export const CreateOrderSchema = z.object({
     .string()
     .max(8 * 1024 * 1024, "حجم الإشعار كبير جداً")
     .optional(),
+  couponCode: z.string().max(50, "كود الكوبون طويل جداً").optional(),
+  giftItemName: z.string().max(100, "اسم الهدية طويل جداً").optional(),
   notes: z.string().max(500, "الملاحظات لا يمكن أن تتجاوز 500 حرف").optional(),
   items: z
     .array(

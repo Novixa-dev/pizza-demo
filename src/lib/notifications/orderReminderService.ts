@@ -221,11 +221,13 @@ export function checkReminderEligibility(prefs?: ReminderPreferences): {
   };
 }
 
+import { Language } from "@/types";
+
 /**
  * Checks customer inactivity and triggers the push reminder if eligible
  */
 export async function triggerDueReminder(
-  language: "ar" | "en" = "ar",
+  language: Language = "ar",
   force: boolean = false
 ): Promise<boolean> {
   const prefs = getReminderPreferences();
@@ -240,17 +242,27 @@ export async function triggerDueReminder(
     return false;
   }
 
-  const meal = prefs.favoriteMeal || (language === "ar" ? "وجبتك المفضلة" : "your favorite meal");
+  const meal =
+    prefs.favoriteMeal ||
+    (language === "ar"
+      ? "وجبتك المفضلة"
+      : language === "id"
+      ? "menu favorit Anda"
+      : "your favorite meal");
   const days = eligibility.daysSinceLastOrder || prefs.intervalDays;
 
   const title =
     language === "ar"
       ? `🍕 اشتقنا لك في بيتزا هاوس المكلا!`
+      : language === "id"
+      ? `🍕 Kami Rindu Anda di Pizza House Mukalla!`
       : `🍕 Pizza House Mukalla: We Miss You!`;
 
   const body =
     language === "ar"
       ? `مرّ ${days} يوماً على آخر طلب لك! هل حان وقت الاستمتاع بـ (${meal}) ساخنة من الفرن الحجري؟ اطلب مسبقاً الآن واستلم بدون انتظار.`
+      : language === "id"
+      ? `Sudah ${days} hari sejak pesanan terakhir Anda! Waktunya menikmati (${meal}) hangat dari oven batu? Pesan sekarang tanpa antre!`
       : `It's been ${days} days since your last order! Craving your favorite (${meal}) fresh from the stone oven? Order ahead now!`;
 
   const sent = await sendBrowserNotification(title, {
@@ -272,7 +284,7 @@ export async function triggerDueReminder(
 /**
  * Simulates a due reminder immediately for user testing / preview
  */
-export async function simulateDueReminder(language: "ar" | "en" = "ar"): Promise<boolean> {
+export async function simulateDueReminder(language: Language = "ar"): Promise<boolean> {
   const prefs = getReminderPreferences();
 
   // Ensure permission is requested

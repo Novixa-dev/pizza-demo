@@ -1,8 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { createOrderAction } from "@/app/actions/orderActions";
+import {
+  validateCouponAction,
+  ValidateCouponResult,
+  getCustomerLoyaltyAction,
+} from "@/app/actions/couponActions";
 import {
   Clock,
   CalendarCheck,
@@ -18,6 +23,10 @@ import {
   User,
   FileText,
   X,
+  Tag,
+  Gift,
+  Sparkles,
+  Award,
 } from "lucide-react";
 import { TimeSlotOption } from "@/types";
 import { recordCompletedOrderForReminders } from "@/lib/notifications/orderReminderService";
@@ -37,6 +46,11 @@ export default function CheckoutClientView({
 
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [couponInput, setCouponInput] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<ValidateCouponResult | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [loyaltyInfo, setLoyaltyInfo] = useState<any>(null);
   const [pickupMode, setPickupMode] = useState<"ASAP" | "SCHEDULED">(() => {
     if (
       restaurantStatus &&
@@ -70,6 +84,106 @@ export default function CheckoutClientView({
       }
     }
   }, [availableSlots, selectedSlot]);
+
+  // Active automatic gift calculation based on cartTotal
+  const activeGift = useMemo(() => {
+    if (cartTotal >= 20000) {
+      return {
+        tier: "TIER2",
+        name:
+          language === "ar"
+            ? "فطيرة شوكولاتة نوتيلا وموز مجانية"
+            : language === "id"
+            ? "Fatayer Nutella Pisang Cokelat Gratis"
+            : "Free Nutella Banana Fatayer",
+      };
+    }
+    if (cartTotal >= 12000) {
+      return {
+        tier: "TIER1",
+        name:
+          language === "ar"
+            ? "بطاطس مقلية ذهبية مقرمشة مجانية"
+            : language === "id"
+            ? "Kentang Goreng Krispi Gratis"
+            : "Free Crispy Golden Fries",
+      };
+    }
+    return null;
+  }, [cartTotal, language]);
+
+  // Read URL search param ?coupon=...
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const codeParam = params.get("coupon");
+      if (codeParam) {
+        const cleanCode = codeParam.trim().toUpperCase();
+        setCouponInput(cleanCode);
+        if (cartTotal > 0) {
+          validateCouponAction({
+            code: cleanCode,
+            subtotal: cartTotal,
+            customerPhone: customerPhone.trim() || undefined,
+          }).then((res) => {
+            if (res.success) setAppliedCoupon(res);
+          });
+        }
+      }
+    }
+  }, [cartTotal, customerPhone]);
+
+  // Check customer loyalty rewards status when phone changes
+  useEffect(() => {
+    const clean = customerPhone.replace(/\s+/g, "");
+    if (clean.length >= 7) {
+      getCustomerLoyaltyAction(clean).then((res) => {
+        if (res.success && res.loyalty) {
+          setLoyaltyInfo(res.loyalty);
+        } else {
+          setLoyaltyInfo(null);
+        }
+      });
+    } else {
+      setLoyaltyInfo(null);
+    }
+  }, [customerPhone]);
+
+  const handleApplyCoupon = async () => {
+    setCouponError(null);
+    if (!couponInput.trim()) {
+      setCouponError(dict.checkout.couponPlaceholder);
+      return;
+    }
+    setCouponLoading(true);
+    try {
+      const res = await validateCouponAction({
+        code: couponInput.trim(),
+        subtotal: cartTotal,
+        customerPhone: customerPhone.trim() || undefined,
+      });
+      if (res.success) {
+        setAppliedCoupon(res);
+        setCouponError(null);
+      } else {
+        setCouponError(res.message || dict.checkout.couponInvalid);
+      }
+    } catch (err) {
+      setCouponError(dict.checkout.couponInvalid);
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput("");
+    setCouponError(null);
+  };
+
+  const couponDiscount = appliedCoupon?.discountAmount || 0;
+  const finalPayableTotal = Math.max(0, cartTotal - couponDiscount);
+
   const [paymentMethod, setPaymentMethod] = useState<
     "PAY_AT_PICKUP" | "TRANSFER_KURAIMI" | "TRANSFER_AMQI" | "TRANSFER_BUSAIRI"
   >("PAY_AT_PICKUP");
@@ -138,6 +252,8 @@ export default function CheckoutClientView({
         referenceNumber: referenceNumber.trim() || undefined,
         receiptUrl: receiptBase64 || undefined,
         notes: notes.trim() || undefined,
+        couponCode: appliedCoupon?.code || undefined,
+        giftItemName: activeGift?.name || undefined,
         items: cart.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
@@ -617,6 +733,92 @@ export default function CheckoutClientView({
                   </span>
                 </div>
               ))}
+
+              {/* Automatic Gift Item Row */}
+              {activeGift && (
+                <div className="flex justify-between items-center text-xs p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+                  <div className="flex items-center gap-2">
+                    <Gift className="w-4 h-4 text-emerald-400 animate-pulse flex-shrink-0" />
+                    <span className="font-bold">{activeGift.name}</span>
+                  </div>
+                  <span className="font-outfit font-black px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 text-[10px]">
+                    0 {dict.menu.currency} ({dict.cart.freeGiftBadge})
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Loyalty Reward Indicator */}
+            {loyaltyInfo?.isRewardAvailable && (
+              <div className="p-3 rounded-xl bg-gradient-to-r from-amber-500/15 to-amber-700/10 border border-amber-500/30 text-amber-200 text-xs flex items-center gap-2">
+                <Award className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <span className="font-bold text-[11px]">
+                  {dict.checkout.loyaltyReward}: مؤهل لصنف مجاني من برنامج الولاء!
+                </span>
+              </div>
+            )}
+
+            {/* Coupon Section */}
+            <div className="pt-2 border-t border-[#222934] space-y-2">
+              <label className="text-xs font-bold text-stone-300 flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-[#EFCC80]" />
+                <span>{dict.checkout.couponTitle}</span>
+              </label>
+
+              {appliedCoupon ? (
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-xs">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-emerald-400" />
+                    <div>
+                      <span className="font-black text-[#EFCC80] uppercase tracking-wider font-outfit">
+                        {appliedCoupon.code}
+                      </span>
+                      <p className="text-[10px] text-emerald-300">
+                        {dict.checkout.couponApplied} (
+                        {appliedCoupon.discountType === "PERCENTAGE" && `${appliedCoupon.discountValue}%`}
+                        {appliedCoupon.discountType === "FIXED" && `${appliedCoupon.discountValue} ر.ي`}
+                        {appliedCoupon.discountType === "FREE_ITEM" && "صنف مجاني"}
+                        )
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemoveCoupon}
+                    className="p-1 rounded-lg text-stone-400 hover:text-red-400 hover:bg-white/5 transition-colors"
+                    title="إزالة الكوبون"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-1.5">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      placeholder={dict.checkout.couponPlaceholder}
+                      className="flex-1 text-xs p-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] font-outfit uppercase"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleApplyCoupon}
+                      disabled={couponLoading}
+                      className="px-3 py-2 rounded-xl bg-[#1c222b] hover:bg-[#252e3b] text-[#EFCC80] border border-[#2e3745] font-bold text-xs transition-colors flex items-center gap-1.5 disabled:opacity-50"
+                    >
+                      {couponLoading ? (
+                        <span className="w-3.5 h-3.5 border-2 border-[#EFCC80] border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <span>{dict.checkout.applyCoupon}</span>
+                      )}
+                    </button>
+                  </div>
+                  {couponError && (
+                    <p className="text-[11px] text-red-400 font-bold">{couponError}</p>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Totals */}
@@ -627,10 +829,20 @@ export default function CheckoutClientView({
                   {cartTotal.toLocaleString()} {dict.menu.currency}
                 </span>
               </div>
+
+              {couponDiscount > 0 && (
+                <div className="flex justify-between text-emerald-400 font-bold">
+                  <span>{dict.checkout.discount}:</span>
+                  <span className="font-outfit">
+                    -{couponDiscount.toLocaleString()} {dict.menu.currency}
+                  </span>
+                </div>
+              )}
+
               <div className="flex justify-between text-base font-black text-white pt-2 border-t border-[#222934]">
                 <span>الإجمالي للدفع:</span>
                 <span className="text-xl text-[#EFCC80] font-outfit font-black">
-                  {cartTotal.toLocaleString()} {dict.menu.currency}
+                  {finalPayableTotal.toLocaleString()} {dict.menu.currency}
                 </span>
               </div>
             </div>

@@ -34,7 +34,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setMounted(true);
     // Load language from storage
     const savedLang = localStorage.getItem("ph_lang") as Language;
-    if (savedLang === "ar" || savedLang === "en") {
+    if (savedLang === "ar" || savedLang === "en" || savedLang === "id") {
       setLanguageState(savedLang);
       document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
       document.documentElement.lang = savedLang;
