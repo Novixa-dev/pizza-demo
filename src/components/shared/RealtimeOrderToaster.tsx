@@ -371,14 +371,14 @@ export default function RealtimeOrderToaster() {
           <div
             key={toast.id}
             role="alert"
-            className={`pointer-events-auto w-full rounded-2xl shadow-2xl border p-4 backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-top-4 ${
+            className={`pointer-events-auto w-full rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] border p-4 backdrop-blur-xl transition-all duration-300 animate-in fade-in slide-in-from-top-4 ${
               isReady
-                ? "bg-emerald-950/95 text-white border-emerald-500/60 shadow-emerald-900/30"
+                ? "bg-[#14181f]/95 text-white border-emerald-500/50 shadow-emerald-950/40"
                 : isFlame
-                ? "bg-stone-900/95 text-white border-orange-500/60 shadow-orange-950/40"
+                ? "bg-[#14181f]/95 text-white border-[#EFCC80]/50 shadow-amber-950/40"
                 : isCheck
-                ? "bg-stone-900/95 text-white border-emerald-500/40"
-                : "bg-stone-900/95 text-white border-pizza-500/40"
+                ? "bg-[#14181f]/95 text-white border-emerald-500/40"
+                : "bg-[#14181f]/95 text-white border-[#222934]"
             }`}
           >
             {/* Countdown draining bar */}
@@ -388,8 +388,8 @@ export default function RealtimeOrderToaster() {
                   isReady
                     ? "bg-emerald-400"
                     : isFlame
-                    ? "bg-orange-400"
-                    : "bg-pizza-400"
+                    ? "bg-[#EFCC80]"
+                    : "bg-[#C69843]"
                 }`}
                 style={{
                   animation: "shrink 8s linear forwards",
@@ -402,12 +402,12 @@ export default function RealtimeOrderToaster() {
               <div
                 className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 shadow-inner ${
                   isReady
-                    ? "bg-emerald-500 text-white animate-bounce-subtle"
+                    ? "bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 animate-bounce-subtle"
                     : isFlame
-                    ? "bg-orange-500 text-amber-200 animate-pulse"
+                    ? "bg-[#EFCC80]/20 border border-[#EFCC80]/40 text-[#EFCC80] animate-pulse"
                     : isCheck
-                    ? "bg-emerald-600 text-white"
-                    : "bg-pizza-600 text-white"
+                    ? "bg-emerald-500/20 border border-emerald-500/40 text-emerald-400"
+                    : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
                 }`}
               >
                 {isReady ? (
@@ -417,7 +417,7 @@ export default function RealtimeOrderToaster() {
                 ) : isCheck ? (
                   <CheckCircle2 className="w-6 h-6" />
                 ) : (
-                  <Sparkles className="w-6 h-6 text-amber-300" />
+                  <Sparkles className="w-6 h-6" />
                 )}
               </div>
 
@@ -425,7 +425,7 @@ export default function RealtimeOrderToaster() {
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/10 font-outfit">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#0c0e12] border border-[#222934] text-[#EFCC80] font-outfit">
                       {toast.orderNumber}
                     </span>
                     <span className="text-[10px] text-stone-300 font-bold">
@@ -439,10 +439,10 @@ export default function RealtimeOrderToaster() {
                       type="button"
                       onClick={toggleSound}
                       title={soundEnabled ? "كتم الصوت" : "تشغيل الصوت"}
-                      className="text-stone-400 hover:text-white p-1 rounded-md"
+                      className="text-stone-400 hover:text-[#EFCC80] p-1 rounded-md transition-colors"
                     >
                       {soundEnabled ? (
-                        <Volume2 className="w-3.5 h-3.5 text-amber-300" />
+                        <Volume2 className="w-3.5 h-3.5 text-[#EFCC80]" />
                       ) : (
                         <VolumeX className="w-3.5 h-3.5 text-stone-500" />
                       )}
@@ -452,7 +452,7 @@ export default function RealtimeOrderToaster() {
                     <button
                       type="button"
                       onClick={() => removeToast(toast.id)}
-                      className="text-stone-400 hover:text-white p-1 rounded-md"
+                      className="text-stone-400 hover:text-white p-1 rounded-md transition-colors"
                       aria-label="Dismiss toast"
                     >
                       <X className="w-4 h-4" />
@@ -464,7 +464,7 @@ export default function RealtimeOrderToaster() {
                   {language === "ar" ? toast.titleAr : toast.titleEn}
                 </h4>
 
-                <p className="text-xs text-stone-200 leading-snug">
+                <p className="text-xs text-stone-300 leading-snug">
                   {language === "ar" ? toast.messageAr : toast.messageEn}
                 </p>
 
@@ -477,11 +477,7 @@ export default function RealtimeOrderToaster() {
                         : `/track/${toast.orderNumber}`
                     }
                     onClick={() => removeToast(toast.id)}
-                    className={`inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-xl transition-transform active:scale-95 ${
-                      isReady
-                        ? "bg-emerald-400 hover:bg-emerald-300 text-stone-950 font-black"
-                        : "bg-white/15 hover:bg-white/25 text-white"
-                    }`}
+                    className="inline-flex items-center gap-1.5 text-xs font-black px-3.5 py-1.5 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 shadow-md shadow-[#EFCC80]/20 transition-all active:scale-95"
                   >
                     <span>{language === "ar" ? "تتبع مباشر في الفرن" : "View Live Oven Tracker"}</span>
                     <ExternalLink className="w-3 h-3" />

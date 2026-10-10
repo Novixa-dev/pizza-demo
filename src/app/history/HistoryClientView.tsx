@@ -436,18 +436,18 @@ export default function HistoryClientView() {
       )}
 
       {/* Header Banner */}
-      <div className="bg-gradient-to-br from-pizza-700 via-pizza-800 to-stone-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 end-0 -mt-10 -me-10 w-52 h-52 bg-pizza-500/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-gradient-to-br from-[#14181f] via-[#0f1218] to-[#0a0c10] border border-[#C69843]/30 rounded-3xl p-6 sm:p-10 text-white shadow-[0_15px_40px_rgba(0,0,0,0.85)] relative overflow-hidden">
+        <div className="absolute top-0 end-0 -mt-10 -me-10 w-52 h-52 bg-[#EFCC80]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-amber-300 border border-white/10">
-              <Pizza className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 bg-[#0c0e12]/80 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-[#EFCC80] border border-[#C69843]/30 shadow-xs">
+              <Pizza className="w-3.5 h-3.5 text-[#EFCC80]" />
               <span>{dict.brand.name} · المكلا - فوه - حي المساكن</span>
             </div>
-            <h1 className="text-2xl sm:text-4xl font-black font-cairo tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-black font-cairo tracking-tight text-white">
               {dict.history.title}
             </h1>
-            <p className="text-sm text-stone-200 max-w-xl leading-relaxed">
+            <p className="text-sm text-stone-300 max-w-xl leading-relaxed">
               {dict.history.subtitle}
             </p>
           </div>
@@ -455,9 +455,9 @@ export default function HistoryClientView() {
           <div className="flex flex-wrap items-center gap-3 self-start md:self-center">
             <Link
               href="/menu"
-              className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-amber-950/40 transition-transform active:scale-95"
+              className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-amber-950/40 transition-transform active:scale-95"
             >
-              <ShoppingBag className="w-4 h-4" />
+              <ShoppingBag className="w-4 h-4 fill-current" />
               <span>{dict.hero.primaryCta}</span>
             </Link>
           </div>
@@ -466,21 +466,21 @@ export default function HistoryClientView() {
 
       {/* Active Order Spotlight Banner */}
       {currentActiveOrder && (
-        <div className="bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-pizza-500/10 dark:from-orange-950/40 dark:via-amber-950/40 dark:to-pizza-950/40 border-2 border-orange-500/30 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-[#14181f]/90 border-2 border-[#C69843]/60 rounded-3xl p-5 sm:p-6 shadow-[0_0_25px_rgba(239,204,128,0.15)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-orange-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30 animate-pulse">
-              <Flame className="w-6 h-6 text-amber-200" />
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center shrink-0 shadow-md shadow-amber-950/40 animate-pulse">
+              <Flame className="w-6 h-6 fill-current" />
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#EFCC80]">
                   {dict.history.activeOrderBannerTitle}
                 </span>
-                <span className="font-outfit font-black text-sm text-stone-900 dark:text-white">
+                <span className="font-outfit font-black text-sm text-white">
                   {currentActiveOrder.orderNumber}
                 </span>
               </div>
-              <p className="text-xs text-stone-600 dark:text-stone-300">
+              <p className="text-xs text-stone-300">
                 {currentActiveOrder.status === "PREPARING"
                   ? (language === "ar" ? "البيتزا في الفرن الآن ويتم خبزها على الحجر بعناية." : "Your pizza is actively baking in the stone oven.")
                   : currentActiveOrder.status === "READY"
@@ -497,16 +497,16 @@ export default function HistoryClientView() {
                 const nextMock = currentActiveOrder.status === "PREPARING" ? "READY" : "PREPARING";
                 (window as any).__triggerTestOrderToast?.(nextMock);
               }}
-              className="inline-flex items-center gap-1.5 bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-750 text-stone-800 dark:text-stone-200 border border-stone-200 dark:border-stone-700 font-bold px-3.5 py-3 rounded-2xl text-xs shadow-xs transition-colors"
+              className="inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-[#1a202a] text-stone-200 border border-[#222934] font-bold px-3.5 py-3 rounded-2xl text-xs shadow-xs transition-colors"
               title="تجربة صوت وتنبيه التحديث"
             >
-              <Bell className="w-3.5 h-3.5 text-orange-500" />
+              <Bell className="w-3.5 h-3.5 text-[#EFCC80]" />
               <span>{language === "ar" ? "تجربة التنبيه 🔔" : "Test Alert 🔔"}</span>
             </button>
 
             <Link
               href={`/track/${currentActiveOrder.orderNumber}?token=${currentActiveOrder.trackingToken}`}
-              className="inline-flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold px-5 py-3 rounded-2xl text-xs shadow-md transition-all active:scale-95 shrink-0"
+              className="inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black px-5 py-3 rounded-2xl text-xs shadow-md shadow-amber-950/40 transition-all active:scale-95 shrink-0"
             >
               <Clock className="w-4 h-4" />
               <span>{dict.history.activeOrderBannerAction}</span>
@@ -517,16 +517,16 @@ export default function HistoryClientView() {
       )}
 
       {/* Phone Lookup Form */}
-      <div className="bg-white dark:bg-stone-850 rounded-3xl p-6 sm:p-8 border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+      <div className="bg-[#14181f]/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
         <form onSubmit={handleSearchSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wide">
+            <label className="block text-xs font-bold text-stone-300 uppercase tracking-wide">
               {dict.history.phoneLabel}
             </label>
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
-                <div className="absolute inset-y-0 start-0 ps-3.5 flex items-center pointer-events-none text-stone-400">
-                  <Phone className="w-4 h-4 text-pizza-600" />
+                <div className="absolute inset-y-0 start-0 ps-3.5 flex items-center pointer-events-none text-[#C69843]">
+                  <Phone className="w-4 h-4" />
                 </div>
                 <input
                   type="tel"
@@ -534,13 +534,13 @@ export default function HistoryClientView() {
                   value={phoneInput}
                   onChange={(e) => setPhoneInput(e.target.value)}
                   placeholder="771234567 أو 05375561"
-                  className="w-full text-start ps-10 pe-4 py-3.5 rounded-2xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-white placeholder:text-stone-400 font-outfit text-sm focus:outline-none focus:ring-2 focus:ring-pizza-500/20 focus:border-pizza-600"
+                  className="w-full text-start ps-10 pe-4 py-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 font-outfit text-sm focus:outline-none focus:border-[#C69843] focus:ring-2 focus:ring-[#C69843]/30 transition-all shadow-inner"
                 />
                 {phoneInput && (
                   <button
                     type="button"
                     onClick={handleClearPhone}
-                    className="absolute inset-y-0 end-0 pe-3 flex items-center text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+                    className="absolute inset-y-0 end-0 pe-3 flex items-center text-stone-400 hover:text-white"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -550,7 +550,7 @@ export default function HistoryClientView() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold disabled:opacity-50 px-7 py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-950/40 active:scale-95 transition-all"
+                className="bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black disabled:opacity-50 px-7 py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-950/40 active:scale-95 transition-all cursor-pointer"
               >
                 <Search className="w-4 h-4" />
                 <span>
@@ -560,13 +560,13 @@ export default function HistoryClientView() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs text-stone-500">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs text-stone-400">
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={rememberPhone}
                 onChange={(e) => setRememberPhone(e.target.checked)}
-                className="rounded border-stone-300 text-pizza-600 focus:ring-pizza-500 w-4 h-4"
+                className="rounded border-[#222934] bg-[#0c0e12] text-[#C69843] focus:ring-[#C69843] w-4 h-4"
               />
               <span>{dict.history.rememberPhone}</span>
             </label>
@@ -582,7 +582,7 @@ export default function HistoryClientView() {
                     setPhoneInput(num);
                     executeSearch(num);
                   }}
-                  className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-pizza-50 dark:hover:bg-pizza-950 text-pizza-700 dark:text-pizza-300 font-outfit text-xs font-bold transition-colors"
+                  className="px-2.5 py-1 rounded-xl bg-[#0c0e12] border border-[#222934] hover:border-[#EFCC80]/40 text-[#EFCC80] hover:text-white font-outfit text-xs font-bold transition-colors cursor-pointer"
                 >
                   {num}
                 </button>
@@ -592,7 +592,7 @@ export default function HistoryClientView() {
         </form>
 
         {error && (
-          <div className="p-3.5 rounded-2xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
+          <div className="p-3.5 rounded-2xl bg-red-950/50 border border-red-900/50 text-red-300 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -601,23 +601,23 @@ export default function HistoryClientView() {
 
       {/* Customer Profile & Activity Stats Summary */}
       {stats && stats.totalOrders > 0 && (
-        <div className="bg-gradient-to-br from-stone-50 to-white dark:from-stone-850 dark:to-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-sm space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200/60 dark:border-stone-800 pb-4">
+        <div className="bg-[#14181f]/90 rounded-3xl p-6 border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-5 text-white">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-pizza-100 dark:bg-pizza-950/80 text-pizza-700 dark:text-pizza-300 flex items-center justify-center font-bold text-lg font-outfit shadow-inner">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center font-bold text-lg font-outfit shadow-md shadow-amber-950/40">
                 <User className="w-6 h-6" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-extrabold text-stone-900 dark:text-white font-cairo">
+                  <h3 className="text-lg font-black text-white font-cairo">
                     {stats.latestCustomerName || (language === "ar" ? "عميل بيتزا هاوس" : "Pizza House Customer")}
                   </h3>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-amber-100 text-amber-900 dark:bg-amber-950/80 dark:text-amber-300 px-2 py-0.5 rounded-full border border-amber-300/40">
-                    <Award className="w-3.5 h-3.5 text-amber-600" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-[#EFCC80]/15 text-[#EFCC80] px-2.5 py-0.5 rounded-full border border-[#C69843]/30">
+                    <Award className="w-3.5 h-3.5 text-[#EFCC80]" />
                     <span>{getCustomerTier(stats.totalOrders).label}</span>
                   </span>
                 </div>
-                <p className="text-xs text-stone-500 font-outfit" dir="ltr">
+                <p className="text-xs text-stone-400 font-outfit" dir="ltr">
                   {stats.searchedPhone}
                 </p>
               </div>
@@ -625,7 +625,7 @@ export default function HistoryClientView() {
 
             <button
               onClick={handleClearPhone}
-              className="text-xs text-pizza-700 dark:text-pizza-400 hover:underline flex items-center gap-1 self-start sm:self-center font-bold"
+              className="text-xs text-[#EFCC80] hover:text-white flex items-center gap-1 self-start sm:self-center font-bold transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3 h-3" />
               <span>{dict.history.changePhone}</span>
@@ -634,44 +634,44 @@ export default function HistoryClientView() {
 
           {/* Metric cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-stone-800 border border-stone-200/80 dark:border-stone-700/60 shadow-xs space-y-1">
-              <span className="text-[11px] text-stone-500 font-medium block">
+            <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] shadow-xs space-y-1">
+              <span className="text-[11px] text-stone-400 font-medium block">
                 {dict.history.totalOrders}
               </span>
-              <p className="text-xl font-black text-stone-900 dark:text-white font-outfit">
+              <p className="text-xl font-black text-white font-outfit">
                 {stats.totalOrders}
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-stone-800 border border-stone-200/80 dark:border-stone-700/60 shadow-xs space-y-1">
-              <span className="text-[11px] text-stone-500 font-medium block">
+            <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] shadow-xs space-y-1">
+              <span className="text-[11px] text-stone-400 font-medium block">
                 {dict.history.totalSpent}
               </span>
-              <p className="text-xl font-black text-emerald-600 dark:text-emerald-400 font-outfit">
+              <p className="text-xl font-black text-[#EFCC80] font-outfit">
                 {stats.totalSpent.toLocaleString()}{" "}
                 <span className="text-xs font-bold">{dict.menu.currency}</span>
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-stone-800 border border-stone-200/80 dark:border-stone-700/60 shadow-xs space-y-1">
-              <span className="text-[11px] text-stone-500 font-medium block">
+            <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] shadow-xs space-y-1">
+              <span className="text-[11px] text-stone-400 font-medium block">
                 {dict.history.activeOrders}
               </span>
               <p
                 className={`text-xl font-black font-outfit ${
-                  stats.activeOrdersCount > 0 ? "text-pizza-600 animate-pulse" : "text-stone-700 dark:text-stone-300"
+                  stats.activeOrdersCount > 0 ? "text-[#EFCC80] animate-pulse" : "text-stone-300"
                 }`}
               >
                 {stats.activeOrdersCount}
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-stone-800 border border-stone-200/80 dark:border-stone-700/60 shadow-xs space-y-1">
-              <span className="text-[11px] text-stone-500 font-medium flex items-center gap-1">
-                <Heart className="w-3 h-3 text-red-500" />
+            <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] shadow-xs space-y-1">
+              <span className="text-[11px] text-stone-400 font-medium flex items-center gap-1">
+                <Heart className="w-3 h-3 text-red-400" />
                 <span>{dict.history.favoriteItem}</span>
               </span>
-              <p className="text-xs font-bold text-stone-900 dark:text-white truncate">
+              <p className="text-xs font-bold text-white truncate">
                 {stats.favoriteItem
                   ? (language === "ar" ? stats.favoriteItem.nameAr : stats.favoriteItem.nameEn)
                   : "—"}
@@ -680,18 +680,18 @@ export default function HistoryClientView() {
           </div>
 
           {/* Recurring Order Reminders Quick Setup Card */}
-          <div className="pt-4 border-t border-stone-200/60 dark:border-stone-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 flex items-center justify-center shrink-0">
-                <Bell className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center shrink-0 shadow-sm">
+                <Bell className="w-4 h-4 fill-current" />
               </div>
               <div>
-                <span className="text-xs font-bold text-stone-900 dark:text-white block font-cairo">
+                <span className="text-xs font-bold text-white block font-cairo">
                   {language === "ar"
                     ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
                     : "Favorite Meal Reminders (Every 2 Weeks)"}
                 </span>
-                <p className="text-[11px] text-stone-500">
+                <p className="text-[11px] text-stone-400">
                   {language === "ar"
                     ? "إشعار متصفح يذكرك بطلب وجبتك المفضلة إذا مر أسبوعان دون طلب."
                     : "Browser push notification reminding you to order your favorite meal after 2 weeks of inactivity."}
@@ -702,7 +702,7 @@ export default function HistoryClientView() {
             <button
               type="button"
               onClick={() => setIsReminderModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold text-xs shadow-xs transition-colors shrink-0"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black text-xs shadow-md shadow-amber-950/40 transition-colors shrink-0 cursor-pointer"
             >
               <Bell className="w-3.5 h-3.5" />
               <span>{language === "ar" ? "ضبط التنبيهات 🔔" : "Setup Reminders 🔔"}</span>
@@ -715,7 +715,7 @@ export default function HistoryClientView() {
       {searched && orders.length > 0 && (
         <div className="space-y-4">
           {/* Main Filter Tabs */}
-          <div className="bg-white dark:bg-stone-850 p-2 sm:p-2.5 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div className="bg-[#14181f]/90 p-2 sm:p-2.5 rounded-2xl border border-white/10 shadow-sm flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
               {/* Tab 1: All */}
               <button
@@ -726,16 +726,16 @@ export default function HistoryClientView() {
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   statusFilter === "ALL"
-                    ? "bg-pizza-700 text-white shadow-md shadow-pizza-700/20"
-                    : "text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/40 font-black"
+                    : "text-stone-300 hover:text-white hover:bg-white/5"
                 }`}
               >
                 <span>{dict.history.filterAll}</span>
                 <span
                   className={`px-1.5 py-0.2 rounded-md text-[11px] font-outfit ${
                     statusFilter === "ALL"
-                      ? "bg-white/20 text-white"
-                      : "bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300"
+                      ? "bg-[#2C1A04] text-[#EFCC80]"
+                      : "bg-[#0c0e12] text-stone-300 border border-white/10"
                   }`}
                 >
                   {counts.all}
@@ -748,17 +748,17 @@ export default function HistoryClientView() {
                 onClick={() => setStatusFilter("IN_PROGRESS")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   statusFilter === "IN_PROGRESS"
-                    ? "bg-orange-600 text-white shadow-md shadow-orange-600/20"
-                    : "text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/40 font-black"
+                    : "text-stone-300 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <Flame className={`w-3.5 h-3.5 ${counts.inProgress > 0 ? "text-amber-300 animate-pulse" : ""}`} />
+                <Flame className={`w-3.5 h-3.5 ${counts.inProgress > 0 ? "text-amber-800 animate-pulse" : ""}`} />
                 <span>{dict.history.filterActive}</span>
                 <span
                   className={`px-1.5 py-0.2 rounded-md text-[11px] font-outfit ${
                     statusFilter === "IN_PROGRESS"
-                      ? "bg-white/20 text-white"
-                      : "bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300"
+                      ? "bg-[#2C1A04] text-[#EFCC80]"
+                      : "bg-[#0c0e12] text-stone-300 border border-white/10"
                   }`}
                 >
                   {counts.inProgress}
@@ -774,8 +774,8 @@ export default function HistoryClientView() {
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   statusFilter === "COMPLETED"
-                    ? "bg-emerald-700 text-white shadow-md shadow-emerald-700/20"
-                    : "text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/40 font-black"
+                    : "text-stone-300 hover:text-white hover:bg-white/5"
                 }`}
               >
                 <Check className="w-3.5 h-3.5" />
@@ -783,8 +783,8 @@ export default function HistoryClientView() {
                 <span
                   className={`px-1.5 py-0.2 rounded-md text-[11px] font-outfit ${
                     statusFilter === "COMPLETED"
-                      ? "bg-white/20 text-white"
-                      : "bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300"
+                      ? "bg-[#2C1A04] text-[#EFCC80]"
+                      : "bg-[#0c0e12] text-stone-300 border border-white/10"
                   }`}
                 >
                   {counts.completed}
@@ -800,8 +800,8 @@ export default function HistoryClientView() {
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   statusFilter === "CANCELLED"
-                    ? "bg-red-700 text-white shadow-md shadow-red-700/20"
-                    : "text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/40 font-black"
+                    : "text-stone-300 hover:text-white hover:bg-white/5"
                 }`}
               >
                 <X className="w-3.5 h-3.5" />
@@ -809,8 +809,8 @@ export default function HistoryClientView() {
                 <span
                   className={`px-1.5 py-0.2 rounded-md text-[11px] font-outfit ${
                     statusFilter === "CANCELLED"
-                      ? "bg-white/20 text-white"
-                      : "bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300"
+                      ? "bg-[#2C1A04] text-[#EFCC80]"
+                      : "bg-[#0c0e12] text-stone-300 border border-white/10"
                   }`}
                 >
                   {counts.cancelled}
@@ -837,17 +837,17 @@ export default function HistoryClientView() {
 
           {/* Sub-filters row if In-Progress is chosen */}
           {statusFilter === "IN_PROGRESS" && counts.inProgress > 0 && (
-            <div className="flex items-center gap-2 p-2 bg-orange-50/60 dark:bg-orange-950/20 rounded-2xl border border-orange-200/50 dark:border-orange-900/30 text-xs">
-              <span className="text-orange-900 dark:text-orange-300 font-bold ps-2">
+            <div className="flex items-center gap-2 p-2 bg-[#0c0e12] rounded-2xl border border-[#222934] text-xs">
+              <span className="text-[#EFCC80] font-bold ps-2">
                 {language === "ar" ? "تصفية المرحلة:" : "Filter Stage:"}
               </span>
               <button
                 type="button"
                 onClick={() => setActiveSubFilter("ALL")}
-                className={`px-3 py-1 rounded-xl font-bold transition-colors ${
+                className={`px-3 py-1.5 rounded-xl font-bold transition-colors ${
                   activeSubFilter === "ALL"
-                    ? "bg-orange-600 text-white"
-                    : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black"
+                    : "bg-[#14181f] text-stone-300 border border-[#222934] hover:text-white"
                 }`}
               >
                 {language === "ar" ? "الكل النشط" : "All Active"}
@@ -855,10 +855,10 @@ export default function HistoryClientView() {
               <button
                 type="button"
                 onClick={() => setActiveSubFilter("IN_OVEN")}
-                className={`px-3 py-1 rounded-xl font-bold transition-colors flex items-center gap-1 ${
+                className={`px-3 py-1.5 rounded-xl font-bold transition-colors flex items-center gap-1 ${
                   activeSubFilter === "IN_OVEN"
-                    ? "bg-orange-600 text-white"
-                    : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black"
+                    : "bg-[#14181f] text-stone-300 border border-[#222934] hover:text-white"
                 }`}
               >
                 <Flame className="w-3.5 h-3.5 text-amber-500" />
@@ -868,10 +868,10 @@ export default function HistoryClientView() {
               <button
                 type="button"
                 onClick={() => setActiveSubFilter("READY")}
-                className={`px-3 py-1 rounded-xl font-bold transition-colors flex items-center gap-1 ${
+                className={`px-3 py-1.5 rounded-xl font-bold transition-colors flex items-center gap-1 ${
                   activeSubFilter === "READY"
-                    ? "bg-orange-600 text-white"
-                    : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black"
+                    : "bg-[#14181f] text-stone-300 border border-[#222934] hover:text-white"
                 }`}
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
@@ -888,14 +888,14 @@ export default function HistoryClientView() {
               value={queryFilter}
               onChange={(e) => setQueryFilter(e.target.value)}
               placeholder={dict.history.searchOrdersPlaceholder}
-              className="w-full text-xs p-3.5 ps-10 pe-10 rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-850 text-stone-900 dark:text-white placeholder:text-stone-400 focus:outline-none focus:border-pizza-500 shadow-xs"
+              className="w-full text-xs p-3.5 ps-10 pe-10 rounded-2xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] shadow-md transition-colors"
             />
-            <Search className="w-4 h-4 text-stone-400 absolute start-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#EFCC80] absolute start-3.5 top-1/2 -translate-y-1/2" />
             {queryFilter && (
               <button
                 type="button"
                 onClick={() => setQueryFilter("")}
-                className="absolute end-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                className="absolute end-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -903,7 +903,7 @@ export default function HistoryClientView() {
           </div>
 
           {/* Filter Status Feedback Bar */}
-          <div className="flex items-center justify-between text-xs text-stone-500 px-1">
+          <div className="flex items-center justify-between text-xs text-stone-400 px-1">
             <span>
               {language === "ar"
                 ? `عرض ${filteredAndSortedOrders.length} من إجمالي ${orders.length} طلب`
@@ -917,7 +917,7 @@ export default function HistoryClientView() {
                   setActiveSubFilter("ALL");
                   setQueryFilter("");
                 }}
-                className="text-pizza-700 dark:text-pizza-400 hover:underline font-bold"
+                className="text-[#EFCC80] hover:text-[#f7dda0] hover:underline font-bold transition-colors"
               >
                 {dict.history.clearFilters}
               </button>
@@ -926,12 +926,12 @@ export default function HistoryClientView() {
 
           {/* Orders List */}
           {filteredAndSortedOrders.length === 0 ? (
-            <div className="text-center py-16 bg-white dark:bg-stone-850 rounded-3xl border border-stone-200 dark:border-stone-800 p-8 space-y-3">
-              <Pizza className="w-12 h-12 text-stone-300 dark:text-stone-600 mx-auto" />
-              <h4 className="text-base font-bold text-stone-800 dark:text-stone-200">
+            <div className="text-center py-16 bg-[#14181f]/90 backdrop-blur-md rounded-3xl border border-[#222934] p-8 space-y-3 shadow-xl">
+              <Pizza className="w-12 h-12 text-[#EFCC80] mx-auto" />
+              <h4 className="text-base font-bold text-white">
                 {language === "ar" ? "لا توجد طلبات مطابقة لهذا الفلتر" : "No orders matching this filter"}
               </h4>
-              <p className="text-xs text-stone-500 max-w-sm mx-auto">
+              <p className="text-xs text-stone-400 max-w-sm mx-auto">
                 {language === "ar"
                   ? "جرب اختيار تبويب فلاتر آخر، أو قم بمسح عبارة البحث للعثور على جميع طلباتك السابقة."
                   : "Try selecting another status tab or clear your search query to see all past orders."}
@@ -974,13 +974,13 @@ export default function HistoryClientView() {
                 return (
                   <div
                     key={order.id}
-                    className="bg-white dark:bg-stone-850 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm overflow-hidden hover:border-stone-300 dark:hover:border-stone-700 transition-colors"
+                    className="bg-[#14181f]/90 rounded-3xl border border-white/10 hover:border-[#EFCC80]/40 shadow-[0_12px_32px_rgba(0,0,0,0.85)] overflow-hidden transition-all text-white"
                   >
                     {/* Order summary header */}
                     <div className="p-5 sm:p-6 space-y-4">
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <span className="font-outfit font-black text-base sm:text-lg text-stone-900 dark:text-white tracking-tight">
+                          <span className="font-outfit font-black text-base sm:text-lg text-white tracking-tight">
                             {order.orderNumber}
                           </span>
                           <span
@@ -991,15 +991,15 @@ export default function HistoryClientView() {
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-2 text-xs text-stone-500 font-outfit">
-                          <Calendar className="w-3.5 h-3.5 text-stone-400" />
+                        <div className="flex items-center gap-2 text-xs text-stone-400 font-outfit">
+                          <Calendar className="w-3.5 h-3.5 text-[#C69843]" />
                           <span>{orderDate}</span>
                         </div>
                       </div>
 
                       {/* Visual Step Progress Tracker (for Active & Completed orders) */}
                       {statusBadge.progressIndex > 0 && (
-                        <div className="bg-stone-50 dark:bg-stone-900/60 p-3 rounded-2xl border border-stone-100 dark:border-stone-800">
+                        <div className="bg-[#0c0e12] p-3.5 rounded-2xl border border-white/10">
                           <div className="grid grid-cols-5 gap-1 text-center">
                             {[
                               { label: dict.history.progressPlaced, step: 1 },
@@ -1015,19 +1015,19 @@ export default function HistoryClientView() {
                                   <div
                                     className={`h-1.5 rounded-full transition-all ${
                                       isCurrent
-                                        ? "bg-orange-500 animate-pulse"
+                                        ? "bg-gradient-to-r from-[#EFCC80] to-[#C69843] animate-pulse"
                                         : isPast
-                                        ? "bg-emerald-500"
-                                        : "bg-stone-200 dark:bg-stone-700"
+                                        ? "bg-gradient-to-r from-[#EFCC80] to-[#C69843]"
+                                        : "bg-white/10"
                                     }`}
                                   />
                                   <span
                                     className={`block text-[10px] truncate ${
                                       isCurrent
-                                        ? "font-extrabold text-orange-600 dark:text-orange-400"
+                                        ? "font-extrabold text-[#EFCC80]"
                                         : isPast
-                                        ? "font-bold text-stone-700 dark:text-stone-300"
-                                        : "text-stone-400"
+                                        ? "font-bold text-stone-300"
+                                        : "text-stone-500"
                                     }`}
                                   >
                                     {s.label}
@@ -1040,14 +1040,14 @@ export default function HistoryClientView() {
                       )}
 
                       {/* Info Row */}
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-stone-50 dark:bg-stone-900/40 p-3.5 rounded-2xl border border-stone-200/60 dark:border-stone-800">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-[#0c0e12] p-3.5 rounded-2xl border border-[#222934]">
                         <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-pizza-600 shrink-0" />
+                          <Clock className="w-4 h-4 text-[#C69843] shrink-0" />
                           <div>
                             <span className="text-stone-400 block text-[11px]">
                               {dict.history.pickupModeLabel}:
                             </span>
-                            <span className="font-bold text-stone-800 dark:text-stone-200">
+                            <span className="font-bold text-white">
                               {order.pickupMode === "ASAP"
                                 ? dict.history.asapPickup
                                 : `${dict.history.scheduledPickup} (${pickupTime})`}
@@ -1056,12 +1056,12 @@ export default function HistoryClientView() {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <CreditCard className="w-4 h-4 text-emerald-600 shrink-0" />
+                          <CreditCard className="w-4 h-4 text-emerald-400 shrink-0" />
                           <div>
                             <span className="text-stone-400 block text-[11px]">
                               {dict.history.paymentMethod}:
                             </span>
-                            <span className="font-bold text-stone-800 dark:text-stone-200">
+                            <span className="font-bold text-white">
                               {getPaymentMethodLabel(order.payment?.method)}
                             </span>
                           </div>
@@ -1072,7 +1072,7 @@ export default function HistoryClientView() {
                             <span className="text-stone-400 block text-[11px] sm:text-end">
                               {dict.history.orderTotal}:
                             </span>
-                            <span className="text-base font-black text-pizza-700 dark:text-pizza-400 font-outfit">
+                            <span className="text-base font-black text-[#EFCC80] font-outfit">
                               {order.total.toLocaleString()} {dict.menu.currency}
                             </span>
                           </div>
@@ -1082,13 +1082,13 @@ export default function HistoryClientView() {
                       {/* Items preview / breakdown */}
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-stone-600 dark:text-stone-300">
+                          <span className="text-xs font-bold text-stone-300">
                             {order.items.length} {dict.history.itemsCount}
                           </span>
                           <button
                             type="button"
                             onClick={() => setExpandedOrderId(isExpanded ? null : order.id)}
-                            className="text-xs font-bold text-pizza-700 dark:text-pizza-400 flex items-center gap-1 hover:underline"
+                            className="text-xs font-bold text-[#EFCC80] flex items-center gap-1 hover:underline cursor-pointer"
                           >
                             <span>
                               {isExpanded
@@ -1105,17 +1105,17 @@ export default function HistoryClientView() {
                             {order.items.map((it) => (
                               <div
                                 key={it.id}
-                                className="group inline-flex items-center gap-1.5 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-700 dark:text-stone-300 ps-2.5 pe-1 py-1 rounded-xl text-xs font-medium border border-stone-200/60 dark:border-stone-700/60 transition-colors"
+                                className="group inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-[#171c26] text-stone-200 ps-2.5 pe-1 py-1 rounded-xl text-xs font-medium border border-[#222934] transition-colors"
                               >
-                                <span className="font-bold text-pizza-600 font-outfit">{it.quantity}x</span>
+                                <span className="font-bold text-[#EFCC80] font-outfit">{it.quantity}x</span>
                                 <span>{language === "ar" ? it.productNameAr : it.productNameEn}</span>
                                 <button
                                   type="button"
                                   onClick={(e) => handleReorderItem(it, e)}
-                                  className="inline-flex items-center gap-1 bg-white hover:bg-pizza-700 dark:bg-stone-700 dark:hover:bg-pizza-600 text-stone-700 hover:text-white dark:text-stone-200 dark:hover:text-white px-2 py-0.5 rounded-lg text-[10px] font-bold shadow-2xs transition-all ms-1 active:scale-90"
+                                  className="inline-flex items-center gap-1 bg-[#14181f] hover:bg-gradient-to-b hover:from-[#EFCC80] hover:to-[#C69843] hover:text-[#2C1A04] text-[#EFCC80] px-2 py-0.5 rounded-lg text-[10px] font-bold border border-white/5 transition-all ms-1 active:scale-90 cursor-pointer"
                                   title={language === "ar" ? `إعادة طلب ${it.productNameAr}` : `Re-order ${it.productNameEn}`}
                                 >
-                                  <Plus className="w-3 h-3 text-pizza-600 group-hover:text-white" />
+                                  <Plus className="w-3 h-3" />
                                   <span>{dict.history.reorderItem}</span>
                                 </button>
                               </div>
@@ -1125,22 +1125,22 @@ export default function HistoryClientView() {
 
                         {/* Full Items list when expanded */}
                         {isExpanded && (
-                          <div className="divide-y divide-stone-100 dark:divide-stone-800 pt-2 border-t border-stone-100 dark:border-stone-800">
+                          <div className="divide-y divide-white/5 pt-2 border-t border-white/10">
                             {order.items.map((it) => (
                               <div key={it.id} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                                 <div className="space-y-1">
                                   <div className="flex items-center gap-2">
-                                    <span className="w-5 h-5 rounded-md bg-pizza-100 dark:bg-pizza-950 text-pizza-700 dark:text-pizza-300 flex items-center justify-center font-black font-outfit text-xs">
+                                    <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center font-black font-outfit text-xs">
                                       {it.quantity}
                                     </span>
-                                    <span className="font-bold text-stone-900 dark:text-white">
+                                    <span className="font-bold text-white">
                                       {language === "ar" ? it.productNameAr : it.productNameEn}
                                     </span>
                                   </div>
 
                                   {/* Customized Options */}
                                   {it.options && it.options.length > 0 && (
-                                    <div className="text-[11px] text-stone-500 ps-7 space-y-0.5">
+                                    <div className="text-[11px] text-[#EFCC80] ps-7 space-y-0.5">
                                       {it.options.map((opt) => (
                                         <div key={opt.id} className="flex items-center gap-1">
                                           <span>• {language === "ar" ? opt.nameAr : opt.nameEn}</span>
@@ -1155,14 +1155,14 @@ export default function HistoryClientView() {
                                   )}
 
                                   {it.itemNotes && (
-                                    <p className="text-[11px] text-amber-600 dark:text-amber-400 ps-7 italic">
+                                    <p className="text-[11px] text-amber-300 ps-7 italic">
                                       &quot;{it.itemNotes}&quot;
                                     </p>
                                   )}
                                 </div>
 
                                 <div className="flex items-center justify-between sm:justify-end gap-3 ps-7 sm:ps-0 pt-1 sm:pt-0">
-                                  <span className="font-bold font-outfit text-stone-800 dark:text-stone-200 whitespace-nowrap">
+                                  <span className="font-bold font-outfit text-white whitespace-nowrap">
                                     {it.subtotal.toLocaleString()} {dict.menu.currency}
                                   </span>
 
@@ -1170,10 +1170,10 @@ export default function HistoryClientView() {
                                   <button
                                     type="button"
                                     onClick={(e) => handleReorderItem(it, e)}
-                                    className="inline-flex items-center gap-1.5 bg-pizza-50 hover:bg-pizza-100 dark:bg-pizza-950/80 dark:hover:bg-pizza-900 text-pizza-700 dark:text-pizza-300 px-3 py-1.5 rounded-xl text-xs font-bold border border-pizza-200 dark:border-pizza-900 shadow-2xs transition-all active:scale-95"
+                                    className="inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-gradient-to-b hover:from-[#EFCC80] hover:to-[#C69843] hover:text-[#2C1A04] text-[#EFCC80] px-3 py-1.5 rounded-xl text-xs font-bold border border-[#222934] transition-all active:scale-95 cursor-pointer"
                                     title={language === "ar" ? `إعادة طلب ${it.productNameAr} إلى السلة` : `Re-order ${it.productNameEn}`}
                                   >
-                                    <Plus className="w-3.5 h-3.5 text-pizza-600" />
+                                    <Plus className="w-3.5 h-3.5" />
                                     <span>{dict.history.reorderItem}</span>
                                   </button>
                                 </div>
@@ -1181,8 +1181,8 @@ export default function HistoryClientView() {
                             ))}
 
                             {order.notes && (
-                              <div className="py-2.5 text-xs text-stone-500 ps-1">
-                                <span className="font-bold text-stone-700 dark:text-stone-300">
+                              <div className="py-2.5 text-xs text-stone-400 ps-1">
+                                <span className="font-bold text-stone-300">
                                   {dict.history.notes}:
                                 </span>{" "}
                                 <span>{order.notes}</span>
@@ -1193,12 +1193,12 @@ export default function HistoryClientView() {
                       </div>
 
                       {/* Action buttons footer */}
-                      <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex flex-wrap items-center justify-between gap-2.5">
+                      <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2.5">
                         <div className="flex flex-wrap items-center gap-2">
                           {/* Live Tracking Link */}
                           <Link
                             href={`/track/${order.orderNumber}?token=${order.trackingToken}`}
-                            className="inline-flex items-center gap-1.5 bg-pizza-50 hover:bg-pizza-100 dark:bg-pizza-950/80 dark:hover:bg-pizza-900 text-pizza-700 dark:text-pizza-300 px-3.5 py-2 rounded-xl text-xs font-bold border border-pizza-200 dark:border-pizza-900/60 transition-colors"
+                            className="inline-flex items-center gap-1.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-3.5 py-2 rounded-xl text-xs font-black shadow-md shadow-amber-950/40 transition-colors"
                           >
                             <Clock className="w-3.5 h-3.5" />
                             <span>{dict.history.trackLive}</span>
@@ -1209,9 +1209,9 @@ export default function HistoryClientView() {
                           <button
                             type="button"
                             onClick={() => handleReorder(order)}
-                            className="inline-flex items-center gap-1.5 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-800 dark:text-stone-200 px-3.5 py-2 rounded-xl text-xs font-bold transition-colors active:scale-95"
+                            className="inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-[#1a202a] text-stone-200 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-[#222934] hover:border-[#EFCC80]/40 transition-colors active:scale-95 cursor-pointer"
                           >
-                            <RotateCcw className="w-3.5 h-3.5 text-pizza-600" />
+                            <RotateCcw className="w-3.5 h-3.5 text-[#C69843]" />
                             <span>{dict.history.reorder}</span>
                           </button>
 
@@ -1219,7 +1219,7 @@ export default function HistoryClientView() {
                           <button
                             type="button"
                             onClick={() => setActiveReceiptOrder(order)}
-                            className="inline-flex items-center gap-1.5 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-700 dark:text-stone-300 px-3 py-2 rounded-xl text-xs font-bold transition-colors"
+                            className="inline-flex items-center gap-1.5 bg-[#0c0e12] hover:bg-[#1a202a] text-stone-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-[#222934] transition-colors cursor-pointer"
                           >
                             <Printer className="w-3.5 h-3.5" />
                             <span>{dict.history.printReceipt}</span>
@@ -1233,7 +1233,7 @@ export default function HistoryClientView() {
                           )}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline text-xs font-bold ms-auto"
+                          className="inline-flex items-center gap-1 text-emerald-400 hover:underline text-xs font-bold ms-auto"
                         >
                           <MessageCircle className="w-3.5 h-3.5" />
                           <span>{dict.history.whatsappInquiry}</span>
@@ -1250,15 +1250,15 @@ export default function HistoryClientView() {
 
       {/* Empty State: Phone searched but 0 orders found */}
       {searched && orders.length === 0 && !isPending && !error && (
-        <div className="bg-white dark:bg-stone-850 rounded-3xl p-10 sm:p-14 text-center border border-stone-200 dark:border-stone-800 space-y-4 max-w-md mx-auto">
-          <div className="w-16 h-16 rounded-3xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 mx-auto flex items-center justify-center">
+        <div className="bg-[#14181f]/90 backdrop-blur-md rounded-3xl p-10 sm:p-14 text-center border border-[#222934] space-y-4 max-w-md mx-auto shadow-2xl">
+          <div className="w-16 h-16 rounded-3xl bg-[#0c0e12] border border-[#222934] text-[#EFCC80] mx-auto flex items-center justify-center shadow-lg">
             <Pizza className="w-8 h-8" />
           </div>
           <div className="space-y-1">
-            <h3 className="text-lg font-bold text-stone-900 dark:text-white font-cairo">
+            <h3 className="text-lg font-bold text-white font-cairo">
               {dict.history.noOrdersFound}
             </h3>
-            <p className="text-xs text-stone-500 leading-relaxed">
+            <p className="text-xs text-stone-400 leading-relaxed">
               {dict.history.noOrdersDesc}
             </p>
           </div>

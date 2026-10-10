@@ -410,5 +410,59 @@
   filter: brightness(1.05);
 }
 
+/* Atmospheric Environmental Particle Keyframes */
+@keyframes floatLeaf {
+  0%, 100% {
+    transform: translateY(0px) rotate(25deg) scale(1);
+  }
+  50% {
+    transform: translateY(-22px) translateX(12px) rotate(35deg) scale(1.04);
+  }
+}
 
+@keyframes floatLeafRev {
+  0%, 100% {
+    transform: translateY(0px) rotate(-40deg) scale(1);
+  }
+  50% {
+    transform: translateY(-26px) translateX(-15px) rotate(-30deg) scale(0.96);
+  }
+}
 
+@keyframes driftChili {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateY(-16px) translateX(8px) rotate(18deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes pulseFlour {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.9) translateY(0);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.2) translateY(-10px);
+  }
+}
+
+.animate-float-leaf {
+  animation: floatLeaf 14s ease-in-out infinite;
+}
+
+.animate-float-leaf-rev {
+  animation: floatLeafRev 18s ease-in-out infinite;
+}
+
+.animate-drift-chili {
+  animation: driftChili 12s ease-in-out infinite;
+}
+
+.animate-pulse-flour {
+  animation: pulseFlour 5s ease-in-out infinite;
+}

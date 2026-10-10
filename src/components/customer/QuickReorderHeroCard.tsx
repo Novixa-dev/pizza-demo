@@ -69,14 +69,14 @@ export default function QuickReorderHeroCard() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-amber-500/10 via-pizza-500/10 to-amber-500/10 border border-amber-300/60 dark:border-amber-700/50 rounded-3xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in duration-300">
+    <div className="bg-[#14181f]/90 backdrop-blur-xl border border-[#222934] hover:border-[#EFCC80]/40 rounded-3xl p-4 sm:p-5 shadow-[0_12px_32px_rgba(0,0,0,0.85)] flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in duration-300">
       <div className="flex items-center gap-3.5 text-center sm:text-start">
-        <div className="w-12 h-12 rounded-2xl bg-amber-500 text-stone-950 flex items-center justify-center shrink-0 shadow-md shadow-amber-500/20">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center shrink-0 shadow-md shadow-[#EFCC80]/20">
           <Pizza className="w-6 h-6" />
         </div>
         <div>
           <div className="flex items-center gap-1.5 justify-center sm:justify-start">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 font-outfit">
+            <span className="text-[11px] font-black uppercase tracking-wider text-[#EFCC80] font-outfit">
               {customerName
                 ? language === "ar"
                   ? `مرحباً بعودتك ${customerName}!`
@@ -85,16 +85,16 @@ export default function QuickReorderHeroCard() {
                 ? "إعادة طلب سريعة"
                 : "Quick Reorder"}
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <Sparkles className="w-3.5 h-3.5 text-[#EFCC80]" />
           </div>
 
-          <h3 className="text-sm sm:text-base font-extrabold text-stone-900 dark:text-white font-cairo">
+          <h3 className="text-sm sm:text-base font-black text-white font-cairo">
             {language === "ar" ? "وجبتك المفضلة:" : "Your Favorite Meal:"}{" "}
-            <span className="text-pizza-700 dark:text-pizza-400">{favoriteMeal}</span>
+            <span className="text-[#EFCC80]">{favoriteMeal}</span>
           </h3>
 
-          <p className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1 justify-center sm:justify-start pt-0.5">
-            <Clock className="w-3 h-3 text-pizza-600" />
+          <p className="text-[11px] text-stone-400 flex items-center gap-1 justify-center sm:justify-start pt-0.5">
+            <Clock className="w-3 h-3 text-[#C69843]" />
             <span>
               {lastOrderDays !== null
                 ? language === "ar"
@@ -112,7 +112,7 @@ export default function QuickReorderHeroCard() {
         <button
           type="button"
           onClick={handleInstantReorder}
-          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-5 py-2.5 rounded-2xl text-xs shadow-md shadow-amber-950/40 active:scale-95 transition-all"
+          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black px-5 py-2.5 rounded-2xl text-xs shadow-md shadow-[#EFCC80]/20 active:scale-95 transition-all font-cairo"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>
@@ -128,7 +128,7 @@ export default function QuickReorderHeroCard() {
 
         <Link
           href="/menu"
-          className="inline-flex items-center justify-center gap-1 text-xs font-bold text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white px-3 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
+          className="inline-flex items-center justify-center gap-1 text-xs font-bold text-stone-300 hover:text-white px-3.5 py-2.5 rounded-2xl border border-[#222934] bg-[#0c0e12] hover:border-[#EFCC80]/30 transition-colors"
         >
           <span>{language === "ar" ? "القائمة" : "Menu"}</span>
           {language === "ar" ? <ArrowLeft className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}

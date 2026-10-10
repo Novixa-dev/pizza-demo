@@ -111,15 +111,15 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
   );
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8 font-cairo">
       {/* Top Card: Order Reference & Refresh */}
-      <div className="bg-white dark:bg-stone-850 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+      <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
-            <span className="text-xs text-stone-400 font-bold uppercase tracking-wider font-outfit">
+            <span className="text-xs text-[#EFCC80] font-bold uppercase tracking-wider font-outfit">
               Pizza House Mukalla
             </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white font-outfit">
+            <h1 className="text-2xl sm:text-3xl font-black text-white font-outfit">
               {order.orderNumber}
             </h1>
           </div>
@@ -127,10 +127,10 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           <div className="flex items-center gap-2">
             <button
               onClick={handleManualRefresh}
-              className="inline-flex items-center gap-1.5 text-xs text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-stone-800 px-3 py-2 rounded-xl hover:bg-stone-200 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-stone-300 bg-[#0c0e12] border border-[#222934] hover:border-[#C69843]/40 px-3.5 py-2 rounded-xl transition-colors cursor-pointer"
             >
               <RotateCw
-                className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`}
+                className={`w-3.5 h-3.5 text-[#C69843] ${isRefreshing ? "animate-spin" : ""}`}
               />
               <span>تحديث الحالة</span>
             </button>
@@ -138,12 +138,12 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
             <span
               className={`px-3 py-1.5 rounded-xl text-xs font-bold ${
                 order.status === "READY"
-                  ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 animate-pulse"
+                  ? "bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 animate-pulse"
                   : order.status === "PREPARING"
-                  ? "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300"
+                  ? "bg-amber-950/80 text-[#EFCC80] border border-amber-500/40"
                   : order.status === "REJECTED"
-                  ? "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300"
-                  : "bg-pizza-50 text-pizza-800 dark:bg-pizza-950 dark:text-pizza-300"
+                  ? "bg-red-950/80 text-red-300 border border-red-500/40"
+                  : "bg-[#0c0e12] text-stone-300 border border-white/10"
               }`}
             >
               {order.status === "READY"
@@ -164,33 +164,33 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
         </div>
 
         {/* Scheduled Delivery Banner */}
-        <div className="bg-pizza-50 dark:bg-pizza-950/60 p-4 rounded-2xl border border-pizza-200/80 dark:border-pizza-900/60 flex items-center justify-between">
+        <div className="bg-[#0c0e12] p-4 rounded-2xl border border-amber-500/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-pizza-600 text-white flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center shadow-md shadow-amber-950/40">
               <Clock className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[11px] text-stone-500 dark:text-stone-400 block font-cairo">
+              <span className="text-[11px] text-stone-400 block font-cairo">
                 موعد الاستلام المحدد من الفرع:
               </span>
-              <span className="text-base font-black text-stone-900 dark:text-white font-outfit">
+              <span className="text-base font-black text-[#EFCC80] font-outfit">
                 {formattedPickupTime} ({order.pickupMode === "ASAP" ? "أسرع وقت" : "طلب مجدول"})
               </span>
             </div>
           </div>
-          <span className="text-xs font-bold text-pizza-700 dark:text-pizza-400 font-cairo hidden sm:inline">
+          <span className="text-xs font-bold text-[#EFCC80] font-cairo hidden sm:inline">
             فرع فوه - حي المساكن
           </span>
         </div>
 
         {/* Rejection Alert if payment failed */}
         {order.status === "REJECTED" && (
-          <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300 text-xs sm:text-sm space-y-1">
+          <div className="p-4 rounded-2xl bg-red-950/60 border border-red-800 text-red-300 text-xs sm:text-sm space-y-1">
             <p className="font-bold flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-red-600" />
+              <AlertCircle className="w-4 h-4 text-red-400" />
               <span>نعتذر، لم يتم تأكيد إشعار التحويل.</span>
             </p>
-            <p className="text-stone-600 dark:text-stone-400 text-xs">
+            <p className="text-stone-400 text-xs">
               سبب الرفض: {order.payment?.rejectReason || "الإشعار غير مطابق."}
             </p>
             <p className="pt-2 text-xs font-bold">
@@ -217,9 +217,10 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       />
 
       {/* Steps Visual Progress Tracker */}
-      <div className="bg-white dark:bg-stone-850 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-6">
-        <h3 className="text-sm font-bold text-stone-900 dark:text-white">
-          مراحل تجهيز طلبك في المطبخ
+      <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-6">
+        <h3 className="text-base font-bold text-white font-cairo flex items-center gap-2">
+          <Flame className="w-4 h-4 text-[#C69843]" />
+          <span>مراحل تجهيز طلبك في الفرن الحجري</span>
         </h3>
 
         <div className="space-y-6">
@@ -227,11 +228,11 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
             <div key={step.key} className="flex items-start gap-4">
               <div className="flex flex-col items-center">
                 <div
-                  className={`w-9 h-9 rounded-full flex items-center justify-center font-outfit text-xs font-bold transition-colors ${
+                  className={`w-9 h-9 rounded-full flex items-center justify-center font-outfit text-xs font-bold transition-all ${
                     step.isComplete
-                      ? "bg-pizza-600 text-white shadow-md shadow-pizza-600/30"
-                      : "bg-stone-100 dark:bg-stone-800 text-stone-400"
-                  } ${step.isActive ? "ring-4 ring-pizza-500/20 animate-pulse" : ""}`}
+                      ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-amber-950/40"
+                      : "bg-[#0c0e12] text-stone-500 border border-white/10"
+                  } ${step.isActive ? "ring-4 ring-[#EFCC80]/30 animate-pulse" : ""}`}
                 >
                   {step.isComplete ? (
                     <CheckCircle2 className="w-4 h-4" />
@@ -243,8 +244,8 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
                   <div
                     className={`w-0.5 h-10 my-1 ${
                       step.isComplete
-                        ? "bg-pizza-600"
-                        : "bg-stone-200 dark:bg-stone-800"
+                        ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843]"
+                        : "bg-white/10"
                     }`}
                   />
                 )}
@@ -254,13 +255,13 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
                 <h4
                   className={`text-sm font-bold font-cairo ${
                     step.isComplete
-                      ? "text-stone-900 dark:text-white"
+                      ? "text-white"
                       : "text-stone-400"
                   }`}
                 >
                   {step.label}
                 </h4>
-                <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-0.5">
                   {step.desc}
                 </p>
               </div>
@@ -280,45 +281,46 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       )}
 
       {/* Order Item Details Card */}
-      <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
-        <h3 className="text-sm font-bold text-stone-900 dark:text-white border-b border-stone-200 dark:border-stone-800 pb-3">
-          تفاصيل الأصناف المطلوبة
+      <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-7 rounded-3xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
+        <h3 className="text-base font-bold text-white border-b border-white/10 pb-3 flex items-center justify-between">
+          <span>تفاصيل الأصناف المطلوبة</span>
+          <span className="text-xs text-[#EFCC80] font-normal">{order.items?.length || 0} أصناف</span>
         </h3>
 
         <div className="space-y-3">
           {order.items.map((item: any) => (
             <div
               key={item.id}
-              className="flex justify-between items-start text-xs border-b border-stone-100 dark:border-stone-800/60 pb-3"
+              className="flex justify-between items-start text-xs border-b border-white/5 pb-3"
             >
               <div>
-                <span className="font-bold text-stone-900 dark:text-white text-sm">
+                <span className="font-bold text-white text-sm">
                   {item.quantity}x {language === "ar" ? item.productNameAr : item.productNameEn}
                 </span>
                 {item.options && item.options.length > 0 && (
-                  <p className="text-[11px] text-stone-500 mt-0.5">
+                  <p className="text-[11px] text-[#EFCC80] mt-0.5">
                     {item.options
                       .map((o: any) => (language === "ar" ? o.nameAr : o.nameEn))
                       .join(" • ")}
                   </p>
                 )}
                 {item.itemNotes && (
-                  <p className="text-[11px] text-pizza-600 mt-0.5 italic">
+                  <p className="text-[11px] text-amber-300 mt-0.5 italic">
                     &quot;{item.itemNotes}&quot;
                   </p>
                 )}
               </div>
 
-              <span className="font-outfit font-black text-stone-900 dark:text-white text-sm">
+              <span className="font-outfit font-black text-white text-sm">
                 {item.subtotal.toLocaleString()} {dict.menu.currency}
               </span>
             </div>
           ))}
         </div>
 
-        <div className="flex justify-between items-center text-base font-black text-stone-900 dark:text-white pt-2">
+        <div className="flex justify-between items-center text-base font-black text-white pt-2 border-t border-white/10">
           <span>إجمالي المبلغ:</span>
-          <span className="text-xl text-pizza-700 dark:text-pizza-400 font-outfit">
+          <span className="text-xl sm:text-2xl text-[#EFCC80] font-outfit">
             {order.total.toLocaleString()} {dict.menu.currency}
           </span>
         </div>
@@ -332,7 +334,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           )}`}
           target="_blank"
           rel="noreferrer"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-2xl text-xs font-bold shadow-md shadow-emerald-600/20 transition-all"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3.5 rounded-2xl text-xs font-bold shadow-md shadow-emerald-600/30 transition-all cursor-pointer"
         >
           <Phone className="w-4 h-4" />
           <span>{dict.tracking.helpWhatsApp}</span>
@@ -340,17 +342,17 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
 
         <Link
           href={`/history?phone=${encodeURIComponent(order.customerPhone.replace(/\D/g, ""))}`}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-800 dark:text-stone-200 px-6 py-3 rounded-2xl text-xs font-bold transition-all border border-stone-200 dark:border-stone-700"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#14181f] hover:bg-[#1c212d] text-stone-200 hover:text-white px-6 py-3.5 rounded-2xl text-xs font-bold transition-all border border-[#222934] hover:border-[#EFCC80]/40"
         >
-          <Clock className="w-4 h-4 text-pizza-600" />
+          <Clock className="w-4 h-4 text-[#C69843]" />
           <span>{language === "ar" ? "سجل طلباتي السابقة" : "My Order History"}</span>
         </Link>
 
         <Link
           href="/menu"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-pizza-50 hover:bg-pizza-100 dark:bg-pizza-950/80 dark:hover:bg-pizza-900 text-pizza-700 dark:text-pizza-300 px-6 py-3 rounded-2xl text-xs font-bold transition-all border border-pizza-200 dark:border-pizza-900"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black px-6 py-3.5 rounded-2xl text-xs shadow-md shadow-amber-950/40 transition-all active:scale-95"
         >
-          <Pizza className="w-4 h-4" />
+          <Pizza className="w-4 h-4 fill-current" />
           <span>{dict.tracking.backToMenu}</span>
         </Link>
       </div>
@@ -408,17 +410,17 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
 
       {/* Confirmation Modal for Cancellation */}
       {showCancelModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/80 backdrop-blur-sm">
-          <div className="bg-white dark:bg-stone-900 rounded-3xl max-w-sm w-full p-6 border border-stone-200 dark:border-stone-800 shadow-2xl space-y-4 text-center">
-            <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="bg-[#14181f] rounded-3xl max-w-sm w-full p-6 border border-[#C69843]/40 shadow-2xl space-y-4 text-center font-cairo">
+            <div className="w-12 h-12 rounded-2xl bg-red-950/60 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto shadow-inner">
               <AlertCircle className="w-6 h-6" />
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+              <h3 className="text-base font-bold text-white font-cairo">
                 {language === "ar" ? "تأكيد إلغاء الطلب" : "Cancel Order Confirmation"}
               </h3>
-              <p className="text-xs text-stone-500 dark:text-stone-400">
+              <p className="text-xs text-stone-400">
                 {language === "ar"
                   ? "هل أنت متأكد من رغبتك في إلغاء هذا الطلب؟ لا يمكن التراجع بعد الإلغاء."
                   : "Are you sure you want to cancel this order? This cannot be undone."}
@@ -426,7 +428,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
             </div>
 
             {cancelError && (
-              <p className="text-xs text-red-600 bg-red-50 dark:bg-red-950/60 p-2.5 rounded-xl">
+              <p className="text-xs text-red-300 bg-red-950/60 border border-red-500/40 p-2.5 rounded-xl">
                 {cancelError}
               </p>
             )}
@@ -436,7 +438,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
                 type="button"
                 onClick={() => setShowCancelModal(false)}
                 disabled={isCancelling}
-                className="flex-1 py-2.5 px-4 rounded-xl border border-stone-200 dark:border-stone-700 text-xs font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                className="flex-1 py-2.5 px-4 rounded-xl border border-[#222934] bg-[#0c0e12] text-xs font-bold text-stone-300 hover:text-white transition-colors"
               >
                 {language === "ar" ? "تراجع" : "Keep Order"}
               </button>
@@ -444,7 +446,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
                 type="button"
                 onClick={handleConfirmCancel}
                 disabled={isCancelling}
-                className="flex-1 py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-colors disabled:opacity-50"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-red-950/60 hover:bg-red-900/80 border border-red-500/40 text-red-300 text-xs font-bold transition-colors disabled:opacity-50"
               >
                 {isCancelling
                   ? language === "ar"

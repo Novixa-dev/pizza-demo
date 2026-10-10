@@ -65,17 +65,17 @@ export default function PwaInstallPrompt() {
 
   return (
     <div className="fixed bottom-20 start-4 end-4 sm:start-auto sm:end-6 sm:max-w-sm z-30 animate-in slide-in-from-bottom duration-300">
-      <div className="bg-stone-900/95 dark:bg-stone-850/95 backdrop-blur-md text-white p-3.5 rounded-2xl border border-pizza-600/40 shadow-xl flex items-center justify-between gap-3">
+      <div className="bg-[#14181f]/95 backdrop-blur-xl text-white p-3.5 rounded-2xl border border-[#EFCC80]/30 shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pizza-600 to-amber-500 flex items-center justify-center shrink-0 shadow-md">
-            <Smartphone className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] flex items-center justify-center shrink-0 shadow-md shadow-[#EFCC80]/20 text-[#2C1A04]">
+            <Smartphone className="w-5 h-5 text-[#2C1A04]" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold font-cairo">
+              <span className="text-xs font-bold font-cairo text-white">
                 {language === "ar" ? "تطبيق بيتزا هاوس" : "Pizza House App"}
               </span>
-              <Sparkles className="w-3 h-3 text-amber-400" />
+              <Sparkles className="w-3 h-3 text-[#EFCC80]" />
             </div>
             <p className="text-[11px] text-stone-300">
               {language === "ar"

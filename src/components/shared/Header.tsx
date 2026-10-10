@@ -343,15 +343,21 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-2.5 py-1.5 rounded-lg font-semibold transition-colors flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
                     isActive
-                      ? "text-pizza-600 dark:text-pizza-400 font-bold bg-pizza-50 dark:bg-pizza-950/50"
-                      : "text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-stone-800"
+                      ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-sm shadow-amber-950/40"
+                      : "text-stone-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-amber-500/20"
                   }`}
                 >
                   {link.label}
                   {link.badge && (
-                    <span className="text-[10px] font-bold bg-crust-500 text-stone-950 px-1.5 py-0.2 rounded font-outfit">
+                    <span
+                      className={`text-[10px] font-bold px-1.5 py-0.2 rounded font-outfit ${
+                        isActive
+                          ? "bg-[#2C1A04] text-[#EFCC80]"
+                          : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
+                      }`}
+                    >
                       {link.badge}
                     </span>
                   )}
@@ -361,13 +367,13 @@ export default function Header() {
           </div>
 
           {/* Left: Support Phone Line (Matches Reference: پشتیبانی: ۰۲۱۸۸۲۳...) */}
-          <div className="flex items-center gap-2 text-stone-600 dark:text-stone-400">
+          <div className="flex items-center gap-2 text-stone-300">
             <a
               href="tel:05375561"
-              className="flex items-center gap-1.5 hover:text-pizza-600 transition-colors font-medium font-outfit"
+              className="flex items-center gap-1.5 hover:text-[#EFCC80] transition-colors font-semibold font-outfit"
             >
               <span>{language === "ar" ? "خدمة العملاء: 05375561" : "Support: 05375561"}</span>
-              <PhoneCall className="w-3.5 h-3.5 text-pizza-600" />
+              <PhoneCall className="w-3.5 h-3.5 text-[#C69843]" />
             </a>
           </div>
         </div>
@@ -375,12 +381,12 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 pt-3 pb-5 space-y-2">
+        <div className="md:hidden border-t border-amber-500/20 bg-[#0c0e14]/95 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-3 shadow-2xl">
           {/* Mobile Language Switcher Row */}
-          <div className="p-3 bg-stone-50 dark:bg-stone-850 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
+          <div className="p-3 bg-[#14181f] rounded-2xl border border-white/10 space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-pizza-600" />
+              <span className="font-bold text-white flex items-center gap-1.5">
+                <Globe className="w-3.5 h-3.5 text-[#C69843]" />
                 <span>{language === "ar" ? "لغة الواجهة" : "Interface Language"}</span>
               </span>
               <span className="text-[11px] text-stone-400 font-bold uppercase font-outfit">
@@ -394,8 +400,8 @@ export default function Header() {
                 onClick={() => setLanguage("ar")}
                 className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-all ${
                   language === "ar"
-                    ? "bg-pizza-700 text-white border-pizza-700 shadow-xs font-black"
-                    : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
+                    : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
                 }`}
               >
                 <span>🇾🇪 العربية</span>
@@ -405,8 +411,8 @@ export default function Header() {
                 onClick={() => setLanguage("en")}
                 className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-all font-outfit ${
                   language === "en"
-                    ? "bg-pizza-700 text-white border-pizza-700 shadow-xs font-black"
-                    : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700"
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] font-black shadow-md shadow-amber-950/40"
+                    : "bg-[#0c0e12] text-stone-300 border-white/10 hover:text-white"
                 }`}
               >
                 <span>🇬🇧 English</span>
@@ -415,47 +421,62 @@ export default function Header() {
           </div>
 
           {/* Real-time Branch Status in Mobile Drawer */}
-          <div className="p-3 mb-2 bg-stone-50 dark:bg-stone-850 rounded-2xl border border-stone-200 dark:border-stone-800 text-xs space-y-1">
+          <div className="p-3 mb-2 bg-[#14181f] rounded-2xl border border-white/10 text-xs space-y-1">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-stone-900 dark:text-white">
+              <span className="font-bold text-white">
                 {language === "ar" ? "حالة الفرع الآن:" : "Branch Status:"}
               </span>
               <span
-                className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-bold text-[11px] ${
+                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-bold text-[11px] ${
                   opStatus.status === "OPEN_FOR_ORDERING"
-                    ? "text-emerald-700 bg-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-300"
+                    ? "text-emerald-300 bg-emerald-950/80 border border-emerald-500/30"
                     : opStatus.status === "CLOSING_SOON"
-                    ? "text-amber-700 bg-amber-100 dark:bg-amber-950/80 dark:text-amber-300"
+                    ? "text-amber-300 bg-amber-950/80 border border-amber-500/30"
                     : opStatus.status === "SCHEDULED_ONLY"
-                    ? "text-sky-700 bg-sky-100 dark:bg-sky-950/80 dark:text-sky-300"
-                    : "text-red-700 bg-red-100 dark:bg-red-950/80 dark:text-red-300"
+                    ? "text-sky-300 bg-sky-950/80 border border-sky-500/30"
+                    : "text-red-300 bg-red-950/80 border border-red-500/30"
                 }`}
               >
                 {language === "ar" ? opStatus.badgeLabelAr : opStatus.badgeLabelEn}
               </span>
             </div>
-            <p className="text-[11px] text-stone-500 dark:text-stone-400">
+            <p className="text-[11px] text-stone-400">
               {language === "ar" ? opStatus.descriptionAr : opStatus.descriptionEn}
             </p>
           </div>
 
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-3 py-2.5 rounded-lg text-base font-bold text-stone-800 dark:text-stone-200 hover:bg-pizza-50 dark:hover:bg-stone-800"
-            >
-              <div className="flex items-center justify-between">
-                <span>{link.label}</span>
-                {link.badge && (
-                  <span className="text-xs bg-crust-500 text-stone-950 font-bold px-2 py-0.5 rounded font-outfit">
-                    {link.badge}
-                  </span>
-                )}
-              </div>
-            </Link>
-          ))}
+          <div className="space-y-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                    isActive
+                      ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
+                      : "text-stone-200 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{link.label}</span>
+                    {link.badge && (
+                      <span
+                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-outfit ${
+                          isActive
+                            ? "bg-[#2C1A04] text-[#EFCC80]"
+                            : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
+                        }`}
+                      >
+                        {link.badge}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
 
           {/* Mobile Recurring Reminders Button */}
           <button
@@ -464,17 +485,17 @@ export default function Header() {
               setIsMobileMenuOpen(false);
               setIsReminderModalOpen(true);
             }}
-            className="w-full mt-2 p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800/60 text-amber-900 dark:text-amber-300 font-bold text-xs flex items-center justify-between transition-colors"
+            className="w-full mt-2 p-3 rounded-2xl bg-[#14181f] border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center justify-between transition-colors shadow-sm"
           >
             <span className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-pizza-600" />
+              <Bell className="w-4 h-4 text-[#C69843]" />
               <span>
                 {language === "ar"
                   ? "تنبيهات الوجبة المفضلة (كل أسبوعين)"
                   : "Meal Reminders (2 Weeks)"}
               </span>
             </span>
-            <span className="text-[10px] bg-pizza-600 text-white px-2 py-0.5 rounded-full font-bold">
+            <span className="text-[10px] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-2.5 py-1 rounded-full font-bold">
               {language === "ar" ? "ضبط" : "Setup"}
             </span>
           </button>

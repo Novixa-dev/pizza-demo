@@ -7,10 +7,10 @@ describe("Theme, Design & SEO Comprehensive Verification", () => {
     expect(String(siteMetadata.title)).toContain("بيتزا هاوس المكلا");
     expect(siteMetadata.description).toBeDefined();
     expect(siteMetadata.openGraph).toBeDefined();
-    expect(siteMetadata.openGraph?.type).toBe("website");
+    expect((siteMetadata.openGraph as any)?.type).toBe("website");
     expect(siteMetadata.openGraph?.locale).toBe("ar_YE");
     expect(siteMetadata.twitter).toBeDefined();
-    expect(siteMetadata.twitter?.card).toBe("summary_large_image");
+    expect((siteMetadata.twitter as any)?.card).toBe("summary_large_image");
   });
 
   it("provides canonical URL and alternates", () => {

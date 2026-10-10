@@ -116,21 +116,25 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
   };
 
   return (
-    <div className="min-h-[calc(100vh-5rem)] bg-stone-950 text-white p-4 sm:p-6 space-y-6">
+    <div className="min-h-[calc(100vh-5rem)] bg-[#0c0e12] text-white p-4 sm:p-6 space-y-6 relative overflow-hidden font-cairo">
+      {/* Background Ambience */}
+      <div className="absolute top-0 end-1/4 w-96 h-96 bg-[#EFCC80]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 start-10 w-80 h-80 bg-amber-600/5 rounded-full blur-3xl pointer-events-none" />
+
       {/* KDS Control Header */}
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-stone-900 p-4 rounded-3xl border border-stone-800">
+      <div className="relative z-10 flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-[#14181f]/90 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-[#C69843]/30 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-pizza-600 flex items-center justify-center text-amber-300 shadow-md">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] flex items-center justify-center text-[#2C1A04] shadow-lg shadow-[#EFCC80]/20 flex-shrink-0">
             <ChefHat className="w-6 h-6" />
           </div>
           <div>
             <h1 className="text-lg font-black font-cairo flex items-center gap-2">
-              <span>{dict.kitchen.title}</span>
-              <span className="text-xs bg-amber-400 text-stone-950 px-2 py-0.5 rounded font-outfit font-black">
+              <span className="text-white">{dict.kitchen.title}</span>
+              <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-2.5 py-0.5 rounded-full font-outfit font-black tracking-wider shadow-sm">
                 LIVE
               </span>
             </h1>
-            <p className="text-xs text-stone-400 font-outfit">
+            <p className="text-xs text-[#EFCC80]/80 font-outfit font-bold">
               {currentTime.toLocaleTimeString(language === "ar" ? "ar-YE" : "en-US", {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -143,10 +147,10 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
         <div className="flex items-center gap-3">
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className={`p-2.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-colors ${
+            className={`p-2.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all ${
               soundEnabled
-                ? "bg-stone-800 border-stone-700 text-emerald-400"
-                : "bg-stone-900 border-stone-800 text-stone-500"
+                ? "bg-[#0c0e12] border-emerald-500/50 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+                : "bg-[#0c0e12] border-[#222934] text-stone-500 hover:text-stone-300"
             }`}
           >
             {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
@@ -158,9 +162,9 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
               router.refresh();
               playChime();
             }}
-            className="p-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-300 flex items-center gap-1.5 text-xs font-bold"
+            className="p-2.5 rounded-xl bg-[#0c0e12] hover:bg-[#1a202c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-300 hover:text-white flex items-center gap-1.5 text-xs font-bold transition-colors"
           >
-            <RotateCw className="w-4 h-4" />
+            <RotateCw className="w-4 h-4 text-[#EFCC80]" />
             <span className="hidden sm:inline">{dict.kitchen.autoRefresh}</span>
           </button>
 
@@ -169,7 +173,7 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
               await logoutStaffAction();
               window.location.reload();
             }}
-            className="p-2.5 rounded-xl bg-red-950/40 hover:bg-red-950/80 border border-red-800/40 text-red-300 flex items-center gap-1.5 text-xs font-bold"
+            className="p-2.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300 flex items-center gap-1.5 text-xs font-bold transition-colors"
             title="تسجيل الخروج"
           >
             <LogOut className="w-4 h-4" />
@@ -179,24 +183,24 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
       </div>
 
       {/* 4 Column Kitchen Board */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-start">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-start">
         {/* Col 1: Upcoming Scheduled */}
-        <div className="bg-stone-900/60 rounded-3xl p-4 border border-stone-800/80 space-y-4">
-          <div className="flex justify-between items-center border-b border-stone-800 pb-3">
+        <div className="bg-[#14181f]/80 backdrop-blur-md rounded-3xl p-4 border border-[#222934] space-y-4 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
+          <div className="flex justify-between items-center border-b border-[#222934] pb-3">
             <div>
               <h3 className="text-sm font-bold text-stone-200 font-cairo">
                 {dict.kitchen.colUpcoming}
               </h3>
-              <p className="text-[11px] text-stone-500">{dict.kitchen.colUpcomingDesc}</p>
+              <p className="text-[11px] text-stone-400">{dict.kitchen.colUpcomingDesc}</p>
             </div>
-            <span className="w-6 h-6 rounded-full bg-stone-800 text-stone-300 text-xs font-bold font-outfit flex items-center justify-center">
+            <span className="w-7 h-7 rounded-full bg-[#0c0e12] border border-[#222934] text-[#EFCC80] text-xs font-bold font-outfit flex items-center justify-center">
               {upcoming.length}
             </span>
           </div>
 
           <div className="space-y-3">
             {upcoming.length === 0 ? (
-              <p className="text-xs text-stone-600 text-center py-8">{dict.kitchen.emptyCol}</p>
+              <p className="text-xs text-stone-500 text-center py-8">{dict.kitchen.emptyCol}</p>
             ) : (
               upcoming.map((order) => (
                 <TicketCard
@@ -214,23 +218,23 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
         </div>
 
         {/* Col 2: Ready to Prepare (Release window active!) */}
-        <div className="bg-stone-900/90 rounded-3xl p-4 border-2 border-amber-500/60 space-y-4 shadow-lg shadow-amber-950/20">
-          <div className="flex justify-between items-center border-b border-stone-800 pb-3">
+        <div className="bg-[#14181f]/95 backdrop-blur-md rounded-3xl p-4 border-2 border-[#EFCC80] space-y-4 shadow-[0_0_30px_rgba(239,204,128,0.15)]">
+          <div className="flex justify-between items-center border-b border-[#222934] pb-3">
             <div>
-              <h3 className="text-sm font-bold text-amber-400 font-cairo flex items-center gap-1.5">
-                <Flame className="w-4 h-4 text-amber-400 animate-pulse" />
+              <h3 className="text-sm font-bold text-[#EFCC80] font-cairo flex items-center gap-1.5">
+                <Flame className="w-4 h-4 text-[#EFCC80] animate-pulse" />
                 <span>{dict.kitchen.colReadyToPrep}</span>
               </h3>
-              <p className="text-[11px] text-stone-400">{dict.kitchen.colReadyToPrepDesc}</p>
+              <p className="text-[11px] text-stone-300">{dict.kitchen.colReadyToPrepDesc}</p>
             </div>
-            <span className="w-6 h-6 rounded-full bg-amber-400 text-stone-950 text-xs font-black font-outfit flex items-center justify-center animate-pulse">
+            <span className="w-7 h-7 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-xs font-black font-outfit flex items-center justify-center animate-pulse shadow-md">
               {readyToPrep.length}
             </span>
           </div>
 
           <div className="space-y-3">
             {readyToPrep.length === 0 ? (
-              <p className="text-xs text-stone-600 text-center py-8">{dict.kitchen.emptyCol}</p>
+              <p className="text-xs text-stone-500 text-center py-8">{dict.kitchen.emptyCol}</p>
             ) : (
               readyToPrep.map((order) => (
                 <TicketCard
@@ -248,23 +252,23 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
         </div>
 
         {/* Col 3: Preparing (In Oven) */}
-        <div className="bg-stone-900/60 rounded-3xl p-4 border border-pizza-600/40 space-y-4">
-          <div className="flex justify-between items-center border-b border-stone-800 pb-3">
+        <div className="bg-[#14181f]/80 backdrop-blur-md rounded-3xl p-4 border border-[#C69843]/40 space-y-4 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
+          <div className="flex justify-between items-center border-b border-[#222934] pb-3">
             <div>
-              <h3 className="text-sm font-bold text-pizza-400 font-cairo flex items-center gap-1.5">
-                <Flame className="w-4 h-4 text-pizza-500" />
+              <h3 className="text-sm font-bold text-[#EFCC80] font-cairo flex items-center gap-1.5">
+                <Flame className="w-4 h-4 text-[#EFCC80]" />
                 <span>{dict.kitchen.colPreparing}</span>
               </h3>
-              <p className="text-[11px] text-stone-500">{dict.kitchen.colPreparingDesc}</p>
+              <p className="text-[11px] text-stone-400">{dict.kitchen.colPreparingDesc}</p>
             </div>
-            <span className="w-6 h-6 rounded-full bg-pizza-600 text-white text-xs font-bold font-outfit flex items-center justify-center">
+            <span className="w-7 h-7 rounded-full bg-[#C69843]/20 border border-[#C69843]/40 text-[#EFCC80] text-xs font-bold font-outfit flex items-center justify-center">
               {preparing.length}
             </span>
           </div>
 
           <div className="space-y-3">
             {preparing.length === 0 ? (
-              <p className="text-xs text-stone-600 text-center py-8">{dict.kitchen.emptyCol}</p>
+              <p className="text-xs text-stone-500 text-center py-8">{dict.kitchen.emptyCol}</p>
             ) : (
               preparing.map((order) => (
                 <TicketCard
@@ -282,23 +286,23 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
         </div>
 
         {/* Col 4: Ready for Pickup */}
-        <div className="bg-stone-900/60 rounded-3xl p-4 border border-emerald-600/40 space-y-4">
-          <div className="flex justify-between items-center border-b border-stone-800 pb-3">
+        <div className="bg-[#14181f]/80 backdrop-blur-md rounded-3xl p-4 border border-emerald-500/30 space-y-4 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
+          <div className="flex justify-between items-center border-b border-[#222934] pb-3">
             <div>
               <h3 className="text-sm font-bold text-emerald-400 font-cairo flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>{dict.kitchen.colReady}</span>
               </h3>
-              <p className="text-[11px] text-stone-500">{dict.kitchen.colReadyDesc}</p>
+              <p className="text-[11px] text-stone-400">{dict.kitchen.colReadyDesc}</p>
             </div>
-            <span className="w-6 h-6 rounded-full bg-emerald-500 text-stone-950 text-xs font-black font-outfit flex items-center justify-center">
+            <span className="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-black font-outfit flex items-center justify-center">
               {ready.length}
             </span>
           </div>
 
           <div className="space-y-3">
             {ready.length === 0 ? (
-              <p className="text-xs text-stone-600 text-center py-8">{dict.kitchen.emptyCol}</p>
+              <p className="text-xs text-stone-500 text-center py-8">{dict.kitchen.emptyCol}</p>
             ) : (
               ready.map((order) => (
                 <TicketCard
@@ -348,28 +352,28 @@ function TicketCard({
     <div
       className={`p-4 rounded-2xl border transition-all ${
         type === "readyToPrep"
-          ? "bg-stone-850 border-amber-500/80 shadow-md shadow-amber-950/30"
+          ? "bg-[#0c0e12]/95 border-[#EFCC80] shadow-[0_0_20px_rgba(239,204,128,0.2)]"
           : type === "preparing"
-          ? "bg-stone-850 border-pizza-600/60"
+          ? "bg-[#0c0e12]/95 border-[#C69843]/60 shadow-[0_0_15px_rgba(198,152,67,0.15)]"
           : type === "ready"
-          ? "bg-stone-850 border-emerald-500/60"
-          : "bg-stone-850 border-stone-800"
+          ? "bg-[#0c0e12]/95 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
+          : "bg-[#0c0e12]/90 border-[#222934] hover:border-[#EFCC80]/40"
       }`}
     >
       {/* Header */}
-      <div className="flex justify-between items-start border-b border-stone-800 pb-2.5">
+      <div className="flex justify-between items-start border-b border-[#222934] pb-2.5">
         <div>
           <span className="text-base font-black text-white font-outfit">
             {order.orderNumber}
           </span>
-          <p className="text-xs text-stone-400 font-bold">{order.customerName}</p>
+          <p className="text-xs text-stone-300 font-bold">{order.customerName}</p>
         </div>
 
         <div className="text-end">
           <span className="text-[10px] text-stone-400 block font-cairo">
             {dict.kitchen.targetPickup}
           </span>
-          <span className="text-xs font-black text-amber-300 font-outfit">
+          <span className="text-xs font-black text-[#EFCC80] font-outfit">
             {pickupTimeStr}
           </span>
         </div>
@@ -386,7 +390,7 @@ function TicketCard({
             </div>
 
             {item.options?.length > 0 && (
-              <div className="text-[11px] text-amber-400 ps-2">
+              <div className="text-[11px] text-[#EFCC80] font-medium ps-2">
                 {item.options
                   .map((o: any) => (language === "ar" ? o.nameAr : o.nameEn))
                   .join(" + ")}
@@ -394,7 +398,7 @@ function TicketCard({
             )}
 
             {item.itemNotes && (
-              <p className="text-[10px] text-pizza-400 italic ps-2">
+              <p className="text-[10px] text-amber-300/90 italic ps-2">
                 &quot;{item.itemNotes}&quot;
               </p>
             )}
@@ -402,7 +406,7 @@ function TicketCard({
         ))}
 
         {order.notes && (
-          <div className="pt-1.5 border-t border-stone-800/80 text-[11px] text-red-400 font-bold flex items-center gap-1">
+          <div className="pt-1.5 border-t border-[#222934] text-[11px] text-red-400 font-bold flex items-center gap-1">
             <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
             <span>ملاحظة: {order.notes}</span>
           </div>
@@ -410,8 +414,8 @@ function TicketCard({
       </div>
 
       {/* Footer Action Button */}
-      <div className="pt-2 border-t border-stone-800 flex items-center justify-between gap-2">
-        <span className="text-[10px] text-stone-500 font-outfit">
+      <div className="pt-2 border-t border-[#222934] flex items-center justify-between gap-2">
+        <span className="text-[10px] text-stone-400 font-outfit">
           {order.pickupMode === "ASAP" ? "فوري (ASAP)" : `بدء: ${releaseTimeStr}`}
         </span>
 
@@ -419,7 +423,7 @@ function TicketCard({
           <button
             onClick={onAction}
             disabled={isUpdating}
-            className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded-xl text-xs font-bold transition-colors"
+            className="px-3 py-1.5 bg-[#14181f] hover:bg-[#1a202c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 rounded-xl text-xs font-bold transition-colors"
           >
             تقديم البدء
           </button>
@@ -427,7 +431,7 @@ function TicketCard({
           <button
             onClick={onAction}
             disabled={isUpdating}
-            className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 font-black rounded-xl text-xs shadow-md shadow-amber-600/30 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] font-black rounded-xl text-xs shadow-md shadow-[#EFCC80]/20 transition-all flex items-center gap-1.5"
           >
             <Flame className="w-3.5 h-3.5" />
             <span>{dict.kitchen.startBaking}</span>
@@ -436,7 +440,7 @@ function TicketCard({
           <button
             onClick={onAction}
             disabled={isUpdating}
-            className="px-4 py-2 bg-gradient-to-r from-pizza-600 to-pizza-700 hover:from-pizza-700 hover:to-pizza-800 text-white font-bold rounded-xl text-xs shadow-md shadow-pizza-700/30 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] font-black rounded-xl text-xs shadow-md shadow-[#EFCC80]/20 transition-all flex items-center gap-1.5"
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>{dict.kitchen.markReady}</span>
@@ -445,7 +449,7 @@ function TicketCard({
           <button
             onClick={onAction}
             disabled={isUpdating}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-md shadow-emerald-700/30 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-black rounded-xl text-xs shadow-md shadow-emerald-700/30 transition-all flex items-center gap-1.5"
           >
             <Package className="w-3.5 h-3.5" />
             <span>{dict.kitchen.markCompleted}</span>

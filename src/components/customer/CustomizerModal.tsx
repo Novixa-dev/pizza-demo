@@ -166,9 +166,9 @@ export default function CustomizerModal({
       />
 
       {/* Dialog Modal */}
-      <div className="relative w-full max-w-xl bg-white dark:bg-stone-900 rounded-3xl shadow-2xl overflow-hidden z-10 border border-stone-200 dark:border-stone-800 flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-xl bg-[#14181f] rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden z-10 border border-[#C69843]/40 flex flex-col max-h-[90vh] text-white font-cairo">
         {/* Header with image */}
-        <div className="relative h-44 sm:h-52 w-full flex-shrink-0 bg-stone-200 dark:bg-stone-800">
+        <div className="relative h-44 sm:h-52 w-full flex-shrink-0 bg-[#0c0e12]">
           <Image
             src={product.imageUrl}
             alt={language === "ar" ? product.nameAr : product.nameEn}
@@ -177,12 +177,12 @@ export default function CustomizerModal({
             referrerPolicy="no-referrer"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#14181f] via-[#14181f]/40 to-transparent" />
 
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-3 end-3 w-8 h-8 rounded-full bg-stone-900/60 hover:bg-stone-900 text-white flex items-center justify-center backdrop-blur-md transition-colors"
+            className="absolute top-3 end-3 w-8 h-8 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center backdrop-blur-md transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -192,7 +192,7 @@ export default function CustomizerModal({
             <h3 className="text-xl sm:text-2xl font-black text-white drop-shadow-md">
               {language === "ar" ? product.nameAr : product.nameEn}
             </h3>
-            <p className="text-xs text-stone-200 line-clamp-1 mt-0.5 drop-shadow">
+            <p className="text-xs text-stone-300 line-clamp-1 mt-0.5 drop-shadow">
               {language === "ar" ? product.descriptionAr : product.descriptionEn}
             </p>
           </div>
@@ -205,10 +205,10 @@ export default function CustomizerModal({
             return (
               <div key={group.id} className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-sm font-bold text-stone-900 dark:text-white flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-white flex items-center gap-2">
                     <span>{language === "ar" ? group.nameAr : group.nameEn}</span>
                     {group.isRequired && (
-                      <span className="text-[10px] text-pizza-600 dark:text-pizza-400 bg-pizza-50 dark:bg-pizza-950/60 px-2 py-0.5 rounded-full font-medium">
+                      <span className="text-[10px] text-[#EFCC80] bg-[#EFCC80]/15 border border-[#EFCC80]/30 px-2.5 py-0.5 rounded-full font-bold">
                         {language === "ar" ? "إجباري" : "Required"}
                       </span>
                     )}
@@ -244,10 +244,10 @@ export default function CustomizerModal({
                         }
                         className={`p-3 rounded-2xl border text-start flex items-center justify-between transition-all ${
                           !opt.isAvailable
-                            ? "opacity-40 cursor-not-allowed border-stone-200 dark:border-stone-800"
+                            ? "opacity-40 cursor-not-allowed border-[#222934] bg-[#0c0e12]"
                             : isSelected
-                            ? "border-pizza-600 bg-pizza-50/70 dark:bg-pizza-950/40 text-pizza-900 dark:text-pizza-200 shadow-sm"
-                            : "border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 bg-white dark:bg-stone-850 text-stone-700 dark:text-stone-300"
+                            ? "border-[#EFCC80] bg-[#0c0e12] text-white shadow-[0_0_15px_rgba(239,204,128,0.2)]"
+                            : "border-[#222934] hover:border-[#EFCC80]/40 bg-[#0c0e12]/60 text-stone-300"
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
@@ -256,8 +256,8 @@ export default function CustomizerModal({
                               isRadio ? "full" : "md"
                             } border flex items-center justify-center ${
                               isSelected
-                                ? "border-pizza-600 bg-pizza-600 text-white"
-                                : "border-stone-300 dark:border-stone-600"
+                                ? "border-[#EFCC80] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
+                                : "border-stone-600"
                             }`}
                           >
                             {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
@@ -268,7 +268,7 @@ export default function CustomizerModal({
                         </div>
 
                         {opt.priceDelta !== 0 && (
-                          <span className="text-xs font-outfit font-black text-pizza-700 dark:text-pizza-400">
+                          <span className="text-xs font-outfit font-black text-[#EFCC80]">
                             +{opt.priceDelta.toLocaleString()} {dict.menu.currency}
                           </span>
                         )}
@@ -281,8 +281,8 @@ export default function CustomizerModal({
           })}
 
           {/* Kitchen Instructions */}
-          <div className="space-y-2 pt-2 border-t border-stone-200 dark:border-stone-800">
-            <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
+          <div className="space-y-2 pt-2 border-t border-[#222934]">
+            <label className="text-xs font-bold text-stone-300">
               {dict.customizer.notes}
             </label>
             <input
@@ -290,27 +290,27 @@ export default function CustomizerModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder={dict.customizer.notesPlaceholder}
-              className="w-full text-xs p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white placeholder:text-stone-400 focus:outline-none focus:border-pizza-600 transition-colors"
+              className="w-full text-xs p-3 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] transition-colors"
             />
           </div>
         </div>
 
         {/* Modal Footer with Live Quantity & Add Action */}
-        <div className="p-4 sm:p-5 border-t border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/90 flex items-center justify-between gap-4">
+        <div className="p-4 sm:p-5 border-t border-[#222934] bg-[#0c0e12] flex items-center justify-between gap-4">
           {/* Quantity selector */}
-          <div className="flex items-center gap-2 bg-white dark:bg-stone-800 p-1 rounded-xl border border-stone-200 dark:border-stone-700">
+          <div className="flex items-center gap-2 bg-[#14181f] p-1 rounded-xl border border-[#222934]">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-300 hover:text-white hover:bg-[#1a202c] transition-colors"
             >
               <Minus className="w-3.5 h-3.5" />
             </button>
-            <span className="w-7 text-center font-outfit font-black text-stone-900 dark:text-white">
+            <span className="w-7 text-center font-outfit font-black text-white">
               {quantity}
             </span>
             <button
               onClick={() => setQuantity(quantity + 1)}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-300 hover:text-white hover:bg-[#1a202c] transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
             </button>
@@ -319,7 +319,7 @@ export default function CustomizerModal({
           {/* Add CTA */}
           <button
             onClick={handleAddToCart}
-            className="flex-1 flex items-center justify-between bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 py-3.5 px-5 rounded-2xl font-bold text-sm shadow-lg shadow-amber-950/30 active:scale-[0.99] transition-all font-cairo"
+            className="flex-1 flex items-center justify-between bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 text-[#2C1A04] py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg shadow-[#EFCC80]/20 active:scale-[0.99] transition-all font-cairo"
           >
             <span>{dict.customizer.confirmAdd}</span>
             <span className="font-outfit text-base font-black">

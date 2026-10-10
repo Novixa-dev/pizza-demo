@@ -191,26 +191,26 @@ export default function CheckoutClientView({
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-cairo text-white">
       <div className="text-center space-y-2 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white font-cairo">
+        <h1 className="text-2xl sm:text-3xl font-black text-white font-cairo">
           {dict.checkout.title}
         </h1>
-        <p className="text-xs sm:text-sm text-stone-500">
+        <p className="text-xs sm:text-sm text-[#EFCC80] font-bold">
           فرع فوه - حي المساكن | استلام سريع ومجدول
         </p>
       </div>
 
       {restaurant?.isOnlineOrderingPaused && (
-        <div className="mb-6 p-4 rounded-2xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+        <div className="mb-6 p-4 rounded-2xl bg-red-950/60 border border-red-500/40 text-red-300 text-sm flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-400" />
           <span>{restaurant.pauseMessageAr || dict.checkout.orderingPausedAlert}</span>
         </div>
       )}
 
       {restaurantStatus && !restaurantStatus.canOrderImmediate && restaurantStatus.canOrderScheduled && (
-        <div className="mb-6 p-4 rounded-2xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 text-sky-800 dark:text-sky-200 text-xs sm:text-sm flex items-center gap-3">
-          <Clock className="w-5 h-5 flex-shrink-0 text-sky-600" />
+        <div className="mb-6 p-4 rounded-2xl bg-[#14181f] border border-[#C69843]/40 text-[#EFCC80] text-xs sm:text-sm flex items-center gap-3">
+          <Clock className="w-5 h-5 flex-shrink-0 text-[#EFCC80]" />
           <span>
             {language === "ar" ? restaurantStatus.descriptionAr : restaurantStatus.descriptionEn} (تم توجيه الطلب تلقائياً إلى خيار &quot;الاستلام المجدول&quot;).
           </span>
@@ -218,8 +218,8 @@ export default function CheckoutClientView({
       )}
 
       {restaurantStatus && !restaurantStatus.canOrderImmediate && !restaurantStatus.canOrderScheduled && (
-        <div className="mb-6 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 text-xs sm:text-sm flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 text-amber-600" />
+        <div className="mb-6 p-4 rounded-2xl bg-amber-950/50 border border-amber-600/40 text-amber-200 text-xs sm:text-sm flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 flex-shrink-0 text-amber-400" />
           <span>
             {language === "ar" ? restaurantStatus.descriptionAr : restaurantStatus.descriptionEn}
           </span>
@@ -227,30 +227,30 @@ export default function CheckoutClientView({
       )}
 
       {errorMessage && (
-        <div className="mb-6 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 text-sm flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+        <div className="mb-6 p-4 rounded-2xl bg-red-950/60 border border-red-500/40 text-red-300 text-sm flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-400" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {/* 4-Step Checkout Progress Bar */}
-      <div className="mb-8 bg-white dark:bg-stone-850 p-4 rounded-2xl border border-stone-200/80 dark:border-stone-800 shadow-xs">
+      <div className="mb-8 bg-[#14181f]/90 backdrop-blur-md p-4 rounded-2xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
         <div className="grid grid-cols-4 gap-2 text-center text-xs">
           <div className="flex flex-col items-center gap-1.5">
-            <span className="w-6 h-6 rounded-full bg-pizza-700 text-white font-bold flex items-center justify-center text-xs font-outfit">1</span>
-            <span className="font-bold text-stone-900 dark:text-white text-[11px] truncate">{language === "ar" ? "بيانات العميل" : "Customer"}</span>
+            <span className="w-6 h-6 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black flex items-center justify-center text-xs font-outfit shadow-sm">1</span>
+            <span className="font-bold text-[#EFCC80] text-[11px] truncate">{language === "ar" ? "بيانات العميل" : "Customer"}</span>
           </div>
           <div className="flex flex-col items-center gap-1.5">
-            <span className="w-6 h-6 rounded-full bg-pizza-700 text-white font-bold flex items-center justify-center text-xs font-outfit">2</span>
-            <span className="font-bold text-stone-900 dark:text-white text-[11px] truncate">{language === "ar" ? "موعد الاستلام" : "Pickup Slot"}</span>
+            <span className="w-6 h-6 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black flex items-center justify-center text-xs font-outfit shadow-sm">2</span>
+            <span className="font-bold text-[#EFCC80] text-[11px] truncate">{language === "ar" ? "موعد الاستلام" : "Pickup Slot"}</span>
           </div>
           <div className="flex flex-col items-center gap-1.5">
-            <span className="w-6 h-6 rounded-full bg-pizza-700 text-white font-bold flex items-center justify-center text-xs font-outfit">3</span>
-            <span className="font-bold text-stone-900 dark:text-white text-[11px] truncate">{language === "ar" ? "طريقة الدفع" : "Payment"}</span>
+            <span className="w-6 h-6 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black flex items-center justify-center text-xs font-outfit shadow-sm">3</span>
+            <span className="font-bold text-[#EFCC80] text-[11px] truncate">{language === "ar" ? "طريقة الدفع" : "Payment"}</span>
           </div>
           <div className="flex flex-col items-center gap-1.5">
-            <span className="w-6 h-6 rounded-full bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 font-bold flex items-center justify-center text-xs font-outfit">4</span>
-            <span className="font-bold text-stone-500 text-[11px] truncate">{language === "ar" ? "التأكيد والاستلام" : "Confirm"}</span>
+            <span className="w-6 h-6 rounded-full bg-[#0c0e12] border border-[#222934] text-stone-400 font-bold flex items-center justify-center text-xs font-outfit">4</span>
+            <span className="font-bold text-stone-400 text-[11px] truncate">{language === "ar" ? "التأكيد والاستلام" : "Confirm"}</span>
           </div>
         </div>
       </div>
@@ -259,15 +259,15 @@ export default function CheckoutClientView({
         {/* Left Column: Form Fields */}
         <div className="lg:col-span-7 space-y-8">
           {/* 1. Customer Information */}
-          <div className="bg-white dark:bg-stone-850 p-5 sm:p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-stone-900 dark:text-white flex items-center gap-2">
-              <User className="w-4 h-4 text-pizza-600" />
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <User className="w-4 h-4 text-[#EFCC80]" />
               <span>{dict.checkout.customerInfo}</span>
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                <label className="text-xs font-bold text-stone-300">
                   {dict.checkout.fullName} *
                 </label>
                 <input
@@ -276,12 +276,12 @@ export default function CheckoutClientView({
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                   placeholder={dict.checkout.fullNamePlaceholder}
-                  className="w-full text-xs sm:text-sm p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white placeholder:text-stone-400 focus:outline-none focus:border-pizza-600 transition-colors"
+                  className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] transition-colors"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                <label className="text-xs font-bold text-stone-300">
                   {dict.checkout.phone} *
                 </label>
                 <input
@@ -290,7 +290,7 @@ export default function CheckoutClientView({
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
                   placeholder={dict.checkout.phonePlaceholder}
-                  className="w-full text-xs sm:text-sm p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white placeholder:text-stone-400 focus:outline-none focus:border-pizza-600 transition-colors font-outfit"
+                  className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] transition-colors font-outfit"
                 />
                 <p className="text-[10px] text-stone-400">
                   {language === "ar" ? "أرقام يمن موبايل (77) / يو (73) / سبأفون (71) أو الهاتف الثابت" : "e.g. 771234567 or 73XXXXXXX"}
@@ -300,9 +300,9 @@ export default function CheckoutClientView({
           </div>
 
           {/* 2. Pickup Timing Strategy (The Key Innovation) */}
-          <div className="bg-white dark:bg-stone-850 p-5 sm:p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-stone-900 dark:text-white flex items-center gap-2">
-              <Clock className="w-4 h-4 text-crust-500" />
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#EFCC80]" />
               <span>{dict.checkout.timingTitle}</span>
             </h3>
 
@@ -314,10 +314,10 @@ export default function CheckoutClientView({
                 onClick={() => setPickupMode("ASAP")}
                 className={`p-4 rounded-2xl border text-start transition-all ${
                   restaurantStatus && !restaurantStatus.canOrderImmediate
-                    ? "opacity-50 cursor-not-allowed bg-stone-100 dark:bg-stone-850 border-stone-200 dark:border-stone-800 text-stone-400"
+                    ? "opacity-50 cursor-not-allowed bg-[#0c0e12] border-[#222934] text-stone-500"
                     : pickupMode === "ASAP"
-                    ? "border-pizza-600 bg-pizza-50/70 dark:bg-pizza-950/40 text-pizza-950 dark:text-white shadow-sm"
-                    : "border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 bg-white dark:bg-stone-850 text-stone-700 dark:text-stone-300"
+                    ? "border-[#EFCC80] bg-[#0c0e12] text-white shadow-[0_0_20px_rgba(239,204,128,0.15)]"
+                    : "border-[#222934] hover:border-[#EFCC80]/40 bg-[#0c0e12]/60 text-stone-300"
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -327,14 +327,14 @@ export default function CheckoutClientView({
                   <div
                     className={`w-4 h-4 rounded-full border flex items-center justify-center ${
                       pickupMode === "ASAP"
-                        ? "border-pizza-600 bg-pizza-600 text-white"
-                        : "border-stone-300"
+                        ? "border-[#EFCC80] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
+                        : "border-stone-600"
                     }`}
                   >
                     {pickupMode === "ASAP" && <CheckCircle2 className="w-3 h-3" />}
                   </div>
                 </div>
-                <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">
+                <p className="text-[11px] text-stone-400 mt-1">
                   {restaurantStatus && !restaurantStatus.canOrderImmediate
                     ? "غير متاح حالياً (خارج ساعات العمل الفوري)"
                     : dict.checkout.asapBadge}
@@ -347,8 +347,8 @@ export default function CheckoutClientView({
                 onClick={() => setPickupMode("SCHEDULED")}
                 className={`p-4 rounded-2xl border text-start transition-all ${
                   pickupMode === "SCHEDULED"
-                    ? "border-pizza-600 bg-pizza-50/70 dark:bg-pizza-950/40 text-pizza-950 dark:text-white shadow-sm"
-                    : "border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 bg-white dark:bg-stone-850 text-stone-700 dark:text-stone-300"
+                    ? "border-[#EFCC80] bg-[#0c0e12] text-white shadow-[0_0_20px_rgba(239,204,128,0.15)]"
+                    : "border-[#222934] hover:border-[#EFCC80]/40 bg-[#0c0e12]/60 text-stone-300"
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -358,14 +358,14 @@ export default function CheckoutClientView({
                   <div
                     className={`w-4 h-4 rounded-full border flex items-center justify-center ${
                       pickupMode === "SCHEDULED"
-                        ? "border-pizza-600 bg-pizza-600 text-white"
-                        : "border-stone-300"
+                        ? "border-[#EFCC80] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04]"
+                        : "border-stone-600"
                     }`}
                   >
                     {pickupMode === "SCHEDULED" && <CheckCircle2 className="w-3 h-3" />}
                   </div>
                 </div>
-                <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">
+                <p className="text-[11px] text-stone-400 mt-1">
                   حدد وقت وصولك لنجهزها طازجة فوراً
                 </p>
               </button>
@@ -373,13 +373,13 @@ export default function CheckoutClientView({
 
             {/* Slots Grid if Scheduled */}
             {pickupMode === "SCHEDULED" && (
-              <div className="pt-3 space-y-2 border-t border-stone-200 dark:border-stone-800">
-                <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
+              <div className="pt-3 space-y-2 border-t border-[#222934]">
+                <label className="text-xs font-bold text-stone-300 block">
                   {dict.checkout.selectSlot}
                 </label>
 
                 {availableSlots.length === 0 ? (
-                  <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-800 text-center text-xs text-stone-500">
+                  <div className="p-4 rounded-xl bg-[#0c0e12] text-center text-xs text-stone-400 border border-[#222934]">
                     لا توجد فترات حجز متبقية لليوم. يمكنك التواصل مع خدمة العملاء عبر الواتساب للتنسيق.
                   </div>
                 ) : (
@@ -392,10 +392,10 @@ export default function CheckoutClientView({
                         onClick={() => setSelectedSlot(slot.timeString)}
                         className={`p-2.5 rounded-xl border text-xs font-bold font-outfit text-center transition-all ${
                           !slot.isAvailable
-                            ? "opacity-35 cursor-not-allowed bg-stone-100 dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400"
+                            ? "opacity-35 cursor-not-allowed bg-[#0c0e12] border-[#222934] text-stone-500"
                             : selectedSlot === slot.timeString
-                            ? "bg-pizza-700 text-white border-pizza-700 shadow-sm"
-                            : "bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700 hover:border-pizza-500"
+                            ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-black border-transparent shadow-md"
+                            : "bg-[#0c0e12] text-stone-200 border border-[#222934] hover:border-[#EFCC80]/40"
                         }`}
                       >
                         <div>
@@ -404,7 +404,7 @@ export default function CheckoutClientView({
                             : slot.displayLabelEn}
                         </div>
                         {!slot.isAvailable && (
-                          <span className="text-[9px] block text-red-500 font-cairo mt-0.5">
+                          <span className="text-[9px] block text-red-400 font-cairo mt-0.5">
                             {slot.reason || dict.checkout.slotFull}
                           </span>
                         )}
@@ -417,84 +417,84 @@ export default function CheckoutClientView({
           </div>
 
           {/* 3. Payment Method */}
-          <div className="bg-white dark:bg-stone-850 p-5 sm:p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-stone-900 dark:text-white flex items-center gap-2">
-              <CreditCard className="w-4 h-4 text-emerald-600" />
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-[#EFCC80]" />
               <span>{dict.checkout.paymentTitle}</span>
             </h3>
 
             <div className="space-y-3">
               {/* Pay at Pickup */}
-              <label className="p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-800/40 flex items-start gap-3 cursor-pointer">
+              <label className="p-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12]/80 hover:border-[#EFCC80]/40 flex items-start gap-3 cursor-pointer transition-colors">
                 <input
                   type="radio"
                   name="payment"
                   checked={paymentMethod === "PAY_AT_PICKUP"}
                   onChange={() => setPaymentMethod("PAY_AT_PICKUP")}
-                  className="mt-1 text-pizza-600 focus:ring-pizza-500"
+                  className="mt-1 accent-[#EFCC80]"
                 />
                 <div>
-                  <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-white block">
+                  <span className="text-xs sm:text-sm font-bold text-white block">
                     {dict.checkout.payAtPickup}
                   </span>
-                  <span className="text-[11px] text-stone-500 block mt-0.5">
+                  <span className="text-[11px] text-stone-400 block mt-0.5">
                     {dict.checkout.payAtPickupDesc}
                   </span>
                 </div>
               </label>
 
               {/* Kuraimi Transfer */}
-              <label className="p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-800/40 flex items-start gap-3 cursor-pointer">
+              <label className="p-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12]/80 hover:border-[#EFCC80]/40 flex items-start gap-3 cursor-pointer transition-colors">
                 <input
                   type="radio"
                   name="payment"
                   checked={paymentMethod === "TRANSFER_KURAIMI"}
                   onChange={() => setPaymentMethod("TRANSFER_KURAIMI")}
-                  className="mt-1 text-pizza-600 focus:ring-pizza-500"
+                  className="mt-1 accent-[#EFCC80]"
                 />
                 <div>
-                  <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-white block">
+                  <span className="text-xs sm:text-sm font-bold text-white block">
                     تحويل عبر بنك الكريمي (حاسب / إم فلوس)
                   </span>
-                  <span className="text-[11px] text-stone-500 block mt-0.5">
+                  <span className="text-[11px] text-[#EFCC80]/80 block mt-0.5">
                     {dict.checkout.kuraimiAcc}
                   </span>
                 </div>
               </label>
 
               {/* Al-Amqi Transfer */}
-              <label className="p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-800/40 flex items-start gap-3 cursor-pointer">
+              <label className="p-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12]/80 hover:border-[#EFCC80]/40 flex items-start gap-3 cursor-pointer transition-colors">
                 <input
                   type="radio"
                   name="payment"
                   checked={paymentMethod === "TRANSFER_AMQI"}
                   onChange={() => setPaymentMethod("TRANSFER_AMQI")}
-                  className="mt-1 text-pizza-600 focus:ring-pizza-500"
+                  className="mt-1 accent-[#EFCC80]"
                 />
                 <div>
-                  <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-white block">
+                  <span className="text-xs sm:text-sm font-bold text-white block">
                     تحويل عبر شركة العمقي للصرافة
                   </span>
-                  <span className="text-[11px] text-stone-500 block mt-0.5">
+                  <span className="text-[11px] text-[#EFCC80]/80 block mt-0.5">
                     {dict.checkout.amqiAcc}
                   </span>
                 </div>
               </label>
 
               {/* Al-Busairi Transfer */}
-              <label className="p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-800/40 flex items-start gap-3 cursor-pointer">
+              <label className="p-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12]/80 hover:border-[#EFCC80]/40 flex items-start gap-3 cursor-pointer transition-colors">
                 <input
                   type="radio"
                   name="payment"
                   checked={paymentMethod === "TRANSFER_BUSAIRI"}
                   onChange={() => setPaymentMethod("TRANSFER_BUSAIRI")}
-                  className="mt-1 text-pizza-600 focus:ring-pizza-500"
+                  className="mt-1 accent-[#EFCC80]"
                 />
                 <div>
-                  <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-white block">
+                  <span className="text-xs sm:text-sm font-bold text-white block">
                     تحويل عبر شركة البسيري للصرافة
                   </span>
-                  <span className="text-[11px] text-stone-500 block mt-0.5">
+                  <span className="text-[11px] text-[#EFCC80]/80 block mt-0.5">
                     {dict.checkout.busairiAcc}
                   </span>
                 </div>
@@ -503,12 +503,12 @@ export default function CheckoutClientView({
 
             {/* Receipt Upload Box if Transfer is selected */}
             {paymentMethod !== "PAY_AT_PICKUP" && (
-              <div className="pt-4 border-t border-stone-200 dark:border-stone-800 space-y-4">
+              <div className="pt-4 border-t border-[#222934] space-y-4">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
+                  <label className="text-xs font-bold text-stone-300 block">
                     {dict.checkout.uploadReceipt} *
                   </label>
-                  <div className="border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-2xl p-4 text-center hover:border-pizza-500 transition-colors bg-stone-50 dark:bg-stone-800/50">
+                  <div className="border-2 border-dashed border-[#222934] hover:border-[#EFCC80]/50 rounded-2xl p-4 text-center transition-colors bg-[#0c0e12]">
                     <input
                       type="file"
                       id="receiptFile"
@@ -520,8 +520,8 @@ export default function CheckoutClientView({
                       htmlFor="receiptFile"
                       className="cursor-pointer flex flex-col items-center gap-2"
                     >
-                      <Upload className="w-6 h-6 text-pizza-600" />
-                      <span className="text-xs font-bold text-stone-800 dark:text-stone-200">
+                      <Upload className="w-6 h-6 text-[#EFCC80]" />
+                      <span className="text-xs font-bold text-stone-200">
                         {receiptBase64
                           ? "تم اختيار صورة الإشعار (انقر للتغيير)"
                           : dict.checkout.chooseFile}
@@ -532,17 +532,17 @@ export default function CheckoutClientView({
                     </label>
 
                     {receiptBase64 && (
-                      <div className="mt-3 inline-block relative rounded-xl overflow-hidden border border-stone-300 dark:border-stone-700 max-h-36">
+                      <div className="mt-3 inline-block relative rounded-xl overflow-hidden border border-[#222934] max-h-36">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={receiptBase64}
                           alt="Receipt Preview"
-                          className="h-32 object-contain bg-stone-100 dark:bg-stone-900"
+                          className="h-32 object-contain bg-black"
                         />
                         <button
                           type="button"
                           onClick={() => setReceiptBase64("")}
-                          className="absolute top-1.5 end-1.5 p-1 bg-stone-900/80 hover:bg-red-600 text-white rounded-full transition-colors"
+                          className="absolute top-1.5 end-1.5 p-1 bg-black/80 hover:bg-red-600 text-white rounded-full transition-colors"
                           title="حذف صورة الإشعار"
                         >
                           <X className="w-3.5 h-3.5" />
@@ -553,7 +553,7 @@ export default function CheckoutClientView({
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                  <label className="text-xs font-bold text-stone-300">
                     {dict.checkout.referenceNumber}
                   </label>
                   <input
@@ -561,7 +561,7 @@ export default function CheckoutClientView({
                     value={referenceNumber}
                     onChange={(e) => setReferenceNumber(e.target.value)}
                     placeholder={dict.checkout.referencePlaceholder}
-                    className="w-full text-xs sm:text-sm p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white placeholder:text-stone-400 font-outfit"
+                    className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] font-outfit transition-colors"
                   />
                 </div>
               </div>
@@ -569,9 +569,9 @@ export default function CheckoutClientView({
           </div>
 
           {/* 4. Optional Order Notes */}
-          <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
-            <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
-              <FileText className="w-4 h-4 text-stone-400" />
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-2">
+            <label className="text-xs font-bold text-stone-300 flex items-center gap-1.5">
+              <FileText className="w-4 h-4 text-[#EFCC80]" />
               <span>{dict.checkout.notes}</span>
             </label>
             <input
@@ -579,15 +579,15 @@ export default function CheckoutClientView({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder={dict.checkout.notesPlaceholder}
-              className="w-full text-xs p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white placeholder:text-stone-400"
+              className="w-full text-xs p-3 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#EFCC80] transition-colors"
             />
           </div>
         </div>
 
         {/* Right Column: Order Summary & Place Order Action */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white dark:bg-stone-850 p-5 sm:p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4 sticky top-24">
-            <h3 className="text-base font-bold text-stone-900 dark:text-white border-b border-stone-200 dark:border-stone-800 pb-3">
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4 sticky top-24">
+            <h3 className="text-base font-bold text-white border-b border-[#222934] pb-3">
               ملخص طلبك ({cart.length} أصناف)
             </h3>
 
@@ -596,10 +596,10 @@ export default function CheckoutClientView({
               {cart.map((item) => (
                 <div
                   key={item.cartItemId}
-                  className="flex justify-between items-start text-xs border-b border-stone-100 dark:border-stone-800/60 pb-2"
+                  className="flex justify-between items-start text-xs border-b border-[#222934]/60 pb-2"
                 >
                   <div>
-                    <span className="font-bold text-stone-900 dark:text-white">
+                    <span className="font-bold text-white">
                       {item.quantity}x {language === "ar" ? item.nameAr : item.nameEn}
                     </span>
                     {item.selectedOptions?.length > 0 && (
@@ -610,7 +610,7 @@ export default function CheckoutClientView({
                       </p>
                     )}
                   </div>
-                  <span className="font-outfit font-black text-stone-800 dark:text-stone-200">
+                  <span className="font-outfit font-black text-[#EFCC80]">
                     {item.subtotal.toLocaleString()} {dict.menu.currency}
                   </span>
                 </div>
@@ -618,16 +618,16 @@ export default function CheckoutClientView({
             </div>
 
             {/* Totals */}
-            <div className="pt-2 space-y-2 border-t border-stone-200 dark:border-stone-800 text-xs">
-              <div className="flex justify-between text-stone-500">
+            <div className="pt-2 space-y-2 border-t border-[#222934] text-xs">
+              <div className="flex justify-between text-stone-400">
                 <span>المجموع الفرعي:</span>
-                <span className="font-outfit font-bold">
+                <span className="font-outfit font-bold text-white">
                   {cartTotal.toLocaleString()} {dict.menu.currency}
                 </span>
               </div>
-              <div className="flex justify-between text-base font-black text-stone-900 dark:text-white pt-2 border-t border-stone-200 dark:border-stone-800">
+              <div className="flex justify-between text-base font-black text-white pt-2 border-t border-[#222934]">
                 <span>الإجمالي للدفع:</span>
-                <span className="text-xl text-pizza-700 dark:text-pizza-400 font-outfit">
+                <span className="text-xl text-[#EFCC80] font-outfit font-black">
                   {cartTotal.toLocaleString()} {dict.menu.currency}
                 </span>
               </div>
@@ -649,13 +649,13 @@ export default function CheckoutClientView({
                 (restaurantStatus &&
                   !restaurantStatus.canOrderImmediate &&
                   !restaurantStatus.canOrderScheduled)
-                  ? "bg-stone-300 dark:bg-stone-700 text-stone-500 cursor-not-allowed shadow-none"
-                  : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 shadow-xl shadow-amber-950/40"
+                  ? "bg-[#14181f] text-stone-500 cursor-not-allowed shadow-none border border-[#222934]"
+                  : "bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 text-[#2C1A04] font-black shadow-xl shadow-[#EFCC80]/20"
               }`}
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                  <span className="w-4 h-4 rounded-full border-2 border-[#2C1A04] border-t-transparent animate-spin" />
                   <span>جاري تأكيد وتسجيل الطلب...</span>
                 </span>
               ) : (

@@ -117,20 +117,20 @@ export default function OrderFeedbackCard({
   // If already submitted and user is not editing, show elegant summary card
   if (isSubmitted && !isEditing) {
     return (
-      <div className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50 dark:from-emerald-950/40 dark:via-stone-850 dark:to-emerald-950/40 border-2 border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4 text-center sm:text-start">
+      <div className="bg-[#14181f]/95 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4 text-center sm:text-start font-cairo">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-600/30">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 shadow-md">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2 justify-center sm:justify-start">
-                <h3 className="text-base sm:text-lg font-black text-stone-900 dark:text-white font-cairo">
+                <h3 className="text-base sm:text-lg font-black text-white font-cairo">
                   {language === "ar" ? "شكراً لتقييمك ومشاركتنا رأيك!" : "Thank You for Your Feedback!"}
                 </h3>
-                <Sparkles className="w-4 h-4 text-amber-500" />
+                <Sparkles className="w-4 h-4 text-[#EFCC80]" />
               </div>
-              <p className="text-xs text-stone-600 dark:text-stone-300">
+              <p className="text-xs text-stone-300">
                 {language === "ar"
                   ? "رأيك يساهم في الحفاظ على أعلى معايير الجودة لبيتزا هاوس بالمكلا."
                   : "Your review helps Pizza House Mukalla maintain top quality and fast service."}
@@ -141,52 +141,52 @@ export default function OrderFeedbackCard({
           <button
             type="button"
             onClick={() => setIsEditing(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-600 dark:text-stone-300 hover:text-pizza-700 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 px-3.5 py-2 rounded-xl transition-all"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-300 hover:text-white bg-[#0c0e12] border border-[#222934] hover:border-[#EFCC80]/40 px-3.5 py-2 rounded-xl transition-all"
           >
-            <Edit3 className="w-3.5 h-3.5 text-pizza-600" />
+            <Edit3 className="w-3.5 h-3.5 text-[#EFCC80]" />
             <span>{language === "ar" ? "تعديل تقييمي" : "Edit Review"}</span>
           </button>
         </div>
 
         {/* Rating Overview Pills */}
         <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div className="p-3 bg-white dark:bg-stone-800 rounded-2xl border border-stone-200/80 dark:border-stone-700 space-y-1">
-            <span className="text-[11px] text-stone-500 block">
+          <div className="p-3 bg-[#0c0e12] rounded-2xl border border-[#222934] space-y-1">
+            <span className="text-[11px] text-stone-400 block">
               {language === "ar" ? "تقييم الوجبة والبيتزا:" : "Meal Quality:"}
             </span>
             <div className="flex items-center gap-1.5">
-              <div className="flex items-center text-amber-400">
+              <div className="flex items-center text-[#EFCC80]">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star
                     key={s}
                     className={`w-4 h-4 ${
-                      s <= mealRating ? "fill-amber-400 text-amber-400" : "text-stone-300"
+                      s <= mealRating ? "fill-[#EFCC80] text-[#EFCC80]" : "text-stone-600"
                     }`}
                   />
                 ))}
               </div>
-              <span className="font-bold text-stone-800 dark:text-stone-200 text-xs">
+              <span className="font-bold text-white text-xs">
                 ({mealRating}/5) {getMealLabel(mealRating)}
               </span>
             </div>
           </div>
 
-          <div className="p-3 bg-white dark:bg-stone-800 rounded-2xl border border-stone-200/80 dark:border-stone-700 space-y-1">
-            <span className="text-[11px] text-stone-500 block">
+          <div className="p-3 bg-[#0c0e12] rounded-2xl border border-[#222934] space-y-1">
+            <span className="text-[11px] text-stone-400 block">
               {language === "ar" ? "تقييم سرعة الخدمة والتجهيز:" : "Service & Speed:"}
             </span>
             <div className="flex items-center gap-1.5">
-              <div className="flex items-center text-amber-400">
+              <div className="flex items-center text-[#EFCC80]">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star
                     key={s}
                     className={`w-4 h-4 ${
-                      s <= serviceRating ? "fill-amber-400 text-amber-400" : "text-stone-300"
+                      s <= serviceRating ? "fill-[#EFCC80] text-[#EFCC80]" : "text-stone-600"
                     }`}
                   />
                 ))}
               </div>
-              <span className="font-bold text-stone-800 dark:text-stone-200 text-xs">
+              <span className="font-bold text-white text-xs">
                 ({serviceRating}/5) {getServiceLabel(serviceRating)}
               </span>
             </div>
@@ -194,7 +194,7 @@ export default function OrderFeedbackCard({
         </div>
 
         {comment && (
-          <div className="bg-white/70 dark:bg-stone-800/70 p-3 rounded-2xl border border-stone-200/60 dark:border-stone-700/60 text-xs italic text-stone-700 dark:text-stone-300">
+          <div className="bg-[#0c0e12] p-3 rounded-2xl border border-[#222934] text-xs italic text-stone-300">
             &quot;{comment}&quot;
           </div>
         )}
@@ -203,23 +203,23 @@ export default function OrderFeedbackCard({
   }
 
   return (
-    <div className="bg-white dark:bg-stone-850 rounded-3xl p-6 sm:p-8 border border-stone-200 dark:border-stone-800 shadow-sm space-y-6">
+    <div className="bg-[#14181f]/95 rounded-3xl p-6 sm:p-8 border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-6 font-cairo">
       <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-          <Star className="w-6 h-6 fill-amber-400 text-amber-500" />
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center shrink-0 shadow-md shadow-[#EFCC80]/20">
+          <Star className="w-6 h-6 fill-[#2C1A04]" />
         </div>
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <h3 className="text-base sm:text-lg font-black text-stone-900 dark:text-white font-cairo">
+            <h3 className="text-base sm:text-lg font-black text-white font-cairo">
               {language === "ar"
                 ? "كيف كانت تجربتك مع طلبك اليوم؟"
                 : "How was your meal and service today?"}
             </h3>
-            <span className="text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">
+            <span className="text-xs bg-[#0c0e12] border border-[#222934] text-[#EFCC80] px-2.5 py-0.5 rounded-full font-bold font-outfit">
               {orderNumber}
             </span>
           </div>
-          <p className="text-xs text-stone-500 dark:text-stone-400">
+          <p className="text-xs text-stone-400">
             {language === "ar"
               ? "يسعدنا معرفة رأيك في مذاق البيتزا وسرعة التجهيز لمساعدتنا على تقديم أفضل تجربة دائماً."
               : "Tell us about your pizza quality and service speed to help us continuously elevate our craft."}
@@ -229,13 +229,13 @@ export default function OrderFeedbackCard({
 
       <form onSubmit={handleSubmit} className="space-y-6 pt-2">
         {/* Rating 1: Meal & Food Quality */}
-        <div className="space-y-2 p-4 bg-stone-50 dark:bg-stone-800/50 rounded-2xl border border-stone-200/60 dark:border-stone-750">
+        <div className="space-y-2 p-4 bg-[#0c0e12] rounded-2xl border border-[#222934]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-            <label className="text-xs font-bold text-stone-900 dark:text-white flex items-center gap-1.5">
+            <label className="text-xs font-bold text-white flex items-center gap-1.5">
               <span>🍕 {language === "ar" ? "تقييم جودة البيتزا والوجبة" : "Pizza & Food Quality"}</span>
-              <span className="text-red-500">*</span>
+              <span className="text-[#EFCC80]">*</span>
             </label>
-            <span className="text-xs font-bold text-amber-600 dark:text-amber-400">
+            <span className="text-xs font-bold text-[#EFCC80]">
               {getMealLabel(hoverMeal || mealRating)}
             </span>
           </div>
@@ -256,8 +256,8 @@ export default function OrderFeedbackCard({
                   <Star
                     className={`w-7 h-7 sm:w-8 sm:h-8 transition-colors ${
                       isFilled
-                        ? "fill-amber-400 text-amber-400 drop-shadow-sm"
-                        : "text-stone-300 dark:text-stone-600"
+                        ? "fill-[#EFCC80] text-[#EFCC80] drop-shadow-sm"
+                        : "text-stone-700"
                     }`}
                   />
                 </button>
@@ -267,13 +267,13 @@ export default function OrderFeedbackCard({
         </div>
 
         {/* Rating 2: Service & Preparation Speed */}
-        <div className="space-y-2 p-4 bg-stone-50 dark:bg-stone-800/50 rounded-2xl border border-stone-200/60 dark:border-stone-750">
+        <div className="space-y-2 p-4 bg-[#0c0e12] rounded-2xl border border-[#222934]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-            <label className="text-xs font-bold text-stone-900 dark:text-white flex items-center gap-1.5">
+            <label className="text-xs font-bold text-white flex items-center gap-1.5">
               <span>⚡ {language === "ar" ? "تقييم سرعة التجهيز والخدمة" : "Service & Prep Speed"}</span>
-              <span className="text-red-500">*</span>
+              <span className="text-[#EFCC80]">*</span>
             </label>
-            <span className="text-xs font-bold text-amber-600 dark:text-amber-400">
+            <span className="text-xs font-bold text-[#EFCC80]">
               {getServiceLabel(hoverService || serviceRating)}
             </span>
           </div>
@@ -294,8 +294,8 @@ export default function OrderFeedbackCard({
                   <Star
                     className={`w-7 h-7 sm:w-8 sm:h-8 transition-colors ${
                       isFilled
-                        ? "fill-amber-400 text-amber-400 drop-shadow-sm"
-                        : "text-stone-300 dark:text-stone-600"
+                        ? "fill-[#EFCC80] text-[#EFCC80] drop-shadow-sm"
+                        : "text-stone-700"
                     }`}
                   />
                 </button>
@@ -306,7 +306,7 @@ export default function OrderFeedbackCard({
 
         {/* Quick Tag Pills */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
+          <label className="text-xs font-bold text-stone-300 block">
             {language === "ar" ? "ما الذي أعجبك أكثر؟ (اختياري)" : "What did you like most? (Optional)"}
           </label>
           <div className="flex flex-wrap gap-2">
@@ -317,10 +317,10 @@ export default function OrderFeedbackCard({
                   key={tag.id}
                   type="button"
                   onClick={() => toggleTag(tag.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all border ${
                     isSelected
-                      ? "bg-pizza-600 text-white border-pizza-600 shadow-xs"
-                      : "bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-750 text-stone-700 dark:text-stone-300 border-stone-200 dark:border-stone-700"
+                      ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] shadow-sm"
+                      : "bg-[#0c0e12] hover:bg-[#1a202c] text-stone-300 border-[#222934]"
                   }`}
                 >
                   {language === "ar" ? tag.labelAr : tag.labelEn}
@@ -332,8 +332,8 @@ export default function OrderFeedbackCard({
 
         {/* Comment field */}
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
-            <MessageSquare className="w-3.5 h-3.5 text-pizza-600" />
+          <label className="text-xs font-bold text-stone-300 flex items-center gap-1.5">
+            <MessageSquare className="w-3.5 h-3.5 text-[#EFCC80]" />
             <span>
               {language === "ar"
                 ? "ملاحظاتك واقتراحاتك لتطوير الخدمة (اختياري)"
@@ -350,9 +350,9 @@ export default function OrderFeedbackCard({
                 ? "شاركنا أي ملاحظة حول الطعم، حرارة البيتزا، أو مستوى الخدمة..."
                 : "Share any thoughts on taste, temperature, or service..."
             }
-            className="w-full px-4 py-3 rounded-2xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 focus:outline-none focus:ring-2 focus:ring-pizza-500 text-xs sm:text-sm text-stone-900 dark:text-white transition-all placeholder:text-stone-400"
+            className="w-full px-4 py-3 rounded-2xl bg-[#0c0e12] border border-[#222934] focus:outline-none focus:border-[#EFCC80] text-xs sm:text-sm text-white transition-all placeholder:text-stone-600 font-bold"
           />
-          <div className="flex justify-between items-center text-[11px] text-stone-400 px-1">
+          <div className="flex justify-between items-center text-[11px] text-stone-500 px-1">
             <span>
               {language === "ar"
                 ? "تصل الملاحظات مباشرة إلى إدارة بيتزا هاوس"
@@ -363,7 +363,7 @@ export default function OrderFeedbackCard({
         </div>
 
         {errorMsg && (
-          <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs font-bold">
+          <div className="p-3 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs font-bold">
             {errorMsg}
           </div>
         )}
@@ -373,7 +373,7 @@ export default function OrderFeedbackCard({
           <button
             type="submit"
             disabled={isPending}
-            className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 disabled:opacity-50 font-bold py-3.5 px-6 rounded-2xl text-xs sm:text-sm shadow-md shadow-amber-950/40 active:scale-95 transition-all"
+            className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 disabled:opacity-50 font-black py-3.5 px-6 rounded-2xl text-xs sm:text-sm shadow-md shadow-[#EFCC80]/20 active:scale-95 transition-all font-cairo"
           >
             <Send className="w-4 h-4" />
             <span>
@@ -391,7 +391,7 @@ export default function OrderFeedbackCard({
             <button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="px-5 py-3.5 rounded-2xl border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 text-xs font-bold hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              className="px-5 py-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12] text-stone-300 hover:text-white text-xs font-bold hover:bg-[#1a202c] transition-colors"
             >
               {language === "ar" ? "إلغاء" : "Cancel"}
             </button>

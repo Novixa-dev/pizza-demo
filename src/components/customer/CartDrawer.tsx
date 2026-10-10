@@ -31,18 +31,18 @@ export default function CartDrawer() {
 
       {/* Slide-over panel */}
       <div className="fixed inset-y-0 end-0 max-w-full flex w-full sm:max-w-md animate-in slide-in-from-end duration-300">
-        <div className="w-full bg-white dark:bg-stone-900 shadow-2xl flex flex-col justify-between border-s border-stone-200 dark:border-stone-800 transition-colors">
+        <div className="w-full bg-[#0c0e14]/95 backdrop-blur-2xl shadow-2xl flex flex-col justify-between border-s border-[#C69843]/30 transition-colors text-white font-cairo">
           {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-pizza-100 dark:bg-pizza-950 flex items-center justify-center text-pizza-700 dark:text-pizza-300">
+          <div className="p-4 sm:p-5 border-b border-[#222934] flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] flex items-center justify-center text-[#2C1A04] shadow-md shadow-[#EFCC80]/20 flex-shrink-0">
                 <ShoppingBag className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+                <h3 className="text-base font-bold text-white font-cairo">
                   {dict.cart.title}
                 </h3>
-                <span className="text-xs text-stone-500">
+                <span className="text-xs text-[#EFCC80] font-bold">
                   {cartCount} {language === "ar" ? "أصناف" : "items"}
                 </span>
               </div>
@@ -52,7 +52,7 @@ export default function CartDrawer() {
               {cart.length > 0 && (
                 <button
                   onClick={clearCart}
-                  className="text-xs text-red-600 hover:text-red-700 dark:text-red-400 p-1.5 rounded hover:bg-red-50 dark:hover:bg-red-950/40"
+                  className="text-xs text-red-400 hover:text-red-300 p-1.5 rounded-lg hover:bg-red-950/40 transition-colors"
                   title={dict.cart.clear}
                 >
                   <Trash2 className="w-4 h-4" />
@@ -60,7 +60,7 @@ export default function CartDrawer() {
               )}
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="p-1.5 text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800"
+                className="p-1.5 text-stone-400 hover:text-white rounded-lg hover:bg-[#1a202c] transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -68,22 +68,22 @@ export default function CartDrawer() {
           </div>
 
           {/* Items List */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3.5">
             {cart.length === 0 ? (
               <div className="text-center py-16 px-4 space-y-3">
-                <div className="w-16 h-16 rounded-full bg-stone-100 dark:bg-stone-800 flex items-center justify-center mx-auto text-stone-400">
+                <div className="w-16 h-16 rounded-2xl bg-[#14181f] border border-[#222934] flex items-center justify-center mx-auto text-[#EFCC80] shadow-md">
                   <ShoppingBag className="w-8 h-8" />
                 </div>
-                <h4 className="text-base font-bold text-stone-800 dark:text-stone-200">
+                <h4 className="text-base font-bold text-white">
                   {dict.cart.emptyTitle}
                 </h4>
-                <p className="text-xs text-stone-500 max-w-xs mx-auto">
+                <p className="text-xs text-stone-400 max-w-xs mx-auto">
                   {dict.cart.emptyDesc}
                 </p>
                 <div className="pt-2">
                   <button
                     onClick={() => setIsCartOpen(false)}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-pizza-700 dark:text-pizza-400 bg-pizza-50 dark:bg-pizza-950/60 px-4 py-2 rounded-xl"
+                    className="inline-flex items-center gap-1.5 text-xs font-black text-[#2C1A04] bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 px-5 py-2.5 rounded-xl shadow-md shadow-[#EFCC80]/20 transition-all"
                   >
                     <span>{dict.cart.continueShopping}</span>
                     {language === "ar" ? (
@@ -98,9 +98,9 @@ export default function CartDrawer() {
               cart.map((item) => (
                 <div
                   key={item.cartItemId}
-                  className="p-3 bg-stone-50 dark:bg-stone-850 rounded-2xl border border-stone-200/60 dark:border-stone-800/80 flex gap-3 transition-colors"
+                  className="p-3 bg-[#14181f]/80 rounded-2xl border border-[#222934] hover:border-[#EFCC80]/30 flex gap-3 transition-colors shadow-sm"
                 >
-                  <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-stone-200 dark:bg-stone-800">
+                  <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-[#0c0e12] border border-[#222934]">
                     <Image
                       src={item.imageUrl}
                       alt={language === "ar" ? item.nameAr : item.nameEn}
@@ -113,12 +113,12 @@ export default function CartDrawer() {
                   <div className="flex-1 min-w-0 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-start">
-                        <h4 className="text-sm font-bold text-stone-900 dark:text-white truncate">
+                        <h4 className="text-sm font-bold text-white truncate">
                           {language === "ar" ? item.nameAr : item.nameEn}
                         </h4>
                         <button
                           onClick={() => removeFromCart(item.cartItemId)}
-                          className="text-stone-400 hover:text-red-500 p-0.5"
+                          className="text-stone-400 hover:text-red-400 p-0.5 transition-colors"
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
@@ -126,7 +126,7 @@ export default function CartDrawer() {
 
                       {/* Selected Options Summary */}
                       {item.selectedOptions && item.selectedOptions.length > 0 && (
-                        <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1 line-clamp-2">
+                        <div className="text-[11px] text-[#EFCC80] mt-1 line-clamp-2">
                           {item.selectedOptions
                             .map((o) => (language === "ar" ? o.optionNameAr : o.optionNameEn))
                             .join(" • ")}
@@ -134,28 +134,28 @@ export default function CartDrawer() {
                       )}
 
                       {item.notes && (
-                        <p className="text-[10px] text-pizza-700 dark:text-pizza-400 mt-0.5 italic truncate">
+                        <p className="text-[10px] text-amber-300 mt-0.5 italic truncate">
                           &quot;{item.notes}&quot;
                         </p>
                       )}
                     </div>
 
-                    <div className="flex justify-between items-center mt-2 pt-1 border-t border-stone-200/40 dark:border-stone-800/40">
+                    <div className="flex justify-between items-center mt-2 pt-1.5 border-t border-[#222934]">
                       {/* Quantity Selector */}
-                      <div className="flex items-center gap-1.5 bg-white dark:bg-stone-800 px-1.5 py-0.5 rounded-lg border border-stone-200 dark:border-stone-700">
+                      <div className="flex items-center gap-1.5 bg-[#0c0e12] px-1.5 py-0.5 rounded-lg border border-[#222934]">
                         <button
                           onClick={() => updateQuantity(item.cartItemId, -1)}
-                          className="p-1 text-stone-500 hover:text-stone-900 dark:hover:text-white"
+                          className="p-1 text-stone-400 hover:text-white transition-colors"
                           aria-label="Decrease quantity"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="text-xs font-bold font-outfit px-1">
+                        <span className="text-xs font-bold font-outfit px-1 text-white">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => updateQuantity(item.cartItemId, 1)}
-                          className="p-1 text-stone-500 hover:text-stone-900 dark:hover:text-white"
+                          className="p-1 text-stone-400 hover:text-white transition-colors"
                           aria-label="Increase quantity"
                         >
                           <Plus className="w-3 h-3" />
@@ -163,9 +163,9 @@ export default function CartDrawer() {
                       </div>
 
                       {/* Item Total */}
-                      <div className="text-sm font-black text-stone-900 dark:text-stone-100 font-outfit">
+                      <div className="text-sm font-black text-[#EFCC80] font-outfit">
                         {item.subtotal.toLocaleString()}{" "}
-                        <span className="text-xs font-normal font-cairo text-stone-500">
+                        <span className="text-xs font-normal font-cairo text-stone-400">
                           {dict.menu.currency}
                         </span>
                       </div>
@@ -178,17 +178,17 @@ export default function CartDrawer() {
 
           {/* Footer & Checkout Action */}
           {cart.length > 0 && (
-            <div className="p-4 sm:p-5 border-t border-stone-200 dark:border-stone-800 bg-stone-50/80 dark:bg-stone-900/90 space-y-3">
-              <div className="flex justify-between items-center text-sm text-stone-600 dark:text-stone-400">
+            <div className="p-4 sm:p-5 border-t border-[#222934] bg-[#0c0e12] space-y-3">
+              <div className="flex justify-between items-center text-sm text-stone-400">
                 <span>{dict.cart.subtotal}</span>
-                <span className="font-bold font-outfit text-stone-900 dark:text-white">
+                <span className="font-bold font-outfit text-white">
                   {cartTotal.toLocaleString()} {dict.menu.currency}
                 </span>
               </div>
 
-              <div className="flex justify-between items-center text-base font-black text-stone-900 dark:text-white pt-1 border-t border-stone-200 dark:border-stone-800">
+              <div className="flex justify-between items-center text-base font-black text-white pt-1.5 border-t border-[#222934]">
                 <span>{dict.cart.total}</span>
-                <span className="text-xl text-pizza-700 dark:text-pizza-400 font-outfit">
+                <span className="text-xl text-[#EFCC80] font-outfit font-black">
                   {cartTotal.toLocaleString()} {dict.menu.currency}
                 </span>
               </div>
@@ -196,7 +196,7 @@ export default function CartDrawer() {
               <a
                 href="/checkout"
                 onClick={() => setIsCartOpen(false)}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 py-3.5 px-4 rounded-xl text-base font-bold shadow-lg shadow-amber-950/30 active:scale-[0.99] transition-all font-cairo"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 text-[#2C1A04] py-3.5 px-4 rounded-xl text-base font-black shadow-lg shadow-[#EFCC80]/20 active:scale-[0.99] transition-all font-cairo"
               >
                 <span>{dict.cart.checkout}</span>
                 {language === "ar" ? (

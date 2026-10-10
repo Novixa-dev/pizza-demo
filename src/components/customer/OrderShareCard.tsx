@@ -153,21 +153,21 @@ Direct tracking link:`;
   return (
     <>
       {/* Prominent Share Banner / Button on Tracking Page */}
-      <div className="bg-gradient-to-r from-amber-50 via-white to-pizza-50 dark:from-stone-850 dark:via-stone-850 dark:to-stone-850 p-4 sm:p-5 rounded-3xl border border-amber-200/80 dark:border-stone-800 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-[#14181f]/95 p-4 sm:p-5 rounded-3xl border border-[#222934] hover:border-[#EFCC80]/40 shadow-[0_12px_32px_rgba(0,0,0,0.85)] flex flex-col sm:flex-row items-center justify-between gap-4 font-cairo">
         <div className="flex items-center gap-3.5 text-center sm:text-start">
-          <div className="w-11 h-11 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-            <Share2 className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center shrink-0 shadow-md shadow-[#EFCC80]/20">
+            <Share2 className="w-5 h-5 text-[#2C1A04]" />
           </div>
           <div>
             <div className="flex items-center gap-1.5 justify-center sm:justify-start">
-              <h4 className="text-xs sm:text-sm font-bold text-stone-900 dark:text-white font-cairo">
+              <h4 className="text-xs sm:text-sm font-black text-white font-cairo">
                 {language === "ar"
                   ? "مشاركة رابط التتبع مع العائلة أو الأصدقاء"
                   : "Share Order Tracking with Family or Friends"}
               </h4>
-              <Users className="w-3.5 h-3.5 text-amber-500" />
+              <Users className="w-3.5 h-3.5 text-[#EFCC80]" />
             </div>
-            <p className="text-[11px] text-stone-500 dark:text-stone-400">
+            <p className="text-[11px] text-stone-400">
               {language === "ar"
                 ? "يمكن لأصدقائك متابعة مراحل الخبز والاستلام في الفرن الحجري لحظة بلحظة."
                 : "Allow friends to track stone-oven baking progress and pickup time live."}
@@ -180,7 +180,7 @@ Direct tracking link:`;
           <button
             type="button"
             onClick={handlePrimaryShare}
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-bold px-4 py-2.5 rounded-2xl text-xs shadow-md shadow-amber-950/40 active:scale-95 transition-all"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black px-4 py-2.5 rounded-2xl text-xs shadow-md shadow-[#EFCC80]/20 active:scale-95 transition-all font-cairo"
           >
             <Share2 className="w-4 h-4" />
             <span>{language === "ar" ? "مشاركة الرابط 📲" : "Share Progress 📲"}</span>
@@ -190,19 +190,19 @@ Direct tracking link:`;
           <button
             type="button"
             onClick={handleCopyLink}
-            className="inline-flex items-center justify-center gap-1.5 bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-750 text-stone-700 dark:text-stone-200 font-bold px-3.5 py-2.5 rounded-2xl text-xs border border-stone-200 dark:border-stone-700 transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 bg-[#0c0e12] hover:bg-[#1a202c] text-stone-300 hover:text-white font-bold px-3.5 py-2.5 rounded-2xl text-xs border border-[#222934] transition-colors"
             title={language === "ar" ? "نسخ الرابط المباشر" : "Copy Link"}
           >
             {isCopied ? (
               <>
-                <Check className="w-4 h-4 text-emerald-600" />
-                <span className="text-emerald-600 font-bold">
+                <Check className="w-4 h-4 text-emerald-400" />
+                <span className="text-emerald-400 font-bold">
                   {language === "ar" ? "تم النسخ!" : "Copied!"}
                 </span>
               </>
             ) : (
               <>
-                <Copy className="w-4 h-4 text-stone-500" />
+                <Copy className="w-4 h-4 text-stone-400" />
                 <span>{language === "ar" ? "نسخ" : "Copy"}</span>
               </>
             )}
@@ -212,7 +212,7 @@ Direct tracking link:`;
           <button
             type="button"
             onClick={() => setShowQrModal(true)}
-            className="p-2.5 rounded-2xl bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-750 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-700 transition-colors"
+            className="p-2.5 rounded-2xl bg-[#0c0e12] hover:bg-[#1a202c] text-stone-300 hover:text-[#EFCC80] border border-[#222934] transition-colors"
             title={language === "ar" ? "رمز الاستجابة السريعة QR" : "Show QR Code"}
             aria-label="Show QR Code"
           >
@@ -224,21 +224,21 @@ Direct tracking link:`;
       {/* Social Media Share Modal */}
       {showShareModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-xs animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-sm bg-white dark:bg-stone-900 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-800 overflow-hidden p-6 space-y-5">
+          <div className="relative w-full max-w-sm bg-[#14181f] rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] border border-[#222934] overflow-hidden p-6 space-y-5 font-cairo">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-600 flex items-center justify-center">
-                  <Share2 className="w-4 h-4" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center shadow-md shadow-[#EFCC80]/20">
+                  <Share2 className="w-5 h-5 text-[#2C1A04]" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-stone-900 dark:text-white font-cairo">
+                  <h3 className="text-sm font-black text-white font-cairo">
                     {language === "ar" ? "مشاركة تتبع الطلب" : "Share Order Tracking"}
                   </h3>
-                  <span className="text-[11px] text-stone-400 font-outfit">
+                  <span className="text-[11px] text-[#EFCC80] font-outfit">
                     {orderNumber}
                   </span>
                 </div>
@@ -247,13 +247,13 @@ Direct tracking link:`;
               <button
                 type="button"
                 onClick={() => setShowShareModal(false)}
-                className="p-1.5 rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-100 dark:hover:bg-stone-800"
+                className="p-1.5 rounded-full text-stone-400 hover:text-white hover:bg-[#1a202c] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-xs text-stone-500 leading-relaxed">
+            <p className="text-xs text-stone-400 leading-relaxed">
               {language === "ar"
                 ? "اختر التطبيق لمشاركة رابط التتبع المباشر مع عائلتك أو أصدقائك:"
                 : "Choose an app to share the live tracking link with family or friends:"}
@@ -268,7 +268,7 @@ Direct tracking link:`;
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => setShowShareModal(false)}
-                  className="flex items-center justify-between p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/80 hover:bg-stone-100 dark:hover:bg-stone-750 border border-stone-200/80 dark:border-stone-700 text-xs font-bold text-stone-800 dark:text-stone-200 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-[#0c0e12] hover:bg-[#1a202c] border border-[#222934] hover:border-[#EFCC80]/30 text-xs font-bold text-stone-300 hover:text-white transition-colors"
                 >
                   <span className="flex items-center gap-2.5">
                     <span
@@ -278,14 +278,14 @@ Direct tracking link:`;
                     </span>
                     <span>{channel.name}</span>
                   </span>
-                  <ExternalLink className="w-3.5 h-3.5 text-stone-400" />
+                  <ExternalLink className="w-3.5 h-3.5 text-stone-500" />
                 </a>
               ))}
             </div>
 
             {/* Link Preview and Copy Input */}
-            <div className="pt-2 border-t border-stone-100 dark:border-stone-800 space-y-1.5">
-              <label className="text-[11px] font-bold text-stone-500 block">
+            <div className="pt-2 border-t border-[#222934] space-y-1.5">
+              <label className="text-[11px] font-bold text-stone-400 block">
                 {language === "ar" ? "أو انسخ الرابط المباشر:" : "Or copy direct link:"}
               </label>
               <div className="flex items-center gap-2">
@@ -293,12 +293,12 @@ Direct tracking link:`;
                   type="text"
                   readOnly
                   value={url}
-                  className="flex-1 text-[11px] p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-300 font-mono truncate select-all"
+                  className="flex-1 text-[11px] p-2.5 rounded-xl bg-[#0c0e12] border border-[#222934] text-stone-300 font-mono truncate select-all focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="px-3 py-2.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 rounded-xl text-xs font-bold shrink-0 transition-all"
+                  className="px-3 py-2.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 rounded-xl text-xs font-black shrink-0 transition-all shadow-md shadow-[#EFCC80]/20 font-cairo"
                 >
                   {isCopied
                     ? language === "ar"
@@ -317,28 +317,28 @@ Direct tracking link:`;
       {/* QR Code Modal for easy camera scan */}
       {showQrModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-xs animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-xs bg-white dark:bg-stone-900 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-800 p-6 text-center space-y-4">
+          <div className="relative w-full max-w-xs bg-[#14181f] rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] border border-[#222934] p-6 text-center space-y-4 font-cairo">
             <button
               type="button"
               onClick={() => setShowQrModal(false)}
-              className="absolute top-4 end-4 p-1.5 rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-100 dark:hover:bg-stone-800"
+              className="absolute top-4 end-4 p-1.5 rounded-full text-stone-400 hover:text-white hover:bg-[#1a202c] transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="space-y-1 pt-2">
-              <h3 className="text-sm font-bold text-stone-900 dark:text-white font-cairo">
+              <h3 className="text-sm font-black text-white font-cairo">
                 {language === "ar" ? "مسح رمز التتبع (QR Code)" : "Scan to Track (QR Code)"}
               </h3>
-              <p className="text-xs text-stone-500 font-outfit">{orderNumber}</p>
+              <p className="text-xs text-[#EFCC80] font-outfit">{orderNumber}</p>
             </div>
 
             {/* QR Image Container */}
-            <div className="p-3 bg-white rounded-2xl border border-stone-200 shadow-inner inline-block">
+            <div className="p-3 bg-white rounded-2xl border border-white/20 shadow-inner inline-block">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrImageUrl}
@@ -348,7 +348,7 @@ Direct tracking link:`;
               />
             </div>
 
-            <p className="text-[11px] text-stone-500 leading-relaxed">
+            <p className="text-[11px] text-stone-400 leading-relaxed">
               {language === "ar"
                 ? "امسح الرمز بكاميرا الجوال لمتابعة حالة الطلب مباشرة دون الحاجة لنسخ الرابط."
                 : "Scan with your phone camera to track this order instantly."}
@@ -357,7 +357,7 @@ Direct tracking link:`;
             <button
               type="button"
               onClick={() => setShowQrModal(false)}
-              className="w-full py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 text-xs font-bold hover:bg-stone-200 transition-colors"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 text-xs font-black transition-all shadow-md shadow-[#EFCC80]/20 font-cairo"
             >
               {language === "ar" ? "إغلاق" : "Close"}
             </button>

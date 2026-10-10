@@ -10,8 +10,10 @@ import {
   Flame,
   CheckCircle2,
   ChevronDown,
+  Phone,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
+import FloatingParticles from "./FloatingParticles";
 
 interface HeroSectionProps {
   language: string;
@@ -38,55 +40,55 @@ export default function HeroSection({
   const [selectedTime, setSelectedTime] = useState<"asap" | "later">("asap");
   const [addedItemMessage, setAddedItemMessage] = useState<string | null>(null);
 
-  // The 4 Signature Gourmet Pies
+  // The 4 Signature Gourmet Pies (Aligned 100% with Specification)
   const signaturePies = [
     {
-      id: "sig-truffle",
-      nameEn: "Truffle Mushroom",
-      nameAr: "بيتزا ماشروم بالترفل",
-      priceYER: "4,800 YER",
-      numericPrice: 4800,
+      id: "sig-burrata",
+      nameEn: "Spicy Burrata",
+      nameAr: "سبايسي بوراتا الإيطالية",
+      priceYER: "YER 4,900",
+      numericPrice: 4900,
       rating: 4.9,
-      descEn: "White truffle crema, roasted forest mushrooms, melted cheese",
-      descAr: "كريمة الترفل البيضاء، فطر بري مشوي... بطير البشاميل...",
-      image: "/images/aura/pan_truffle.png",
-      fallbackImage: "https://images.unsplash.com/photo-1511688878353-3a2f5be94cd7?q=80&w=800",
-    },
-    {
-      id: "sig-pepperoni",
-      nameEn: "Double Pepperoni",
-      nameAr: "دبل بيبروني كرسبي",
-      priceYER: "4,200 YER",
-      numericPrice: 4800,
-      rating: 4.8,
-      descEn: "Double crispy beef pepperoni cups, rich tomato base",
-      descAr: "شرائح بيبروني بقري مضاعفة مضاعفة دبل البيبروني...",
-      image: "/images/aura/pan_pepperoni.png",
-      fallbackImage: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=800",
+      descEn: "Creamy artisanal burrata cheese, hot chili crisp crunch",
+      descAr: "كرية جبنة بوراتا كريمية، صوص حار كرنش...",
+      image: "/images/aura/spicy-burrata.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1555072956-7758afb20e8f?q=80&w=800",
     },
     {
       id: "sig-margherita",
       nameEn: "Margherita Craft",
       nameAr: "مارغريتا كرافت الحجرية",
-      priceYER: "3,500 YER",
+      priceYER: "YER 3,500",
       numericPrice: 3500,
       rating: 4.7,
       descEn: "San Marzano tomato sauce, fresh mozzarella patches, basil",
-      descAr: "صلصة سان مارزانو، موزاريلا طازجة ملسة كريزاا...",
-      image: "/images/aura/pan_margherita.png",
+      descAr: "صلصة سان مارزانو، موزاريلا طارتي عمنة...",
+      image: "/images/aura/margherita-craft.jpg",
       fallbackImage: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=800",
     },
     {
-      id: "sig-burrata",
-      nameEn: "Spicy Burrata",
-      nameAr: "سبايسي بوراتا الإيطالية",
-      priceYER: "4,900 YER",
-      numericPrice: 4900,
+      id: "sig-pepperoni",
+      nameEn: "Double Pepperoni",
+      nameAr: "دبل بيبروني كرسبي",
+      priceYER: "YER 4,200",
+      numericPrice: 4200,
+      rating: 4.8,
+      descEn: "Double crispy beef pepperoni cups, rich tomato base",
+      descAr: "شرائح بيبروني بقري مضاعفة مضاعفة دبل...",
+      image: "/images/aura/double-pepperoni.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=800",
+    },
+    {
+      id: "sig-truffle",
+      nameEn: "Truffle Mushroom",
+      nameAr: "بيتزا ماشروم بالترفل",
+      priceYER: "YER 4,800",
+      numericPrice: 4800,
       rating: 4.9,
-      descEn: "Creamy artisanal burrata cheese, hot chili crisp crunch",
-      descAr: "كرة جبنة بوراتا كريمية، صوص حار كريسب...",
-      image: "/images/aura/pan_burrata.png",
-      fallbackImage: "https://images.unsplash.com/photo-1555072956-7758afb20e8f?q=80&w=800",
+      descEn: "White truffle crema, roasted forest mushrooms, melted cheese",
+      descAr: "كريمة الترفل البيضاء، فطر بري مشوي...",
+      image: "/images/aura/truffle-mushroom.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1511688878353-3a2f5be94cd7?q=80&w=800",
     },
   ];
 
@@ -106,7 +108,8 @@ export default function HeroSection({
       productId: pie.id,
       nameAr: pie.nameAr,
       nameEn: pie.nameEn,
-      price: pie.numericPrice,
+      basePrice: pie.numericPrice,
+      unitPrice: pie.numericPrice,
       quantity: 1,
       selectedOptions: [],
       imageUrl: pie.image,
@@ -316,67 +319,77 @@ export default function HeroSection({
       </div>
 
       {/* =========================================================================
-          "التواقيع الحرفية" - SIGNATURE PIZZAS SECTION
+          "التواقيع الحرفية" - SIGNATURE PIZZAS SECTION (100% Matching Specification)
       ========================================================================= */}
-      <section className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto w-full font-cairo">
-        <h2 className="text-2xl font-bold text-white font-cairo mb-5 text-start tracking-wide">
-          التواقيع الحرفية
-        </h2>
+      <section className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto w-full font-cairo overflow-visible">
+        {/* Environmental Floating Particles (Basil, Chili Flakes, Flour Specks) */}
+        <FloatingParticles />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo text-start tracking-wide">
+            التواقيع الحرفية
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative z-20">
           {signaturePies.map((pie) => (
             <div
               key={pie.id}
-              className="bg-[#16171b]/85 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 flex flex-row-reverse items-center gap-3.5 hover:border-[#dab165]/50 hover:scale-[1.02] transition-all duration-300 shadow-xl group"
+              className="bg-[#16171e]/90 backdrop-blur-md border border-[#C69843]/35 hover:border-[#EFCC80] rounded-2xl p-3.5 sm:p-4 flex flex-row items-center justify-between gap-3 hover:scale-[1.02] transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.25)] group relative overflow-visible"
             >
-              {/* Circular Pan on Left */}
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-[#1a1b20] border border-white/10 shadow-[0_8px_20px_rgba(0,0,0,0.8)] shrink-0 flex items-center justify-center overflow-hidden">
-                <Image
-                  src={pie.image}
-                  alt={pie.nameAr}
-                  width={110}
-                  height={110}
-                  className="w-full h-full object-cover rounded-full group-hover:rotate-6 transition-transform duration-500"
-                  onError={(e) => {
-                    const target = e.currentTarget as HTMLImageElement;
-                    if (target.src !== pie.fallbackImage) {
-                      target.src = pie.fallbackImage;
-                    }
-                  }}
-                />
-              </div>
-
-              {/* Info on Right */}
-              <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5 text-right font-cairo">
+              {/* Info on Right (Child 1 in RTL) */}
+              <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5 text-right font-cairo z-10 pe-1">
                 <div>
-                  <div className="flex items-center justify-end gap-1 text-[#EFCC80] text-xs font-bold mb-1">
-                    <span>★</span>
-                    <span>{pie.rating}</span>
+                  {/* Rating Badge */}
+                  <div className="flex items-center justify-start gap-1 text-[#EFCC80] text-xs font-bold mb-1">
+                    <span className="text-amber-400">★</span>
+                    <span className="font-outfit">{pie.rating}</span>
                   </div>
 
                   <h3 className="font-bold text-white text-sm sm:text-base font-cairo truncate">
                     {pie.nameAr}
                   </h3>
 
-                  <p className="text-[11px] text-[#8c8c96] font-cairo line-clamp-2 mt-0.5 leading-tight">
+                  <p className="text-[11px] text-[#9ca3af] font-cairo line-clamp-2 mt-1 leading-relaxed">
                     {pie.descAr}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between mt-2 pt-1 border-t border-white/5">
-                  <span className="font-bold text-xs sm:text-sm text-gray-200 font-cairo">
-                    {pie.priceYER}
-                  </span>
-
+                <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/5">
+                  {/* + Button on Right in RTL */}
                   <button
                     type="button"
                     onClick={() => handleAddSignaturePie(pie)}
-                    className="w-7 h-7 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 font-black flex items-center justify-center text-sm shadow-md active:scale-90 transition-all cursor-pointer"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-bold flex items-center justify-center text-base sm:text-lg shadow-[0_2px_12px_rgba(198,152,67,0.4)] active:scale-90 transition-all cursor-pointer"
                     title="أضف إلى السلة"
                     aria-label={`Add ${pie.nameAr} to cart`}
                   >
                     +
                   </button>
+
+                  {/* Price on Left in RTL */}
+                  <span className="font-bold text-xs sm:text-sm text-[#EFCC80] font-outfit tracking-wide">
+                    {pie.priceYER}
+                  </span>
+                </div>
+              </div>
+
+              {/* Realistic 3D-Overlapping Circular Dish on Left (Child 2 in RTL) */}
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-[#0c0d11] border-2 border-[#2b2c35] shadow-[0_12px_28px_rgba(0,0,0,0.95),0_0_15px_rgba(0,0,0,0.8)] shrink-0 flex items-center justify-center -me-2 sm:-me-3">
+                <div className="relative w-full h-full rounded-full overflow-hidden">
+                  <Image
+                    src={pie.image}
+                    alt={pie.nameAr}
+                    fill
+                    sizes="112px"
+                    className="object-cover rounded-full group-hover:rotate-6 group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target.src !== pie.fallbackImage) {
+                        target.src = pie.fallbackImage;
+                      }
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -384,47 +397,43 @@ export default function HeroSection({
         </div>
       </section>
 
-      {/* ================= OPERATIONAL STATUS SUB-BAR ================= */}
-      <div className="w-full bg-[#0a0b0e] border-t border-[#dab165]/10 py-2.5 px-4 sm:px-6 relative z-10 font-cairo">
-        <div className="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs text-gray-400">
-          <div className="flex items-center gap-2">
-            <span
-              className={`w-2 h-2 rounded-full ${
-                opStatus.status === "OPEN_FOR_ORDERING"
-                  ? "bg-emerald-400 animate-pulse"
-                  : "bg-amber-400 animate-ping"
-              }`}
-            />
-            <span className="font-bold text-white font-cairo">
-              {opStatus.badgeLabelAr}
+      {/* ================= MIDDLE INFORMATIONAL BAR ================= */}
+      <div className="w-full bg-[#0a0b0e] border-y border-[#dab165]/15 py-3 px-4 sm:px-8 relative z-20 font-cairo">
+        <div className="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+          {/* Right side info in RTL */}
+          <div className="flex flex-wrap items-center gap-2 text-stone-300 font-cairo">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+            <span className="font-bold text-white font-cairo">مفتوح الآن للطلب</span>
+            <span className="text-stone-600">•</span>
+            <span className="text-[#EFCC80] font-semibold flex items-center gap-1 font-cairo">
+              <MapPin className="w-3.5 h-3.5 text-[#C69843]" />
+              <span>المكلا • فوه • حي المساكن</span>
             </span>
-            <span className="text-white/20">·</span>
-            <span className="flex items-center gap-1 text-[#dab165] font-semibold font-cairo">
-              <MapPin className="w-3.5 h-3.5 text-[#dab165]" />
-              <span>المكلا · فوه · حي المساكن</span>
-            </span>
-            <span className="text-white/20">·</span>
-            <span className="text-[#dab165] font-bold font-cairo flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 fill-[#dab165]" />
+            <span className="text-stone-600">•</span>
+            <span className="text-[#EFCC80] font-bold flex items-center gap-1 font-cairo">
+              <Flame className="w-3.5 h-3.5 text-[#C69843] fill-[#C69843]" />
               <span>فرن حجري 15 دقيقة</span>
             </span>
           </div>
 
+          {/* Left side contacts in RTL */}
           <div className="flex items-center gap-3">
             <a
               href="tel:05375561"
-              className="text-gray-300 hover:text-white transition-colors font-bold text-[#dab165]"
+              className="text-[#EFCC80] hover:text-white transition-colors font-bold flex items-center gap-1.5"
             >
-              هاتف: 05375561
+              <Phone className="w-3.5 h-3.5 text-[#C69843]" />
+              <span className="font-outfit">هاتف: 05375561</span>
             </a>
-            <span className="text-white/20">|</span>
+            <span className="text-stone-700">|</span>
             <a
               href="https://wa.me/967772207788"
               target="_blank"
               rel="noreferrer"
-              className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors"
+              className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors flex items-center gap-1.5"
             >
-              واتساب: 772207788
+              <span className="text-sm">💬</span>
+              <span className="font-outfit">واتساب: 772207788</span>
             </a>
           </div>
         </div>

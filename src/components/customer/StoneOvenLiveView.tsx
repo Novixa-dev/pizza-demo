@@ -33,20 +33,20 @@ export default function StoneOvenLiveView({
   if (!isBaking && !isReady) return null;
 
   return (
-    <div className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-950 text-white rounded-3xl p-5 sm:p-6 border border-amber-500/30 shadow-xl overflow-hidden relative">
+    <div className="bg-[#14181f]/95 text-white rounded-3xl p-5 sm:p-6 border border-[#EFCC80]/40 shadow-[0_12px_32px_rgba(0,0,0,0.85)] overflow-hidden relative font-cairo">
       {/* Background Oven Ambient Glow */}
-      <div className="absolute top-0 end-0 w-48 h-48 bg-orange-600/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 start-0 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 end-0 w-48 h-48 bg-[#EFCC80]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 start-0 w-48 h-48 bg-[#C69843]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 space-y-4">
         {/* Header: Oven Status & Internal Temp */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-800 pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#222934] pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-orange-500/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
-              <Flame className="w-5 h-5 animate-pulse text-orange-500" />
+            <div className="w-10 h-10 rounded-2xl bg-[#EFCC80]/15 text-[#EFCC80] flex items-center justify-center border border-[#EFCC80]/30 shadow-md">
+              <Flame className="w-5 h-5 animate-pulse text-[#EFCC80]" />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-orange-400 font-outfit block">
+              <span className="text-[10px] font-black uppercase tracking-wider text-[#EFCC80] font-outfit block">
                 {language === "ar" ? "فرن الحجر الإيطالي المباشر" : "Live Traditional Stone Oven"}
               </span>
               <h4 className="text-sm font-black font-cairo text-white flex items-center gap-1.5">
@@ -64,27 +64,27 @@ export default function StoneOvenLiveView({
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <div className="bg-stone-800/80 px-3 py-1.5 rounded-xl border border-stone-700 text-xs font-bold flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping" />
-              <span className="text-stone-300 font-outfit">{ovenTemp}°C</span>
-              <span className="text-[10px] text-stone-500">{language === "ar" ? "حرارة الفرن" : "Oven Temp"}</span>
+            <div className="bg-[#0c0e12] px-3 py-1.5 rounded-xl border border-[#222934] text-xs font-bold flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#EFCC80] animate-ping" />
+              <span className="text-white font-outfit font-black">{ovenTemp}°C</span>
+              <span className="text-[10px] text-stone-400">{language === "ar" ? "حرارة الفرن" : "Oven Temp"}</span>
             </div>
           </div>
         </div>
 
         {/* Visual Oven Chamber Representation */}
-        <div className="bg-stone-950/70 rounded-2xl p-4 border border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="bg-[#0c0e12] rounded-2xl p-4 border border-[#222934] flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-stone-900 border border-stone-800 flex items-center justify-center relative overflow-hidden">
-              <Pizza className={`w-8 h-8 text-amber-400 ${isBaking ? "animate-bounce" : ""}`} />
+            <div className="w-14 h-14 rounded-2xl bg-[#14181f] border border-[#222934] flex items-center justify-center relative overflow-hidden">
+              <Pizza className={`w-8 h-8 text-[#EFCC80] ${isBaking ? "animate-bounce" : ""}`} />
               {isBaking && (
-                <div className="absolute inset-0 bg-gradient-to-t from-orange-500/30 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#EFCC80]/20 to-transparent pointer-events-none" />
               )}
             </div>
 
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-white font-cairo">
+                <span className="text-xs font-black text-white font-cairo">
                   {isReady
                     ? language === "ar"
                       ? "مستوى النضج: 100% مقرمشة وموزاريللا ذائبة"
@@ -93,7 +93,7 @@ export default function StoneOvenLiveView({
                     ? "مستوى النضج: جاري تحمير الأطراف وإذابة الجبن"
                       : "Bake Level: Melting Cheese & Stone Crust"}
                 </span>
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <Sparkles className="w-3.5 h-3.5 text-[#EFCC80]" />
               </div>
               <p className="text-[11px] text-stone-400">
                 {language === "ar"
@@ -104,22 +104,22 @@ export default function StoneOvenLiveView({
           </div>
 
           <div className="w-full sm:w-48 space-y-1.5 shrink-0">
-            <div className="flex justify-between text-[11px] font-bold">
+            <div className="flex justify-between text-[11px] font-black">
               <span className="text-stone-400">{language === "ar" ? "تقدم الخبز:" : "Bake Progress:"}</span>
-              <span className="text-orange-400 font-outfit">{isReady ? "100%" : `${bakingProgress}%`}</span>
+              <span className="text-[#EFCC80] font-outfit">{isReady ? "100%" : `${bakingProgress}%`}</span>
             </div>
-            <div className="w-full bg-stone-800 h-2.5 rounded-full overflow-hidden">
+            <div className="w-full bg-[#14181f] h-2.5 rounded-full overflow-hidden border border-[#222934]">
               <div
                 className={`h-full rounded-full transition-all duration-500 ${
                   isReady
                     ? "bg-emerald-500"
-                    : "bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 animate-pulse"
+                    : "bg-gradient-to-r from-[#EFCC80] via-[#C69843] to-[#EFCC80] animate-pulse"
                 }`}
                 style={{ width: isReady ? "100%" : `${bakingProgress}%` }}
               />
             </div>
             {pickupTimeText && (
-              <span className="text-[10px] text-stone-400 block text-end">
+              <span className="text-[10px] text-stone-400 block text-end font-bold">
                 {language === "ar" ? `الاستلام: ${pickupTimeText}` : `Pickup: ${pickupTimeText}`}
               </span>
             )}

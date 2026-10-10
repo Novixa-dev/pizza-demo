@@ -152,263 +152,268 @@ export default function AdminClientView({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <div>
-          <span className="text-xs text-pizza-600 dark:text-pizza-400 font-bold uppercase tracking-wider font-outfit">
-            Pizza House Operations
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white font-cairo">
-            {dict.admin.title}
-          </h1>
-        </div>
+    <div className="min-h-screen bg-[#0c0e12] text-white py-8 sm:py-12 relative overflow-hidden font-cairo">
+      {/* Ambient Glows */}
+      <div className="absolute top-0 end-1/4 w-96 h-96 bg-[#EFCC80]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 start-10 w-96 h-96 bg-amber-600/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => router.refresh()}
-            className="inline-flex items-center gap-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 text-stone-800 dark:text-stone-200 px-4 py-2 rounded-xl text-xs font-bold transition-colors w-fit"
-          >
-            <RotateCw className="w-3.5 h-3.5" />
-            <span>تحديث البيانات</span>
-          </button>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 relative z-10">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#C69843]/30 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
+          <div>
+            <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
+              Pizza House Operations
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-black text-white font-cairo">
+              {dict.admin.title}
+            </h1>
+          </div>
 
-          <button
-            onClick={async () => {
-              await logoutStaffAction();
-              window.location.reload();
-            }}
-            className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-700 dark:bg-red-950/40 dark:hover:bg-red-950/70 dark:text-red-300 px-3 py-2 rounded-xl text-xs font-bold transition-colors"
-            title="تسجيل الخروج"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">خروج</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-stone-200 dark:border-stone-800 overflow-x-auto pb-2 scrollbar-none">
-        {[
-          { id: "overview", label: dict.admin.overview, icon: TrendingUp },
-          { id: "orders", label: dict.admin.orders, icon: ShoppingBag, count: orders.length },
-          {
-            id: "payments",
-            label: dict.admin.payments,
-            icon: CreditCard,
-            count: pendingPayments.length,
-            highlight: pendingPayments.length > 0,
-          },
-          {
-            id: "feedback",
-            label: language === "ar" ? "تقييمات العملاء" : "Customer Reviews",
-            icon: Star,
-            count: ordersWithFeedback.length,
-            highlight: ordersWithFeedback.length > 0,
-          },
-          { id: "menu", label: dict.admin.menuMgmt, icon: ChefHat },
-          { id: "settings", label: dict.admin.settings, icon: ShieldAlert },
-        ].map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
-          return (
+          <div className="flex items-center gap-2">
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex-shrink-0 ${
-                isActive
-                  ? "bg-pizza-700 text-white shadow-md shadow-pizza-700/20"
-                  : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
-              }`}
+              onClick={() => router.refresh()}
+              className="inline-flex items-center gap-2 bg-[#0c0e12] hover:bg-[#1a202c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors w-fit"
             >
-              <Icon className="w-4 h-4" />
-              <span>{tab.label}</span>
-              {tab.count !== undefined && (
-                <span
-                  className={`text-xs px-1.5 py-0.2 rounded-full font-outfit ${
-                    tab.highlight
-                      ? "bg-amber-400 text-stone-950 font-black animate-pulse"
-                      : isActive
-                      ? "bg-white/20 text-white"
-                      : "bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300"
-                  }`}
-                >
-                  {tab.count}
-                </span>
-              )}
+              <RotateCw className="w-3.5 h-3.5 text-[#EFCC80]" />
+              <span>تحديث البيانات</span>
             </button>
-          );
-        })}
-      </div>
 
-      {/* Tab 1: Overview Dashboard */}
-      {activeTab === "overview" && (
-        <div className="space-y-8">
-          {/* Key Metric Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
-              <div className="flex justify-between items-center text-stone-400">
-                <span className="text-xs font-bold font-cairo">{dict.admin.todayOrders}</span>
-                <ShoppingBag className="w-5 h-5 text-pizza-600" />
-              </div>
-              <div className="text-2xl font-black font-outfit text-stone-900 dark:text-white">
-                {orders.length}
-              </div>
-              <p className="text-[11px] text-stone-500">إجمالي الطلبات اليوم</p>
-            </div>
-
-            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
-              <div className="flex justify-between items-center text-stone-400">
-                <span className="text-xs font-bold font-cairo">{dict.admin.todayRevenue}</span>
-                <TrendingUp className="w-5 h-5 text-emerald-600" />
-              </div>
-              <div className="text-2xl font-black font-outfit text-emerald-600">
-                {totalRevenue.toLocaleString()}{" "}
-                <span className="text-xs font-normal font-cairo text-stone-500">
-                  {dict.menu.currency}
-                </span>
-              </div>
-              <p className="text-[11px] text-stone-500">صافي المبيعات</p>
-            </div>
-
-            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
-              <div className="flex justify-between items-center text-stone-400">
-                <span className="text-xs font-bold font-cairo">
-                  {dict.admin.pendingVerification}
-                </span>
-                <CreditCard className="w-5 h-5 text-amber-500" />
-              </div>
-              <div className="text-2xl font-black font-outfit text-amber-600">
-                {pendingPayments.length}
-              </div>
-              <p className="text-[11px] text-stone-500">تحويلات مالية للمراجعة</p>
-            </div>
-
-            <div className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
-              <div className="flex justify-between items-center text-stone-400">
-                <span className="text-xs font-bold font-cairo">
-                  {dict.admin.activeInKitchen}
-                </span>
-                <ChefHat className="w-5 h-5 text-pizza-600" />
-              </div>
-              <div className="text-2xl font-black font-outfit text-pizza-600">
-                {activeKitchenCount}
-              </div>
-              <p className="text-[11px] text-stone-500">طلبات في المطبخ</p>
-            </div>
-
-            <div
-              onClick={() => setActiveTab("feedback")}
-              className="bg-white dark:bg-stone-850 p-5 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-2 cursor-pointer hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+            <button
+              onClick={async () => {
+                await logoutStaffAction();
+                window.location.reload();
+              }}
+              className="inline-flex items-center gap-1.5 bg-red-950/40 hover:bg-red-900/60 text-red-300 border border-red-500/30 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors"
+              title="تسجيل الخروج"
             >
-              <div className="flex justify-between items-center text-stone-400">
-                <span className="text-xs font-bold font-cairo">
-                  {language === "ar" ? "رضا العملاء والتقييم" : "Customer Rating"}
-                </span>
-                <Star className="w-5 h-5 text-amber-500 fill-amber-400" />
-              </div>
-              <div className="text-2xl font-black font-outfit text-amber-500 flex items-center gap-1.5">
-                <span>{avgMealRating}</span>
-                <span className="text-xs font-normal text-stone-400">/ 5.0</span>
-              </div>
-              <p className="text-[11px] text-stone-500">
-                {ordersWithFeedback.length}{" "}
-                {language === "ar" ? "تقييم مسجل" : "reviews received"}
-              </p>
-            </div>
-          </div>
-
-          {/* Quick Recent Orders Table */}
-          <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
-                أحدث الطلبات الواردة
-              </h3>
-              <button
-                onClick={() => setActiveTab("orders")}
-                className="text-xs font-bold text-pizza-700 hover:text-pizza-800"
-              >
-                عرض كل الطلبات ({orders.length})
-              </button>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs text-start">
-                <thead className="border-b border-stone-200 dark:border-stone-800 text-stone-400 uppercase font-outfit">
-                  <tr>
-                    <th className="py-2.5 px-3 text-start">رقم الطلب</th>
-                    <th className="py-2.5 px-3 text-start">العميل</th>
-                    <th className="py-2.5 px-3 text-start">وقت الاستلام</th>
-                    <th className="py-2.5 px-3 text-start">الإجمالي</th>
-                    <th className="py-2.5 px-3 text-start">طريقة الدفع</th>
-                    <th className="py-2.5 px-3 text-start">الحالة</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-stone-100 dark:divide-stone-800/60">
-                  {orders.slice(0, 5).map((o) => (
-                    <tr key={o.id} className="hover:bg-stone-50 dark:hover:bg-stone-800/40">
-                      <td className="py-3 px-3 font-bold font-outfit text-stone-900 dark:text-white">
-                        {o.orderNumber}
-                      </td>
-                      <td className="py-3 px-3 text-stone-700 dark:text-stone-300">
-                        <div>{o.customerName}</div>
-                        <div className="text-[10px] text-stone-400 font-outfit">
-                          {o.customerPhone}
-                        </div>
-                      </td>
-                      <td className="py-3 px-3 font-outfit text-stone-600 dark:text-stone-400">
-                        {new Date(o.requestedPickupTime).toLocaleTimeString(
-                          language === "ar" ? "ar-YE" : "en-US",
-                          { hour: "2-digit", minute: "2-digit" }
-                        )}
-                      </td>
-                      <td className="py-3 px-3 font-bold font-outfit text-stone-900 dark:text-white">
-                        {o.total.toLocaleString()} {dict.menu.currency}
-                      </td>
-                      <td className="py-3 px-3 text-stone-600 dark:text-stone-400">
-                        {o.payment?.method === "PAY_AT_PICKUP"
-                          ? "الدفع عند الاستلام"
-                          : "تحويل إلكتروني"}
-                      </td>
-                      <td className="py-3 px-3">
-                        <span
-                          className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                            o.status === "READY"
-                              ? "bg-emerald-100 text-emerald-800"
-                              : o.status === "PREPARING"
-                              ? "bg-amber-100 text-amber-800"
-                              : o.status === "PAYMENT_PENDING"
-                              ? "bg-purple-100 text-purple-800"
-                              : "bg-stone-100 text-stone-800 dark:bg-stone-800 dark:text-stone-300"
-                          }`}
-                        >
-                          {o.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">خروج</span>
+            </button>
           </div>
         </div>
-      )}
+
+        {/* Navigation Tabs */}
+        <div className="flex items-center gap-2 border-b border-[#222934] overflow-x-auto pb-3 scrollbar-none">
+          {[
+            { id: "overview", label: dict.admin.overview, icon: TrendingUp },
+            { id: "orders", label: dict.admin.orders, icon: ShoppingBag, count: orders.length },
+            {
+              id: "payments",
+              label: dict.admin.payments,
+              icon: CreditCard,
+              count: pendingPayments.length,
+              highlight: pendingPayments.length > 0,
+            },
+            {
+              id: "feedback",
+              label: language === "ar" ? "تقييمات العملاء" : "Customer Reviews",
+              icon: Star,
+              count: ordersWithFeedback.length,
+              highlight: ordersWithFeedback.length > 0,
+            },
+            { id: "menu", label: dict.admin.menuMgmt, icon: ChefHat },
+            { id: "settings", label: dict.admin.settings, icon: ShieldAlert },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex-shrink-0 ${
+                  isActive
+                    ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] shadow-md shadow-[#EFCC80]/20 font-black"
+                    : "bg-[#14181f]/80 text-stone-400 hover:text-white hover:bg-[#1c222c] border border-[#222934]"
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{tab.label}</span>
+                {tab.count !== undefined && (
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full font-outfit ${
+                      tab.highlight
+                        ? "bg-amber-400 text-stone-950 font-black animate-pulse"
+                        : isActive
+                        ? "bg-[#2C1A04]/20 text-[#2C1A04] font-black"
+                        : "bg-[#0c0e12] border border-[#222934] text-[#EFCC80]"
+                    }`}
+                  >
+                    {tab.count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Tab 1: Overview Dashboard */}
+        {activeTab === "overview" && (
+          <div className="space-y-8">
+            {/* Key Metric Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+              <div className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] hover:border-[#EFCC80]/40 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-2 transition-all">
+                <div className="flex justify-between items-center text-stone-400">
+                  <span className="text-xs font-bold font-cairo">{dict.admin.todayOrders}</span>
+                  <ShoppingBag className="w-5 h-5 text-[#EFCC80]" />
+                </div>
+                <div className="text-2xl font-black font-outfit text-white">
+                  {orders.length}
+                </div>
+                <p className="text-[11px] text-stone-400">إجمالي الطلبات اليوم</p>
+              </div>
+
+              <div className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] hover:border-[#EFCC80]/40 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-2 transition-all">
+                <div className="flex justify-between items-center text-stone-400">
+                  <span className="text-xs font-bold font-cairo">{dict.admin.todayRevenue}</span>
+                  <TrendingUp className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div className="text-2xl font-black font-outfit text-[#EFCC80]">
+                  {totalRevenue.toLocaleString()}{" "}
+                  <span className="text-xs font-normal font-cairo text-stone-400">
+                    {dict.menu.currency}
+                  </span>
+                </div>
+                <p className="text-[11px] text-stone-400">صافي المبيعات</p>
+              </div>
+
+              <div className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] hover:border-[#EFCC80]/40 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-2 transition-all">
+                <div className="flex justify-between items-center text-stone-400">
+                  <span className="text-xs font-bold font-cairo">
+                    {dict.admin.pendingVerification}
+                  </span>
+                  <CreditCard className="w-5 h-5 text-amber-400" />
+                </div>
+                <div className="text-2xl font-black font-outfit text-amber-400">
+                  {pendingPayments.length}
+                </div>
+                <p className="text-[11px] text-stone-400">تحويلات مالية للمراجعة</p>
+              </div>
+
+              <div className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] hover:border-[#EFCC80]/40 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-2 transition-all">
+                <div className="flex justify-between items-center text-stone-400">
+                  <span className="text-xs font-bold font-cairo">
+                    {dict.admin.activeInKitchen}
+                  </span>
+                  <ChefHat className="w-5 h-5 text-[#EFCC80]" />
+                </div>
+                <div className="text-2xl font-black font-outfit text-[#EFCC80]">
+                  {activeKitchenCount}
+                </div>
+                <p className="text-[11px] text-stone-400">طلبات في المطبخ</p>
+              </div>
+
+              <div
+                onClick={() => setActiveTab("feedback")}
+                className="bg-[#14181f]/90 backdrop-blur-md p-5 rounded-3xl border border-[#222934] hover:border-[#EFCC80]/60 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-2 cursor-pointer transition-all"
+              >
+                <div className="flex justify-between items-center text-stone-400">
+                  <span className="text-xs font-bold font-cairo">
+                    {language === "ar" ? "رضا العملاء والتقييم" : "Customer Rating"}
+                  </span>
+                  <Star className="w-5 h-5 text-[#EFCC80] fill-[#EFCC80]" />
+                </div>
+                <div className="text-2xl font-black font-outfit text-[#EFCC80] flex items-center gap-1.5">
+                  <span>{avgMealRating}</span>
+                  <span className="text-xs font-normal text-stone-400">/ 5.0</span>
+                </div>
+                <p className="text-[11px] text-stone-400">
+                  {ordersWithFeedback.length}{" "}
+                  {language === "ar" ? "تقييم مسجل" : "reviews received"}
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Recent Orders Table */}
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-base font-bold text-white font-cairo">
+                  أحدث الطلبات الواردة
+                </h3>
+                <button
+                  onClick={() => setActiveTab("orders")}
+                  className="text-xs font-bold text-[#EFCC80] hover:text-[#f7dda0] transition-colors"
+                >
+                  عرض كل الطلبات ({orders.length})
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs text-start">
+                  <thead className="border-b border-[#222934] text-[#EFCC80]/80 uppercase font-outfit">
+                    <tr>
+                      <th className="py-2.5 px-3 text-start">رقم الطلب</th>
+                      <th className="py-2.5 px-3 text-start">العميل</th>
+                      <th className="py-2.5 px-3 text-start">وقت الاستلام</th>
+                      <th className="py-2.5 px-3 text-start">الإجمالي</th>
+                      <th className="py-2.5 px-3 text-start">طريقة الدفع</th>
+                      <th className="py-2.5 px-3 text-start">الحالة</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#222934]">
+                    {orders.slice(0, 5).map((o) => (
+                      <tr key={o.id} className="hover:bg-[#1a202c]/50 transition-colors">
+                        <td className="py-3 px-3 font-bold font-outfit text-white">
+                          {o.orderNumber}
+                        </td>
+                        <td className="py-3 px-3 text-stone-200">
+                          <div>{o.customerName}</div>
+                          <div className="text-[10px] text-stone-400 font-outfit">
+                            {o.customerPhone}
+                          </div>
+                        </td>
+                        <td className="py-3 px-3 font-outfit text-stone-300">
+                          {new Date(o.requestedPickupTime).toLocaleTimeString(
+                            language === "ar" ? "ar-YE" : "en-US",
+                            { hour: "2-digit", minute: "2-digit" }
+                          )}
+                        </td>
+                        <td className="py-3 px-3 font-bold font-outfit text-[#EFCC80]">
+                          {o.total.toLocaleString()} {dict.menu.currency}
+                        </td>
+                        <td className="py-3 px-3 text-stone-300">
+                          {o.payment?.method === "PAY_AT_PICKUP"
+                            ? "الدفع عند الاستلام"
+                            : "تحويل إلكتروني"}
+                        </td>
+                        <td className="py-3 px-3">
+                          <span
+                            className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                              o.status === "READY"
+                                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                                : o.status === "PREPARING"
+                                ? "bg-[#EFCC80]/20 text-[#EFCC80] border border-[#EFCC80]/30"
+                                : o.status === "PAYMENT_PENDING"
+                                ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
+                                : "bg-[#0c0e12] text-stone-300 border border-[#222934]"
+                            }`}
+                          >
+                            {o.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
 
       {/* Tab 2: Orders Manager */}
       {activeTab === "orders" && (
-        <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-6">
+        <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-6">
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
             <div className="relative max-w-sm w-full">
-              <Search className="w-4 h-4 text-stone-400 absolute top-3 start-3" />
+              <Search className="w-4 h-4 text-[#EFCC80] absolute top-3 start-3" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={dict.admin.searchOrders}
-                className="w-full text-xs ps-9 pe-3 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:border-pizza-600"
+                className="w-full text-xs ps-9 pe-3 py-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-white placeholder-stone-500 focus:outline-none focus:border-[#EFCC80] transition-colors"
               />
             </div>
-            <span className="text-xs text-stone-500">
+            <span className="text-xs text-stone-400">
               إجمالي النتائج: {filteredOrders.length}
             </span>
           </div>
@@ -417,36 +422,36 @@ export default function AdminClientView({
             {filteredOrders.map((order) => (
               <div
                 key={order.id}
-                className="p-4 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-800/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+                className="p-4 sm:p-5 rounded-2xl border border-[#222934] bg-[#0c0e12]/80 hover:border-[#EFCC80]/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-all shadow-md"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-base font-black font-outfit text-stone-900 dark:text-white">
+                    <span className="text-base font-black font-outfit text-white">
                       {order.orderNumber}
                     </span>
-                    <span className="text-xs text-stone-400 font-bold">•</span>
-                    <span className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                    <span className="text-xs text-stone-500 font-bold">•</span>
+                    <span className="text-xs font-bold text-stone-300">
                       {order.customerName} ({order.customerPhone})
                     </span>
                     <span
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                         order.status === "READY"
-                          ? "bg-emerald-100 text-emerald-800"
+                          ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
                           : order.status === "PREPARING"
-                          ? "bg-amber-100 text-amber-800"
+                          ? "bg-[#EFCC80]/20 text-[#EFCC80] border border-[#EFCC80]/30"
                           : order.status === "COMPLETED"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-stone-200 text-stone-800"
+                          ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                          : "bg-[#14181f] text-stone-300 border border-[#222934]"
                       }`}
                     >
                       {order.status}
                     </span>
                   </div>
 
-                  <div className="text-xs text-stone-500 flex flex-wrap gap-3">
+                  <div className="text-xs text-stone-400 flex flex-wrap gap-3">
                     <span>
                       موعد الاستلام:{" "}
-                      <b className="font-outfit text-stone-800 dark:text-stone-200">
+                      <b className="font-outfit text-stone-200">
                         {new Date(order.requestedPickupTime).toLocaleTimeString(
                           language === "ar" ? "ar-YE" : "en-US",
                           { hour: "2-digit", minute: "2-digit" }
@@ -455,7 +460,7 @@ export default function AdminClientView({
                     </span>
                     <span>
                       الإجمالي:{" "}
-                      <b className="font-outfit text-pizza-700 dark:text-pizza-400">
+                      <b className="font-outfit text-[#EFCC80]">
                         {order.total.toLocaleString()} {dict.menu.currency}
                       </b>
                     </span>
@@ -473,7 +478,7 @@ export default function AdminClientView({
                     href={`/track/${order.id}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 text-stone-500 hover:text-stone-900 dark:hover:text-white rounded-lg hover:bg-stone-200 dark:hover:bg-stone-700"
+                    className="p-2 text-stone-400 hover:text-white rounded-lg hover:bg-[#1a202c] transition-colors"
                     title="معاينة صفحة التتبع"
                   >
                     <ExternalLink className="w-4 h-4" />
@@ -484,7 +489,7 @@ export default function AdminClientView({
                       onClick={() =>
                         updateOrderStatusAction(order.id, "COMPLETED", "الكاشير")
                       }
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm"
+                      className="px-4 py-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] rounded-xl text-xs font-black shadow-md shadow-[#EFCC80]/20 transition-all"
                     >
                       تم تسليم العميل
                     </button>
@@ -498,28 +503,28 @@ export default function AdminClientView({
 
       {/* Tab 3: Transfer Payments Verification */}
       {activeTab === "payments" && (
-        <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-6">
-          <div className="flex justify-between items-center border-b border-stone-200 dark:border-stone-800 pb-4">
+        <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-6">
+          <div className="flex justify-between items-center border-b border-[#222934] pb-4">
             <div>
-              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+              <h3 className="text-base font-bold text-white font-cairo">
                 {dict.admin.payments}
               </h3>
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-stone-400">
                 مراجعة إشعارات الحوالات البنكية (كريمي، العمقي، البسيري) واعتمادها
               </p>
             </div>
-            <span className="text-xs font-bold bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-outfit">
+            <span className="text-xs font-bold bg-[#EFCC80]/20 text-[#EFCC80] border border-[#EFCC80]/30 px-3 py-1 rounded-full font-outfit">
               {pendingPayments.length} إشعارات معلقة
             </span>
           </div>
 
           {pendingPayments.length === 0 ? (
             <div className="text-center py-16 space-y-2">
-              <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
-              <h4 className="text-base font-bold text-stone-800 dark:text-stone-200">
+              <CheckCircle2 className="w-12 h-12 text-[#EFCC80] mx-auto" />
+              <h4 className="text-base font-bold text-stone-200">
                 لا توجد تحويلات معلقة للمراجعة
               </h4>
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-stone-400">
                 جميع طلبات التحويل البنكي تم تدقيقها واعتمادها بنجاح.
               </p>
             </div>
@@ -528,36 +533,36 @@ export default function AdminClientView({
               {pendingPayments.map((order) => (
                 <div
                   key={order.id}
-                  className="p-5 rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/40 dark:bg-amber-950/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+                  className="p-5 rounded-2xl border border-[#C69843]/30 bg-[#0c0e12]/90 hover:border-[#EFCC80]/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-lg transition-all"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                      <span className="text-base font-black font-outfit text-stone-900 dark:text-white">
+                      <span className="text-base font-black font-outfit text-white">
                         {order.orderNumber}
                       </span>
-                      <span className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                      <span className="text-xs font-bold text-stone-300">
                         {order.customerName} ({order.customerPhone})
                       </span>
-                      <span className="text-xs font-bold font-outfit text-pizza-700">
+                      <span className="text-xs font-bold font-outfit text-[#EFCC80]">
                         {order.total.toLocaleString()} {dict.menu.currency}
                       </span>
                     </div>
 
-                    <div className="text-xs text-stone-600 dark:text-stone-400 flex flex-wrap gap-4">
+                    <div className="text-xs text-stone-400 flex flex-wrap gap-4">
                       <span>
-                        البنك / الصرافة: <b>{order.payment?.method}</b>
+                        البنك / الصرافة: <b className="text-stone-200">{order.payment?.method}</b>
                       </span>
                       {order.payment?.referenceNumber && (
                         <span>
                           الرقم المرجعي:{" "}
-                          <b className="font-outfit text-stone-900 dark:text-white">
+                          <b className="font-outfit text-white">
                             {order.payment.referenceNumber}
                           </b>
                         </span>
                       )}
                       <span>
                         الموعد المفضل:{" "}
-                        <b className="font-outfit">
+                        <b className="font-outfit text-stone-200">
                           {new Date(order.requestedPickupTime).toLocaleTimeString(
                             language === "ar" ? "ar-YE" : "en-US",
                             { hour: "2-digit", minute: "2-digit" }
@@ -571,13 +576,13 @@ export default function AdminClientView({
                     {order.payment?.receipt?.fileUrl ? (
                       <button
                         onClick={() => setSelectedReceiptOrder(order)}
-                        className="flex items-center gap-1.5 px-3 py-2 bg-stone-900 text-white rounded-xl text-xs font-bold hover:bg-stone-800 transition-colors shadow-sm"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-[#14181f] hover:bg-[#1c222c] border border-[#222934] hover:border-[#EFCC80]/40 text-stone-200 rounded-xl text-xs font-bold transition-colors shadow-sm"
                       >
-                        <Eye className="w-3.5 h-3.5" />
+                        <Eye className="w-3.5 h-3.5 text-[#EFCC80]" />
                         <span>معاينة الإشعار</span>
                       </button>
                     ) : (
-                      <span className="text-xs text-red-500 font-bold">
+                      <span className="text-xs text-red-400 font-bold">
                         لم يُرفق صورة
                       </span>
                     )}
@@ -585,7 +590,7 @@ export default function AdminClientView({
                     <button
                       onClick={() => handleVerifyPayment(order.id, true)}
                       disabled={isProcessing}
-                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all"
+                      className="px-4 py-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] text-xs font-black rounded-xl shadow-md shadow-[#EFCC80]/20 transition-all"
                     >
                       {dict.admin.approve}
                     </button>
@@ -601,7 +606,7 @@ export default function AdminClientView({
                         }
                       }}
                       disabled={isProcessing}
-                      className="px-3 py-2 bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 hover:bg-red-200 text-xs font-bold rounded-xl transition-colors"
+                      className="px-3.5 py-2 bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300 text-xs font-bold rounded-xl transition-colors"
                     >
                       {dict.admin.reject}
                     </button>
@@ -615,13 +620,13 @@ export default function AdminClientView({
 
       {/* Tab 4: Menu & Pricing Quick Stock Toggle */}
       {activeTab === "menu" && (
-        <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-6">
-          <div className="flex justify-between items-center border-b border-stone-200 dark:border-stone-800 pb-4">
+        <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-6">
+          <div className="flex justify-between items-center border-b border-[#222934] pb-4">
             <div>
-              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+              <h3 className="text-base font-bold text-white font-cairo">
                 {dict.admin.menuMgmt}
               </h3>
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-stone-400">
                 التحكم بتوفر الأصناف فوراً (متوفر / نفدت الكمية)
               </p>
             </div>
@@ -631,10 +636,10 @@ export default function AdminClientView({
             {products.map((prod) => (
               <div
                 key={prod.id}
-                className="p-4 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-800/40 flex items-center justify-between gap-3"
+                className="p-4 rounded-2xl border border-[#222934] bg-[#0c0e12]/80 hover:border-[#EFCC80]/40 flex items-center justify-between gap-3 transition-colors shadow-sm"
               >
                 <div className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 bg-stone-200 dark:bg-stone-700">
+                  <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 bg-[#14181f] border border-[#222934]">
                     <Image
                       src={prod.imageUrl}
                       alt={prod.nameAr}
@@ -645,10 +650,10 @@ export default function AdminClientView({
                     />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-stone-900 dark:text-white">
+                    <h4 className="text-xs font-bold text-white">
                       {prod.nameAr}
                     </h4>
-                    <span className="text-[11px] font-outfit text-pizza-700 font-bold">
+                    <span className="text-[11px] font-outfit text-[#EFCC80] font-bold">
                       {prod.basePrice.toLocaleString()} {dict.menu.currency}
                     </span>
                   </div>
@@ -656,10 +661,10 @@ export default function AdminClientView({
 
                 <button
                   onClick={() => handleToggleAvailability(prod.id, prod.isAvailable)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     prod.isAvailable
-                      ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
-                      : "bg-red-100 text-red-800 hover:bg-red-200"
+                      ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] font-black shadow-sm"
+                      : "bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300"
                   }`}
                 >
                   {prod.isAvailable ? dict.admin.markAvailable : dict.admin.markSoldOut}
@@ -675,22 +680,22 @@ export default function AdminClientView({
         <div className="space-y-6">
           {/* Top Score Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-1">
-              <span className="text-xs font-bold text-stone-500">
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-1">
+              <span className="text-xs font-bold text-stone-400">
                 {language === "ar" ? "متوسط تقييم جودة الوجبات" : "Average Food Rating"}
               </span>
               <div className="flex items-center gap-2">
-                <span className="text-3xl font-black font-outfit text-amber-500">
+                <span className="text-3xl font-black font-outfit text-[#EFCC80]">
                   {avgMealRating}
                 </span>
-                <div className="flex items-center text-amber-400">
+                <div className="flex items-center text-[#EFCC80]">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star
                       key={s}
                       className={`w-4 h-4 ${
                         s <= Math.round(Number(avgMealRating))
-                          ? "fill-amber-400 text-amber-400"
-                          : "text-stone-300"
+                          ? "fill-[#EFCC80] text-[#EFCC80]"
+                          : "text-stone-600"
                       }`}
                     />
                   ))}
@@ -698,22 +703,22 @@ export default function AdminClientView({
               </div>
             </div>
 
-            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-1">
-              <span className="text-xs font-bold text-stone-500">
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-1">
+              <span className="text-xs font-bold text-stone-400">
                 {language === "ar" ? "متوسط تقييم سرعة الخدمة" : "Average Service Speed"}
               </span>
               <div className="flex items-center gap-2">
-                <span className="text-3xl font-black font-outfit text-emerald-500">
+                <span className="text-3xl font-black font-outfit text-emerald-400">
                   {avgServiceRating}
                 </span>
-                <div className="flex items-center text-amber-400">
+                <div className="flex items-center text-[#EFCC80]">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star
                       key={s}
                       className={`w-4 h-4 ${
                         s <= Math.round(Number(avgServiceRating))
-                          ? "fill-amber-400 text-amber-400"
-                          : "text-stone-300"
+                          ? "fill-[#EFCC80] text-[#EFCC80]"
+                          : "text-stone-600"
                       }`}
                     />
                   ))}
@@ -721,29 +726,29 @@ export default function AdminClientView({
               </div>
             </div>
 
-            <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-1">
-              <span className="text-xs font-bold text-stone-500">
+            <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-1">
+              <span className="text-xs font-bold text-stone-400">
                 {language === "ar" ? "إجمالي التقييمات المستلمة" : "Total Reviews"}
               </span>
-              <div className="text-3xl font-black font-outfit text-stone-900 dark:text-white">
+              <div className="text-3xl font-black font-outfit text-white">
                 {ordersWithFeedback.length}
               </div>
             </div>
           </div>
 
           {/* Reviews List */}
-          <div className="bg-white dark:bg-stone-850 p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
+            <h3 className="text-base font-bold text-white font-cairo">
               {language === "ar" ? "آراء وتقييمات زبائن بيتزا هاوس" : "Customer Reviews & Feedback"}
             </h3>
 
             {ordersWithFeedback.length === 0 ? (
               <div className="py-12 text-center text-xs text-stone-500 space-y-2">
-                <Star className="w-8 h-8 text-stone-300 mx-auto" />
+                <Star className="w-8 h-8 text-stone-600 mx-auto" />
                 <p>{language === "ar" ? "لا توجد تقييمات مسجلة حتى الآن." : "No reviews registered yet."}</p>
               </div>
             ) : (
-              <div className="divide-y divide-stone-100 dark:divide-stone-800 space-y-4">
+              <div className="divide-y divide-[#222934] space-y-4">
                 {ordersWithFeedback.map((ord) => {
                   const fb = ord.feedback;
                   const tags = fb.tags ? (typeof fb.tags === "string" ? fb.tags.split(",") : fb.tags) : [];
@@ -752,10 +757,10 @@ export default function AdminClientView({
                     <div key={ord.id} className="pt-4 first:pt-0 space-y-2 text-xs">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-stone-900 dark:text-white font-cairo text-sm">
+                          <span className="font-bold text-white font-cairo text-sm">
                             {ord.customerName}
                           </span>
-                          <span className="px-2 py-0.5 rounded-md bg-pizza-50 dark:bg-pizza-950 text-pizza-700 dark:text-pizza-300 font-outfit font-black text-[11px]">
+                          <span className="px-2.5 py-0.5 rounded-full bg-[#EFCC80]/15 text-[#EFCC80] border border-[#EFCC80]/30 font-outfit font-black text-[11px]">
                             {ord.orderNumber}
                           </span>
                         </div>
@@ -766,13 +771,13 @@ export default function AdminClientView({
 
                       <div className="flex flex-wrap items-center gap-4 text-[11px]">
                         <div className="flex items-center gap-1">
-                          <span className="text-stone-500">جودة الوجبة:</span>
-                          <div className="flex text-amber-400">
+                          <span className="text-stone-400">جودة الوجبة:</span>
+                          <div className="flex text-[#EFCC80]">
                             {[1, 2, 3, 4, 5].map((s: number) => (
                               <Star
                                 key={s}
                                 className={`w-3.5 h-3.5 ${
-                                  s <= fb.mealRating ? "fill-amber-400 text-amber-400" : "text-stone-300"
+                                  s <= fb.mealRating ? "fill-[#EFCC80] text-[#EFCC80]" : "text-stone-600"
                                 }`}
                               />
                             ))}
@@ -780,13 +785,13 @@ export default function AdminClientView({
                         </div>
 
                         <div className="flex items-center gap-1">
-                          <span className="text-stone-500">سرعة الخدمة:</span>
-                          <div className="flex text-amber-400">
+                          <span className="text-stone-400">سرعة الخدمة:</span>
+                          <div className="flex text-[#EFCC80]">
                             {[1, 2, 3, 4, 5].map((s: number) => (
                               <Star
                                 key={s}
                                 className={`w-3.5 h-3.5 ${
-                                  s <= fb.serviceRating ? "fill-amber-400 text-amber-400" : "text-stone-300"
+                                  s <= fb.serviceRating ? "fill-[#EFCC80] text-[#EFCC80]" : "text-stone-600"
                                 }`}
                               />
                             ))}
@@ -799,7 +804,7 @@ export default function AdminClientView({
                           {tags.map((tg: string) => (
                             <span
                               key={tg}
-                              className="px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-[10px] font-bold"
+                              className="px-2.5 py-0.5 rounded-lg bg-[#0c0e12] border border-[#222934] text-[#EFCC80] text-[10px] font-bold"
                             >
                               {tg}
                             </span>
@@ -808,7 +813,7 @@ export default function AdminClientView({
                       )}
 
                       {fb.comment && (
-                        <p className="p-3 rounded-xl bg-stone-50 dark:bg-stone-800/60 text-stone-800 dark:text-stone-200 italic">
+                        <p className="p-3 rounded-xl bg-[#0c0e12] border border-[#222934] text-stone-200 italic">
                           &quot;{fb.comment}&quot;
                         </p>
                       )}
@@ -825,26 +830,26 @@ export default function AdminClientView({
       {activeTab === "settings" && (
         <div className="space-y-6 max-w-3xl">
           {/* Pause Ordering Card */}
-          <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+              <h3 className="text-base font-bold text-white font-cairo">
                 {dict.admin.pauseOrdering}
               </h3>
-              <p className="text-xs text-stone-500">{dict.admin.pauseOrderingDesc}</p>
+              <p className="text-xs text-stone-400">{dict.admin.pauseOrderingDesc}</p>
             </div>
 
-            <div className="p-4 rounded-2xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 space-y-3">
+            <div className="p-4 rounded-2xl border border-[#222934] bg-[#0c0e12] space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-stone-900 dark:text-white">
+                <span className="text-sm font-bold text-white">
                   حالة استقبال الطلبات الرقمية:
                 </span>
                 <button
                   onClick={handleTogglePause}
                   disabled={isProcessing}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white transition-colors ${
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     isPaused
-                      ? "bg-emerald-600 hover:bg-emerald-700"
-                      : "bg-red-600 hover:bg-red-700"
+                      ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 text-[#2C1A04] font-black shadow-md shadow-[#EFCC80]/20"
+                      : "bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300"
                   }`}
                 >
                   {isPaused ? (
@@ -862,8 +867,8 @@ export default function AdminClientView({
               </div>
 
               {isPaused && (
-                <div className="space-y-1.5 pt-3 border-t border-stone-200 dark:border-stone-700">
-                  <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                <div className="space-y-1.5 pt-3 border-t border-[#222934]">
+                  <label className="text-xs font-bold text-stone-300">
                     رسالة التنبيه المعروضة للزبائن:
                   </label>
                   <input
@@ -871,7 +876,7 @@ export default function AdminClientView({
                     value={pauseMessage}
                     onChange={(e) => setPauseMessage(e.target.value)}
                     placeholder="نعتذر، تم إيقاف استقبال الطلبات مؤقتاً..."
-                    className="w-full text-xs p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-white"
+                    className="w-full text-xs p-2.5 rounded-xl border border-[#222934] bg-[#14181f] text-white focus:outline-none focus:border-[#EFCC80] transition-colors"
                   />
                 </div>
               )}
@@ -879,26 +884,26 @@ export default function AdminClientView({
           </div>
 
           {/* Ovens, Slots & Branch Logistics Configuration */}
-          <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-5">
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-5">
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+              <h3 className="text-base font-bold text-white font-cairo">
                 إعدادات الأفران، سعة الفترات، وبيانات الفرع
               </h3>
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-stone-400">
                 تحديد وقت التجهيز الافتراضي للفرن، الحد الأقصى للطلبات في الشريحة الزمنية، ومعلومات التواصل.
               </p>
             </div>
 
             {saveSuccessMsg && (
-              <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold rounded-xl flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <div className="p-3 bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs font-bold rounded-xl flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>{saveSuccessMsg}</span>
               </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div className="space-y-1.5">
-                <label className="font-bold text-stone-700 dark:text-stone-300">
+                <label className="font-bold text-stone-300">
                   مدة تجهيز وخبز البيتزا (بالدقائق):
                 </label>
                 <input
@@ -907,7 +912,7 @@ export default function AdminClientView({
                   max="60"
                   value={prepDuration}
                   onChange={(e) => setPrepDuration(Number(e.target.value))}
-                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
+                  className="w-full p-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-white font-outfit focus:outline-none focus:border-[#EFCC80] transition-colors"
                 />
                 <span className="text-[11px] text-stone-500">
                   تحدد موعد إطلاق التذكرة في شاشة المطبخ (افتراضياً: 15 دقيقة)
@@ -915,7 +920,7 @@ export default function AdminClientView({
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-bold text-stone-700 dark:text-stone-300">
+                <label className="font-bold text-stone-300">
                   سعة الأفران القصوى لكل شريحة (15 دقيقة):
                 </label>
                 <input
@@ -924,7 +929,7 @@ export default function AdminClientView({
                   max="30"
                   value={slotCapacity}
                   onChange={(e) => setSlotCapacity(Number(e.target.value))}
-                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
+                  className="w-full p-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-white font-outfit focus:outline-none focus:border-[#EFCC80] transition-colors"
                 />
                 <span className="text-[11px] text-stone-500">
                   الحد الأقصى للطلبات المتزامنة قبل وضع الشريحة بحالة &quot;ممتلئ&quot;
@@ -932,38 +937,38 @@ export default function AdminClientView({
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-bold text-stone-700 dark:text-stone-300">
+                <label className="font-bold text-stone-300">
                   رقم الهاتف الثابت للفرع:
                 </label>
                 <input
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
+                  className="w-full p-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-white font-outfit focus:outline-none focus:border-[#EFCC80] transition-colors"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-bold text-stone-700 dark:text-stone-300">
+                <label className="font-bold text-stone-300">
                   رقم الواتساب الرسمي (خدمة العملاء):
                 </label>
                 <input
                   type="text"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white font-outfit"
+                  className="w-full p-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-white font-outfit focus:outline-none focus:border-[#EFCC80] transition-colors"
                 />
               </div>
 
               <div className="sm:col-span-2 space-y-1.5">
-                <label className="font-bold text-stone-700 dark:text-stone-300">
+                <label className="font-bold text-stone-300">
                   العنوان الرسمي ونقاط الدلالة (بالعربية):
                 </label>
                 <input
                   type="text"
                   value={addressAr}
                   onChange={(e) => setAddressAr(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-white"
+                  className="w-full p-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-white focus:outline-none focus:border-[#EFCC80] transition-colors"
                 />
               </div>
             </div>
@@ -988,7 +993,7 @@ export default function AdminClientView({
                   }
                   setIsProcessing(false);
                 }}
-                className="bg-pizza-700 hover:bg-pizza-800 text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-pizza-700/20 active:scale-95 transition-all"
+                className="bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] px-6 py-2.5 rounded-xl text-xs font-black shadow-md shadow-[#EFCC80]/20 transition-all"
               >
                 {isProcessing ? "جاري الحفظ..." : "حفظ التعديلات"}
               </button>
@@ -996,37 +1001,37 @@ export default function AdminClientView({
           </div>
 
           {/* Official Bank Accounts Information */}
-          <div className="bg-white dark:bg-stone-850 p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-stone-900 dark:text-white font-cairo">
+          <div className="bg-[#14181f]/90 backdrop-blur-md p-6 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
+            <h3 className="text-base font-bold text-white font-cairo">
               حسابات التحويل المالي المعتمدة للعملاء
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 space-y-1">
-                <span className="font-bold text-pizza-700 dark:text-pizza-400 block">
+              <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] space-y-1">
+                <span className="font-bold text-[#EFCC80] block">
                   بنك الكريمي (حاسب)
                 </span>
-                <span className="font-outfit font-black text-stone-900 dark:text-white block text-sm">
+                <span className="font-outfit font-black text-white block text-sm">
                   PH-772207788
                 </span>
-                <span className="text-[11px] text-stone-500">باسم: بيتزا هاوس</span>
+                <span className="text-[11px] text-stone-400">باسم: بيتزا هاوس</span>
               </div>
-              <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 space-y-1">
-                <span className="font-bold text-emerald-700 dark:text-emerald-400 block">
+              <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] space-y-1">
+                <span className="font-bold text-emerald-400 block">
                   شركة العمقي للصرافة
                 </span>
-                <span className="font-outfit font-black text-stone-900 dark:text-white block text-sm">
+                <span className="font-outfit font-black text-white block text-sm">
                   25401982
                 </span>
-                <span className="text-[11px] text-stone-500">حساب تجاري: بيتزا هاوس</span>
+                <span className="text-[11px] text-stone-400">حساب تجاري: بيتزا هاوس</span>
               </div>
-              <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 space-y-1">
-                <span className="font-bold text-sky-700 dark:text-sky-400 block">
+              <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] space-y-1">
+                <span className="font-bold text-sky-400 block">
                   شركة البسيري للصرافة
                 </span>
-                <span className="font-outfit font-black text-stone-900 dark:text-white block text-sm">
+                <span className="font-outfit font-black text-white block text-sm">
                   889104
                 </span>
-                <span className="text-[11px] text-stone-500">فرع فوه: بيتزا هاوس</span>
+                <span className="text-[11px] text-stone-400">فرع فوه: بيتزا هاوس</span>
               </div>
             </div>
           </div>
@@ -1035,14 +1040,14 @@ export default function AdminClientView({
 
       {/* Receipt Inspection Modal */}
       {selectedReceiptOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/80 backdrop-blur-sm">
-          <div className="bg-white dark:bg-stone-900 rounded-3xl max-w-lg w-full overflow-hidden border border-stone-200 dark:border-stone-800 shadow-2xl space-y-4 p-5">
-            <div className="flex justify-between items-center border-b border-stone-200 dark:border-stone-800 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="bg-[#14181f] rounded-3xl max-w-lg w-full overflow-hidden border border-[#C69843]/40 shadow-2xl space-y-4 p-5">
+            <div className="flex justify-between items-center border-b border-[#222934] pb-3">
               <div>
-                <h3 className="text-base font-bold text-stone-900 dark:text-white">
+                <h3 className="text-base font-bold text-white">
                   معاينة إشعار التحويل • {selectedReceiptOrder.orderNumber}
                 </h3>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-stone-400">
                   المرسل: {selectedReceiptOrder.customerName} (
                   {selectedReceiptOrder.payment?.amount?.toLocaleString()}{" "}
                   {dict.menu.currency})
@@ -1050,13 +1055,13 @@ export default function AdminClientView({
               </div>
               <button
                 onClick={() => setSelectedReceiptOrder(null)}
-                className="text-stone-400 hover:text-stone-700"
+                className="text-stone-400 hover:text-white transition-colors"
               >
                 <XCircle className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-800 max-h-96 flex items-center justify-center bg-black">
+            <div className="rounded-2xl overflow-hidden border border-[#222934] max-h-96 flex items-center justify-center bg-black">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={selectedReceiptOrder.payment?.receipt?.fileUrl}
@@ -1068,13 +1073,13 @@ export default function AdminClientView({
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setSelectedReceiptOrder(null)}
-                className="px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 text-xs font-bold"
+                className="px-4 py-2.5 rounded-xl border border-[#222934] bg-[#0c0e12] text-stone-300 hover:text-white text-xs font-bold transition-colors"
               >
                 إغلاق
               </button>
               <button
                 onClick={() => handleVerifyPayment(selectedReceiptOrder.id, true)}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold"
+                className="px-5 py-2.5 bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 active:scale-95 text-[#2C1A04] rounded-xl text-xs font-black shadow-md shadow-[#EFCC80]/20 transition-all"
               >
                 اعتماد وتأكيد التحويل
               </button>
@@ -1082,6 +1087,7 @@ export default function AdminClientView({
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

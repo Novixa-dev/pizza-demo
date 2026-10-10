@@ -57,24 +57,24 @@ export default function StaffAuthModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/85 backdrop-blur-md">
-      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-6 text-center">
-        <div className="w-14 h-14 rounded-2xl bg-pizza-100 dark:bg-pizza-950 text-pizza-600 dark:text-pizza-400 flex items-center justify-center mx-auto shadow-inner">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+      <div className="bg-[#14181f] border border-[#C69843]/40 rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-6 text-center font-cairo">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center mx-auto shadow-lg shadow-[#EFCC80]/20">
           <KeyRound className="w-7 h-7" />
         </div>
 
         <div className="space-y-1.5">
-          <h2 className="text-xl font-black text-stone-900 dark:text-white font-cairo">
+          <h2 className="text-xl font-black text-white font-cairo">
             {language === "ar" ? titleAr : titleEn}
           </h2>
-          <p className="text-xs text-stone-500 dark:text-stone-400">
+          <p className="text-xs text-stone-400">
             {language === "ar" ? descriptionAr : descriptionEn}
           </p>
         </div>
 
         {error && (
-          <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs flex items-center gap-2 text-start">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-600" />
+          <div className="p-3 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs flex items-center gap-2 text-start">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-400" />
             <span>{error}</span>
           </div>
         )}
@@ -89,14 +89,14 @@ export default function StaffAuthModal({
               value={pin}
               onChange={(e) => setPin(e.target.value)}
               placeholder="••••"
-              className="w-full text-center text-2xl tracking-[0.5em] py-3.5 px-4 rounded-2xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white placeholder:text-stone-400 focus:outline-none focus:border-pizza-600 font-mono"
+              className="w-full text-center text-2xl tracking-[0.5em] py-3.5 px-4 rounded-2xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-600 focus:outline-none focus:border-[#EFCC80] font-mono transition-colors"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-pizza-700 hover:bg-pizza-800 disabled:opacity-50 text-white py-3 rounded-2xl font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-pizza-700/20 active:scale-95 transition-all"
+            className="w-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] hover:brightness-110 disabled:opacity-50 text-[#2C1A04] py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#EFCC80]/20 active:scale-95 transition-all"
           >
             <Lock className="w-3.5 h-3.5" />
             <span>
@@ -116,10 +116,10 @@ export default function StaffAuthModal({
           </button>
         </form>
 
-        <div className="pt-2 border-t border-stone-100 dark:border-stone-800">
+        <div className="pt-2 border-t border-[#222934]">
           <a
             href="/"
-            className="text-xs text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition-colors"
+            className="text-xs text-[#EFCC80]/70 hover:text-[#EFCC80] transition-colors"
           >
             {language === "ar" ? "العودة للرئيسية" : "Back to Home"}
           </a>
