@@ -290,20 +290,6 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Dark / Light Mode Toggle (Desktop only) */}
-            <button
-              onClick={toggleTheme}
-              className="hidden md:flex p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
-              title="تبديل المظهر"
-              aria-label="Toggle Theme"
-            >
-              {theme === "light" ? (
-                <Moon className="w-4 h-4" />
-              ) : (
-                <Sun className="w-4 h-4 text-amber-400" />
-              )}
-            </button>
-
             {/* Mobile Menu Toggle Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
