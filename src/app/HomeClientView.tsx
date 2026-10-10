@@ -593,8 +593,8 @@ export default function HomeClientView({
               </div>
             </div>
 
-            {/* 3D-Overlapping Circular Dish on Left in RTL */}
-            <div className="absolute -left-6 sm:-left-8 -bottom-6 sm:-bottom-8 w-44 h-44 sm:w-56 sm:h-56 pointer-events-none group-hover:scale-105 group-hover:rotate-6 transition-transform duration-500 rounded-full p-2 bg-[#0c0d12] border-2 border-[#2b2c35] shadow-[0_15px_35px_rgba(0,0,0,0.95),0_0_20px_rgba(198,152,67,0.2)]">
+            {/* 3D-Overlapping Circular Dish (Left in RTL, Right in LTR) */}
+            <div className={`absolute ${language === "ar" ? "-left-6 sm:-left-8 right-auto" : "-right-6 sm:-right-8 left-auto"} rtl:-left-6 rtl:sm:-left-8 rtl:right-auto ltr:-right-6 ltr:sm:-right-8 ltr:left-auto -bottom-6 sm:-bottom-8 w-44 h-44 sm:w-56 sm:h-56 pointer-events-none group-hover:scale-105 group-hover:rotate-6 transition-transform duration-500 rounded-full p-2 bg-[#0c0d12] border-2 border-[#2b2c35] shadow-[0_15px_35px_rgba(0,0,0,0.95),0_0_20px_rgba(198,152,67,0.2)]`}>
               <div className="relative w-full h-full rounded-full overflow-hidden">
                 <Image
                   src="/images/aura/banner-favorite-pizza.jpg"
@@ -648,8 +648,8 @@ export default function HomeClientView({
               </div>
             </div>
 
-            {/* 3D-Overlapping Circular Dish on Left in RTL */}
-            <div className="absolute -left-6 sm:-left-8 -bottom-6 sm:-bottom-8 w-44 h-44 sm:w-56 sm:h-56 pointer-events-none group-hover:scale-105 group-hover:rotate-6 transition-transform duration-500 rounded-full p-2 bg-[#0c0d12] border-2 border-[#2b2c35] shadow-[0_15px_35px_rgba(0,0,0,0.95),0_0_20px_rgba(198,152,67,0.2)]">
+            {/* 3D-Overlapping Circular Dish (Left in RTL, Right in LTR) */}
+            <div className={`absolute ${language === "ar" ? "-left-6 sm:-left-8 right-auto" : "-right-6 sm:-right-8 left-auto"} rtl:-left-6 rtl:sm:-left-8 rtl:right-auto ltr:-right-6 ltr:sm:-right-8 ltr:left-auto -bottom-6 sm:-bottom-8 w-44 h-44 sm:w-56 sm:h-56 pointer-events-none group-hover:scale-105 group-hover:rotate-6 transition-transform duration-500 rounded-full p-2 bg-[#0c0d12] border-2 border-[#2b2c35] shadow-[0_15px_35px_rgba(0,0,0,0.95),0_0_20px_rgba(198,152,67,0.2)]`}>
               <div className="relative w-full h-full rounded-full overflow-hidden">
                 <Image
                   src="/images/aura/banner-family-combo.jpg"
