@@ -23,9 +23,6 @@ export default function TrackSearchClientView() {
         </div>
 
         <div className="space-y-2">
-          <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit block">
-            LIVE STONE-OVEN TRACKER
-          </span>
           <h1 className="text-2xl sm:text-3xl font-black text-white font-cairo">
             {dict.tracking.title}
           </h1>

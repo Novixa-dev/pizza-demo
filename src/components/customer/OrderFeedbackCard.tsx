@@ -2,7 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 import { useApp } from "@/context/AppContext";
-import { Star, CheckCircle2, MessageSquare, Sparkles, Send, Edit3, Heart } from "lucide-react";
+import { Star, CheckCircle2, MessageSquare, Send, Edit3, Heart } from "lucide-react";
 import { submitOrderFeedbackAction } from "@/app/actions/orderActions";
 
 interface OrderFeedbackCardProps {
@@ -124,11 +124,10 @@ export default function OrderFeedbackCard({
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2 justify-center sm:justify-start">
+              <div className="flex items-center justify-center sm:justify-start">
                 <h3 className="text-base sm:text-lg font-black text-white font-cairo">
                   {language === "ar" ? "شكراً لتقييمك ومشاركتنا رأيك!" : "Thank You for Your Feedback!"}
                 </h3>
-                <Sparkles className="w-4 h-4 text-[#EFCC80]" />
               </div>
               <p className="text-xs text-stone-300">
                 {language === "ar"

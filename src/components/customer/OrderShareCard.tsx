@@ -9,7 +9,6 @@ import {
   QrCode,
   X,
   Send,
-  Sparkles,
   ExternalLink,
   Users,
 } from "lucide-react";

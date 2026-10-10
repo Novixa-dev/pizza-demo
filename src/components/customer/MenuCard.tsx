@@ -42,13 +42,13 @@ export default function MenuCard({ product, onCustomize }: MenuCardProps) {
               {dict.menu.soldOut}
             </span>
           ) : product.basePrice >= 5000 ? (
-            <span className="bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1 font-outfit uppercase">
+            <span className="bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1 font-cairo">
               <Star className="w-2.5 h-2.5 fill-current" />
-              <span>SIGNATURE</span>
+              <span>{language === "ar" ? "طبق مميز" : "Signature"}</span>
             </span>
           ) : (
-            <span className="bg-amber-950/80 text-[#EFCC80] border border-amber-800/40 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-              <Flame className="w-2.5 h-2.5 fill-[#EFCC80]" />
+            <span className="bg-amber-950/80 text-[#EFCC80] border border-amber-800/40 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 font-cairo">
+              <span>⏱️</span>
               <span>{language === "ar" ? "15 دقيقة" : "15m"}</span>
             </span>
           )}

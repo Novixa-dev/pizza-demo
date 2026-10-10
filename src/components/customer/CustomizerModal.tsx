@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useApp } from "@/context/AppContext";
-import { X, Plus, Minus, Check, Sparkles } from "lucide-react";
+import { X, Plus, Minus, Check } from "lucide-react";
 import { SelectedOptionPayload } from "@/types";
 
 export interface CustomizerProduct {

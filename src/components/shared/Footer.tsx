@@ -63,7 +63,7 @@ export default function Footer() {
 
           {/* Col 2: Operating Hours */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5 font-cairo">
+            <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-cairo">
               <Clock className="w-4 h-4 text-[#C69843]" />
               <span>{language === "ar" ? "أوقات العمل الرسمية" : "Operating Hours"}</span>
             </h4>
@@ -85,7 +85,7 @@ export default function Footer() {
 
           {/* Col 3: Location & Contacts */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5 font-cairo">
+            <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-cairo">
               <MapPin className="w-4 h-4 text-[#C69843]" />
               <span>{language === "ar" ? "العنوان والتواصل" : "Location & Contact"}</span>
             </h4>
@@ -108,7 +108,7 @@ export default function Footer() {
 
           {/* Col 4: Quick Links & Platform */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider font-cairo">
+            <h4 className="text-sm font-bold text-white font-cairo">
               {language === "ar" ? "روابط سريعة" : "Quick Links"}
             </h4>
             <ul className="text-xs space-y-2 text-stone-400">

@@ -4,13 +4,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  MapPin,
   Play,
   X,
   Flame,
   CheckCircle2,
   ChevronDown,
-  Phone,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import FloatingParticles from "./FloatingParticles";
@@ -397,48 +395,6 @@ export default function HeroSection({
         </div>
       </section>
 
-      {/* ================= MIDDLE INFORMATIONAL BAR ================= */}
-      <div className="w-full bg-[#0a0b0e] border-y border-[#dab165]/15 py-3 px-4 sm:px-8 relative z-20 font-cairo">
-        <div className="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
-          {/* Right side info in RTL */}
-          <div className="flex flex-wrap items-center gap-2 text-stone-300 font-cairo">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
-            <span className="font-bold text-white font-cairo">مفتوح الآن للطلب</span>
-            <span className="text-stone-600">•</span>
-            <span className="text-[#EFCC80] font-semibold flex items-center gap-1 font-cairo">
-              <MapPin className="w-3.5 h-3.5 text-[#C69843]" />
-              <span>المكلا • فوه • حي المساكن</span>
-            </span>
-            <span className="text-stone-600">•</span>
-            <span className="text-[#EFCC80] font-bold flex items-center gap-1 font-cairo">
-              <Flame className="w-3.5 h-3.5 text-[#C69843] fill-[#C69843]" />
-              <span>فرن حجري 15 دقيقة</span>
-            </span>
-          </div>
-
-          {/* Left side contacts in RTL */}
-          <div className="flex items-center gap-3">
-            <a
-              href="tel:05375561"
-              className="text-[#EFCC80] hover:text-white transition-colors font-bold flex items-center gap-1.5"
-            >
-              <Phone className="w-3.5 h-3.5 text-[#C69843]" />
-              <span className="font-outfit">هاتف: 05375561</span>
-            </a>
-            <span className="text-stone-700">|</span>
-            <a
-              href="https://wa.me/967772207788"
-              target="_blank"
-              rel="noreferrer"
-              className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors flex items-center gap-1.5"
-            >
-              <span className="text-sm">💬</span>
-              <span className="font-outfit">واتساب: 772207788</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* ================= VIDEO MODAL ================= */}
       {isVideoOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in font-cairo">
@@ -446,7 +402,7 @@ export default function HeroSection({
             <div className="flex items-center justify-between p-4 border-b border-white/10">
               <div className="flex items-center gap-2 text-white font-bold font-cairo">
                 <Flame className="w-4 h-4 text-[#dab165] fill-[#dab165]" />
-                <span>أسرار الخَبز الحجري الفاخر — AURA PIZZA</span>
+                <span>أسرار الخَبز الحجري الفاخر — بيتزا هاوس المكلا</span>
               </div>
               <button
                 type="button"

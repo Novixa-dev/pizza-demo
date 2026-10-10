@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
-import { Download, X, Smartphone, Sparkles, CheckCircle2 } from "lucide-react";
+import { Download, X, Smartphone, CheckCircle2 } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -75,7 +75,6 @@ export default function PwaInstallPrompt() {
               <span className="text-xs font-bold font-cairo text-white">
                 {language === "ar" ? "تطبيق بيتزا هاوس" : "Pizza House App"}
               </span>
-              <Sparkles className="w-3 h-3 text-[#EFCC80]" />
             </div>
             <p className="text-[11px] text-stone-300">
               {language === "ar"

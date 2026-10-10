@@ -28,7 +28,6 @@ import {
   MessageCircle,
   ArrowRight,
   ArrowLeft,
-  Sparkles,
   Flame,
   Award,
   Filter,
@@ -473,7 +472,7 @@ export default function HistoryClientView() {
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#EFCC80]">
+                <span className="text-xs font-bold text-[#EFCC80] font-cairo">
                   {dict.history.activeOrderBannerTitle}
                 </span>
                 <span className="font-outfit font-black text-sm text-white">

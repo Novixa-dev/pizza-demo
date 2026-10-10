@@ -14,7 +14,7 @@ import {
   Flame,
   PackageCheck,
   RotateCw,
-  Sparkles,
+  Bell,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cancelCustomerOrderAction } from "@/app/actions/orderActions";
@@ -116,8 +116,8 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
-            <span className="text-xs text-[#EFCC80] font-bold uppercase tracking-wider font-outfit">
-              Pizza House Mukalla
+            <span className="text-xs text-[#EFCC80] font-bold font-cairo">
+              {language === "ar" ? "بيتزا هاوس المكلا" : "Pizza House Mukalla"}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white font-outfit">
               {order.orderNumber}
@@ -367,7 +367,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           }}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-800/60 font-bold transition-colors text-[11px]"
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          <Bell className="w-3.5 h-3.5 text-amber-500" />
           <span>{language === "ar" ? "تجربة صوت وتنبيه التحديث الفوري 🔔" : "Test Live Toast & Chime Alert 🔔"}</span>
         </button>
 

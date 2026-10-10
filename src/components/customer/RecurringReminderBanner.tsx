@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useApp } from "@/context/AppContext";
 import { useRecurringOrderReminder } from "@/hooks/useRecurringOrderReminder";
-import { Bell, Pizza, ArrowLeft, ArrowRight, X, Clock, Sparkles } from "lucide-react";
+import { Bell, Pizza, ArrowLeft, ArrowRight, X, Clock } from "lucide-react";
 import RecurringReminderModal from "./RecurringReminderModal";
 
 export default function RecurringReminderBanner() {
@@ -54,11 +54,10 @@ export default function RecurringReminderBanner() {
             </div>
 
             <div className="space-y-1 pe-5">
-              <div className="flex items-center gap-1.5">
+              <div>
                 <span className="text-xs font-black text-[#EFCC80] font-cairo">
                   {language === "ar" ? "اشتقنا لك في بيتزا هاوس!" : "We Miss You at Pizza House!"}
                 </span>
-                <Sparkles className="w-3.5 h-3.5 text-[#EFCC80]" />
               </div>
 
               <p className="text-xs text-stone-300 leading-relaxed">

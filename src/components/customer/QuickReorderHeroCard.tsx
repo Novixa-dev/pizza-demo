@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useApp } from "@/context/AppContext";
 import { getReminderPreferences } from "@/lib/notifications/orderReminderService";
-import { Pizza, Sparkles, ArrowLeft, ArrowRight, Clock, RotateCcw } from "lucide-react";
+import { Pizza, ArrowLeft, ArrowRight, Clock, RotateCcw } from "lucide-react";
 
 export default function QuickReorderHeroCard() {
   const { language, addToCart, setIsCartOpen } = useApp();
@@ -75,8 +75,8 @@ export default function QuickReorderHeroCard() {
           <Pizza className="w-6 h-6" />
         </div>
         <div>
-          <div className="flex items-center gap-1.5 justify-center sm:justify-start">
-            <span className="text-[11px] font-black uppercase tracking-wider text-[#EFCC80] font-outfit">
+          <div className="flex items-center justify-center sm:justify-start">
+            <span className="text-xs font-bold text-[#EFCC80] font-cairo">
               {customerName
                 ? language === "ar"
                   ? `مرحباً بعودتك ${customerName}!`
@@ -85,7 +85,6 @@ export default function QuickReorderHeroCard() {
                 ? "إعادة طلب سريعة"
                 : "Quick Reorder"}
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-[#EFCC80]" />
           </div>
 
           <h3 className="text-sm sm:text-base font-black text-white font-cairo">

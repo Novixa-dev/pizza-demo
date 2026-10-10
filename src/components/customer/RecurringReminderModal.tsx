@@ -10,7 +10,6 @@ import {
   Pizza,
   CheckCircle2,
   X,
-  Sparkles,
   AlertCircle,
   Calendar,
   Send,
@@ -117,7 +116,7 @@ export default function RecurringReminderModal({
               <BellRing className="w-6 h-6 animate-pulse" />
             </div>
             <div>
-              <span className="text-[11px] font-black uppercase tracking-wider text-[#EFCC80] font-outfit">
+              <span className="text-xs font-bold text-[#EFCC80] font-cairo">
                 {language === "ar" ? "تنبيهات دورية ذكية" : "Smart Recurring Reminders"}
               </span>
               <h2
@@ -269,7 +268,7 @@ export default function RecurringReminderModal({
 
           {testResult && (
             <div className="p-3 rounded-xl bg-[#0c0e12] border border-[#EFCC80]/40 text-[#EFCC80] text-xs font-bold flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#EFCC80] shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-[#EFCC80] shrink-0" />
               <span>{testResult}</span>
             </div>
           )}

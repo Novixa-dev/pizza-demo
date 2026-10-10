@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
-import { Flame, Clock, Sparkles, CheckCircle2, Pizza, ChefHat } from "lucide-react";
+import { Flame, Clock, CheckCircle2, Pizza, ChefHat } from "lucide-react";
 
 interface StoneOvenLiveViewProps {
   orderStatus: string;
@@ -46,8 +46,8 @@ export default function StoneOvenLiveView({
               <Flame className="w-5 h-5 animate-pulse text-[#EFCC80]" />
             </div>
             <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#EFCC80] font-outfit block">
-                {language === "ar" ? "فرن الحجر الإيطالي المباشر" : "Live Traditional Stone Oven"}
+              <span className="text-xs font-bold text-[#EFCC80] font-cairo block">
+                {language === "ar" ? "فرن الحجر الطبيعي المباشر" : "Live Traditional Stone Oven"}
               </span>
               <h4 className="text-sm font-black font-cairo text-white flex items-center gap-1.5">
                 <span>
@@ -83,7 +83,7 @@ export default function StoneOvenLiveView({
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center gap-2">
+              <div>
                 <span className="text-xs font-black text-white font-cairo">
                   {isReady
                     ? language === "ar"
@@ -93,7 +93,6 @@ export default function StoneOvenLiveView({
                     ? "مستوى النضج: جاري تحمير الأطراف وإذابة الجبن"
                       : "Bake Level: Melting Cheese & Stone Crust"}
                 </span>
-                <Sparkles className="w-3.5 h-3.5 text-[#EFCC80]" />
               </div>
               <p className="text-[11px] text-stone-400">
                 {language === "ar"

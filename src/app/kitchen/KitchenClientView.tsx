@@ -13,7 +13,6 @@ import {
   RotateCw,
   ChefHat,
   AlertTriangle,
-  Sparkles,
   Package,
   LogOut,
 } from "lucide-react";
@@ -130,8 +129,8 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
           <div>
             <h1 className="text-lg font-black font-cairo flex items-center gap-2">
               <span className="text-white">{dict.kitchen.title}</span>
-              <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-2.5 py-0.5 rounded-full font-outfit font-black tracking-wider shadow-sm">
-                LIVE
+              <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-2.5 py-0.5 rounded-full font-cairo font-bold shadow-sm">
+                {language === "ar" ? "مباشر" : "LIVE"}
               </span>
             </h1>
             <p className="text-xs text-[#EFCC80]/80 font-outfit font-bold">

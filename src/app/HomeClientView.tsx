@@ -16,7 +16,6 @@ import {
   ArrowLeft,
   ArrowRight,
   Pizza,
-  Sparkles,
   ShoppingBag,
   ChefHat,
   ChevronLeft,
@@ -476,8 +475,8 @@ export default function HomeClientView({
           {/* Right Banner (First in RTL): الأكثر طلباً في المكلا */}
           <div className="relative rounded-2xl bg-[#14161f]/90 backdrop-blur-md border border-[#C69843]/35 hover:border-[#EFCC80] p-6 sm:p-8 overflow-hidden group transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] flex flex-col justify-between min-h-[220px]">
             <div className="relative z-10 space-y-3 max-w-[62%] sm:max-w-[65%] text-start">
-              <span className="text-[11px] font-bold text-[#EFCC80] uppercase tracking-wider font-outfit block">
-                {language === "ar" ? "أكثر طلباً في المكلا" : "TOP RATED IN MUKALLA"}
+              <span className="text-xs font-bold text-[#EFCC80] font-cairo block">
+                {language === "ar" ? "الأكثر طلباً في المكلا" : "Most Popular in Mukalla"}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white font-cairo leading-snug">
                 {language === "ar"
@@ -492,10 +491,10 @@ export default function HomeClientView({
               <div className="pt-2">
                 <Link
                   href="/menu"
-                  className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[10px] font-bold text-xs uppercase tracking-wider shadow-md shadow-amber-950/50 transition-all active:scale-95"
+                  className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[10px] font-black text-xs shadow-md shadow-amber-950/50 transition-all active:scale-95 font-cairo"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
-                  <span>SHOP NOW</span>
+                  <span>{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
                 </Link>
               </div>
             </div>
@@ -517,8 +516,8 @@ export default function HomeClientView({
           {/* Left Banner (Second in RTL): وجبات التوفير العائلي */}
           <div className="relative rounded-2xl bg-[#14161f]/90 backdrop-blur-md border border-[#C69843]/35 hover:border-[#EFCC80] p-6 sm:p-8 overflow-hidden group transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] flex flex-col justify-between min-h-[220px]">
             <div className="relative z-10 space-y-3 max-w-[62%] sm:max-w-[65%] text-start">
-              <span className="text-[11px] font-bold text-[#EFCC80] uppercase tracking-wider font-outfit block">
-                {language === "ar" ? "وجبات التوفير العائلي" : "FAMILY SAVINGS COMBOS"}
+              <span className="text-xs font-bold text-[#EFCC80] font-cairo block">
+                {language === "ar" ? "وجبات التوفير العائلي" : "Family Savings Meals"}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white font-cairo leading-snug">
                 {language === "ar"
@@ -533,10 +532,10 @@ export default function HomeClientView({
               <div className="pt-2">
                 <Link
                   href="/menu"
-                  className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[10px] font-bold text-xs uppercase tracking-wider shadow-md shadow-amber-950/50 transition-all active:scale-95"
+                  className="inline-flex items-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 px-5 py-2.5 rounded-[10px] font-black text-xs shadow-md shadow-amber-950/50 transition-all active:scale-95 font-cairo"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
-                  <span>SHOP NOW</span>
+                  <span>{language === "ar" ? "اطلب الآن" : "Order Now"}</span>
                 </Link>
               </div>
             </div>
@@ -566,12 +565,8 @@ export default function HomeClientView({
 
         {/* Middle Navigation & Title Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 relative z-10">
-          {/* On the Right in RTL: Section Title & Tag */}
+          {/* On the Right in RTL: Section Title */}
           <div className="text-start space-y-1">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#EFCC80] uppercase tracking-wider mb-1 font-cairo">
-              <Flame className="w-3.5 h-3.5 text-[#C69843] fill-[#C69843]" />
-              <span>{language === "ar" ? "قائمة الأطباق الحجرية" : "STONE OVEN SPECIALTIES"}</span>
-            </div>
             <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
               {language === "ar" ? "أطباق الفرن الحجري المخبوزة طازجة" : "Fresh Stone-Oven Dishes"}
             </h2>
@@ -722,17 +717,14 @@ export default function HomeClientView({
                 className="object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-transparent to-[#14181f]/80 pointer-events-none" />
-              <div className="absolute top-4 start-4 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-[11px] font-black px-3 py-1 rounded font-outfit uppercase shadow-lg">
-                HOT DEAL
+              <div className="absolute top-4 start-4 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] text-xs font-black px-3.5 py-1 rounded-full shadow-lg font-cairo">
+                {language === "ar" ? "عرض حصري" : "Special Offer"}
               </div>
             </div>
 
             {/* Content & Live Countdown Timer */}
             <div className="lg:col-span-6 p-6 sm:p-10 space-y-6 text-start">
               <div className="space-y-2">
-                <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
-                  LIMITED TIME EXCLUSIVE
-                </span>
                 <h3 className="text-2xl sm:text-4xl font-black text-white font-cairo">
                   {language === "ar" ? "عرض اليوم التوفيري المميز" : "Deal of The Day"}
                 </h3>
@@ -798,9 +790,6 @@ export default function HomeClientView({
       ========================================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-2">
-          <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
-            AUTHENTIC STONE OVEN KITCHEN
-          </span>
           <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo">
             {language === "ar" ? "قائمة أسعار أطباقنا (Menu Card)" : "Menu Card"}
           </h2>
@@ -994,9 +983,6 @@ export default function HomeClientView({
         <div className="flex items-center justify-between gap-4">
           {/* Title on the Right in RTL */}
           <div className="text-start space-y-1">
-            <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit block">
-              CUSTOMER REVIEWS & PRAISE
-            </span>
             <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
               {language === "ar" ? "ماذا يقول عملاؤنا في المكلا؟" : "What Our Customers Say in Mukalla"}
             </h2>
@@ -1200,8 +1186,8 @@ export default function HomeClientView({
         <div id="branches" className="bg-[#14181f] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-[#222934] shadow-2xl relative overflow-hidden scroll-mt-24">
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
-              <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-bold px-3 py-1 rounded-full uppercase tracking-wider font-outfit">
-                Fuwa Branch • فرع فوه
+              <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-bold px-3.5 py-1 rounded-full font-cairo shadow-sm">
+                {language === "ar" ? "فرع فوه - المكلا" : "Fuwa Branch • Mukalla"}
               </span>
               <h3 className="text-2xl sm:text-3xl font-black font-cairo">
                 {language === "ar"
@@ -1234,7 +1220,7 @@ export default function HomeClientView({
             </div>
 
             <div className="bg-[#0c0e12] p-5 rounded-2xl border border-[#222934] space-y-3">
-              <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+              <h4 className="text-xs font-bold text-[#EFCC80] flex items-center gap-2 font-cairo">
                 <Clock className="w-4 h-4 text-[#C69843]" />
                 <span>{language === "ar" ? "جدول الدوام المعتمد" : "Official Working Hours"}</span>
               </h4>

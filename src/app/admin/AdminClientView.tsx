@@ -161,8 +161,8 @@ export default function AdminClientView({
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-[#14181f]/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-[#C69843]/30 shadow-[0_12px_32px_rgba(0,0,0,0.85)]">
           <div>
-            <span className="text-xs font-bold text-[#EFCC80] uppercase tracking-wider font-outfit">
-              Pizza House Operations
+            <span className="text-xs font-bold text-[#EFCC80] font-cairo">
+              {language === "ar" ? "عمليات وإدارة بيتزا هاوس" : "Pizza House Operations"}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white font-cairo">
               {dict.admin.title}

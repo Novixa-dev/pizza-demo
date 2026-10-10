@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { useApp } from "@/context/AppContext";
-import { Search, Pizza, Sparkles, Filter } from "lucide-react";
+import { Search, Pizza, Filter } from "lucide-react";
 import MenuCard from "@/components/customer/MenuCard";
 import CustomizerModal, {
   CustomizerProduct,

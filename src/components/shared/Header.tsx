@@ -65,14 +65,13 @@ export default function Header() {
     }
   };
 
-  const navLinks = [
+  const navLinks: Array<{ href: string; label: string; badge?: string }> = [
     { href: "/", label: dict.nav.home },
     { href: "/menu", label: dict.nav.menu },
     { href: "/history", label: dict.nav.orderHistory },
     { href: "/track", label: dict.nav.trackOrder },
     { href: "/#branches", label: dict.nav.branches },
     { href: "/#about", label: dict.nav.about },
-    { href: "/kitchen", label: dict.nav.kitchen, badge: "KDS" },
     { href: "/admin", label: dict.nav.admin },
   ];
 

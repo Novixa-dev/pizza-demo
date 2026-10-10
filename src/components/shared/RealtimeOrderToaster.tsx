@@ -13,7 +13,6 @@ import {
   Volume2,
   VolumeX,
   ExternalLink,
-  Sparkles,
   AlertCircle,
   Bell,
 } from "lucide-react";
@@ -417,7 +416,7 @@ export default function RealtimeOrderToaster() {
                 ) : isCheck ? (
                   <CheckCircle2 className="w-6 h-6" />
                 ) : (
-                  <Sparkles className="w-6 h-6" />
+                  <Bell className="w-6 h-6" />
                 )}
               </div>
 
