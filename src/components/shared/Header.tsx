@@ -28,6 +28,8 @@ import {
   History,
   Truck,
   MessageSquare,
+  Instagram,
+  Navigation,
 } from "lucide-react";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 import RecurringReminderModal from "@/components/customer/RecurringReminderModal";
@@ -71,8 +73,7 @@ export default function Header() {
   const navLinks: Array<{ href: string; label: string; badge?: string }> = [
     { href: "/", label: dict.nav.home },
     { href: "/menu", label: dict.nav.menu },
-    { href: "/history", label: dict.nav.orderHistory },
-    { href: "/track", label: dict.nav.trackOrder },
+    { href: "/#reviews", label: language === "ar" ? "التقييمات" : "Reviews" },
     { href: "/#branches", label: dict.nav.branches },
     { href: "/#about", label: dict.nav.about },
     { href: "/admin", label: dict.nav.admin },
@@ -762,6 +763,29 @@ export default function Header() {
           </div>
 
           {/* 8. Branch Location & Official Operating Hours */}
+          {/* 8. Mobile Quick Shortcuts: Google Maps & Instagram */}
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#141822] hover:bg-[#1a202c] text-stone-300 hover:text-[#EFCC80] text-xs font-semibold border border-white/10 active:scale-95 transition-all font-cairo"
+            >
+              <MapPin className="w-3.5 h-3.5 text-[#C69843]" />
+              <span>{language === "ar" ? "خرائط Google" : "Google Maps"}</span>
+            </a>
+            <a
+              href="https://www.instagram.com/pizza_house66/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#141822] hover:bg-[#1a202c] text-stone-300 hover:text-rose-400 text-xs font-semibold border border-white/10 active:scale-95 transition-all font-outfit"
+            >
+              <span className="text-rose-400">📸</span>
+              <span>@pizza_house66</span>
+            </a>
+          </div>
+
+          {/* 9. Branch Location & Official Operating Hours */}
           <div className="p-3 rounded-2xl bg-[#0e1118] border border-white/5 text-[11px] text-stone-400 space-y-1.5 font-cairo">
             <p className="flex items-start gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-[#C69843] shrink-0 mt-0.5" />

@@ -157,6 +157,74 @@ export function generatePickupSlots({
     }
   }
 
+  // Sort today's slots chronologically
+  slots.sort((a, b) => a.timeString.localeCompare(b.timeString));
+
+  // If no available slots remain for targetDate (e.g. late evening or night),
+  // automatically append tomorrow's shifts so customers can pre-schedule smoothly!
+  const availableCount = slots.filter((s) => s.isAvailable).length;
+  if (availableCount < 4) {
+    const tomorrow = new Date(targetDate);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowDayOfWeek = tomorrow.getDay();
+    const tomorrowShifts = businessHours.filter(
+      (b) => b.dayOfWeek === tomorrowDayOfWeek && !b.isClosed
+    );
+
+    for (const shift of tomorrowShifts) {
+      const open = parseTime(shift.openTime);
+      const close = parseTime(shift.closeTime);
+
+      const shiftStart = new Date(tomorrow);
+      shiftStart.setHours(open.hours, open.minutes, 0, 0);
+
+      const shiftEnd = new Date(tomorrow);
+      shiftEnd.setHours(close.hours, close.minutes, 0, 0);
+
+      if (close.hours < open.hours) {
+        shiftEnd.setDate(shiftEnd.getDate() + 1);
+      }
+
+      const lastOrderTime = new Date(shiftEnd.getTime() - 30 * 60 * 1000);
+      let currentSlot = new Date(shiftStart);
+      const minRemainder = currentSlot.getMinutes() % 15;
+      if (minRemainder !== 0) {
+        currentSlot.setMinutes(currentSlot.getMinutes() + (15 - minRemainder));
+      }
+
+      while (currentSlot <= lastOrderTime) {
+        const hours = currentSlot.getHours();
+        const minutes = currentSlot.getMinutes();
+        const timeString = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+
+        const periodAr = hours >= 12 ? "مساءً" : "صباحاً";
+        const periodEn = hours >= 12 ? "PM" : "AM";
+        const displayHours = hours % 12 || 12;
+        const displayMins = String(minutes).padStart(2, "0");
+
+        // If today already has this slot in the list but expired, we replace or append with tomorrow label
+        const existingIdx = slots.findIndex((s) => s.timeString === timeString);
+        const slotItem: TimeSlotOption = {
+          timeString,
+          displayLabelAr: `غداً ${displayHours}:${displayMins} ${periodAr}`,
+          displayLabelEn: `Tomorrow ${displayHours}:${displayMins} ${periodEn}`,
+          isAvailable: true,
+        };
+
+        if (existingIdx >= 0) {
+          // If existing is expired, replace with available tomorrow slot
+          if (!slots[existingIdx].isAvailable) {
+            slots[existingIdx] = slotItem;
+          }
+        } else {
+          slots.push(slotItem);
+        }
+
+        currentSlot = new Date(currentSlot.getTime() + 15 * 60 * 1000);
+      }
+    }
+  }
+
   // Sort slots chronologically
   return slots.sort((a, b) => a.timeString.localeCompare(b.timeString));
 }

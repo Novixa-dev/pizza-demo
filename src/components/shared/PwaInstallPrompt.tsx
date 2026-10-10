@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useApp } from "@/context/AppContext";
-import { Download, X, Smartphone, CheckCircle2 } from "lucide-react";
+import { Download, X, Smartphone, Sparkles, CheckCircle2 } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -67,8 +68,14 @@ export default function PwaInstallPrompt() {
     <div className="fixed bottom-20 start-4 end-4 sm:start-auto sm:end-6 sm:max-w-sm z-30 animate-in slide-in-from-bottom duration-300">
       <div className="bg-[#14181f]/95 backdrop-blur-xl text-white p-3.5 rounded-2xl border border-[#EFCC80]/30 shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#EFCC80] to-[#C69843] flex items-center justify-center shrink-0 shadow-md shadow-[#EFCC80]/20 text-[#2C1A04]">
-            <Smartphone className="w-5 h-5 text-[#2C1A04]" />
+          <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 shadow-md border border-[#EFCC80]/40 bg-[#0c0e12]">
+            <Image
+              src="/icon-192.png"
+              alt="Pizza House App Icon"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover"
+            />
           </div>
           <div>
             <div className="flex items-center gap-1.5">

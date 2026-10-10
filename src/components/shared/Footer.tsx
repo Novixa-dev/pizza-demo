@@ -39,24 +39,26 @@ export default function Footer() {
                 ? "متخصصون في عمل أشهى أنواع البيتزا الإيطالية والفطائر الطازجة في المكلا بعجينة يومية ومكونات فاخرة مخبوزة على الحجر."
                 : "Specializing in mouthwatering Italian stone-baked pizzas and fresh fatayer in Mukalla with artisanal dough and premium ingredients."}
             </p>
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
               <a
                 href="https://www.instagram.com/pizza_house66/"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-[#14181f] border border-[#222934] hover:bg-gradient-to-b hover:from-[#EFCC80] hover:to-[#C69843] hover:border-[#EFCC80] text-stone-300 hover:text-[#2C1A04] flex items-center justify-center transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 bg-[#14181f] hover:bg-[#1c222c] text-stone-300 hover:text-white px-3 py-1.5 rounded-xl border border-white/10 hover:border-amber-500/30 transition-all text-xs font-bold font-outfit"
                 aria-label="Instagram @pizza_house66"
               >
-                <Instagram className="w-4 h-4" />
+                <Instagram className="w-3.5 h-3.5 text-rose-400" />
+                <span>@pizza_house66</span>
               </a>
               <a
                 href="https://wa.me/967772207788"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-[#14181f] border border-[#222934] hover:bg-emerald-600 hover:border-emerald-600 text-stone-300 hover:text-white flex items-center justify-center transition-colors shadow-sm"
+                className="inline-flex items-center gap-1.5 bg-[#14181f] hover:bg-[#1c222c] text-stone-300 hover:text-white px-3 py-1.5 rounded-xl border border-white/10 hover:border-emerald-500/30 transition-all text-xs font-bold font-outfit"
                 aria-label="WhatsApp 772207788"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                <span>772207788</span>
               </a>
             </div>
           </div>
@@ -92,17 +94,37 @@ export default function Footer() {
             <div className="text-xs text-stone-400 space-y-2">
               <p className="leading-relaxed">
                 {language === "ar"
-                  ? "حضرموت، المكلا، فوه، حي المساكن (بالقرب من مستوصف النور وجامعة الأحقاف ومدرسة السلال)."
-                  : "Hadhramaut, Mukalla, Fuwa, Al-Masaken District (near Al-Noor Clinic and Al-Ahgaff University)."}
+                  ? "حضرموت، المكلا، فوه، حي المساكن (بعد جامعة الأحقاف ومستوصف النور يمين الشارع العام)."
+                  : "Hadhramaut, Mukalla, Fuwa, Al-Masaken (after Al-Ahgaff Univ & Al-Noor Clinic, right turn)."}
+              </p>
+              <div className="flex items-center gap-2 pt-0.5">
+                <span className="font-outfit text-stone-400 text-[11px]">Plus Code:</span>
+                <span className="font-outfit font-bold text-stone-200 text-xs">F2QV+HPW</span>
+              </div>
+              <p className="font-outfit text-stone-200">
+                {language === "ar" ? "هاتف ثابت: " : "Landline: "}
+                <a href="tel:05375561" className="text-[#EFCC80] hover:underline font-bold">05-375561</a>
               </p>
               <p className="font-outfit text-stone-200">
-                {language === "ar" ? "هاتف أرضي: " : "Landline: "}
-                <span className="text-[#C69843] font-bold">05375561</span>
+                {language === "ar" ? "واتساب وطلبات: " : "WhatsApp & Mobile: "}
+                <a href="https://wa.me/967772207788" target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline font-bold">+967 772207788</a>
               </p>
-              <p className="font-outfit text-stone-200">
-                {language === "ar" ? "واتساب / جوال: " : "WhatsApp / Mobile: "}
-                <span className="text-emerald-400 font-bold">+967 772207788</span>
+              <p className="font-outfit text-stone-300 text-[11px]">
+                {language === "ar" ? "شبكات إضافية: " : "Other lines: "}
+                <span>738227788 (YOU) · 711227788 (سبأفون)</span>
               </p>
+              <div className="pt-2">
+                <a
+                  href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-[#EFCC80] hover:text-white font-bold transition-colors text-xs"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-[#C69843]" />
+                  <span>{language === "ar" ? "عرض على خرائط Google" : "View on Google Maps"}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
             </div>
           </div>
 

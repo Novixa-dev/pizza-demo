@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cairo, Outfit } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
@@ -9,7 +9,7 @@ import FloatingCartBar from "@/components/shared/FloatingCartBar";
 import RealtimeOrderToaster from "@/components/shared/RealtimeOrderToaster";
 import RecurringReminderBanner from "@/components/customer/RecurringReminderBanner";
 import PwaInstallPrompt from "@/components/shared/PwaInstallPrompt";
-import { siteMetadata, jsonLdRestaurantData } from "@/lib/seoConfig";
+import { siteMetadata, siteViewport, jsonLdRestaurantData } from "@/lib/seoConfig";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -26,6 +26,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = siteMetadata;
+export const viewport: Viewport = siteViewport;
 
 export default function RootLayout({
   children,

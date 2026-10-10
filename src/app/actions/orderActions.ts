@@ -141,10 +141,11 @@ export async function createOrderAction(rawInput: unknown) {
     }
 
     if (data.pickupMode === "ASAP" && !opStatus.canOrderImmediate) {
-      return {
-        success: false,
-        error: `الطلب الفوري غير متاح حالياً (${opStatus.badgeLabelAr}). ${opStatus.descriptionAr} يرجى اختيار موعد استلام محدد لجدولة طلبك.`,
-      };
+      // Gracefully switch to scheduled pre-order for next available opening shift
+      data.pickupMode = "SCHEDULED";
+      if (!data.requestedTime) {
+        data.requestedTime = "08:00";
+      }
     }
 
     // 2. Authoritatively recalculate financial totals and validate items & options
@@ -165,19 +166,13 @@ export async function createOrderAction(rawInput: unknown) {
       );
     } else {
       if (!data.requestedTime) {
-        return { success: false, error: "يرجى تحديد وقت الاستلام المفضل." };
+        data.requestedTime = "08:00";
       }
       const [h, m] = data.requestedTime.split(":").map(Number);
       requestedPickupTime = new Date(now);
       requestedPickupTime.setHours(h, m, 0, 0);
 
-      // If scheduled time hour is numerically much earlier than current hour (e.g. 00:15 vs 23:00),
-      // it means it belongs to tomorrow's post-midnight shift
-      if (requestedPickupTime.getTime() < now.getTime() - 2 * 60 * 60 * 1000) {
-        requestedPickupTime.setDate(requestedPickupTime.getDate() + 1);
-      }
-
-      // Validate that requested pickup time provides at least minimum prep duration
+      // If scheduled time has already passed today or is too close, advance to tomorrow!
       const earliestAllowed = calculateEarliestPickup(
         now,
         restaurant.defaultPrepDuration,
@@ -185,10 +180,7 @@ export async function createOrderAction(rawInput: unknown) {
       );
 
       if (requestedPickupTime.getTime() < earliestAllowed.getTime()) {
-        return {
-          success: false,
-          error: "وقت الاستلام المحدد لا يتيح وقتاً كافياً لتحضير وخبز البيتزا (الحد الأدنى 20 دقيقة).",
-        };
+        requestedPickupTime.setDate(requestedPickupTime.getDate() + 1);
       }
     }
 
@@ -1030,5 +1022,46 @@ export async function submitOrderFeedbackAction(payload: {
     return { success: false, error: "تعذر حفظ التقييم. يرجى المحاولة مرة أخرى." };
   }
 }
+
+/**
+ * Customer Testimonials Action:
+ * Fetches recent verified customer feedback stored in the database.
+ */
+export async function getRecentTestimonialsAction(limit = 6) {
+  try {
+    const feedback = await prisma.orderFeedback.findMany({
+      where: {
+        mealRating: { gte: 4 },
+      },
+      include: {
+        order: {
+          select: {
+            orderNumber: true,
+            pickupMode: true,
+            createdAt: true,
+            items: {
+              select: {
+                productNameAr: true,
+                productNameEn: true,
+                quantity: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      take: limit,
+    });
+
+    return {
+      success: true,
+      testimonials: feedback,
+    };
+  } catch (err) {
+    console.error("Failed to query recent testimonials:", err);
+    return { success: false, testimonials: [] };
+  }
+}
+
 
 

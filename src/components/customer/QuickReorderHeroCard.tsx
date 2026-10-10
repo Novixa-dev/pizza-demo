@@ -115,12 +115,8 @@ export default function QuickReorderHeroCard() {
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>
-            {isAdded
-              ? language === "ar"
-                ? "تمت الإضافة للسلة! ✓"
-                : "Added to Cart! ✓"
-              : language === "ar"
-              ? "اطلبها الآن بنقرة واحدة 🍕"
+            {language === "ar"
+              ? "اطلب وجبتك المفضلة طازجة 🍕"
               : "Reorder in 1-Click 🍕"}
           </span>
         </button>

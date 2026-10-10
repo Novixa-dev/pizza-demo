@@ -104,11 +104,19 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
     },
   ];
 
-  const pickupDate = new Date(order.requestedPickupTime);
-  const formattedPickupTime = pickupDate.toLocaleTimeString(
-    language === "ar" ? "ar-YE" : "en-US",
-    { hour: "2-digit", minute: "2-digit" }
-  );
+  const formattedPickupTime = React.useMemo(() => {
+    if (!order.requestedPickupTime) return "";
+    try {
+      const pickupDate = new Date(order.requestedPickupTime);
+      return pickupDate.toLocaleTimeString(language === "ar" ? "ar-YE" : "en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "Asia/Aden",
+      });
+    } catch {
+      return "";
+    }
+  }, [order.requestedPickupTime, language]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-cairo">
@@ -174,7 +182,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
               <span className="text-[11px] text-stone-400 block font-cairo">
                 موعد الاستلام المحدد من الفرع:
               </span>
-              <span className="text-base font-black text-[#EFCC80] font-outfit">
+              <span suppressHydrationWarning className="text-base font-black text-[#EFCC80] font-outfit">
                 {formattedPickupTime} ({order.pickupMode === "ASAP" ? "أسرع وقت" : "طلب مجدول"})
               </span>
             </div>

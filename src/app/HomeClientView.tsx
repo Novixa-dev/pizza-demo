@@ -29,10 +29,10 @@ import {
   Play,
   Quote,
   Instagram,
-  Timer,
   Percent,
   Tag,
   Plus,
+  Navigation,
 } from "lucide-react";
 import MenuCard from "@/components/customer/MenuCard";
 import HeroSection from "@/components/customer/HeroSection";
@@ -41,6 +41,8 @@ import CustomizerModal, {
   CustomizerProduct,
 } from "@/components/customer/CustomizerModal";
 import QuickReorderHeroCard from "@/components/customer/QuickReorderHeroCard";
+import LocationAndMapSection from "@/components/customer/LocationAndMapSection";
+import TestimonialsSection from "@/components/customer/TestimonialsSection";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 
 interface HomeClientViewProps {
@@ -48,6 +50,7 @@ interface HomeClientViewProps {
   featuredProducts: any[];
   latestProducts?: any[];
   categories: any[];
+  initialTestimonials?: any[];
 }
 
 export default function HomeClientView({
@@ -55,6 +58,7 @@ export default function HomeClientView({
   featuredProducts,
   latestProducts = [],
   categories,
+  initialTestimonials = [],
 }: HomeClientViewProps) {
   const { language, dict, addToCart, setIsCartOpen } = useApp();
   const [selectedProduct, setSelectedProduct] = useState<CustomizerProduct | null>(null);
@@ -1058,7 +1062,7 @@ export default function HomeClientView({
 
                 {/* Short Review Text in White */}
                 <p className="text-sm sm:text-[15px] text-white/95 leading-relaxed font-cairo font-normal">
-                  "{item.quote}"
+                  &ldquo;{item.quote}&rdquo;
                 </p>
               </div>
 
@@ -1177,71 +1181,17 @@ export default function HomeClientView({
       </section>
 
       {/* =========================================================================
-          12. RETURNING CUSTOMER QUICK REORDER & BRANCH LOCATION / HOURS
+          12. RETURNING CUSTOMER QUICK REORDER
       ========================================================================= */}
       <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
         <QuickReorderHeroCard />
-
-        {/* Verified Branch Location & Hours Banner */}
-        <div id="branches" className="bg-[#14181f] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-[#222934] shadow-2xl relative overflow-hidden scroll-mt-24">
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-4">
-              <span className="text-xs bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] font-bold px-3.5 py-1 rounded-full font-cairo shadow-sm">
-                {language === "ar" ? "فرع فوه - المكلا" : "Fuwa Branch • Mukalla"}
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-black font-cairo">
-                {language === "ar"
-                  ? "تفضل بزيارتنا في فوه - حي المساكن"
-                  : "Visit Our Fuwa Branch - Al-Masaken"}
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                {language === "ar"
-                  ? "يقع المطعم في موقع استراتيجي بالقرب من جامعة الأحقاف، مستوصف النور، ومدرسة السلال. تتوفر جلسات مريحة وخدمة استلام سريعة مسبقة الدفع والتجهيز."
-                  : "Conveniently located near Al-Ahgaff University, Al-Noor Clinic, and Al-Sellal School. Dine-in seating and rapid prep-ahead takeout counter available."}
-              </p>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <a
-                  href="tel:05375561"
-                  className="inline-flex items-center gap-2 bg-[#0c0e12] hover:bg-[#1a202a] text-white text-xs font-bold px-4 py-2.5 rounded-full border border-[#222934] transition-colors"
-                >
-                  <Phone className="w-3.5 h-3.5 text-[#C69843]" />
-                  <span>05375561</span>
-                </a>
-                <a
-                  href="https://wa.me/967772207788"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 text-xs font-bold px-4 py-2.5 rounded-full border border-emerald-700/60 transition-colors"
-                >
-                  <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{language === "ar" ? "واتساب: 772207788" : "WhatsApp: 772207788"}</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="bg-[#0c0e12] p-5 rounded-2xl border border-[#222934] space-y-3">
-              <h4 className="text-xs font-bold text-[#EFCC80] flex items-center gap-2 font-cairo">
-                <Clock className="w-4 h-4 text-[#C69843]" />
-                <span>{language === "ar" ? "جدول الدوام المعتمد" : "Official Working Hours"}</span>
-              </h4>
-              <div className="space-y-2 text-xs text-stone-300">
-                <div className="flex justify-between border-b border-[#222934] pb-1.5">
-                  <span>{language === "ar" ? "الفترة الصباحية (معجنات وفطائر):" : "Morning Shift (Pastries):"}</span>
-                  <span className="font-outfit text-white">8:00 AM – 12:00 PM</span>
-                </div>
-                <div className="flex justify-between border-b border-[#222934] pb-1.5">
-                  <span>{language === "ar" ? "الفترة المسائية (بيتزا وعشاء):" : "Evening Shift (Dinner & Pizza):"}</span>
-                  <span className="font-outfit text-white">4:00 PM – 11:30 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>{language === "ar" ? "الجمعة (مساءً فقط):" : "Friday (Evening only):"}</span>
-                  <span className="font-outfit text-white">4:00 PM – 11:30 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
+
+      {/* 3.8 Verified Customer Testimonials & Reviews Section */}
+      <TestimonialsSection initialTestimonials={initialTestimonials} />
+
+      {/* 4. Comprehensive Interactive Location & Map Section with Instagram & Amenities */}
+      <LocationAndMapSection />
 
       {/* Customizer Modal */}
       {selectedProduct && (

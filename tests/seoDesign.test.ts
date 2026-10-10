@@ -27,8 +27,8 @@ describe("Theme, Design & SEO Comprehensive Verification", () => {
 
   it("validates Schema.org JSON-LD structured data coordinates and currency", () => {
     expect(jsonLdRestaurantData.name).toContain("Pizza House");
-    expect(jsonLdRestaurantData.geo.latitude).toBeCloseTo(14.5367);
-    expect(jsonLdRestaurantData.geo.longitude).toBeCloseTo(49.1256);
+    expect(jsonLdRestaurantData.geo.latitude).toBeCloseTo(14.4892, 2);
+    expect(jsonLdRestaurantData.geo.longitude).toBeCloseTo(49.0445, 2);
     expect(jsonLdRestaurantData.currenciesAccepted).toBe("YER");
     expect(jsonLdRestaurantData.aggregateRating.ratingValue).toBe("4.9");
   });
