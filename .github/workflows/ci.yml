@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main] # main is verified by the Deploy workflow, which calls this one
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint · Typecheck · Test · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: file:./ci.db
+      SESSION_SECRET: ci-only-session-secret-0123456789abcdef
+      ADMIN_PIN: "100001"
+      KITCHEN_PIN: "100002"
+      CASHIER_PIN: "100003"
+      NEXT_PUBLIC_APP_URL: https://pizza-house.novixa.dev
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Prepare test database
+        run: |
+          npx prisma db push --skip-generate
+          npm run db:seed
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit & integration tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
