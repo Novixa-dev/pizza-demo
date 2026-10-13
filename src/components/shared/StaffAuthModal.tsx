@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { loginStaffAction } from "@/app/actions/orderActions";
 import { StaffRole } from "@/lib/auth";
 import { ShieldCheck, Lock, ArrowLeft, ArrowRight, AlertCircle, KeyRound } from "lucide-react";
@@ -144,12 +145,12 @@ export default function StaffAuthModal({
         </form>
 
         <div className="pt-2 border-t border-[#222934]">
-          <a
+          <Link
             href="/"
             className="text-xs text-[#EFCC80]/70 hover:text-[#EFCC80] transition-colors"
           >
             {language === "ar" ? "العودة للرئيسية" : language === "id" ? "Kembali ke Beranda" : "Back to Home"}
-          </a>
+          </Link>
         </div>
       </div>
     </div>

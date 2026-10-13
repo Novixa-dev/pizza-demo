@@ -9,10 +9,11 @@ export default async function OrderTrackingPage({
   params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { token?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ token?: string }>;
 }) {
-  const cleanParam = decodeURIComponent(params.id || "").trim();
+  const [{ id }, { token }] = await Promise.all([params, searchParams]);
+  const cleanParam = decodeURIComponent(id || "").trim();
   const withHash = cleanParam.startsWith("#") ? cleanParam : `#${cleanParam}`;
   const withoutHash = cleanParam.replace(/^#/, "");
 
@@ -46,7 +47,7 @@ export default async function OrderTrackingPage({
   }
 
   const isOwner = Boolean(
-    searchParams.token && searchParams.token === order.trackingToken
+    token && token === order.trackingToken
   );
 
   // If visitor is the verified order owner (holds secret token), provide full tracking access.

@@ -367,7 +367,7 @@ export async function updateOrderStatusAction(
 ) {
   try {
     // 1. Authorization check: Staff must be authenticated
-    const session = getStaffSession();
+    const session = await getStaffSession();
     if (!session.isAuthenticated || !session.role) {
       return {
         success: false,
@@ -448,7 +448,7 @@ export async function verifyPaymentAction(
 ) {
   try {
     // 1. Authorization check
-    const session = getStaffSession();
+    const session = await getStaffSession();
     if (
       !session.isAuthenticated ||
       !session.role ||
@@ -551,7 +551,7 @@ export async function togglePauseOrderingAction(
   messageAr?: string
 ) {
   try {
-    const session = getStaffSession();
+    const session = await getStaffSession();
     if (!session.isAuthenticated || session.role !== "ADMIN") {
       return {
         success: false,
@@ -600,7 +600,7 @@ export async function toggleProductAvailabilityAction(
   isAvailable: boolean
 ) {
   try {
-    const session = getStaffSession();
+    const session = await getStaffSession();
     if (
       !session.isAuthenticated ||
       !session.role ||
@@ -642,7 +642,7 @@ export async function toggleProductAvailabilityAction(
  */
 export async function loginStaffAction(pin: string, targetRole: StaffRole) {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const clientIp =
       headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       headersList.get("x-real-ip") ||
@@ -676,7 +676,7 @@ export async function loginStaffAction(pin: string, targetRole: StaffRole) {
 
     // 3. Reset rate limit counter on success & issue HTTP-only cookie
     resetPinAttempts(clientIp);
-    setStaffSessionCookie(verification.role);
+    await setStaffSessionCookie(verification.role);
 
     return {
       success: true,
@@ -766,8 +766,8 @@ export async function updateStoreSettingsAction(data: {
   addressAr?: string;
 }) {
   try {
-    const session = getStaffSession();
-    if (!isAuthorizedStaff(["ADMIN"])) {
+    const session = await getStaffSession();
+    if (!(await isAuthorizedStaff(["ADMIN"]))) {
       return { success: false, error: "غير مصرح لك بتعديل إعدادات الفرع." };
     }
 
@@ -817,7 +817,7 @@ export async function updateStoreSettingsAction(data: {
  */
 export async function logoutStaffAction() {
   try {
-    clearStaffSessionCookie();
+    await clearStaffSessionCookie();
     safeRevalidatePath("/admin");
     safeRevalidatePath("/kitchen");
     return { success: true };

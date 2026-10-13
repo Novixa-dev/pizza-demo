@@ -7,6 +7,20 @@ import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
 export const dynamic = "force-dynamic";
 
 export default async function CheckoutPage() {
+  let checkoutProps: React.ComponentProps<typeof CheckoutClientView> = {
+    restaurant: null,
+    availableSlots: [],
+    restaurantStatus: {
+      status: "TEMPORARILY_PAUSED",
+      canOrderImmediate: false,
+      canOrderScheduled: false,
+      badgeLabelAr: "متوقف مؤقتاً",
+      badgeLabelEn: "Paused",
+      descriptionAr: "جاري صيانة خادم الطلبات مؤقتاً، يرجى المحاولة بعد لحظات.",
+      descriptionEn: "Server is temporarily undergoing maintenance, please retry shortly.",
+    },
+  };
+
   try {
     const restaurant = await prisma.restaurant.findFirst({
       include: { businessHours: true },
@@ -88,30 +102,14 @@ export default async function CheckoutPage() {
         }
       : null;
 
-    return (
-      <CheckoutClientView
-        restaurant={serializedRestaurant}
-        availableSlots={slots}
-        restaurantStatus={restaurantStatus}
-      />
-    );
+    checkoutProps = {
+      restaurant: serializedRestaurant,
+      availableSlots: slots,
+      restaurantStatus,
+    };
   } catch (error) {
     console.error("Critical error loading checkout page:", error);
-    // Graceful fallback to prevent server 500 error
-    return (
-      <CheckoutClientView
-        restaurant={null}
-        availableSlots={[]}
-        restaurantStatus={{
-          status: "TEMPORARILY_PAUSED",
-          canOrderImmediate: false,
-          canOrderScheduled: false,
-          badgeLabelAr: "متوقف مؤقتاً",
-          badgeLabelEn: "Paused",
-          descriptionAr: "جاري صيانة خادم الطلبات مؤقتاً، يرجى المحاولة بعد لحظات.",
-          descriptionEn: "Server is temporarily undergoing maintenance, please retry shortly.",
-        }}
-      />
-    );
   }
+
+  return <CheckoutClientView {...checkoutProps} />;
 }

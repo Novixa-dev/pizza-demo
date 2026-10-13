@@ -54,7 +54,7 @@ export default async function TwitterImage() {
                 fontSize: "28px",
               }}
             >
-              🍕
+              66
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <span style={{ fontSize: "28px", fontWeight: 900 }}>بيتزا هاوس المكلا</span>
@@ -72,7 +72,7 @@ export default async function TwitterImage() {
               fontWeight: 800,
             }}
           >
-            ★ 4.9 تقييم العملاء (348+)
+            4.9/5 تقييم العملاء (348+)
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useApp } from "@/context/AppContext";
 import {
   Pizza,
@@ -139,31 +140,31 @@ export default function Footer() {
             </h4>
             <ul className="text-xs space-y-2 text-stone-400">
               <li>
-                <a href="/menu" className="hover:text-[#EFCC80] transition-colors">
+                <Link href="/menu" className="hover:text-[#EFCC80] transition-colors">
                   {dict.nav.menu}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/history" className="hover:text-[#EFCC80] transition-colors">
+                <Link href="/history" className="hover:text-[#EFCC80] transition-colors">
                   {dict.nav.orderHistory}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/track" className="hover:text-[#EFCC80] transition-colors">
+                <Link href="/track" className="hover:text-[#EFCC80] transition-colors">
                   {dict.nav.trackOrder}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/kitchen" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
+                <Link href="/kitchen" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
                   <span>{dict.kitchen.title}</span>
                   <ExternalLink className="w-3 h-3 text-stone-500" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/admin" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
+                <Link href="/admin" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
                   <span>{dict.admin.title}</span>
                   <ExternalLink className="w-3 h-3 text-stone-500" />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

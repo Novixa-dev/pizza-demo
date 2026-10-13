@@ -13,6 +13,7 @@
 # Production
 /build
 /storage/
+/dev.db*
 
 # Misc
 .DS_Store

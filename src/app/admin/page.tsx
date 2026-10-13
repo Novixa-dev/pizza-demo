@@ -7,7 +7,7 @@ import StaffAuthModal from "@/components/shared/StaffAuthModal";
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const session = getStaffSession();
+  const session = await getStaffSession();
 
   if (!session.isAuthenticated || session.role !== "ADMIN") {
     return (

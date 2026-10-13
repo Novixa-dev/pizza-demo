@@ -74,7 +74,7 @@ export default async function OpenGraphImage() {
                 boxShadow: "0 10px 30px rgba(234, 88, 12, 0.4)",
               }}
             >
-              🍕
+              66
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <span style={{ fontSize: "30px", fontWeight: 900, color: "#ffffff", letterSpacing: "-0.5px" }}>
@@ -100,7 +100,7 @@ export default async function OpenGraphImage() {
               fontWeight: 800,
             }}
           >
-            <span>★ 4.9 تقييم العملاء</span>
+            <span>4.9/5 تقييم العملاء</span>
             <span style={{ color: "rgba(255,255,255,0.4)" }}>·</span>
             <span style={{ color: "#ffffff" }}>فوه حي المساكن</span>
           </div>
@@ -144,11 +144,11 @@ export default async function OpenGraphImage() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "22px", fontSize: "15px", color: "#a8a29e", fontWeight: 600 }}>
-            <span style={{ color: "#f59e0b" }}>📍 حضرموت · المكلا · فوه</span>
+            <span style={{ color: "#f59e0b" }}>حضرموت · المكلا · فوه</span>
             <span style={{ color: "rgba(255,255,255,0.2)" }}>·</span>
-            <span>📞 05-375561 · 772207788</span>
+            <span>05-375561 · 772207788</span>
             <span style={{ color: "rgba(255,255,255,0.2)" }}>·</span>
-            <span style={{ color: "#34d399" }}>💳 كريمي · العمقي · البسيري</span>
+            <span style={{ color: "#34d399" }}>كريمي · العمقي · البسيري</span>
           </div>
 
           <div

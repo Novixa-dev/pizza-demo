@@ -212,7 +212,7 @@ export async function getCustomerLoyaltyAction(customerPhone: string) {
  * Admin action to fetch all coupons for the control panel.
  */
 export async function getAdminCouponsAction() {
-  if (!isAuthorizedStaff(["ADMIN"])) {
+  if (!(await isAuthorizedStaff(["ADMIN"]))) {
     return { success: false, coupons: [], gifts: [], loyaltyCount: 0 };
   }
 
@@ -236,7 +236,7 @@ export async function getAdminCouponsAction() {
  * Admin action to toggle coupon active status.
  */
 export async function toggleCouponStatusAction(couponId: string, isActive: boolean) {
-  if (!isAuthorizedStaff(["ADMIN"])) {
+  if (!(await isAuthorizedStaff(["ADMIN"]))) {
     return { success: false, message: "غير مصرح بهذا الإجراء" };
   }
 
@@ -273,7 +273,7 @@ export async function createCouponAction(data: {
   usageLimit?: number;
   isFirstOrderOnly?: boolean;
 }) {
-  if (!isAuthorizedStaff(["ADMIN"])) {
+  if (!(await isAuthorizedStaff(["ADMIN"]))) {
     return { success: false, message: "غير مصرح بهذا الإجراء" };
   }
 
@@ -319,7 +319,7 @@ export async function createCouponAction(data: {
  * Admin action to delete a coupon.
  */
 export async function deleteCouponAction(couponId: string) {
-  if (!isAuthorizedStaff(["ADMIN"])) {
+  if (!(await isAuthorizedStaff(["ADMIN"]))) {
     return { success: false, message: "غير مصرح بهذا الإجراء" };
   }
 

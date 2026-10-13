@@ -191,9 +191,9 @@ export function verifyPinForRole(
 /**
  * Reads staff session from cookies in Server Components or Server Actions.
  */
-export function getStaffSession(): { isAuthenticated: boolean; role?: StaffRole } {
+export async function getStaffSession(): Promise<{ isAuthenticated: boolean; role?: StaffRole }> {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
     const result = verifyStaffToken(token);
     return {
@@ -208,9 +208,9 @@ export function getStaffSession(): { isAuthenticated: boolean; role?: StaffRole 
 /**
  * Sets staff session cookie.
  */
-export function setStaffSessionCookie(role: StaffRole): void {
+export async function setStaffSessionCookie(role: StaffRole): Promise<void> {
   const token = createStaffToken(role);
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -223,8 +223,8 @@ export function setStaffSessionCookie(role: StaffRole): void {
 /**
  * Clears staff session cookie.
  */
-export function clearStaffSessionCookie(): void {
-  const cookieStore = cookies();
+export async function clearStaffSessionCookie(): Promise<void> {
+  const cookieStore = await cookies();
   cookieStore.delete(SESSION_COOKIE_NAME);
 }
 
@@ -232,10 +232,10 @@ export function clearStaffSessionCookie(): void {
  * Authoritative guard helper for Server Actions.
  * Returns true if the user has one of the required roles.
  */
-export function isAuthorizedStaff(
+export async function isAuthorizedStaff(
   allowedRoles: StaffRole[] = ["ADMIN", "KITCHEN", "CASHIER"]
-): boolean {
-  const session = getStaffSession();
+): Promise<boolean> {
+  const session = await getStaffSession();
   if (!session.isAuthenticated || !session.role) {
     return false;
   }

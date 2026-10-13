@@ -11,13 +11,13 @@ const receiptTypes: Record<string, string> = {
 
 export async function GET(
   _request: Request,
-  { params }: { params: { fileName: string } }
+  { params }: { params: Promise<{ fileName: string }> }
 ) {
-  if (!isAuthorizedStaff(["ADMIN", "CASHIER"])) {
+  if (!(await isAuthorizedStaff(["ADMIN", "CASHIER"]))) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const fileName = params.fileName;
+  const { fileName } = await params;
   const match = /^receipt_[0-9a-f-]{36}\.(jpg|png|webp)$/.exec(fileName);
   if (!match) return new NextResponse("Not found", { status: 404 });
 

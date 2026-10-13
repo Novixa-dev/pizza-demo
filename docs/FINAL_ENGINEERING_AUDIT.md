@@ -3,7 +3,7 @@
 > **Auditor**: Lead Senior Product & Security Engineer  
 > **Evaluation Standards**: Zero-trust server validation, empirical browser testing, automated unit/integration suites, RBAC authentication.
 
-> **Review status (2026-10-13):** This report is historical and its production-readiness claims are superseded. The current review found unguarded coupon administration, development auth fallbacks, publicly served receipt uploads, and a destructive demo seeder. These issues are being corrected; dependencies could not yet be installed in the current environment, so automated test/build claims below are not current verification.
+> **Review status (2026-10-13):** Historical findings above are superseded by the current release review. Production hardening now includes guarded coupon administration, no production fallback PINs/secrets, private receipt storage and authenticated retrieval, and a non-destructive production seeder. Verified with Node 24.15.0, Next.js 16.4.0, React 19.3.0: 86 tests pass across 19 files, typecheck passes, lint has 0 errors (16 warnings), production build passes, and `npm audit --omit=dev` reports 0 vulnerabilities. The full audit still reports dev-tool advisories in the Tailwind 3 toolchain and Next lint plugins; npm offers no non-breaking complete fix (Tailwind 4 requires a separate migration). Metadata image routes retain Edge runtime because Next's Node prerenderer fails on the Arabic glyph shaping used by their images.
 
 ---
 
