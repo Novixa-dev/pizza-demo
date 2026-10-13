@@ -5,7 +5,7 @@
 | Threat / Vulnerability | Risk | Architecture Defense |
 | :--- | :--- | :--- |
 | **Client-Side Price Tampering** | High | The server recalculates totals using authoritative DB rates. Client prices in request payloads are ignored. |
-| **Receipt Upload Malware / RCE** | Critical | Strict MIME inspection (`image/jpeg`, `image/png`, `image/webp`), 5MB size limit, randomized storage names, stored outside web root with authorized streaming. |
+| **Receipt Exposure / Upload Abuse** | High | JPEG/PNG/WebP allowlist, 5MB decoded size limit, cryptographically random names, storage outside the public web root, staff-authorized retrieval with `no-store` and `nosniff` headers. |
 | **Insecure Direct Object Reference (IDOR)** | High | Orders have private random UUID tracking tokens (`trackingToken`) alongside public short IDs (`#PH-1024`). Users can only view tracking data matching their session/token. |
 | **Privilege Escalation** | Critical | Role-based middleware and Server Action authorization guards checking session role before performing cashier/kitchen/manager operations. |
 | **Duplicate Order Submissions** | Medium | Client-side button debouncing + Server Action idempotency key generated per checkout session. |
@@ -24,5 +24,8 @@ export const UPLOAD_CONSTRAINTS = {
   allowedExtensions: ['.jpg', '.jpeg', '.png', '.webp'],
 };
 ```
-1. Filenames are generated using cryptographic random UUIDs (e.g. `rcpt_8f93a1c...png`). Original filenames are sanitized and stored as metadata only.
-2. Direct execution of files is prevented by web server headers (`X-Content-Type-Options: nosniff`).
+1. Filenames use cryptographic random UUIDs. Original client filenames are not used to construct filesystem paths.
+2. Receipt files live under persistent `storage/receipts/`, outside the public web root, and are streamed only to authenticated admin/cashier sessions.
+3. Production must configure a unique session secret of at least 32 bytes and private staff PINs. Development fallback credentials are disabled in production.
+
+The built-in PIN-attempt lockout is process-local. Production deployments with multiple instances require a shared rate limiter; this application currently supports only a single persistent Node.js instance.

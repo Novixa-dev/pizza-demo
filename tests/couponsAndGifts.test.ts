@@ -4,11 +4,30 @@ import {
   getAutomaticGiftsAction,
   getCustomerLoyaltyAction,
   getActiveCouponsAction,
+  getAdminCouponsAction,
+  toggleCouponStatusAction,
+  createCouponAction,
+  deleteCouponAction,
 } from "@/app/actions/couponActions";
 import { createOrderAction } from "@/app/actions/orderActions";
 import { prisma } from "@/lib/prisma";
 
 describe("Coupons, Automatic Gifts & Loyalty System", () => {
+  it("blocks unauthenticated coupon administration", async () => {
+    expect((await getAdminCouponsAction()).success).toBe(false);
+    expect((await toggleCouponStatusAction("missing", true)).success).toBe(false);
+    expect((await createCouponAction({
+      code: "UNAUTHORIZED",
+      titleAr: "اختبار",
+      titleEn: "Test",
+      descriptionAr: "اختبار",
+      descriptionEn: "Test",
+      discountType: "FIXED",
+      discountValue: 100,
+    })).success).toBe(false);
+    expect((await deleteCouponAction("missing")).success).toBe(false);
+  });
+
   it("rejects empty or whitespace coupon code", async () => {
     const res = await validateCouponAction({
       code: "   ",

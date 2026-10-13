@@ -44,7 +44,7 @@ pizza-house66/
 │   ├── KITCHEN_WORKFLOW.md     # KDS station workflows & ticket lifecycle
 │   ├── ANALYTICS.md            # Revenue, prep-accuracy, and volume metrics
 │   ├── TESTING.md              # E2E, unit test, and manual QA runbook
-│   ├── DEPLOYMENT.md           # Production deployment, Docker, Vercel/Node.js
+│   ├── DEPLOYMENT.md           # Single-instance Node.js deployment runbook
 │   ├── ROADMAP.md              # 4-phase rollout (Pickup MVP -> Delivery Fleet)
 │   ├── AI_STRATEGY.md          # Demand forecasting & smart prep optimization
 │   ├── DECISIONS.md            # Architectural Decision Records (ADRs)
@@ -77,16 +77,16 @@ pizza-house66/
 ## 🚀 Quick Start
 
 ### 1. Requirements
-- Node.js 18.x or 20.x
-- npm or yarn
+- Node.js 24 LTS
+- npm
 
 ### 2. Installation
 ```bash
 # Clone or navigate to the repository
 cd pizza-house66
 
-# Install dependencies
-npm install
+# Install locked dependencies
+npm ci
 ```
 
 ### 3. Database Setup & Seeding
@@ -94,7 +94,7 @@ npm install
 # Push schema to SQLite database (dev.db)
 npx prisma db push
 
-# Seed authentic Mukalla restaurant data (Categories, Products, Options, Orders)
+# Seed local development data (includes clearly synthetic demo orders and reviews)
 npm run db:seed
 ```
 
@@ -140,13 +140,7 @@ Pizza House Mukalla accepts cash at pickup alongside direct electronic transfers
 
 ## 🧪 Automated Verification & Testing
 
-The platform has undergone full end-to-end browser subagent testing verifying:
-1. RTL layout and Cairo typography rendering.
-2. Menu customization with price accumulation (Pepperoni Pizza Large + Mozzarella Stuffed Crust = 9,500 YER).
-3. Scheduled checkout order creation (`#PH-1027`).
-4. Real-time order tracking status updates.
-5. Kitchen KDS ticket lifecycle progression.
-6. Admin operations metrics calculation, product availability toggle, and receipt verification.
+Run the automated checks with `npm test`, `npm run typecheck`, `npm run lint`, and `npm run build`. Browser end-to-end automation is not currently configured; use the manual journey in `docs/TESTING.md` before release. Production seeding creates only baseline restaurant/menu data and never inserts demo orders, reviews, coupons, or loyalty accounts.
 
 ---
 

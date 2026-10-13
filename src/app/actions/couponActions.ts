@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { isAuthorizedStaff } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
 export interface ValidateCouponResult {
@@ -211,6 +212,10 @@ export async function getCustomerLoyaltyAction(customerPhone: string) {
  * Admin action to fetch all coupons for the control panel.
  */
 export async function getAdminCouponsAction() {
+  if (!isAuthorizedStaff(["ADMIN"])) {
+    return { success: false, coupons: [], gifts: [], loyaltyCount: 0 };
+  }
+
   try {
     const coupons = await prisma.coupon.findMany({
       orderBy: { createdAt: "desc" },
@@ -231,6 +236,10 @@ export async function getAdminCouponsAction() {
  * Admin action to toggle coupon active status.
  */
 export async function toggleCouponStatusAction(couponId: string, isActive: boolean) {
+  if (!isAuthorizedStaff(["ADMIN"])) {
+    return { success: false, message: "غير مصرح بهذا الإجراء" };
+  }
+
   try {
     const updated = await prisma.coupon.update({
       where: { id: couponId },
@@ -264,6 +273,10 @@ export async function createCouponAction(data: {
   usageLimit?: number;
   isFirstOrderOnly?: boolean;
 }) {
+  if (!isAuthorizedStaff(["ADMIN"])) {
+    return { success: false, message: "غير مصرح بهذا الإجراء" };
+  }
+
   try {
     const cleanCode = data.code.trim().toUpperCase();
     const existing = await prisma.coupon.findUnique({
@@ -306,6 +319,10 @@ export async function createCouponAction(data: {
  * Admin action to delete a coupon.
  */
 export async function deleteCouponAction(couponId: string) {
+  if (!isAuthorizedStaff(["ADMIN"])) {
+    return { success: false, message: "غير مصرح بهذا الإجراء" };
+  }
+
   try {
     await prisma.coupon.delete({
       where: { id: couponId },

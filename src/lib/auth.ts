@@ -4,19 +4,27 @@ import crypto from "crypto";
 export type StaffRole = "ADMIN" | "KITCHEN" | "CASHIER";
 
 const SESSION_COOKIE_NAME = "ph_staff_session";
-const SESSION_SECRET =
-  process.env.SESSION_SECRET || "pizza-house-mukalla-secret-key-2026";
 const SESSION_MAX_AGE_MS = 14 * 60 * 60 * 1000; // 14 hours (full restaurant double shift)
+
+function getSessionSecret(): string {
+  const secret = process.env.SESSION_SECRET?.trim();
+  if (secret && Buffer.byteLength(secret) >= 32) return secret;
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("SESSION_SECRET must contain at least 32 bytes in production");
+  }
+  return "pizza-house-mukalla-secret-key-2026";
+}
 
 export function getRolePins(): Record<StaffRole, string[]> {
   const adminPin = process.env.ADMIN_PIN?.trim();
   const kitchenPin = process.env.KITCHEN_PIN?.trim();
   const cashierPin = process.env.CASHIER_PIN?.trim();
+  const allowDevelopmentDefaults = process.env.NODE_ENV !== "production";
 
   return {
-    ADMIN: Array.from(new Set([adminPin, "1024"].filter((p): p is string => Boolean(p)))),
-    KITCHEN: Array.from(new Set([kitchenPin, "2048"].filter((p): p is string => Boolean(p)))),
-    CASHIER: Array.from(new Set([cashierPin, "4096"].filter((p): p is string => Boolean(p)))),
+    ADMIN: Array.from(new Set([adminPin, allowDevelopmentDefaults ? "1024" : undefined].filter((p): p is string => Boolean(p)))),
+    KITCHEN: Array.from(new Set([kitchenPin, allowDevelopmentDefaults ? "2048" : undefined].filter((p): p is string => Boolean(p)))),
+    CASHIER: Array.from(new Set([cashierPin, allowDevelopmentDefaults ? "4096" : undefined].filter((p): p is string => Boolean(p)))),
   };
 }
 
@@ -104,7 +112,7 @@ export function resetPinAttempts(identifier: string): void {
  */
 function signPayload(payload: string): string {
   return crypto
-    .createHmac("sha256", SESSION_SECRET)
+    .createHmac("sha256", getSessionSecret())
     .update(payload)
     .digest("hex");
 }

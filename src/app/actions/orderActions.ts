@@ -23,6 +23,7 @@ import {
 } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
@@ -58,20 +59,20 @@ async function saveReceiptImage(base64DataUri?: string): Promise<{
     const mimeType = match[1] === "image/jpg" ? "image/jpeg" : match[1];
     const ext = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
     const buffer = Buffer.from(match[3], "base64");
+    if (buffer.length > 5 * 1024 * 1024) return null;
 
-    const uploadsDir = path.join(process.cwd(), "public", "uploads", "receipts");
+    const uploadsDir = path.join(process.cwd(), "storage", "receipts");
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    const uniqueId = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
-    const fileName = `receipt_${uniqueId}.${ext}`;
+    const fileName = `receipt_${crypto.randomUUID()}.${ext}`;
     const filePath = path.join(uploadsDir, fileName);
 
     fs.writeFileSync(filePath, buffer);
 
     return {
-      fileUrl: `/uploads/receipts/${fileName}`,
+      fileUrl: `/api/receipts/${fileName}`,
       fileName,
       mimeType,
       fileSize: buffer.length,

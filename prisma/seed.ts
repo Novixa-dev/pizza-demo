@@ -3,22 +3,33 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+  const isProduction = process.env.NODE_ENV === "production";
   console.log("🌱 Seeding Pizza House Mukalla database...");
 
-  // Clean existing records in correct order
-  await prisma.auditLog.deleteMany();
-  await prisma.analyticsEvent.deleteMany();
-  await prisma.paymentReceipt.deleteMany();
-  await prisma.payment.deleteMany();
-  await prisma.orderItemOption.deleteMany();
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
-  await prisma.optionItem.deleteMany();
-  await prisma.optionGroup.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
-  await prisma.businessHour.deleteMany();
-  await prisma.restaurant.deleteMany();
+  if (isProduction) {
+    const existingRestaurant = await prisma.restaurant.findUnique({
+      where: { slug: "pizza-house-mukalla" },
+    });
+    if (existingRestaurant) {
+      console.log("Production data already exists; skipping seed without changes.");
+      return;
+    }
+  } else {
+    // Development fixtures are intentionally rebuilt from scratch.
+    await prisma.auditLog.deleteMany();
+    await prisma.analyticsEvent.deleteMany();
+    await prisma.paymentReceipt.deleteMany();
+    await prisma.payment.deleteMany();
+    await prisma.orderItemOption.deleteMany();
+    await prisma.orderItem.deleteMany();
+    await prisma.order.deleteMany();
+    await prisma.optionItem.deleteMany();
+    await prisma.optionGroup.deleteMany();
+    await prisma.product.deleteMany();
+    await prisma.category.deleteMany();
+    await prisma.businessHour.deleteMany();
+    await prisma.restaurant.deleteMany();
+  }
 
   // 1. Create Restaurant profile
   const restaurant = await prisma.restaurant.create({
@@ -474,6 +485,12 @@ async function main() {
   });
 
   console.log("✅ Seeded full menu items and options!");
+
+  if (isProduction) {
+    console.log("Production bootstrap completed without synthetic customer data.");
+    console.log("🎉 Database seeding completed successfully!");
+    return;
+  }
 
   // 5. Create 3 sample orders representing different realistic stages:
   // Order 1: Scheduled order for later this evening (QUEUED)

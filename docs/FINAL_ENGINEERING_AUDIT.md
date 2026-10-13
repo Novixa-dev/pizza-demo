@@ -3,6 +3,8 @@
 > **Auditor**: Lead Senior Product & Security Engineer  
 > **Evaluation Standards**: Zero-trust server validation, empirical browser testing, automated unit/integration suites, RBAC authentication.
 
+> **Review status (2026-10-13):** This report is historical and its production-readiness claims are superseded. The current review found unguarded coupon administration, development auth fallbacks, publicly served receipt uploads, and a destructive demo seeder. These issues are being corrected; dependencies could not yet be installed in the current environment, so automated test/build claims below are not current verification.
+
 ---
 
 ## 1. Executive Summary
@@ -163,6 +165,6 @@ The system is fully operational with authentic Mukalla benchmark data, but the r
 
 ## 9. Final Verdict
 
-### **READY FOR PILOT / PRODUCTION DEPLOYMENT**
+### **NOT YET VERIFIED FOR PRODUCTION**
 
-The Pizza House platform has transitioned from an unverified prototype into an **authoritatively tested, security-hardened, and operationally coherent restaurant platform**. With 23 automated regression tests, strict state machine transitions, authenticated staff portals, verified Yemeni phone normalization, and complete RTL/LTR responsiveness, the software is ready for restaurant pilot deployment at Fuwa Al-Masaken branch.
+Production deployment remains blocked until a clean dependency installation, automated tests, typecheck, lint, and production build pass. The owner must also verify merchant payment accounts and replace all production staff secrets/PINs. See `docs/DEPLOYMENT.md` for the currently supported single-instance SQLite deployment model.

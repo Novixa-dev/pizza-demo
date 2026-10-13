@@ -1,9 +1,14 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach, vi } from "vitest";
 import {
   createStaffToken,
+  getRolePins,
   verifyStaffToken,
   verifyPinForRole,
 } from "@/lib/auth";
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 describe("Staff Authentication & Token Security", () => {
   it("creates and verifies valid signed staff tokens", () => {
@@ -45,5 +50,22 @@ describe("Staff Authentication & Token Security", () => {
     // Wrong PIN
     expect(verifyPinForRole("0000", "ADMIN").success).toBe(false);
     expect(verifyPinForRole("2048", "ADMIN").success).toBe(false); // Kitchen cannot unlock Admin
+  });
+
+  it("does not enable built-in PINs in production", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("ADMIN_PIN", "");
+    vi.stubEnv("KITCHEN_PIN", "");
+    vi.stubEnv("CASHIER_PIN", "");
+
+    expect(getRolePins()).toEqual({ ADMIN: [], KITCHEN: [], CASHIER: [] });
+    expect(verifyPinForRole("1024", "ADMIN").success).toBe(false);
+  });
+
+  it("requires a configured production session secret", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("SESSION_SECRET", "");
+
+    expect(() => createStaffToken("ADMIN")).toThrow(/SESSION_SECRET/);
   });
 });
