@@ -15,7 +15,7 @@ describe("Theme, Design & SEO Comprehensive Verification", () => {
 
   it("provides canonical URL and alternates", () => {
     expect(siteMetadata.alternates?.canonical).toBe("/");
-    expect(siteMetadata.metadataBase?.toString()).toBe("https://pizzahouse.ye/");
+    expect(siteMetadata.metadataBase?.toString()).toBe("https://pizza-house.novixa.dev/");
   });
 
   it("includes valid keywords matching Mukalla and Pizza House branding", () => {
@@ -30,7 +30,9 @@ describe("Theme, Design & SEO Comprehensive Verification", () => {
     expect(jsonLdRestaurantData.geo.latitude).toBeCloseTo(14.4892, 2);
     expect(jsonLdRestaurantData.geo.longitude).toBeCloseTo(49.0445, 2);
     expect(jsonLdRestaurantData.currenciesAccepted).toBe("YER");
-    expect(jsonLdRestaurantData.aggregateRating.ratingValue).toBe("4.9");
+    // Self-declared review aggregates violate Google's review-snippet policy; ratings come from real feedback only.
+    expect("aggregateRating" in jsonLdRestaurantData).toBe(false);
+    expect(jsonLdRestaurantData.url).toBe("https://pizza-house.novixa.dev");
   });
 });
 

@@ -97,7 +97,7 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
       </div>
 
       {/* Category Tabs */}
-      <div className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto pb-2 scrollbar-none py-1">
+      <div className="sticky top-[64px] md:top-[112px] z-30 -mx-4 px-4 sm:mx-0 sm:px-0 py-2 bg-[#0b0d12]/85 backdrop-blur-xl flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto scrollbar-none snap-x">
         <button
           onClick={() => setActiveCategorySlug("all")}
           className={`flex-shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
@@ -147,7 +147,7 @@ export default function MenuClientView({ categories }: MenuClientViewProps) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
           {filteredProducts.map((product) => (
             <MenuCard
               key={product.id}

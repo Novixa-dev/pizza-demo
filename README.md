@@ -1,6 +1,8 @@
 # Pizza House (بيتزا هاوس) — Digital Ordering & Restaurant Operations Platform
 > **Mukalla, Hadhramaut, Yemen** | Official Account: [@pizza_house66](https://www.instagram.com/pizza_house66/)  
 > Validation Pilot for **Novixa Restaurant Technology Platform**
+>
+> 🌐 **Production:** https://pizza-house.novixa.dev · [![Deploy](https://github.com/Novixa-dev/pizza-house-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/Novixa-dev/pizza-house-website/actions/workflows/deploy.yml)
 
 ---
 
@@ -109,6 +111,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 npm run build
 npm run start
 ```
+
+### 6. Deployment (CI/CD)
+Pushing to `main` runs lint, typecheck, tests and build, publishes a Docker image to GHCR, and rolls it out to the Novixa VPS behind Nginx + Cloudflare. Failed health checks roll back automatically. See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for the one-time server setup, secrets, backups and rollback procedures.
 
 ---
 

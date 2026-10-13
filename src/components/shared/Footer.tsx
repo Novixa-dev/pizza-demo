@@ -27,11 +27,11 @@ export default function Footer() {
                 <Pizza className="w-5 h-5 text-amber-100" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-black text-white font-playfair tracking-wider">
-                  AURA PIZZA
+                <span className="text-xl font-black text-white font-cairo tracking-tight">
+                  {dict.brand.name}
                 </span>
                 <span className="text-[10px] text-amber-400 font-bold font-cairo">
-                  {dict.brand.name} · {language === "ar" ? "المكلا" : "Mukalla"}
+                  {language === "ar" ? "المكلا · فوه" : "Mukalla · Fuwa"}
                 </span>
               </div>
             </div>
@@ -75,15 +75,15 @@ export default function Footer() {
             <ul className="text-xs text-stone-400 space-y-2">
               <li className="flex justify-between border-b border-[#1a202a] pb-1.5">
                 <span>{language === "ar" ? "السبت – الخميس (صباحاً):" : language === "id" ? "Sabtu – Kamis (Pagi):" : "Sat – Thu (Morning):"}</span>
-                <span className="text-stone-200 font-outfit">8:00 AM – 12:00 PM</span>
+                <span dir="ltr" className="text-stone-200 font-outfit">8:00 AM – 12:00 PM</span>
               </li>
               <li className="flex justify-between border-b border-[#1a202a] pb-1.5">
                 <span>{language === "ar" ? "السبت – الخميس (مساءً):" : language === "id" ? "Sabtu – Kamis (Sore):" : "Sat – Thu (Evening):"}</span>
-                <span className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
+                <span dir="ltr" className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
               </li>
               <li className="flex justify-between">
                 <span>{language === "ar" ? "الجمعة:" : language === "id" ? "Jumat:" : "Friday:"}</span>
-                <span className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
+                <span dir="ltr" className="text-stone-200 font-outfit">4:00 PM – 11:30 PM</span>
               </li>
             </ul>
           </div>
@@ -108,11 +108,11 @@ export default function Footer() {
               </div>
               <p className="font-outfit text-stone-200">
                 {language === "ar" ? "هاتف ثابت: " : language === "id" ? "Telepon Rumah: " : "Landline: "}
-                <a href="tel:05375561" className="text-[#EFCC80] hover:underline font-bold">05-375561</a>
+                <a href="tel:05375561" dir="ltr" className="text-[#EFCC80] hover:underline font-bold">05-375561</a>
               </p>
               <p className="font-outfit text-stone-200">
                 {language === "ar" ? "واتساب وطلبات: " : language === "id" ? "WhatsApp & Pesanan: " : "WhatsApp & Mobile: "}
-                <a href="https://wa.me/967772207788" target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline font-bold">+967 772207788</a>
+                <a href="https://wa.me/967772207788" target="_blank" rel="noreferrer" dir="ltr" className="text-emerald-400 hover:underline font-bold">+967 772207788</a>
               </p>
               <p className="font-outfit text-stone-300 text-[11px]">
                 {language === "ar" ? "شبكات إضافية: " : language === "id" ? "Nomor Lainnya: " : "Other lines: "}
@@ -155,15 +155,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/kitchen" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
-                  <span>{dict.kitchen.title}</span>
-                  <ExternalLink className="w-3 h-3 text-stone-500" />
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin" className="hover:text-[#EFCC80] transition-colors flex items-center gap-1">
-                  <span>{dict.admin.title}</span>
-                  <ExternalLink className="w-3 h-3 text-stone-500" />
+                <Link href="/offers" className="hover:text-[#EFCC80] transition-colors">
+                  {language === "ar" ? "العروض والكوبونات" : language === "id" ? "Promo & Kupon" : "Offers & Coupons"}
                 </Link>
               </li>
             </ul>
@@ -179,7 +172,7 @@ export default function Footer() {
               ? `Hak cipta dilindungi © ${new Date().getFullYear()} Restoran Pizza House Mukalla.`
               : `All rights reserved © ${new Date().getFullYear()} Pizza House Mukalla.`}
           </p>
-          <div className="flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center justify-center gap-1.5">
             <span>
               {language === "ar"
                 ? "مدعوم بواسطة منصة العمليات الرقمية للمطاعم"
@@ -188,6 +181,10 @@ export default function Footer() {
                 : "Powered by Digital Restaurant Platform"}
             </span>
             <span className="font-bold text-[#C69843] font-outfit">Novixa Restaurant</span>
+            <span aria-hidden="true" className="text-stone-700">·</span>
+            <Link href="/admin" className="hover:text-[#EFCC80] transition-colors">
+              {language === "ar" ? "دخول الموظفين" : language === "id" ? "Login Staf" : "Staff login"}
+            </Link>
           </div>
         </div>
       </div>

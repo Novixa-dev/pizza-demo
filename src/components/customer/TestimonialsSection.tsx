@@ -117,13 +117,17 @@ export default function TestimonialsSection({
           <div className="flex items-center gap-2 text-xs font-bold text-[#EFCC80]">
             <Sparkles className="w-4 h-4 text-[#C69843]" />
             <span>{t.badge}</span>
-            <span className="text-stone-600">·</span>
-            <span className="font-outfit text-amber-400 font-extrabold flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 fill-[#EFCC80] text-[#EFCC80]" />
-              <span>{avgMeal} / 5.0</span>
-            </span>
-            <span className="text-stone-600">·</span>
-            <span className="text-stone-400">{t.basedOn}</span>
+            {totalCount > 0 && (
+              <>
+                <span className="text-stone-600">·</span>
+                <span dir="ltr" className="font-outfit text-amber-400 font-extrabold flex items-center gap-1">
+                  <Star className="w-3.5 h-3.5 fill-[#EFCC80] text-[#EFCC80]" />
+                  <span>{avgMeal} / 5</span>
+                </span>
+                <span className="text-stone-600">·</span>
+                <span className="text-stone-400">{t.basedOn.replace("{count}", String(totalCount))}</span>
+              </>
+            )}
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-black text-white font-cairo">

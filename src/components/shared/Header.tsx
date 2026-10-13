@@ -15,8 +15,7 @@ import {
   MapPin,
   Pizza,
   Flame,
-  ChefHat,
-  ShieldCheck,
+  Gift,
   Info,
   Bell,
   Search,
@@ -77,7 +76,6 @@ export default function Header() {
     { href: "/#reviews", label: language === "ar" ? "التقييمات" : language === "id" ? "Ulasan" : "Reviews" },
     { href: "/#branches", label: dict.nav.branches },
     { href: "/#about", label: dict.nav.about },
-    { href: "/admin", label: dict.nav.admin },
   ];
 
   const quickCategories = [
@@ -583,28 +581,26 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/kitchen"
+                href="/offers"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`p-3 rounded-2xl border transition-all flex flex-col gap-1.5 active:scale-95 ${
-                  pathname === "/kitchen"
+                  pathname === "/offers"
                     ? "bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] border-[#EFCC80] shadow-md shadow-amber-950/40"
                     : "bg-[#141822] text-stone-200 border-white/10 hover:border-amber-500/30 hover:bg-[#1a202c]"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <ChefHat className={`w-5 h-5 ${pathname === "/kitchen" ? "text-[#2C1A04]" : "text-[#EFCC80]"}`} />
-                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-outfit ${
-                    pathname === "/kitchen" ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
+                  <Gift className={`w-5 h-5 ${pathname === "/offers" ? "text-[#2C1A04]" : "text-[#EFCC80]"}`} />
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-cairo ${
+                    pathname === "/offers" ? "bg-[#2C1A04] text-[#EFCC80]" : "bg-amber-500/20 text-[#EFCC80]"
                   }`}>
-                    KDS
+                    {language === "ar" ? "جديد" : language === "id" ? "Baru" : "New"}
                   </span>
                 </div>
                 <div>
-                  <div className="font-bold text-xs font-cairo">
-                    {language === "ar" ? "شاشة المطبخ" : language === "id" ? "Layar Dapur" : "Kitchen Display"}
-                  </div>
-                  <div className={`text-[10px] ${pathname === "/kitchen" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
-                    {language === "ar" ? "نظام KDS الحي" : language === "id" ? "Sistem KDS Langsung" : "Live orders screen"}
+                  <div className="font-bold text-xs font-cairo">{dict.nav.offers}</div>
+                  <div className={`text-[10px] ${pathname === "/offers" ? "text-[#2C1A04]/80" : "text-stone-400"} font-cairo`}>
+                    {language === "ar" ? "كوبونات وهدايا" : language === "id" ? "Kupon & hadiah" : "Coupons & gifts"}
                   </div>
                 </div>
               </Link>
@@ -669,23 +665,6 @@ export default function Header() {
             >
               <span>{dict.nav.about}</span>
               <Info className="w-3.5 h-3.5 text-stone-400" />
-            </Link>
-            <Link
-              href="/admin"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-                pathname === "/admin"
-                  ? "bg-amber-500/15 text-[#EFCC80] border border-amber-500/30"
-                  : "text-stone-300 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C69843]" />
-                <span>{dict.nav.admin}</span>
-              </span>
-              <span className="text-[10px] bg-red-950/80 text-red-300 border border-red-500/30 px-1.5 py-0.5 rounded font-bold font-cairo">
-                {language === "ar" ? "لوحة التحكم" : language === "id" ? "Panel Admin" : "Admin Panel"}
-              </span>
             </Link>
           </div>
 

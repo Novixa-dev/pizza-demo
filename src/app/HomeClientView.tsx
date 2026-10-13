@@ -26,7 +26,7 @@ import {
   Utensils,
   PhoneCall,
   Heart,
-  Play,
+  UtensilsCrossed,
   Quote,
   Instagram,
   Percent,
@@ -716,11 +716,11 @@ export default function HomeClientView({
         </div>
 
         {/* Bottom Grid Section: Four Vertical Product Cards (Right to Left) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 relative z-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 relative z-10">
           {displayedOvenProducts.map((item) => (
             <div
               key={item.id}
-              className="bg-[#14161f]/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-[#C69843]/30 hover:border-[#EFCC80] shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.25)] transition-all duration-300 flex flex-col justify-between group relative overflow-visible"
+              className="bg-[#14161f]/90 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-[#C69843]/30 hover:border-[#EFCC80] shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.25)] transition-all duration-300 flex flex-col justify-between group relative overflow-visible"
             >
               {/* Top Row: Heart on Right, Prep-Time Badge on Left in RTL */}
               <div className="flex items-center justify-between w-full mb-3 z-10">
@@ -745,7 +745,7 @@ export default function HomeClientView({
               </div>
 
               {/* Large Rich 3D-Overlapping Circular Dish Image */}
-              <div className="relative w-40 h-40 sm:w-44 sm:h-44 mx-auto my-2 rounded-full p-1.5 bg-[#0c0d12] border-2 border-[#2b2c35] shadow-[0_12px_28px_rgba(0,0,0,0.95),0_0_15px_rgba(198,152,67,0.2)] group-hover:scale-105 group-hover:border-[#EFCC80]/60 transition-all duration-500 shrink-0">
+              <div className="relative w-28 h-28 sm:w-44 sm:h-44 mx-auto my-2 rounded-full p-1.5 bg-[#0c0d12] border-2 border-[#2b2c35] shadow-[0_12px_28px_rgba(0,0,0,0.95),0_0_15px_rgba(198,152,67,0.2)] group-hover:scale-105 group-hover:border-[#EFCC80]/60 transition-all duration-500 shrink-0">
                 <div className="relative w-full h-full rounded-full overflow-hidden">
                   <Image
                     src={item.image}
@@ -764,16 +764,9 @@ export default function HomeClientView({
                 </div>
               </div>
 
-              {/* Five Golden Rating Stars (★★★★★) */}
-              <div className="flex items-center justify-center gap-1 my-2 text-[#EFCC80]">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-sm">★</span>
-                ))}
-              </div>
-
               {/* Bold White Title & Small Muted Description */}
-              <div className="text-center space-y-1 mb-4 flex-1">
-                <h3 className="text-base sm:text-lg font-bold text-white font-cairo group-hover:text-[#EFCC80] transition-colors line-clamp-1">
+              <div className="text-center space-y-1 mt-2 mb-3 sm:mb-4 flex-1">
+                <h3 className="text-sm sm:text-lg font-bold text-white font-cairo group-hover:text-[#EFCC80] transition-colors line-clamp-1">
                   {language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn}
                 </h3>
                 <p className="text-[11px] sm:text-xs text-stone-400 font-cairo line-clamp-2 leading-relaxed">
@@ -784,7 +777,7 @@ export default function HomeClientView({
               {/* Bottom Row: Price in Gold on Right, Amber Round "+" Button on Left in RTL */}
               <div className="pt-3 border-t border-white/5 flex items-center justify-between w-full mt-auto">
                 {/* Right in RTL: Price in Gold "X,XXX ر.ي" */}
-                <span className="text-sm sm:text-base font-black text-[#EFCC80] font-cairo tracking-wide">
+                <span className="text-xs sm:text-base font-black text-[#EFCC80] font-cairo tracking-wide whitespace-nowrap">
                   {language === "ar" ? item.priceTextAr : language === "id" ? item.priceTextId : item.priceTextEn}
                 </span>
 
@@ -792,7 +785,7 @@ export default function HomeClientView({
                 <button
                   type="button"
                   onClick={() => handleAddOvenSpecialty(item)}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black flex items-center justify-center text-lg shadow-[0_2px_12px_rgba(198,152,67,0.4)] active:scale-90 transition-all cursor-pointer"
+                  className="w-9 h-9 shrink-0 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black flex items-center justify-center text-lg shadow-[0_2px_12px_rgba(198,152,67,0.4)] active:scale-90 transition-all cursor-pointer"
                   title={language === "ar" ? "أضف إلى السلة" : language === "id" ? "Tambah ke Keranjang" : "Add to cart"}
                   aria-label={`Add ${language === "ar" ? item.nameAr : language === "id" ? item.nameId : item.nameEn} to cart`}
                 >
@@ -1059,9 +1052,9 @@ export default function HomeClientView({
             <Link
               href="/menu"
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-105 mx-auto flex items-center justify-center shadow-[0_0_35px_rgba(239,204,128,0.5)] active:scale-95 transition-all group-hover:scale-110"
-              aria-label="Artisan Video Showcase"
+              aria-label={dict.nav.menu}
             >
-              <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-[#2C1A04] text-[#2C1A04] ms-1" />
+              <UtensilsCrossed className="w-7 h-7 sm:w-9 sm:h-9 text-[#2C1A04]" />
             </Link>
             <h3 className="text-xl sm:text-3xl font-black text-white font-cairo">
               {language === "ar"
@@ -1085,163 +1078,21 @@ export default function HomeClientView({
           9. "A PERSONAL TOUCH" INFINITE SCROLLING MARQUEE TICKER (Matches Mockup)
       ========================================================================= */}
       <section className="w-full bg-[#14181f] border-y border-[#222934] py-5 sm:py-6 overflow-hidden select-none">
-        <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-xl sm:text-3xl font-black tracking-widest text-white/90 uppercase font-outfit">
-          <span className="flex items-center gap-4">
-            <span>A Personal Touch</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span className="font-cairo">بيتزا هاوس المكلا</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span>Stone-Baked Daily</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span className="font-cairo">عجين يومي طازج</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span>A Personal Touch</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span className="font-cairo">استلام فوري 15 دقيقة</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span>Italian Mozzarella</span>
-            <span className="text-[#EFCC80]">✦</span>
-          </span>
-          <span className="flex items-center gap-4">
-            <span>A Personal Touch</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span className="font-cairo">بيتزا هاوس المكلا</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span>Stone-Baked Daily</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span className="font-cairo">عجين يومي طازج</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span>A Personal Touch</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span className="font-cairo">استلام فوري 15 دقيقة</span>
-            <span className="text-[#EFCC80]">✦</span>
-            <span>Italian Mozzarella</span>
-            <span className="text-[#EFCC80]">✦</span>
-          </span>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          10. CUSTOMER TESTIMONIALS (Customer Reviews & Praise - 100% Matching)
-      ========================================================================= */}
-      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-20 relative z-20 font-cairo">
-        {/* Header Row: Title on the Right, Navigation on the Top Left in RTL */}
-        <div className="flex items-center justify-between gap-4">
-          {/* Title on the Right in RTL */}
-          <div className="text-start space-y-1">
-            <h2 className="text-2xl sm:text-3xl font-black text-white font-cairo tracking-tight">
-              {language === "ar"
-                ? "ماذا يقول عملاؤنا في المكلا؟"
+        <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-xl sm:text-3xl font-black tracking-wide text-white/90 font-cairo" aria-hidden="true">
+          {[0, 1].map((copy) => (
+            <span key={copy} className="flex items-center gap-4">
+              {(language === "ar"
+                ? ["بيتزا هاوس المكلا", "عجين طازج يومياً", "مخبوزة على الحجر", "اطلب مسبقاً واستلم بلا انتظار", "موزاريلا إيطالية أصلية"]
                 : language === "id"
-                ? "Apa Kata Pelanggan Kami di Mukalla?"
-                : "What Our Customers Say in Mukalla"}
-            </h2>
-          </div>
-
-          {/* Navigation: Small Gold Left/Right Circular Arrow Buttons on the Top Left */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                const el = document.getElementById("testimonials-grid");
-                if (el) el.scrollBy({ left: 350, behavior: "smooth" });
-              }}
-              className="w-9 h-9 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center hover:brightness-105 transition-all shadow-md shadow-amber-950/40 font-bold active:scale-95 cursor-pointer"
-              aria-label="Previous Testimonial"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => {
-                const el = document.getElementById("testimonials-grid");
-                if (el) el.scrollBy({ left: -350, behavior: "smooth" });
-              }}
-              className="w-9 h-9 rounded-full bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] flex items-center justify-center hover:brightness-105 transition-all shadow-md shadow-amber-950/40 font-bold active:scale-95 cursor-pointer"
-              aria-label="Next Testimonial"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Three Elegant Floating Testimonial Cards */}
-        <div id="testimonials-grid" className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              id: "rev-1",
-              name: "م. عمر باوزير",
-              role: "المكلا · فوه حي المساكن",
-              avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80",
-              quote:
-                "أفضل بيتزا في المكلا بلا منازع! العجينة خفيفة ومقرمشة والجبن أصلي وجودته عالية جداً، وخدمة الاستلام الفوري مريحة للغاية بدون أي انتظار.",
-              rating: 5,
-            },
-            {
-              id: "rev-2",
-              name: "د. سارة العمودي",
-              role: "المكلا · بالقرب من جامعة الأحقاف",
-              avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80",
-              quote:
-                "أطلب عبر الموقع وأوصل ألقى الطلب جاهز وساخن كأنه لسه طالع من الفرن الحجري، خلطة الرانش والببروني لا يعلى عليها وطعم لا يُنسى!",
-              rating: 5,
-            },
-            {
-              id: "rev-3",
-              name: "أحمد بن عبدات",
-              role: "عميل دائم",
-              avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80",
-              quote:
-                "الفطائر والبيتزا عندهم إدمان عائلي أسبوعي، النظافة ممتازة والتعامل راقي جداً وسرعة الإنجاز والحرص على جودة المكونات استثنائية.",
-              rating: 5,
-            },
-          ].map((item) => (
-            <div
-              key={item.id}
-              className="relative bg-[#14161f]/90 backdrop-blur-md border border-[#C69843]/35 hover:border-[#EFCC80] rounded-2xl p-6 sm:p-7 space-y-4 shadow-[0_12px_32px_rgba(0,0,0,0.85)] hover:shadow-[0_0_25px_rgba(239,204,128,0.22)] transition-all duration-300 overflow-hidden flex flex-col justify-between group"
-            >
-              <div className="space-y-3 relative z-10">
-                {/* Five Gold Stars (★★★★★) at the Top */}
-                <div className="flex items-center gap-1 text-[#EFCC80]">
-                  {[...Array(item.rating)].map((_, i) => (
-                    <span key={i} className="text-base">★</span>
-                  ))}
-                </div>
-
-                {/* Short Review Text in White */}
-                <p className="text-sm sm:text-[15px] text-white/95 leading-relaxed font-cairo font-normal">
-                  &ldquo;{item.quote}&rdquo;
-                </p>
-              </div>
-
-              {/* Bottom Row: Customer Avatar & Name next to Glowing Green "✓ عميل موثق" Badge */}
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between relative z-10 mt-auto">
-                {/* Customer Avatar & Name */}
-                <div className="flex items-center gap-3">
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#C69843]/50 shadow-md shrink-0">
-                    <Image
-                      src={item.avatar}
-                      alt={item.name}
-                      fill
-                      sizes="40px"
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-                  <div className="text-start">
-                    <h4 className="text-sm font-bold text-white font-cairo">
-                      {item.name}
-                    </h4>
-                    <span className="text-[11px] text-stone-400 font-cairo block">
-                      {item.role}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Glowing Green "✓ عميل موثق" (Verified Customer) Badge */}
-                <span className="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full text-[11px] font-bold font-cairo flex items-center gap-1 shadow-[0_0_12px_rgba(16,185,129,0.25)] shrink-0">
-                  <span>✓ عميل موثق</span>
-                </span>
-              </div>
-            </div>
+                ? ["Pizza House Mukalla", "Adonan Segar Setiap Hari", "Dipanggang di Batu", "Pesan Dulu, Ambil Tanpa Antre", "Mozzarella Italia Asli"]
+                : ["Pizza House Mukalla", "Fresh Dough Daily", "Stone-Baked", "Pre-order, Skip the Wait", "Authentic Italian Mozzarella"]
+              ).map((phrase) => (
+                <React.Fragment key={phrase}>
+                  <span>{phrase}</span>
+                  <span className="text-[#EFCC80]">✦</span>
+                </React.Fragment>
+              ))}
+            </span>
           ))}
         </div>
       </section>
