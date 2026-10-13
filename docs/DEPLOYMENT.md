@@ -34,13 +34,15 @@ SSL/TLS mode for the zone must be **Full (strict)**.
 > Prefer a fully automatic setup? Create a Cloudflare API token (*My Profile → API Tokens → Edit zone DNS*, zone `novixa.dev`) and pass it as `CF_API_TOKEN` below. Certificates are then issued and renewed through DNS-01 and the record can stay orange-clouded at all times.
 
 ### 1.2 Bootstrap the VPS (as root)
+The repository is private, so copy the `deploy/` folder to the server from a machine that has the repo checked out:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Novixa-dev/pizza-house-website/main/deploy/scripts/server-setup.sh -o server-setup.sh
-sudo LETSENCRYPT_EMAIL=admin@novixa.dev bash server-setup.sh
-# or, with Cloudflare DNS-01:
-sudo LETSENCRYPT_EMAIL=admin@novixa.dev CF_API_TOKEN=xxxxxxxx bash server-setup.sh
+scp -r deploy root@<VPS_IP>:/root/pizza-house-deploy
+ssh root@<VPS_IP>
+LETSENCRYPT_EMAIL=admin@novixa.dev bash /root/pizza-house-deploy/scripts/server-setup.sh
+# or, with Cloudflare DNS-01 (record can stay orange-clouded):
+LETSENCRYPT_EMAIL=admin@novixa.dev CF_API_TOKEN=xxxxxxxx bash /root/pizza-house-deploy/scripts/server-setup.sh
 ```
-(If the repository is private, copy `deploy/` to the server with `scp -r deploy root@VPS:/root/` and run `bash /root/deploy/scripts/server-setup.sh`.)
+(If the repository is ever made public, `curl -fsSL https://raw.githubusercontent.com/Novixa-dev/pizza-house-website/main/deploy/scripts/server-setup.sh` works too.)
 
 The script is idempotent and never overwrites existing secrets, data or certificates. It:
 1. installs Docker, Nginx and Certbot (aborts if another proxy such as Caddy/Traefik owns ports 80/443);

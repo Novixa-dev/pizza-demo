@@ -2,9 +2,9 @@
 # =============================================================================
 # Pizza House — one-time (idempotent) VPS bootstrap for pizza-house.novixa.dev
 #
-# Run as root on the Contabo VPS:
-#   curl -fsSL https://raw.githubusercontent.com/Novixa-dev/pizza-house-website/main/deploy/scripts/server-setup.sh -o server-setup.sh
-#   sudo LETSENCRYPT_EMAIL=you@novixa.dev bash server-setup.sh
+# Run as root on the Contabo VPS (copy the repo's deploy/ folder there first):
+#   scp -r deploy root@<VPS_IP>:/root/pizza-house-deploy
+#   LETSENCRYPT_EMAIL=you@novixa.dev bash /root/pizza-house-deploy/scripts/server-setup.sh
 #
 # Optional environment overrides:
 #   DOMAIN=pizza-house.novixa.dev   APP_DIR=/opt/pizza-house   APP_PORT=3066
@@ -84,11 +84,17 @@ log "3/8 Application directory $APP_DIR"
 install -d -m 750 -o "$DEPLOY_USER" -g "$DEPLOY_USER" "$APP_DIR"
 install -d -m 750 -o "$APP_UID" -g "$APP_UID" "$APP_DIR/data" "$APP_DIR/data/backups" "$APP_DIR/storage" "$APP_DIR/storage/receipts"
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [ ! -f "$APP_DIR/docker-compose.yml" ] && [ -f "$SCRIPT_DIR/../docker-compose.yml" ]; then
+  cp "$SCRIPT_DIR/../docker-compose.yml" "$APP_DIR/docker-compose.yml"
+fi
 if [ ! -f "$APP_DIR/docker-compose.yml" ]; then
   curl -fsSL "$REPO_RAW/deploy/docker-compose.yml" -o "$APP_DIR/docker-compose.yml" \
     || warn "Could not download docker-compose.yml (private repo?) — the first GitHub deploy will upload it."
-  [ -f "$APP_DIR/docker-compose.yml" ] && chown "$DEPLOY_USER:$DEPLOY_USER" "$APP_DIR/docker-compose.yml"
 fi
+# The deploy user must be able to overwrite these files on every rollout.
+install -d -o "$DEPLOY_USER" -g "$DEPLOY_USER" "$APP_DIR/scripts"
+[ -f "$APP_DIR/docker-compose.yml" ] && chown "$DEPLOY_USER:$DEPLOY_USER" "$APP_DIR/docker-compose.yml"
 
 NEW_ENV=0
 if [ ! -f "$APP_DIR/.env" ]; then
@@ -193,8 +199,8 @@ chmod +x /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
 log "6/8 Nginx virtual host"
 install -d /var/www/certbot
 VHOST_SRC="$(mktemp)"
-if [ -f "$(dirname "$0")/../nginx/pizza-house.novixa.dev.conf" ]; then
-  cp "$(dirname "$0")/../nginx/pizza-house.novixa.dev.conf" "$VHOST_SRC"
+if [ -f "$SCRIPT_DIR/../nginx/pizza-house.novixa.dev.conf" ]; then
+  cp "$SCRIPT_DIR/../nginx/pizza-house.novixa.dev.conf" "$VHOST_SRC"
 else
   curl -fsSL "$REPO_RAW/deploy/nginx/pizza-house.novixa.dev.conf" -o "$VHOST_SRC"
 fi
