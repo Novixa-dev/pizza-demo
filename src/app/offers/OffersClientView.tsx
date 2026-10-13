@@ -143,7 +143,7 @@ export default function OffersClientView({
         ? `🔥 Promo & Kupon Spesial Pizza House Mukalla!\nGunakan kupon WELCOME10 untuk diskon 10% dan dapatkan hadiah gratis!\nLihat promo lengkap:`
         : `🔥 Exclusive Pizza House Mukalla Offers & Coupons!\nUse WELCOME10 for 10% discount plus free gifts on eligible orders!\nBrowse offers:`;
 
-    const url = typeof window !== "undefined" ? window.location.href : "https://pizzahouse.ye/offers";
+    const url = typeof window !== "undefined" ? window.location.href : "/offers";
     const fullMessage = encodeURIComponent(`${shareText}\n${url}`);
     window.open(`https://wa.me/?text=${fullMessage}`, "_blank");
   };

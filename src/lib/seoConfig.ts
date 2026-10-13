@@ -1,3 +1,4 @@
+import { SITE_URL } from "./site";
 import type { Metadata, Viewport } from "next";
 
 export const siteViewport: Viewport = {
@@ -39,7 +40,7 @@ export const siteMetadata: Metadata = {
   authors: [{ name: "Pizza House Mukalla (@pizza_house66)", url: "https://www.instagram.com/pizza_house66/" }],
   creator: "Pizza House Mukalla",
   publisher: "Pizza House Mukalla",
-  metadataBase: new URL("https://pizzahouse.ye"),
+  metadataBase: new URL(SITE_URL),
   icons: {
     icon: [
       { url: "/favicon.png", sizes: "64x64", type: "image/png" },
@@ -71,24 +72,17 @@ export const siteMetadata: Metadata = {
     title: "بيتزا هاوس المكلا | Pizza House Mukalla - اطلب واستلم مسبقاً بدون انتظار",
     description:
       "طعم البيتزا الإيطالية الحقيقي والمخبوزات الطازجة على حجر الفرن البركاني في المكلا، فوه حي المساكن (بعد جامعة الأحقاف ومستوصف النور). اطلب مسبقاً واستلم ساخنة فور وصولك.",
-    url: "https://pizzahouse.ye",
+    url: SITE_URL,
     siteName: "بيتزا هاوس المكلا | Pizza House Mukalla (@pizza_house66)",
     locale: "ar_YE",
     alternateLocale: ["en_US"],
     type: "website",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "بيتزا هاوس المكلا - هوية المطعم والطلب المسبق - فوه حي المساكن",
-        type: "image/png",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200&q=80",
-        width: 1200,
-        height: 630,
-        alt: "بيتزا هاوس المكلا - بيتزا إيطالية طازجة من الفرن الحجري - فوه حي المساكن",
+        alt: "بيتزا هاوس المكلا - بيتزا حجرية طازجة، اطلب مسبقاً واستلم بلا انتظار",
         type: "image/jpeg",
       },
     ],
@@ -99,10 +93,7 @@ export const siteMetadata: Metadata = {
     creator: "@pizza_house66",
     title: "بيتزا هاوس المكلا | Pizza House Mukalla",
     description: "اطلب مسبقاً وتجنب الانتظار - طعم البيتزا الإيطالية الحقيقي والمخبوزات الطازجة في فوه حي المساكن، المكلا.",
-    images: [
-      "/twitter-image",
-      "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200&q=80",
-    ],
+    images: ["/og-image.jpg"],
   },
   other: {
     "restaurant:contact_info:street_address": "فوه، حي المساكن، بعد جامعة الأحقاف ومستوصف النور يمين الشارع العام",
@@ -111,7 +102,7 @@ export const siteMetadata: Metadata = {
     "restaurant:contact_info:postal_code": "F2QV+HPW",
     "restaurant:contact_info:country_name": "Yemen",
     "restaurant:contact_info:phone_number": "+967-5-375561",
-    "restaurant:contact_info:website": "https://pizzahouse.ye",
+    "restaurant:contact_info:website": `${SITE_URL}`,
     "place:location:latitude": "14.4892",
     "place:location:longitude": "49.0445",
   },
@@ -125,20 +116,19 @@ export const jsonLdRestaurantData = {
   description:
     "مطعم بيتزا هاوس في فوه حي المساكن بالمكلا. متخصص في البيتزا الإيطالية المخبوزة على الحجر والفطائر الطازجة مع إمكانية الطلب المسبق والاستلام السريع بدون انتظار.",
   image: [
-    "https://pizzahouse.ye/opengraph-image",
-    "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200&q=80",
+    `${SITE_URL}/og-image.jpg`,
   ],
-  logo: "https://pizzahouse.ye/icon-512.png",
+  logo: `${SITE_URL}/icon-512.png`,
   telephone: "+967-5-375561",
-  url: "https://pizzahouse.ye",
+  url: SITE_URL,
   sameAs: [
     "https://www.instagram.com/pizza_house66/",
     "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
     "https://maps.app.goo.gl/p9awfgXmTeSStM317",
   ],
   hasMap: "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
-  menu: "https://pizzahouse.ye/menu",
-  hasMenu: "https://pizzahouse.ye/menu",
+  menu: `${SITE_URL}/menu`,
+  hasMenu: `${SITE_URL}/menu`,
   servesCuisine: ["Italian Pizza", "Pastries", "Fatayer", "Calzone", "Burgers"],
   priceRange: "1,500 - 6,500 YER",
   currenciesAccepted: "YER",
@@ -197,18 +187,12 @@ export const jsonLdRestaurantData = {
   servesBreakfast: true,
   servesDinner: true,
   acceptsReservations: "True",
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "348",
-    bestRating: "5",
-    worstRating: "1",
-  },
+
   potentialAction: {
     "@type": "OrderAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://pizzahouse.ye/menu",
+      urlTemplate: `${SITE_URL}/menu`,
       inLanguage: ["ar", "en"],
       actionPlatform: [
         "http://schema.org/DesktopWebPlatform",

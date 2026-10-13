@@ -37,3 +37,7 @@ prisma/**/*.db-wal
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local production-parity data
+/data/
+/.local-data/

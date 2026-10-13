@@ -2,7 +2,7 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import MenuClientView from "./MenuClientView";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function MenuPage() {
   let categories: any[] = [];

@@ -2,11 +2,14 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import HomeClientView from "./HomeClientView";
 
-export const revalidate = 60; // ISR cache revalidation every minute
+// Rendered per request: menu availability (86ing) and reviews must reflect the
+// live SQLite state immediately, and the image build has no database to prerender from.
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   let restaurant = null;
   let testimonials: any[] = [];
+  let latestProducts: any[] = [];
   try {
     restaurant = await prisma.restaurant.findFirst({
       include: {
@@ -61,89 +64,25 @@ export default async function HomePage() {
       orderBy: { createdAt: "desc" },
       take: 6,
     });
+
+    latestProducts = await prisma.product.findMany({
+      where: { isAvailable: true },
+      include: {
+        optionGroups: {
+          include: {
+            options: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      take: 8,
+    });
   } catch (err) {
     console.error("Failed to load restaurant or testimonials on HomePage:", err);
   }
 
-  const latestProducts = await prisma.product.findMany({
-    where: { isAvailable: true },
-    include: {
-      optionGroups: {
-        include: {
-          options: true,
-        },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 8,
-  });
-
-  const restaurantSchema = {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
-    name: "بيتزا هاوس | Pizza House Mukalla",
-    image: "https://pizzahouse.ye/hero-pizza.jpg",
-    "@id": "https://pizzahouse.ye/#restaurant",
-    url: "https://pizzahouse.ye",
-    telephone: "+9675375561",
-    servesCuisine: ["Pizza", "Pastries", "Italian", "Middle Eastern"],
-    priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "حي المساكن، فوه، بعد جامعة الأحقاف ومستوصف النور يمين الشارع العام",
-      addressLocality: "المكلا (Al Mukalla)",
-      addressRegion: "حضرموت (Hadhramaut)",
-      postalCode: "F2QV+HPW",
-      addressCountry: "YE",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 14.4891696,
-      longitude: 49.0444845,
-    },
-    sameAs: [
-      "https://www.instagram.com/pizza_house66/",
-      "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
-      "https://maps.app.goo.gl/p9awfgXmTeSStM317",
-    ],
-    hasMap: "https://maps.app.goo.gl/zre73sxKGyM27KvE6",
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Saturday",
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-        ],
-        opens: "08:00",
-        closes: "12:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Saturday",
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-        ],
-        opens: "16:00",
-        closes: "23:30",
-      },
-    ],
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantSchema) }}
-      />
       <HomeClientView
         restaurant={restaurant}
         featuredProducts={restaurant?.products || []}

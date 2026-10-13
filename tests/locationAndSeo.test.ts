@@ -24,7 +24,7 @@ describe("Location, Google Maps, Instagram & SEO Suite", () => {
     // Dynamic OG images
     const ogImages = siteMetadata.openGraph?.images as any[];
     expect(ogImages).toBeDefined();
-    expect(ogImages.some((img) => img.url === "/opengraph-image")).toBe(true);
+    expect(ogImages.some((img) => img.url === "/og-image.jpg")).toBe(true);
 
     // Other restaurant meta
     expect(siteMetadata.other?.["restaurant:contact_info:street_address"]).toBeTruthy();
