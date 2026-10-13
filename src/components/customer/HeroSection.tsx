@@ -153,11 +153,11 @@ export default function HeroSection({
         {/* Full Hero Background: img22.png */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img22.png"
-            alt="AURA PIZZA - Wood Fired Oven"
+            src="/images/hero-oven.webp"
+            alt={language === "ar" ? "بيتزا هاوس - فرن حجري" : "Pizza House - Stone Oven"}
             fill
             priority
-            quality={100}
+            sizes="100vw"
             className="object-cover object-center select-none pointer-events-none"
           />
           {/* Subtle gradient overlays for flawless contrast */}
@@ -225,50 +225,32 @@ export default function HeroSection({
                 </button>
               </div>
 
-              {/* Stats Row (Exact #EFCC80 Gold Numbers & Dividers) */}
-              <div className="flex items-center gap-6 sm:gap-8 pt-3 text-center font-cairo">
-                <div>
-                  <div className="text-xl sm:text-2xl font-black text-[#EFCC80] font-cairo tracking-wide">
-                    {language === "ar" ? "+٥٠٠" : "+500"}
-                  </div>
-                  <div className="text-xs text-[#8c8c96] font-cairo mt-0.5">
-                    {language === "ar"
-                      ? "طلب يومي"
-                      : language === "id"
-                      ? "Pesanan Harian"
-                      : "Daily Orders"}
-                  </div>
-                </div>
-
-                <div className="h-8 w-px bg-white/15" />
-
-                <div>
-                  <div className="text-xl sm:text-2xl font-black text-[#EFCC80] font-cairo tracking-wide">
-                    {language === "ar" ? "١٥,٠٠٠" : "15,000"}
-                  </div>
-                  <div className="text-xs text-[#8c8c96] font-cairo mt-0.5">
-                    {language === "ar"
-                      ? "عميل سعيد"
-                      : language === "id"
-                      ? "Pelanggan Puas"
-                      : "Happy Customers"}
-                  </div>
-                </div>
-
-                <div className="h-8 w-px bg-white/15" />
-
-                <div>
-                  <div className="text-xl sm:text-2xl font-black text-[#EFCC80] font-cairo tracking-wide">
-                    {language === "ar" ? "+١٥" : "+15"}
-                  </div>
-                  <div className="text-xs text-[#8c8c96] font-cairo mt-0.5">
-                    {language === "ar"
-                      ? "سنة خبرة"
-                      : language === "id"
-                      ? "Tahun Pengalaman"
-                      : "Years Experience"}
-                  </div>
-                </div>
+              {/* Stats Row: factual service promises (no unverifiable vanity numbers) */}
+              <div className="flex items-center gap-4 sm:gap-8 pt-3 px-4 py-3 -mx-1 rounded-2xl bg-black/35 backdrop-blur-sm border border-white/5 text-center font-cairo">
+                {[
+                  {
+                    value: language === "ar" ? "15 د" : "15 min",
+                    label: language === "ar" ? "وقت التجهيز" : language === "id" ? "Waktu Persiapan" : "Prep Time",
+                  },
+                  {
+                    value: "100%",
+                    label: language === "ar" ? "عجين طازج يومياً" : language === "id" ? "Adonan Segar Harian" : "Fresh Daily Dough",
+                  },
+                  {
+                    value: "4",
+                    label: language === "ar" ? "طرق دفع محلية" : language === "id" ? "Metode Pembayaran" : "Local Payment Options",
+                  },
+                ].map((stat, i) => (
+                  <React.Fragment key={stat.label}>
+                    {i > 0 && <div className="h-8 w-px bg-white/15" aria-hidden="true" />}
+                    <div>
+                      <div dir="ltr" className="text-lg sm:text-2xl font-black text-[#EFCC80] font-outfit tracking-wide">
+                        {stat.value}
+                      </div>
+                      <div className="text-[11px] sm:text-xs text-[#a8a8b2] font-cairo mt-0.5">{stat.label}</div>
+                    </div>
+                  </React.Fragment>
+                ))}
               </div>
             </div>
 
@@ -510,8 +492,8 @@ export default function HeroSection({
             <div className="relative aspect-video w-full bg-black flex items-center justify-center">
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/1-SJGQ2HLp8?autoplay=1&mute=0"
-                title="AURA PIZZA Wood-Fired Bake Story"
+                src="https://www.youtube-nocookie.com/embed/1-SJGQ2HLp8?autoplay=1&mute=0"
+                title="Pizza House Stone-Baked Story"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />

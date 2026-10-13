@@ -10,10 +10,23 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
+const DISMISS_KEY = "ph_pwa_prompt_dismissed_at";
+const DISMISS_COOLDOWN_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
+const SHOW_DELAY_MS = 25_000; // let the visitor engage with the page first
+
+function wasRecentlyDismissed(): boolean {
+  try {
+    const raw = window.localStorage.getItem(DISMISS_KEY);
+    return raw ? Date.now() - Number(raw) < DISMISS_COOLDOWN_MS : false;
+  } catch {
+    return false;
+  }
+}
+
 export default function PwaInstallPrompt() {
   const { language } = useApp();
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isDismissed, setIsDismissed] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
@@ -22,26 +35,49 @@ export default function PwaInstallPrompt() {
       window.matchMedia("(display-mode: standalone)").matches ||
       (window.navigator as any).standalone === true
     ) {
-      setIsInstalled(true);
       return;
     }
+    if (wasRecentlyDismissed()) return;
+
+    const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    let ready = false;
+    const reveal = () => {
+      if (ready) setIsDismissed(false);
+    };
 
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
+      ready = true;
+    };
+    const installedHandler = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
     };
 
     window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("appinstalled", installedHandler);
 
-    window.addEventListener("appinstalled", () => {
-      setIsInstalled(true);
-      setDeferredPrompt(null);
-    });
+    // Only surface the banner when installation is actually possible
+    // (Chromium install event, or iOS Safari's manual "Add to Home Screen").
+    if (isIos) ready = true;
+    const timer = window.setTimeout(reveal, SHOW_DELAY_MS);
 
     return () => {
+      window.clearTimeout(timer);
       window.removeEventListener("beforeinstallprompt", handler);
+      window.removeEventListener("appinstalled", installedHandler);
     };
   }, []);
+
+  const dismiss = () => {
+    setIsDismissed(true);
+    try {
+      window.localStorage.setItem(DISMISS_KEY, String(Date.now()));
+    } catch {
+      // storage unavailable (private mode) — dismissal lasts for this page view
+    }
+  };
 
   if (isInstalled || isDismissed) return null;
 
@@ -107,7 +143,7 @@ export default function PwaInstallPrompt() {
 
           <button
             type="button"
-            onClick={() => setIsDismissed(true)}
+            onClick={dismiss}
             className="p-1 rounded-lg text-stone-400 hover:text-white transition-colors"
             aria-label="Dismiss"
           >
