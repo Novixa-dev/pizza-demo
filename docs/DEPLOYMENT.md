@@ -20,6 +20,12 @@ Browser ──HTTPS──▶ Cloudflare (proxied DNS) ──HTTPS──▶ Nginx
 
 ---
 
+> **Current production host (161.97.75.64) is shared** with mailcow, novixa.dev and aqar-demo. Mailcow's nginx owns ports 80/443, so `server-setup.sh` (which installs its own Nginx) is **not** used there. Instead:
+> - bootstrap once with `deploy/scripts/mailcow-bootstrap.sh` (see its header) — adds the `pizza` user, `/opt/pizza-house`, the `pizza-house-edge` network and mailcow's `data/conf/nginx/pizza-house.conf`;
+> - TLS is the Cloudflare Origin certificate for `*.novixa.dev` (Cloudflare SSL mode *Full (strict)*, record proxied);
+> - every deploy re-attaches mailcow's nginx to `pizza-house-edge` and syncs `deploy/nginx/pizza-house.mailcow.conf` (with `nginx -t` + restore on failure).
+> The sections below describe a dedicated VPS.
+
 ## 1. One-time setup (≈10 minutes)
 
 ### 1.1 Cloudflare DNS
@@ -58,10 +64,9 @@ The script is idempotent and never overwrites existing secrets, data or certific
 
 | Secret | Value |
 |---|---|
-| `VPS_HOST` | VPS public IP (printed by the script) |
-| `VPS_USER` | `deploy` |
-| `VPS_SSH_KEY` | private key printed by the script (whole block incl. `BEGIN/END`) |
-| `VPS_PORT` | SSH port, only if not `22` |
+| `PIZZA_DEMO_SSH_KEY` | private key of the `pizza` user (whole block incl. `BEGIN/END`) |
+| `PIZZA_DEMO_SSH_KEY_PASSWORD` | passphrase of that key (leave empty if it has none) |
+| `PIZZA_DEMO_HOST` / `PIZZA_DEMO_USER` / `PIZZA_DEMO_PORT` | optional overrides — the workflow defaults to `161.97.75.64`, `pizza`, `22` |
 
 Optionally create a **production** environment (*Settings → Environments*) with required reviewers to gate deploys.
 

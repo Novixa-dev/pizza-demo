@@ -10,6 +10,9 @@ TAG="${2:?usage: remote-deploy.sh <image> <tag>}"
 APP_DIR="${APP_DIR:-/opt/pizza-house}"
 CONTAINER="pizza-house-app"
 HEALTH_TIMEOUT="${HEALTH_TIMEOUT:-180}"
+EDGE_NET="pizza-house-edge"            # shared with mailcow's nginx only
+SITE_SRC="$APP_DIR/nginx/pizza-house.mailcow.conf"
+SITE_CONF="${SITE_CONF:-/opt/mailcow-dockerized/data/conf/nginx/pizza-house.conf}"
 
 cd "$APP_DIR"
 [ -f .env ] || { echo "::error::$APP_DIR/.env is missing — run deploy/scripts/server-setup.sh on the server first."; exit 1; }
@@ -31,6 +34,33 @@ wait_healthy() {
   return 1
 }
 
+nginx_ctr() { docker ps -q --filter label=com.docker.compose.service=nginx-mailcow | head -n1; }
+
+# Install the site block only when it changed; nginx -t first, previous file restored on failure.
+sync_site() {
+  [ -f "$SITE_SRC" ] || return 0
+  cmp -s "$SITE_SRC" "$SITE_CONF" 2>/dev/null && return 0
+  local ctr prev; ctr="$(nginx_ctr)"
+  [ -n "$ctr" ] || { echo "::warning::mailcow nginx is not running — site block not installed"; return 0; }
+  prev="$(mktemp)"; [ -f "$SITE_CONF" ] && cp "$SITE_CONF" "$prev"
+  cat "$SITE_SRC" > "$SITE_CONF"
+  if docker exec "$ctr" nginx -t >/dev/null 2>&1; then
+    docker exec "$ctr" nginx -s reload >/dev/null && echo "✔ nginx site updated and reloaded"
+  else
+    docker exec "$ctr" nginx -t 2>&1 | tail -5 || true
+    if [ -s "$prev" ]; then cat "$prev" > "$SITE_CONF"; else : > "$SITE_CONF"; fi
+    echo "::error::nginx -t rejected the new site block — previous file restored, nginx untouched"
+  fi
+  rm -f "$prev"
+}
+
+# The edge network is created once and attached live to mailcow's nginx (no restart).
+docker network inspect "$EDGE_NET" >/dev/null 2>&1 || docker network create "$EDGE_NET" >/dev/null
+NGINX_CTR="$(nginx_ctr)"
+if [ -n "$NGINX_CTR" ] && ! docker inspect -f '{{json .NetworkSettings.Networks}}' "$NGINX_CTR" | grep -q "\"$EDGE_NET\""; then
+  docker network connect "$EDGE_NET" "$NGINX_CTR" && echo "✔ mailcow nginx joined $EDGE_NET"
+fi
+
 PREV_TAG="$(grep -E '^APP_TAG=' .env | cut -d= -f2- || true)"
 echo "▶ Deploying $IMAGE:$TAG (previous: ${PREV_TAG:-none})"
 
@@ -46,6 +76,7 @@ docker compose up -d --remove-orphans app
 
 if wait_healthy; then
   echo "✅ $CONTAINER is healthy on $TAG"
+  sync_site
 else
   echo "::error::$TAG failed its health check — recent logs:"
   docker compose logs --tail=80 app || true

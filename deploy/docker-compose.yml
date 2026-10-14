@@ -15,8 +15,11 @@ services:
       HOSTNAME: 0.0.0.0
       DATABASE_URL: file:/app/data/pizza-house.db
     ports:
-      # Bound to loopback only: Nginx terminates TLS and proxies to it.
+      # Loopback only, for on-host checks. Public traffic arrives through mailcow's
+      # nginx over the pizza-house-edge network (deploy/nginx/pizza-house.mailcow.conf).
       - "127.0.0.1:${APP_PORT:-3066}:3000"
+    networks:
+      - edge
     volumes:
       - ./data:/app/data
       - ./storage:/app/storage
@@ -39,3 +42,9 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
+
+networks:
+  # Shared only with mailcow's nginx; created by scripts/remote-deploy.sh.
+  edge:
+    external: true
+    name: pizza-house-edge

@@ -20,6 +20,9 @@ concurrency:
 
 env:
   APP_URL: https://pizza-house.novixa.dev
+  # Origin server (Contabo VPS). Override with PIZZA_DEMO_HOST / PIZZA_DEMO_USER secrets if it ever moves.
+  DEPLOY_HOST: 161.97.75.64
+  DEPLOY_USER: pizza
 
 jobs:
   ci:
@@ -83,12 +86,10 @@ jobs:
       - name: Check server credentials
         id: creds
         env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          SSH_KEY: ${{ secrets.PIZZA_DEMO_SSH_KEY }}
         run: |
-          if [ -z "$VPS_HOST" ] || [ -z "$VPS_USER" ] || [ -z "$VPS_SSH_KEY" ]; then
-            echo "::warning title=Deploy skipped::Add VPS_HOST, VPS_USER and VPS_SSH_KEY repository secrets (see docs/DEPLOYMENT.md)."
+          if ! printf '%s' "$SSH_KEY" | grep -q 'BEGIN OPENSSH PRIVATE KEY'; then
+            echo "::warning title=Deploy skipped::PIZZA_DEMO_SSH_KEY must hold the deploy private key (whole BEGIN/END block, see docs/DEPLOYMENT.md)."
             echo "ready=false" >> "$GITHUB_OUTPUT"
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
@@ -105,11 +106,12 @@ jobs:
         if: steps.creds.outputs.ready == 'true'
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT || 22 }}
-          source: deploy/docker-compose.yml,deploy/scripts/remote-deploy.sh
+          host: ${{ secrets.PIZZA_DEMO_HOST || env.DEPLOY_HOST }}
+          username: ${{ secrets.PIZZA_DEMO_USER || env.DEPLOY_USER }}
+          key: ${{ secrets.PIZZA_DEMO_SSH_KEY }}
+          passphrase: ${{ secrets.PIZZA_DEMO_SSH_KEY_PASSWORD }}
+          port: ${{ secrets.PIZZA_DEMO_PORT || 22 }}
+          source: deploy/docker-compose.yml,deploy/scripts/remote-deploy.sh,deploy/nginx/pizza-house.mailcow.conf
           target: /opt/pizza-house
           strip_components: 1
           overwrite: true
@@ -123,10 +125,11 @@ jobs:
           GHCR_USER: ${{ github.actor }}
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT || 22 }}
+          host: ${{ secrets.PIZZA_DEMO_HOST || env.DEPLOY_HOST }}
+          username: ${{ secrets.PIZZA_DEMO_USER || env.DEPLOY_USER }}
+          key: ${{ secrets.PIZZA_DEMO_SSH_KEY }}
+          passphrase: ${{ secrets.PIZZA_DEMO_SSH_KEY_PASSWORD }}
+          port: ${{ secrets.PIZZA_DEMO_PORT || 22 }}
           envs: IMAGE,TAG,GHCR_USER,GHCR_TOKEN
           command_timeout: 10m
           script: bash /opt/pizza-house/scripts/remote-deploy.sh "$IMAGE" "$TAG"
