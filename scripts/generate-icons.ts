@@ -107,10 +107,6 @@ const createSvgIcon = (isMaskable = false) => {
 
     <!-- Traditional Oven Flame Embers Accent at base -->
     <path d="M 220 445 C 240 430, 250 435, 256 425 C 262 435, 272 430, 292 445 C 275 455, 235 455, 220 445 Z" fill="url(#goldGlow)" opacity="0.8" />
-
-    <!-- 66 Brand Badge Small -->
-    <circle cx="256" cy="460" r="18" fill="#ea580c" stroke="#f59e0b" stroke-width="2"/>
-    <text x="256" y="466" font-family="Arial, sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">66</text>
   </g>
 </svg>
 `;
