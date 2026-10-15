@@ -1,6 +1,53 @@
 import { PrismaClient } from "@prisma/client";
+import { legacyBrandChanges } from "./legacyBrand";
 
 const prisma = new PrismaClient();
+
+/**
+ * Rewrites the pre-rebrand restaurant name inside already-seeded catalog rows.
+ * Returns how many rows were changed; a second run changes none.
+ */
+async function neutralizeLegacyBrandInCatalog(): Promise<number> {
+  let changed = 0;
+  const apply = async <T extends { id: string }>(
+    rows: T[],
+    fields: ReadonlyArray<keyof T & string>,
+    save: (id: string, data: Record<string, string>) => Promise<unknown>,
+  ) => {
+    for (const row of rows) {
+      const data = legacyBrandChanges(row, fields);
+      if (!data) continue;
+      await save(row.id, data);
+      changed++;
+    }
+  };
+
+  await apply(await prisma.category.findMany(), ["nameAr", "nameEn"], (id, data) =>
+    prisma.category.update({ where: { id }, data }),
+  );
+  await apply(
+    await prisma.product.findMany(),
+    ["nameAr", "nameEn", "descriptionAr", "descriptionEn"],
+    (id, data) => prisma.product.update({ where: { id }, data }),
+  );
+  await apply(await prisma.optionGroup.findMany(), ["nameAr", "nameEn"], (id, data) =>
+    prisma.optionGroup.update({ where: { id }, data }),
+  );
+  await apply(await prisma.optionItem.findMany(), ["nameAr", "nameEn"], (id, data) =>
+    prisma.optionItem.update({ where: { id }, data }),
+  );
+  await apply(
+    await prisma.coupon.findMany(),
+    ["titleAr", "titleEn", "descriptionAr", "descriptionEn"],
+    (id, data) => prisma.coupon.update({ where: { id }, data }),
+  );
+  await apply(
+    await prisma.automaticGift.findMany(),
+    ["nameAr", "nameEn", "descriptionAr", "descriptionEn"],
+    (id, data) => prisma.automaticGift.update({ where: { id }, data }),
+  );
+  return changed;
+}
 
 async function main() {
   const isProduction = process.env.NODE_ENV === "production";
@@ -25,6 +72,8 @@ async function main() {
           },
         });
         console.log("Demo mode: restaurant profile set to neutral demo values.");
+        const renamed = await neutralizeLegacyBrandInCatalog();
+        console.log(`Demo mode: removed the legacy restaurant name from ${renamed} catalog row(s).`);
       }
       console.log("Production data already exists; skipping seed without changes.");
       return;
