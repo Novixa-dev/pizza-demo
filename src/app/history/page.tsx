@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import HistoryClientView from "./HistoryClientView";
 
 export const metadata = {
-  title: "سجل الطلبات السابقة | بيتزا هاوس المكلا",
-  description: "استعرض جميع طلباتك السابقة وتفاصيلها بدلالة رقم هاتفك المحمول - مطعم بيتزا هاوس فوه المكلا",
+  title: "سجل الطلبات السابقة | بيتزا نوڤا",
+  description: "استعرض جميع طلباتك السابقة وتفاصيلها بدلالة رقم هاتفك المحمول - مطعم بيتزا نوڤا وسط المدينة المكلا",
 };
 
 export default function HistoryPage() {

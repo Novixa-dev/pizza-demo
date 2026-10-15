@@ -107,10 +107,10 @@ export default function AdminClientView({
   const [slotCapacity, setSlotCapacity] = useState(
     restaurant?.slotCapacityLimit || 6
   );
-  const [phone, setPhone] = useState(restaurant?.phone || "05375561");
-  const [whatsapp, setWhatsapp] = useState(restaurant?.whatsapp || "772207788");
+  const [phone, setPhone] = useState(restaurant?.phone || "05000000");
+  const [whatsapp, setWhatsapp] = useState(restaurant?.whatsapp || "700000000");
   const [addressAr, setAddressAr] = useState(
-    restaurant?.addressAr || "المكلا - فوه - حي المساكن"
+    restaurant?.addressAr || "المكلا - وسط المدينة"
   );
   const [saveSuccessMsg, setSaveSuccessMsg] = useState("");
 
@@ -259,10 +259,10 @@ export default function AdminClientView({
           <div>
             <span className="text-xs font-bold text-[#EFCC80] font-cairo">
               {language === "ar"
-                ? "عمليات وإدارة بيتزا هاوس"
+                ? "عمليات وإدارة بيتزا نوڤا"
                 : language === "id"
-                ? "Operasi & Manajemen Pizza House"
-                : "Pizza House Operations"}
+                ? "Operasi & Manajemen Pizza Nova"
+                : "Pizza Nova Operations"}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white font-cairo">
               {dict.admin.title}
@@ -961,9 +961,9 @@ export default function AdminClientView({
           <div className="bg-[#14181f]/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-[#222934] shadow-[0_12px_32px_rgba(0,0,0,0.85)] space-y-4">
             <h3 className="text-base font-bold text-white font-cairo">
               {language === "ar"
-                ? "آراء وتقييمات زبائن بيتزا هاوس"
+                ? "آراء وتقييمات زبائن بيتزا نوڤا"
                 : language === "id"
-                ? "Ulasan & Masukan Pelanggan Pizza House"
+                ? "Ulasan & Masukan Pelanggan Pizza Nova"
                 : "Customer Reviews & Feedback"}
             </h3>
 
@@ -1256,9 +1256,9 @@ export default function AdminClientView({
                   بنك الكريمي (حاسب)
                 </span>
                 <span className="font-outfit font-black text-white block text-sm">
-                  PH-772207788
+                  PH-700000000
                 </span>
-                <span className="text-[11px] text-stone-400">باسم: بيتزا هاوس</span>
+                <span className="text-[11px] text-stone-400">باسم: بيتزا نوڤا</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] space-y-1">
                 <span className="font-bold text-emerald-400 block">
@@ -1267,7 +1267,7 @@ export default function AdminClientView({
                 <span className="font-outfit font-black text-white block text-sm">
                   25401982
                 </span>
-                <span className="text-[11px] text-stone-400">حساب تجاري: بيتزا هاوس</span>
+                <span className="text-[11px] text-stone-400">حساب تجاري: بيتزا نوڤا</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-[#0c0e12] border border-[#222934] space-y-1">
                 <span className="font-bold text-sky-400 block">
@@ -1276,7 +1276,7 @@ export default function AdminClientView({
                 <span className="font-outfit font-black text-white block text-sm">
                   889104
                 </span>
-                <span className="text-[11px] text-stone-400">فرع فوه: بيتزا هاوس</span>
+                <span className="text-[11px] text-stone-400">الفرع الرئيسي: بيتزا نوڤا</span>
               </div>
             </div>
           </div>

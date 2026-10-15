@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   const isProduction = process.env.NODE_ENV === "production";
-  console.log("🌱 Seeding Pizza House Mukalla database...");
+  console.log("🌱 Seeding Pizza Nova database...");
 
   if (isProduction) {
     const existingRestaurant = await prisma.restaurant.findUnique({
@@ -34,13 +34,13 @@ async function main() {
   // 1. Create Restaurant profile
   const restaurant = await prisma.restaurant.create({
     data: {
-      nameAr: "بيتزا هاوس",
-      nameEn: "Pizza House",
+      nameAr: "بيتزا نوڤا",
+      nameEn: "Pizza Nova",
       slug: "pizza-house-mukalla",
-      phone: "05375561",
-      whatsapp: "+967772207788",
-      addressAr: "المكلا - فوه - حي المساكن - بالقرب من جامعة الأحقاف ومستوصف النور",
-      addressEn: "Mukalla, Fuwa, Al-Masaken District, Near Al-Ahgaff University",
+      phone: "05000000",
+      whatsapp: "+967700000000",
+      addressAr: "المكلا - وسط المدينة - عنوان تجريبي لأغراض العرض",
+      addressEn: "Mukalla, City Center District, Near the university",
       currency: "YER",
       defaultPrepDuration: 15,
       slotCapacityMax: 8,
@@ -252,7 +252,7 @@ async function main() {
   await createPizza({
     nameAr: "بيتزا ببروني كلاسيك",
     nameEn: "Classic Pepperoni Pizza",
-    descriptionAr: "شرائح ببروني بقري فاخر مع جبنة موزاريلا ذائبة وصلصة الطماطم الإيطالية الخاصة ببيتزا هاوس على عجينة طازجة.",
+    descriptionAr: "شرائح ببروني بقري فاخر مع جبنة موزاريلا ذائبة وصلصة الطماطم الإيطالية الخاصة ببيتزا نوڤا على عجينة طازجة.",
     descriptionEn: "Premium beef pepperoni slices over melted mozzarella cheese and signature Italian pizza sauce on fresh dough.",
     basePrice: 4500,
     imageUrl: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&q=80",
@@ -261,8 +261,8 @@ async function main() {
   });
 
   await createPizza({
-    nameAr: "بيتزا هاوس سوبريم الخاصة",
-    nameEn: "Pizza House Supreme Special",
+    nameAr: "بيتزا نوڤا سوبريم الخاصة",
+    nameEn: "Pizza Nova Supreme Special",
     descriptionAr: "مزيج متكامل من قطع اللحم والدجاج والببروني، مع الفلفل الرومي، البصل، الزيتون، والمشروم الطازج بجبنة الموزاريلا الغنية.",
     descriptionEn: "The ultimate house specialty loaded with beef, seasoned chicken, pepperoni, bell peppers, onions, olives, and mushrooms.",
     basePrice: 5500,
@@ -639,7 +639,7 @@ async function main() {
 
   // Seed completed orders with customer testimonials (OrderFeedback)
   const pepperoniProd = await prisma.product.findFirst({ where: { nameEn: "Classic Pepperoni Pizza" } });
-  const supremeProd = await prisma.product.findFirst({ where: { nameEn: "Pizza House Supreme Special" } });
+  const supremeProd = await prisma.product.findFirst({ where: { nameEn: "Pizza Nova Supreme Special" } });
   const ranchProd = await prisma.product.findFirst({ where: { nameEn: "Chicken Ranch Pizza" } });
   const margheritaProd = await prisma.product.findFirst({ where: { nameEn: "Traditional Margherita" } });
 
@@ -666,8 +666,8 @@ async function main() {
       total: 7000,
       mealRating: 5,
       serviceRating: 5,
-      tags: "خدمة راقية, دقة الموعد, قرب جامعة الأحقاف",
-      comment: "موقع المطعم ممتاز بقرب مجمع كليات الأحقاف في فوه. خدمة الطلب المسبق وفرت علينا وقتاً ثميناً بين المحاضرات. صوص الرانش والتحمير على الحجر متقن للغاية.",
+      tags: "خدمة راقية, دقة الموعد, موقع مميز",
+      comment: "موقع المطعم ممتاز في وسط المدينة. خدمة الطلب المسبق وفرت علينا وقتاً ثميناً بين المحاضرات. صوص الرانش والتحمير على الحجر متقن للغاية.",
       daysAgo: 2,
     },
     {
@@ -680,7 +680,7 @@ async function main() {
       mealRating: 5,
       serviceRating: 5,
       tags: "جلسات عائلية مريحة, نظافة فائقة",
-      comment: "زرنا قسم العوائل في فرع فوه، الجلسات مريحة وتوفر الخصوصية التامة للعائلات مع تكييف ممتاز. الأبناء استمتعوا جداً بطعم البيتزا والفطائر الساخنة.",
+      comment: "زرنا قسم العوائل في الفرع الرئيسي، الجلسات مريحة وتوفر الخصوصية التامة للعائلات مع تكييف ممتاز. الأبناء استمتعوا جداً بطعم البيتزا والفطائر الساخنة.",
       daysAgo: 3,
     },
     {
@@ -819,12 +819,12 @@ async function main() {
       },
       {
         code: "HADRAMOUT",
-        titleAr: "عرض رواد فوه والطلاب 15%",
+        titleAr: "عرض رواد وسط المدينة والطلاب 15%",
         titleEn: "15% Hadramout Community & Students Deal",
         titleId: "Promo Komunitas & Mahasiswa 15%",
-        descriptionAr: "خصم 15% لطلاب جامعة الأحقاف وأهالي فوه لطلبات 10,000 ر.ي فأكثر (حد أقصى 2,000 ر.ي)",
-        descriptionEn: "15% discount for Al-Ahgaff students and Fuwa community on 10,000+ YER orders (max 2,000 YER)",
-        descriptionId: "Diskon 15% untuk mahasiswa Universitas Al-Ahgaff dan warga Fuwah untuk pesanan 10.000+ YER (maks 2.000 YER)",
+        descriptionAr: "خصم 15% للطلاب وأهالي المدينة لطلبات 10,000 ر.ي فأكثر (حد أقصى 2,000 ر.ي)",
+        descriptionEn: "15% student discount on 10,000+ YER orders (max 2,000 YER)",
+        descriptionId: "Diskon 15% untuk mahasiswa untuk pesanan 10.000+ YER (maks 2.000 YER)",
         discountType: "PERCENTAGE",
         discountValue: 15,
         minOrderAmount: 10000,
@@ -872,7 +872,7 @@ async function main() {
   await prisma.customerLoyalty.createMany({
     data: [
       {
-        customerPhone: "772207788",
+        customerPhone: "700000000",
         ordersCount: 5,
         totalSpent: 32000,
         rewardsEarned: 1,

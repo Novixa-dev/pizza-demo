@@ -7,7 +7,7 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-// Crisp Vector SVG for Pizza House Mukalla
+// Crisp Vector SVG for Pizza Nova
 const createSvgIcon = (isMaskable = false) => {
   const padding = isMaskable ? 80 : 20;
   const viewBoxSize = 512;
@@ -117,7 +117,7 @@ const createSvgIcon = (isMaskable = false) => {
 };
 
 async function generateAllIcons() {
-  console.log("Generating modern PWA icon set for Pizza House Mukalla...");
+  console.log("Generating modern PWA icon set for Pizza Nova...");
 
   const svgStandard = createSvgIcon(false);
   const svgMaskable = createSvgIcon(true);

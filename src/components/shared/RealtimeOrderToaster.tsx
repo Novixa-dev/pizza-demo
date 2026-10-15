@@ -167,8 +167,8 @@ export default function RealtimeOrderToaster() {
           newStatus: "PREPARING",
           titleAr: "طلبك في الفرن الآن! 🔥",
           titleEn: "Order In the Oven! 🔥",
-          messageAr: "بدأ طهاة بيتزا هاوس بخبز البيتزا على الحجر لتكون ساخنة ومقرمشة.",
-          messageEn: "Your stone-baked pizza is now baking in the oven at Fuwa branch.",
+          messageAr: "بدأ طهاة بيتزا نوڤا بخبز البيتزا على الحجر لتكون ساخنة ومقرمشة.",
+          messageEn: "Your stone-baked pizza is now baking in the oven at City Center branch.",
           iconType: "flame",
         });
       } else if (mockStatus === "READY") {
@@ -179,8 +179,8 @@ export default function RealtimeOrderToaster() {
           newStatus: "READY",
           titleAr: "طلبك جاهز وساخن للاستلام! 🍕",
           titleEn: "Order Ready for Pickup! 🍕",
-          messageAr: "تم إخراج طلبك من الفرن وموضوع على رف الاستلام الساخن بفرع فوه.",
-          messageEn: "Your piping hot order is packaged and waiting at Fuwa counter.",
+          messageAr: "تم إخراج طلبك من الفرن وموضوع على رف الاستلام الساخن بالفرع الرئيسي.",
+          messageEn: "Your piping hot order is packaged and waiting at City Center counter.",
           iconType: "ready",
         });
       } else {
@@ -191,8 +191,8 @@ export default function RealtimeOrderToaster() {
           newStatus: "COMPLETED",
           titleAr: "تم تسليم الطلب بنجاح ❤️",
           titleEn: "Order Handed Over ❤️",
-          messageAr: "شكراً لطلبك من بيتزا هاوس المكلا. نتمنى لك وجبة هنيئة!",
-          messageEn: "Thank you for choosing Pizza House Mukalla. Enjoy your meal!",
+          messageAr: "شكراً لطلبك من بيتزا نوڤا. نتمنى لك وجبة هنيئة!",
+          messageEn: "Thank you for choosing Pizza Nova. Enjoy your meal!",
           iconType: "check",
         });
       }
@@ -225,7 +225,7 @@ export default function RealtimeOrderToaster() {
               trackingToken: ord.trackingToken,
               titleAr: `طلبك ${ord.orderNumber} في الفرن الآن! 🔥`,
               titleEn: `Order ${ord.orderNumber} is Baking in the Oven! 🔥`,
-              messageAr: "بدأ طهاة بيتزا هاوس بخبز طلبك طازجاً على الحجر بالفرن.",
+              messageAr: "بدأ طهاة بيتزا نوڤا بخبز طلبك طازجاً على الحجر بالفرن.",
               messageEn: "Baking has started! Your pizza is being stone-baked to perfection.",
               iconType: "flame",
             });
@@ -239,8 +239,8 @@ export default function RealtimeOrderToaster() {
               trackingToken: ord.trackingToken,
               titleAr: `طلبك ${ord.orderNumber} جاهز للاستلام! 🍕`,
               titleEn: `Order ${ord.orderNumber} is Ready for Pickup! 🍕`,
-              messageAr: "طلبك ساخن وموضوع على رف الاستلام بفرع فوه. يمكنك استلامه الآن!",
-              messageEn: "Your piping hot order is packaged and waiting at Fuwa counter.",
+              messageAr: "طلبك ساخن وموضوع على رف الاستلام بالفرع الرئيسي. يمكنك استلامه الآن!",
+              messageEn: "Your piping hot order is packaged and waiting at City Center counter.",
               iconType: "ready",
             });
           } else if (ord.status === "COMPLETED") {
@@ -253,8 +253,8 @@ export default function RealtimeOrderToaster() {
               trackingToken: ord.trackingToken,
               titleAr: `تم تسليم طلبك ${ord.orderNumber} بنجاح ✅`,
               titleEn: `Order ${ord.orderNumber} Completed ✅`,
-              messageAr: "شكراً لطلبك من بيتزا هاوس المكلا. بالهناء والشفاء!",
-              messageEn: "Thank you for dining with Pizza House. Enjoy your meal!",
+              messageAr: "شكراً لطلبك من بيتزا نوڤا. بالهناء والشفاء!",
+              messageEn: "Thank you for dining with Pizza Nova. Enjoy your meal!",
               iconType: "check",
             });
           } else if (ord.status === "CONFIRMED") {

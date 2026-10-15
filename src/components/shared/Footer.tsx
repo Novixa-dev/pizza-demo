@@ -31,7 +31,7 @@ export default function Footer() {
                   {dict.brand.name}
                 </span>
                 <span className="text-[10px] text-amber-400 font-bold font-cairo">
-                  {language === "ar" ? "المكلا · فوه" : "Mukalla · Fuwa"}
+                  {language === "ar" ? "المكلا · وسط المدينة" : "Mukalla · City Center"}
                 </span>
               </div>
             </div>
@@ -44,24 +44,24 @@ export default function Footer() {
             </p>
             <div className="flex flex-wrap items-center gap-2.5 pt-2">
               <a
-                href="https://www.instagram.com/pizza_house66/"
+                href="https://www.facebook.com/profile.php?id=61594556255556"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 bg-[#14181f] hover:bg-[#1c222c] text-stone-300 hover:text-white px-3 py-1.5 rounded-xl border border-white/10 hover:border-amber-500/30 transition-all text-xs font-bold font-outfit"
-                aria-label="Instagram @pizza_house66"
+                aria-label="Instagram @novixa"
               >
                 <Instagram className="w-3.5 h-3.5 text-rose-400" />
-                <span>@pizza_house66</span>
+                <span>@novixa</span>
               </a>
               <a
-                href="https://wa.me/967772207788"
+                href="https://novixa.dev/ar/contact"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 bg-[#14181f] hover:bg-[#1c222c] text-stone-300 hover:text-white px-3 py-1.5 rounded-xl border border-white/10 hover:border-emerald-500/30 transition-all text-xs font-bold font-outfit"
-                aria-label="WhatsApp 772207788"
+                aria-label="WhatsApp 700000000"
               >
                 <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <span>772207788</span>
+                <span>700000000</span>
               </a>
             </div>
           </div>
@@ -97,30 +97,30 @@ export default function Footer() {
             <div className="text-xs text-stone-400 space-y-2">
               <p className="leading-relaxed">
                 {language === "ar"
-                  ? "حضرموت، المكلا، فوه، حي المساكن (بعد جامعة الأحقاف ومستوصف النور يمين الشارع العام)."
+                  ? "حضرموت، المكلا، وسط المدينة (عنوان تجريبي لأغراض العرض)."
                   : language === "id"
-                  ? "Hadhramaut, Mukalla, Fuwah, Distrik Al-Masaken (setelah Univ. Al-Ahgaff & Klinik Al-Noor, belok kanan)."
-                  : "Hadhramaut, Mukalla, Fuwa, Al-Masaken (after Al-Ahgaff Univ & Al-Noor Clinic, right turn)."}
+                  ? "Hadhramaut, Mukalla, City Center (alamat demo)."
+                  : "Hadhramaut, Mukalla, City Center (demo address)."}
               </p>
               <div className="flex items-center gap-2 pt-0.5">
                 <span className="font-outfit text-stone-400 text-[11px]">Plus Code:</span>
-                <span className="font-outfit font-bold text-stone-200 text-xs">F2QV+HPW</span>
+                <span className="font-outfit font-bold text-stone-200 text-xs">Demo</span>
               </div>
               <p className="font-outfit text-stone-200">
                 {language === "ar" ? "هاتف ثابت: " : language === "id" ? "Telepon Rumah: " : "Landline: "}
-                <a href="tel:05375561" dir="ltr" className="text-[#EFCC80] hover:underline font-bold">05-375561</a>
+                <a href="tel:05000000" dir="ltr" className="text-[#EFCC80] hover:underline font-bold">05-000000</a>
               </p>
               <p className="font-outfit text-stone-200">
                 {language === "ar" ? "واتساب وطلبات: " : language === "id" ? "WhatsApp & Pesanan: " : "WhatsApp & Mobile: "}
-                <a href="https://wa.me/967772207788" target="_blank" rel="noreferrer" dir="ltr" className="text-emerald-400 hover:underline font-bold">+967 772207788</a>
+                <a href="https://novixa.dev/ar/contact" target="_blank" rel="noreferrer" dir="ltr" className="text-emerald-400 hover:underline font-bold">+967 700 000 000</a>
               </p>
               <p className="font-outfit text-stone-300 text-[11px]">
                 {language === "ar" ? "شبكات إضافية: " : language === "id" ? "Nomor Lainnya: " : "Other lines: "}
-                <span>738227788 (YOU) · 711227788 (سبأفون)</span>
+                <span>700000001 (YOU) · 700000002 (سبأفون)</span>
               </p>
               <div className="pt-2">
                 <a
-                  href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
+                  href="https://www.google.com/maps/search/?api=1&query=Mukalla"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 text-[#EFCC80] hover:text-white font-bold transition-colors text-xs"
@@ -167,10 +167,10 @@ export default function Footer() {
         <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-stone-500">
           <p>
             {language === "ar"
-              ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} مطعم بيتزا هاوس المكلا (Pizza House).`
+              ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} مطعم بيتزا نوڤا (Pizza Nova).`
               : language === "id"
-              ? `Hak cipta dilindungi © ${new Date().getFullYear()} Restoran Pizza House Mukalla.`
-              : `All rights reserved © ${new Date().getFullYear()} Pizza House Mukalla.`}
+              ? `Hak cipta dilindungi © ${new Date().getFullYear()} Restoran Pizza Nova.`
+              : `All rights reserved © ${new Date().getFullYear()} Pizza Nova.`}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-1.5">
             <span>

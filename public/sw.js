@@ -1,4 +1,4 @@
-// Service Worker for Pizza House Mukalla (مطعم بيتزا هاوس المكلا)
+// Service Worker for Pizza Nova (مطعم بيتزا نوڤا)
 // Handles browser push & recurring order reminder notifications
 
 self.addEventListener('install', (event) => {
@@ -31,7 +31,7 @@ self.addEventListener('notificationclick', (event) => {
 
 self.addEventListener('push', (event) => {
   let data = {
-    title: '🍕 اشتقنا لك في بيتزا هاوس المكلا!',
+    title: '🍕 اشتقنا لك في بيتزا نوڤا!',
     body: 'حان وقت وجبتك المفضلة! اطلب مسبقاً الآن واستلمها ساخنة وطازجة بدون انتظار.',
     url: '/menu',
   };

@@ -132,10 +132,10 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           : "Ready for Pickup!",
       desc:
         language === "ar"
-          ? "الطلب ساخن وجاهز في فرع فوه"
+          ? "الطلب ساخن وجاهز في الفرع الرئيسي"
           : language === "id"
-          ? "Pesanan panas siap di cabang Fuwah"
-          : "Hot & ready at Fuwah branch",
+          ? "Pesanan panas siap di cabang City Center"
+          : "Hot & ready at City Center branch",
       isComplete: ["READY", "COMPLETED"].includes(order.status),
       isActive: order.status === "READY",
     },
@@ -182,7 +182,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
           <div>
             <span className="text-xs text-[#EFCC80] font-bold font-cairo">
-              {language === "ar" ? "بيتزا هاوس المكلا" : "Pizza House Mukalla"}
+              {language === "ar" ? "بيتزا نوڤا" : "Pizza Nova"}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white font-outfit">
               {order.orderNumber}
@@ -296,10 +296,10 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
           </div>
           <span className="text-xs font-bold text-[#EFCC80] font-cairo hidden sm:inline">
             {language === "ar"
-              ? "فرع فوه - حي المساكن"
+              ? "فرع وسط المدينة"
               : language === "id"
-              ? "Cabang Fuwah - Al-Masaken"
-              : "Fuwah Branch - Al-Masaken"}
+              ? "Cabang City Center - City Center"
+              : "City Center Branch - City Center"}
           </span>
         </div>
 
@@ -501,12 +501,12 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       {/* Direct Actions: WhatsApp, Order History, Reorder */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <a
-          href={`https://wa.me/967772207788?text=${encodeURIComponent(
+          href={`https://novixa.dev/ar/contact?text=${encodeURIComponent(
             language === "ar"
-              ? `مرحباً بيتزا هاوس، بخصوص طلبي رقم ${order.orderNumber}`
+              ? `مرحباً بيتزا نوڤا، بخصوص طلبي رقم ${order.orderNumber}`
               : language === "id"
-              ? `Halo Pizza House, mengenai pesanan saya nomor ${order.orderNumber}`
-              : `Hello Pizza House, regarding my order #${order.orderNumber}`
+              ? `Halo Pizza Nova, mengenai pesanan saya nomor ${order.orderNumber}`
+              : `Hello Pizza Nova, regarding my order #${order.orderNumber}`
           )}`}
           target="_blank"
           rel="noreferrer"

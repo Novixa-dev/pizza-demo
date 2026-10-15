@@ -109,7 +109,7 @@ export default function PwaInstallPrompt() {
           <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 shadow-md border border-[#EFCC80]/40 bg-[#0c0e12]">
             <Image
               src="/icon-192.png"
-              alt="Pizza House App Icon"
+              alt="Pizza Nova App Icon"
               width={40}
               height={40}
               className="w-full h-full object-cover"
@@ -118,7 +118,7 @@ export default function PwaInstallPrompt() {
           <div>
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-bold font-cairo text-white">
-                {language === "ar" ? "تطبيق بيتزا هاوس" : language === "id" ? "Aplikasi Pizza House" : "Pizza House App"}
+                {language === "ar" ? "تطبيق بيتزا نوڤا" : language === "id" ? "Aplikasi Pizza Nova" : "Pizza Nova App"}
               </span>
             </div>
             <p className="text-[11px] text-stone-300">

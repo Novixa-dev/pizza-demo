@@ -138,10 +138,10 @@ export default function OffersClientView({
   const handleShareWhatsApp = () => {
     const shareText =
       language === "ar"
-        ? `🔥 عروض وتخفيضات بيتزا هاوس المكلا الحصرية!\nاستخدم كود WELCOME10 للحصول على خصم 10%، بالإضافة لهدايا مجانية عند الطلب!\nتصفح العروض الآن:`
+        ? `🔥 عروض وتخفيضات بيتزا نوڤا الحصرية!\nاستخدم كود WELCOME10 للحصول على خصم 10%، بالإضافة لهدايا مجانية عند الطلب!\nتصفح العروض الآن:`
         : language === "id"
-        ? `🔥 Promo & Kupon Spesial Pizza House Mukalla!\nGunakan kupon WELCOME10 untuk diskon 10% dan dapatkan hadiah gratis!\nLihat promo lengkap:`
-        : `🔥 Exclusive Pizza House Mukalla Offers & Coupons!\nUse WELCOME10 for 10% discount plus free gifts on eligible orders!\nBrowse offers:`;
+        ? `🔥 Promo & Kupon Spesial Pizza Nova!\nGunakan kupon WELCOME10 untuk diskon 10% dan dapatkan hadiah gratis!\nLihat promo lengkap:`
+        : `🔥 Exclusive Pizza Nova Offers & Coupons!\nUse WELCOME10 for 10% discount plus free gifts on eligible orders!\nBrowse offers:`;
 
     const url = typeof window !== "undefined" ? window.location.href : "/offers";
     const fullMessage = encodeURIComponent(`${shareText}\n${url}`);

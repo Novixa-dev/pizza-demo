@@ -5,9 +5,9 @@ import manifest from "@/app/manifest";
 describe("Checkout Page Deep Review & PWA Icons Verification", () => {
   it("validates Yemeni mobile phone numbers correctly", () => {
     // Valid phone numbers
-    expect(YEMENI_PHONE_REGEX.test("772207788")).toBe(true);
-    expect(YEMENI_PHONE_REGEX.test("0772207788")).toBe(true);
-    expect(YEMENI_PHONE_REGEX.test("+967772207788")).toBe(true);
+    expect(YEMENI_PHONE_REGEX.test("700000000")).toBe(true);
+    expect(YEMENI_PHONE_REGEX.test("0700000000")).toBe(true);
+    expect(YEMENI_PHONE_REGEX.test("+967700000000")).toBe(true);
     expect(YEMENI_PHONE_REGEX.test("731234567")).toBe(true);
     expect(YEMENI_PHONE_REGEX.test("719876543")).toBe(true);
     expect(YEMENI_PHONE_REGEX.test("780123456")).toBe(true);
@@ -20,8 +20,8 @@ describe("Checkout Page Deep Review & PWA Icons Verification", () => {
 
   it("manifest provides modern PWA icons including 192, 512, and maskable purpose", () => {
     const pwaManifest = manifest();
-    expect(pwaManifest.name).toContain("بيتزا هاوس المكلا");
-    expect(pwaManifest.short_name).toBe("بيتزا هاوس");
+    expect(pwaManifest.name).toContain("بيتزا نوڤا");
+    expect(pwaManifest.short_name).toBe("بيتزا نوڤا");
     expect(pwaManifest.icons).toBeDefined();
     expect(pwaManifest.icons?.length).toBeGreaterThanOrEqual(3);
 

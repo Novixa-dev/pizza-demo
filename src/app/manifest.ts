@@ -3,9 +3,9 @@ import { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "بيتزا هاوس المكلا | Pizza House Mukalla",
-    short_name: "بيتزا هاوس",
-    description: "اطلب أشهى بيتزا إيطالية وفطائر طازجة مسبقاً بدون انتظار في المكلا - فوه حي المساكن",
+    name: "بيتزا نوڤا | Pizza Nova",
+    short_name: "بيتزا نوڤا",
+    description: "اطلب أشهى بيتزا إيطالية وفطائر طازجة مسبقاً بدون انتظار في المكلا - وسط المدينة",
     start_url: "/",
     scope: "/",
     display: "standalone",

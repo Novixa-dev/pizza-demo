@@ -110,9 +110,9 @@ export default function StoneOvenLiveView({
               </div>
               <p className="text-[11px] text-stone-400">
                 {language === "ar"
-                  ? "تُخبز عجينة بيتزا هاوس المخمرة طبيعياً على أرضية حجرية لتمنحك النكهة المقرمشة والطرية."
+                  ? "تُخبز عجينة بيتزا نوڤا المخمرة طبيعياً على أرضية حجرية لتمنحك النكهة المقرمشة والطرية."
                   : language === "id"
-                  ? "Adonan fermentasi alami Pizza House dipanggang langsung di atas batu untuk kerenyahan khas dan tekstur lembut."
+                  ? "Adonan fermentasi alami Pizza Nova dipanggang langsung di atas batu untuk kerenyahan khas dan tekstur lembut."
                   : "Baked directly on volcanic stone floor for our signature artisan crunch and airy crumb."}
               </p>
             </div>

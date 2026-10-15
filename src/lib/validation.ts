@@ -15,7 +15,7 @@ export const CreateOrderSchema = z.object({
     .trim()
     .refine((val) => YEMENI_PHONE_REGEX.test(val.replace(/\s+/g, "")), {
       message:
-        "يرجى إدخال رقم جوال يمني صالح (مثال: 772207788 أو 0772207788)",
+        "يرجى إدخال رقم جوال يمني صالح (مثال: 700000000 أو 0700000000)",
     })
     .transform((val) => {
       // Normalize to 9-digit standard format: 7xxxxxxxx

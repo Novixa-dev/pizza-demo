@@ -30,16 +30,16 @@ export default function LocationAndMapSection() {
 
   const loc = dict.location;
 
-  const MAP_URL = "https://maps.app.goo.gl/zre73sxKGyM27KvE6";
+  const MAP_URL = "https://www.google.com/maps/search/?api=1&query=Mukalla";
   const MAP_EMBED =
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.921954946859!2d49.044484499999996!3d14.489169599999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3de8e1986e8cba9d%3A0x375ce5e3654e4040!2z2KjZitiq2LLYpyDZh9in2YjYsw!5e0!3m2!1sen!2ssa!4v1791336550065!5m2!1sen!2ssa";
+    "https://www.google.com/maps?q=Mukalla,Yemen&output=embed";
   const DIRECTIONS_URL =
-    "https://www.google.com/maps/dir/?api=1&destination=14.4891696,49.0444845";
+    "https://www.google.com/maps/dir/?api=1&destination=14.5425,49.1242";
 
   const handleCopyAddress = async () => {
     try {
       await navigator.clipboard.writeText(
-        `مطعم بيتزا هاوس المكلا (Pizza House) - المكلا، فوه حي المساكن. موقعنا على الخريطة: ${MAP_URL} - هاتف: 05-375561 / واتساب: 772207788`
+        `مطعم بيتزا نوڤا (Pizza Nova) - المكلا، وسط المدينة. موقعنا على الخريطة: ${MAP_URL} - هاتف: 05-000000 / واتساب: 700000000`
       );
       setCopiedAddress(true);
       setTimeout(() => setCopiedAddress(false), 3000);
@@ -52,8 +52,8 @@ export default function LocationAndMapSection() {
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: "مطعم بيتزا هاوس المكلا | Pizza House Mukalla",
-          text: "موقع مطعم بيتزا هاوس على خرائط Google - تفضل بزيارتنا أو اطلب مسبقاً!",
+          title: "مطعم بيتزا نوڤا | Pizza Nova",
+          text: "موقع مطعم بيتزا نوڤا على خرائط Google - تفضل بزيارتنا أو اطلب مسبقاً!",
           url: MAP_URL,
         });
         return;
@@ -113,27 +113,27 @@ export default function LocationAndMapSection() {
   const phones = [
     {
       label: language === "ar" ? "الهاتف الثابت" : language === "id" ? "Telepon Rumah" : "Landline",
-      number: "05-375561",
-      href: "tel:05375561",
+      number: "05-000000",
+      href: "tel:05000000",
       network: "Landline",
     },
     {
       label: language === "ar" ? "واتساب ويمن موبايل" : language === "id" ? "WhatsApp / Yemen Mobile" : "WhatsApp / Yemen Mobile",
-      number: "772207788",
-      href: "https://wa.me/967772207788",
+      number: "700000000",
+      href: "https://novixa.dev/ar/contact",
       network: "WhatsApp & Mobile",
       primary: true,
     },
     {
       label: language === "ar" ? "شبكة يو (MTN)" : language === "id" ? "Jaringan YOU" : "YOU Network",
-      number: "738227788",
-      href: "tel:0738227788",
+      number: "700000001",
+      href: "tel:0700000001",
       network: "YOU",
     },
     {
       label: language === "ar" ? "شبكة سبأفون" : language === "id" ? "Jaringan Sabafon" : "Sabafon",
-      number: "711227788",
-      href: "tel:0711227788",
+      number: "700000002",
+      href: "tel:0700000002",
       network: "Sabafon",
     },
   ];
@@ -255,7 +255,7 @@ export default function LocationAndMapSection() {
               allowFullScreen={true}
               loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
-              title="Pizza House Mukalla Location Google Map"
+              title="Pizza Nova Location Google Map"
               className="w-full h-full grayscale-[0.05] contrast-[1.05]"
             />
 
@@ -267,14 +267,14 @@ export default function LocationAndMapSection() {
                 </div>
                 <div>
                   <h4 className="text-xs font-bold font-cairo">
-                    {language === "ar" ? "بيتزا هاوس | المكلا - فوه" : "Pizza House | Mukalla - Fuwa"}
+                    {language === "ar" ? "بيتزا نوڤا | المكلا - وسط المدينة" : "Pizza Nova | Mukalla - City Center"}
                   </h4>
                   <p className="text-[11px] text-stone-300 font-cairo">
                     {language === "ar"
-                      ? "حي المساكن - بعد جامعة الأحقاف ومستوصف النور"
+                      ? "وسط المدينة - عنوان تجريبي لأغراض العرض"
                       : language === "id"
-                      ? "Distrik Al-Masaken - dekat Univ. Al-Ahgaff & Klinik Al-Noor"
-                      : "Al-Masaken - near Al-Ahgaff Univ & Al-Noor"}
+                      ? "Pusat kota - alamat demo"
+                      : "City center - demo address"}
                   </p>
                 </div>
               </div>
@@ -299,10 +299,10 @@ export default function LocationAndMapSection() {
               </span>
               <span>
                 {language === "ar"
-                  ? "عند الدخول إلى فوه من الخط الدائري العام باتجاه حي المساكن، تجاوز مجمع كليات جامعة الأحقاف، وبمجرد الوصول إلى مستوصف النور انعطف يميناً مباشرة لتجد المطعم بواجهته المميزة ومواقف السيارات المريحة."
+                  ? "العنوان المعروض هنا تجريبي لأغراض العرض. عند تخصيص النظام لمطعمك نضع عنوانك الفعلي وإرشادات الوصول ونقطة موقعك على الخريطة."
                   : language === "id"
-                  ? "Saat memasuki Fuwah menuju distrik Al-Masaken, lewati kampus Universitas Al-Ahgaff, tepat setelah Klinik Al-Noor belok kanan langsung untuk menemukan Pizza House dengan tempat parkir yang nyaman."
-                  : "Entering Fuwa via the main artery towards Al-Masaken district, pass Al-Ahgaff University campus; right after Al-Noor Dispensary take an immediate right turn to find Pizza House with convenient parking."}
+                  ? "Alamat ini adalah contoh demo. Saat sistem disesuaikan untuk restoran Anda, kami menambahkan alamat, petunjuk arah, dan pin peta asli."
+                  : "This address is a demo placeholder. When the system is customized for your restaurant, we add your real address, directions and map pin."}
               </span>
             </div>
           </div>
@@ -317,7 +317,7 @@ export default function LocationAndMapSection() {
                 <Phone className="w-4 h-4 text-[#C69843]" />
                 <span>{loc.phonesList}</span>
               </h3>
-              <span className="text-[11px] text-stone-400 font-outfit">Mukalla, Fuwa</span>
+              <span className="text-[11px] text-stone-400 font-outfit">Mukalla, City Center</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -435,7 +435,7 @@ export default function LocationAndMapSection() {
         </div>
       </div>
 
-      {/* Official Instagram @pizza_house66 Showcase Banner */}
+      {/* Official Instagram @novixa Showcase Banner */}
       <div className="bg-gradient-to-r from-[#14181f] via-[#1a202c] to-[#14181f] text-white rounded-3xl p-6 sm:p-8 border border-amber-500/25 shadow-2xl relative overflow-hidden font-cairo">
         <div className="relative z-10 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#222934] pb-5">
@@ -459,7 +459,7 @@ export default function LocationAndMapSection() {
             </div>
 
             <a
-              href="https://www.instagram.com/pizza_house66/"
+              href="https://www.facebook.com/profile.php?id=61594556255556"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] hover:brightness-110 font-black px-6 py-3 rounded-2xl text-xs shadow-lg shadow-amber-950/40 transition-transform active:scale-95 whitespace-nowrap font-cairo"
@@ -475,7 +475,7 @@ export default function LocationAndMapSection() {
             {instagramPosts.map((post, idx) => (
               <a
                 key={idx}
-                href="https://www.instagram.com/pizza_house66/"
+                href="https://www.facebook.com/profile.php?id=61594556255556"
                 target="_blank"
                 rel="noreferrer"
                 className="group relative rounded-2xl overflow-hidden aspect-[4/3] border border-[#222934] bg-[#0c0e12] block hover:border-amber-500/40 transition-colors"

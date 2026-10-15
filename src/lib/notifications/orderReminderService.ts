@@ -1,5 +1,5 @@
 /**
- * Recurring Order Notification Service for Pizza House Mukalla
+ * Recurring Order Notification Service for Pizza Nova
  * Manages browser push notification permissions, inactivity tracking,
  * favorite meal detection, and reminders when customers haven't ordered for X days (e.g. 2 weeks).
  */
@@ -217,7 +217,7 @@ export function checkReminderEligibility(prefs?: ReminderPreferences): {
     isDue,
     daysSinceLastOrder,
     thresholdDays: current.intervalDays,
-    favoriteMeal: current.favoriteMeal || "بيتزا هاوس المفضلة",
+    favoriteMeal: current.favoriteMeal || "بيتزا نوڤا المفضلة",
   };
 }
 
@@ -253,10 +253,10 @@ export async function triggerDueReminder(
 
   const title =
     language === "ar"
-      ? `🍕 اشتقنا لك في بيتزا هاوس المكلا!`
+      ? `🍕 اشتقنا لك في بيتزا نوڤا!`
       : language === "id"
-      ? `🍕 Kami Rindu Anda di Pizza House Mukalla!`
-      : `🍕 Pizza House Mukalla: We Miss You!`;
+      ? `🍕 Kami Rindu Anda di Pizza Nova!`
+      : `🍕 Pizza Nova: We Miss You!`;
 
   const body =
     language === "ar"

@@ -4,10 +4,10 @@ import { CreateOrderSchema, YEMENI_PHONE_REGEX } from "@/lib/validation";
 describe("Validation Engine", () => {
   it("accepts valid Yemeni mobile formats across providers (Yemen Mobile, YOU, Sabafon, Y)", () => {
     const validNumbers = [
-      "772207788",      // 9-digit standard
-      "0772207788",     // Leading 0
-      "+967772207788",  // International +967
-      "00967772207788", // International 00967
+      "700000000",      // 9-digit standard
+      "0700000000",     // Leading 0
+      "+967700000000",  // International +967
+      "00967700000000", // International 00967
       "731234567",      // YOU (MTN)
       "0731234567",     // YOU with leading 0
       "719876543",      // Sabafon
@@ -25,7 +25,7 @@ describe("Validation Engine", () => {
       "1234567",        // Too short
       "96777220",       // Incomplete
       "022345678",      // Landline/non-mobile prefix 02
-      "05375561",       // Mukalla landline (not mobile)
+      "05000000",       // Mukalla landline (not mobile)
       "061234567",      // Invalid prefix
       "abcdefgh",       // Non-numeric
       "971501234567",   // UAE number
@@ -39,7 +39,7 @@ describe("Validation Engine", () => {
   it("validates and normalizes valid order payload", () => {
     const rawPayload = {
       customerName: "محمد العمودي",
-      customerPhone: "0772207788",
+      customerPhone: "0700000000",
       pickupMode: "ASAP",
       paymentMethod: "PAY_AT_PICKUP",
       items: [
@@ -55,8 +55,8 @@ describe("Validation Engine", () => {
     const parsed = CreateOrderSchema.safeParse(rawPayload);
     expect(parsed.success).toBe(true);
     if (parsed.success) {
-      // Should normalize 0772207788 to 772207788
-      expect(parsed.data.customerPhone).toBe("772207788");
+      // Should normalize 0700000000 to 700000000
+      expect(parsed.data.customerPhone).toBe("700000000");
       expect(parsed.data.customerName).toBe("محمد العمودي");
       expect(parsed.data.items[0].quantity).toBe(2);
     }

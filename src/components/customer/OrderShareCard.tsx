@@ -87,15 +87,15 @@ export default function OrderShareCard({
       : "";
 
     if (language === "ar") {
-      return `🍕 تابع معي تجهيز طلبنا من بيتزا هاوس المكلا (${orderNumber})!
+      return `🍕 تابع معي تجهيز طلبنا من بيتزا نوڤا (${orderNumber})!
 الحالة الحالية: ${statusText}${timeText}
 رابط المتابعة المباشر:`;
     } else if (language === "id") {
-      return `🍕 Lacak bersama proses pesanan kami dari Pizza House Mukalla (${orderNumber})!
+      return `🍕 Lacak bersama proses pesanan kami dari Pizza Nova (${orderNumber})!
 Status Terkini: ${statusText}${timeText}
 Tautan pelacakan langsung:`;
     } else {
-      return `🍕 Track our Pizza House Mukalla order (${orderNumber})!
+      return `🍕 Track our Pizza Nova order (${orderNumber})!
 Current Status: ${statusText}${timeText}
 Direct tracking link:`;
     }
@@ -129,7 +129,7 @@ Direct tracking link:`;
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: `بيتزا هاوس المكلا - تتبع الطلب ${orderNumber}`,
+          title: `بيتزا نوڤا - تتبع الطلب ${orderNumber}`,
           text: text,
           url: url,
         });

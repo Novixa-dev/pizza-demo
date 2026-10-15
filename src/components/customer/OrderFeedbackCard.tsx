@@ -182,10 +182,10 @@ export default function OrderFeedbackCard({
               </div>
               <p className="text-xs text-stone-300">
                 {language === "ar"
-                  ? "رأيك يساهم في الحفاظ على أعلى معايير الجودة لبيتزا هاوس بالمكلا."
+                  ? "رأيك يساهم في الحفاظ على أعلى معايير الجودة لبيتزا نوڤا بالمكلا."
                   : language === "id"
-                  ? "Ulasan Anda membantu menjaga standar mutu tertinggi dan layanan cepat Pizza House Mukalla."
-                  : "Your review helps Pizza House Mukalla maintain top quality and fast service."}
+                  ? "Ulasan Anda membantu menjaga standar mutu tertinggi dan layanan cepat Pizza Nova."
+                  : "Your review helps Pizza Nova maintain top quality and fast service."}
               </p>
             </div>
           </div>
@@ -447,9 +447,9 @@ export default function OrderFeedbackCard({
           <div className="flex justify-between items-center text-[11px] text-stone-500 px-1">
             <span>
               {language === "ar"
-                ? "تصل الملاحظات مباشرة إلى إدارة بيتزا هاوس"
+                ? "تصل الملاحظات مباشرة إلى إدارة بيتزا نوڤا"
                 : language === "id"
-                ? "Masukan langsung diterima oleh manajemen Pizza House"
+                ? "Masukan langsung diterima oleh manajemen Pizza Nova"
                 : "Feedback goes directly to management"}
             </span>
             <span className="font-outfit">{comment.length}/500</span>

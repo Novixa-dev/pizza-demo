@@ -191,7 +191,7 @@ export default function TestimonialsSection({
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-1.5">
                         <h4 className="text-sm font-bold text-white font-cairo">
-                          {item.customerName || (language === "ar" ? "عميل بيتزا هاوس" : language === "id" ? "Pelanggan Pizza House" : "Pizza House Patron")}
+                          {item.customerName || (language === "ar" ? "عميل بيتزا نوڤا" : language === "id" ? "Pelanggan Pizza Nova" : "Pizza Nova Patron")}
                         </h4>
                         <span title={t.verifiedPatron} className="inline-flex">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -201,7 +201,7 @@ export default function TestimonialsSection({
                       <div className="text-[11px] text-stone-400 flex items-center gap-1.5 font-cairo">
                         <span>{formatRelativeTime(item.createdAt)}</span>
                         <span>·</span>
-                        <span>{language === "ar" ? "فوه المساكن" : language === "id" ? "Distrik Fuwah" : "Fuwa District"}</span>
+                        <span>{language === "ar" ? "وسط المدينة" : language === "id" ? "Pusat kota" : "City Center"}</span>
                       </div>
                     </div>
 

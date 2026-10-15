@@ -108,10 +108,10 @@ export default function QuickReorderHeroCard() {
                   ? `Pesanan terakhir Anda ${lastOrderDays} hari lalu · Dipanggang batu oven tanpa menunggu`
                   : `Last ordered ${lastOrderDays} days ago · Stone baked with zero wait`
                 : language === "ar"
-                ? "الأكثر طلباً وتقييماً في فرع فوه المساكن"
+                ? "الأكثر طلباً وتقييماً في فرع وسط المدينة"
                 : language === "id"
-                ? "Terlaris dan terfavorit di cabang Fuwah Al-Masaken"
-                : "Best-seller in Fuwah Al-Masaken"}
+                ? "Terlaris dan terfavorit di cabang City Center"
+                : "Best-seller in City Center"}
             </span>
           </p>
         </div>

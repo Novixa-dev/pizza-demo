@@ -4,7 +4,7 @@ import { siteMetadata, jsonLdRestaurantData } from "@/lib/seoConfig";
 describe("Theme, Design & SEO Comprehensive Verification", () => {
   it("defines robust OpenGraph and SEO metadata in root layout", () => {
     expect(siteMetadata.title).toBeDefined();
-    expect(String(siteMetadata.title)).toContain("بيتزا هاوس المكلا");
+    expect(String(siteMetadata.title)).toContain("بيتزا نوڤا");
     expect(siteMetadata.description).toBeDefined();
     expect(siteMetadata.openGraph).toBeDefined();
     expect((siteMetadata.openGraph as any)?.type).toBe("website");
@@ -18,17 +18,17 @@ describe("Theme, Design & SEO Comprehensive Verification", () => {
     expect(siteMetadata.metadataBase?.toString()).toBe("https://pizza-house.novixa.dev/");
   });
 
-  it("includes valid keywords matching Mukalla and Pizza House branding", () => {
+  it("includes valid keywords matching Mukalla and Pizza Nova branding", () => {
     const keywords = (siteMetadata.keywords as string[]) || [];
-    expect(keywords).toContain("بيتزا هاوس المكلا");
-    expect(keywords).toContain("حي المساكن فوه");
+    expect(keywords).toContain("بيتزا نوڤا");
+    expect(keywords).toContain("مطعم بيتزا المكلا");
     expect(keywords.some((k) => k.toLowerCase().includes("pizza"))).toBe(true);
   });
 
   it("validates Schema.org JSON-LD structured data coordinates and currency", () => {
-    expect(jsonLdRestaurantData.name).toContain("Pizza House");
-    expect(jsonLdRestaurantData.geo.latitude).toBeCloseTo(14.4892, 2);
-    expect(jsonLdRestaurantData.geo.longitude).toBeCloseTo(49.0445, 2);
+    expect(jsonLdRestaurantData.name).toContain("Pizza Nova");
+    expect(jsonLdRestaurantData.geo.latitude).toBeCloseTo(14.5425, 2);
+    expect(jsonLdRestaurantData.geo.longitude).toBeCloseTo(49.1242, 2);
     expect(jsonLdRestaurantData.currenciesAccepted).toBe("YER");
     // Self-declared review aggregates violate Google's review-snippet policy; ratings come from real feedback only.
     expect("aggregateRating" in jsonLdRestaurantData).toBe(false);

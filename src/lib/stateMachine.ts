@@ -1,5 +1,5 @@
 /**
- * Pizza House Order State Machine
+ * Pizza Nova Order State Machine
  * Authoritative, deterministic lifecycle and transition rules.
  */
 
