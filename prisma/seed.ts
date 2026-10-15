@@ -72,6 +72,8 @@ async function main() {
           },
         });
         console.log("Demo mode: restaurant profile set to neutral demo values.");
+        // Rename the original restaurant's brand wherever it survives in the
+        // already-seeded catalog (products, categories, options, coupons, gifts).
         const renamed = await neutralizeLegacyBrandInCatalog();
         console.log(`Demo mode: removed the legacy restaurant name from ${renamed} catalog row(s).`);
       }
