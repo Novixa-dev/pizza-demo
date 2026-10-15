@@ -110,7 +110,7 @@ export default function FloatingCartBar() {
 
           {/* 3. WhatsApp Ordering */}
           <a
-            href="https://novixa.dev/ar/contact"
+            href="https://wa.me/967776248526"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center gap-1 bg-emerald-950/80 text-emerald-300 py-2.5 px-3 rounded-xl text-xs font-bold border border-emerald-500/30 active:scale-95 transition-all font-outfit"

@@ -39,7 +39,7 @@ export default function LocationAndMapSection() {
   const handleCopyAddress = async () => {
     try {
       await navigator.clipboard.writeText(
-        `مطعم بيتزا نوڤا (Pizza Nova) - المكلا، وسط المدينة. موقعنا على الخريطة: ${MAP_URL} - هاتف: 05-000000 / واتساب: 700000000`
+        `مطعم بيتزا نوڤا (Pizza Nova) - المكلا، وسط المدينة. موقعنا على الخريطة: ${MAP_URL} - هاتف: 05-000000 / واتساب: 776248526`
       );
       setCopiedAddress(true);
       setTimeout(() => setCopiedAddress(false), 3000);
@@ -119,8 +119,8 @@ export default function LocationAndMapSection() {
     },
     {
       label: language === "ar" ? "واتساب ويمن موبايل" : language === "id" ? "WhatsApp / Yemen Mobile" : "WhatsApp / Yemen Mobile",
-      number: "700000000",
-      href: "https://novixa.dev/ar/contact",
+      number: "776248526",
+      href: "https://wa.me/967776248526",
       network: "WhatsApp & Mobile",
       primary: true,
     },

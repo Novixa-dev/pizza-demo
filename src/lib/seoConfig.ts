@@ -155,7 +155,7 @@ export const jsonLdRestaurantData = {
     },
     {
       "@type": "ContactPoint",
-      telephone: "+967-700000000",
+      telephone: "+967-776248526",
       contactType: "orders and reservations (WhatsApp)",
       areaServed: "YE",
       availableLanguage: ["Arabic", "English"],

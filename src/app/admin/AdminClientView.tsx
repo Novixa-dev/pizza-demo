@@ -108,7 +108,7 @@ export default function AdminClientView({
     restaurant?.slotCapacityLimit || 6
   );
   const [phone, setPhone] = useState(restaurant?.phone || "05000000");
-  const [whatsapp, setWhatsapp] = useState(restaurant?.whatsapp || "700000000");
+  const [whatsapp, setWhatsapp] = useState(restaurant?.whatsapp || "776248526");
   const [addressAr, setAddressAr] = useState(
     restaurant?.addressAr || "المكلا - وسط المدينة"
   );
@@ -1256,7 +1256,7 @@ export default function AdminClientView({
                   بنك الكريمي (حاسب)
                 </span>
                 <span className="font-outfit font-black text-white block text-sm">
-                  PH-700000000
+                  PH-776248526
                 </span>
                 <span className="text-[11px] text-stone-400">باسم: بيتزا نوڤا</span>
               </div>

@@ -501,7 +501,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
       {/* Direct Actions: WhatsApp, Order History, Reorder */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <a
-          href={`https://novixa.dev/ar/contact?text=${encodeURIComponent(
+          href={`https://wa.me/967776248526?text=${encodeURIComponent(
             language === "ar"
               ? `مرحباً بيتزا نوڤا، بخصوص طلبي رقم ${order.orderNumber}`
               : language === "id"

@@ -1419,7 +1419,7 @@ export default function HistoryClientView() {
 
                         {/* WhatsApp support */}
                         <a
-                          href={`https://novixa.dev/ar/contact?text=${encodeURIComponent(
+                          href={`https://wa.me/967776248526?text=${encodeURIComponent(
                             language === "ar"
                               ? `مرحباً مطعم بيتزا نوڤا، بخصوص طلبي رقم ${order.orderNumber} باسم ${order.customerName}`
                               : language === "id"

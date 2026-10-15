@@ -11,6 +11,21 @@ async function main() {
       where: { slug: "pizza-house-mukalla" },
     });
     if (existingRestaurant) {
+      // Public demo: keep the restaurant profile neutral (no real business identity).
+      if (process.env.NEXT_PUBLIC_DEMO_MODE !== "false") {
+        await prisma.restaurant.update({
+          where: { id: existingRestaurant.id },
+          data: {
+            nameAr: "بيتزا نوڤا",
+            nameEn: "Pizza Nova",
+            phone: "05000000",
+            whatsapp: "+967776248526",
+            addressAr: "المكلا - وسط المدينة - عنوان تجريبي لأغراض العرض",
+            addressEn: "Mukalla, City Center (demo address)",
+          },
+        });
+        console.log("Demo mode: restaurant profile set to neutral demo values.");
+      }
       console.log("Production data already exists; skipping seed without changes.");
       return;
     }
@@ -38,9 +53,9 @@ async function main() {
       nameEn: "Pizza Nova",
       slug: "pizza-house-mukalla",
       phone: "05000000",
-      whatsapp: "+967700000000",
+      whatsapp: "+967776248526",
       addressAr: "المكلا - وسط المدينة - عنوان تجريبي لأغراض العرض",
-      addressEn: "Mukalla, City Center District, Near the university",
+      addressEn: "Mukalla, City Center (demo address)",
       currency: "YER",
       defaultPrepDuration: 15,
       slotCapacityMax: 8,
@@ -872,7 +887,7 @@ async function main() {
   await prisma.customerLoyalty.createMany({
     data: [
       {
-        customerPhone: "700000000",
+        customerPhone: "776248526",
         ordersCount: 5,
         totalSpent: 32000,
         rewardsEarned: 1,

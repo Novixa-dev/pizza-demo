@@ -482,13 +482,13 @@ export default function Header() {
                 <span>05000000</span>
               </a>
               <a
-                href="https://novixa.dev/ar/contact"
+                href="https://wa.me/967776248526"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/50 border border-emerald-500/30 text-emerald-300 font-bold text-xs active:scale-95 transition-all font-outfit"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
-                <span>700000000</span>
+                <span>776248526</span>
               </a>
             </div>
           </div>

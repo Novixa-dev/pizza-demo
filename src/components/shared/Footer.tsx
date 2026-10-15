@@ -54,14 +54,14 @@ export default function Footer() {
                 <span>@novixa</span>
               </a>
               <a
-                href="https://novixa.dev/ar/contact"
+                href="https://wa.me/967776248526"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 bg-[#14181f] hover:bg-[#1c222c] text-stone-300 hover:text-white px-3 py-1.5 rounded-xl border border-white/10 hover:border-emerald-500/30 transition-all text-xs font-bold font-outfit"
-                aria-label="WhatsApp 700000000"
+                aria-label="WhatsApp 776248526"
               >
                 <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <span>700000000</span>
+                <span>776248526</span>
               </a>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function Footer() {
               </p>
               <p className="font-outfit text-stone-200">
                 {language === "ar" ? "واتساب وطلبات: " : language === "id" ? "WhatsApp & Pesanan: " : "WhatsApp & Mobile: "}
-                <a href="https://novixa.dev/ar/contact" target="_blank" rel="noreferrer" dir="ltr" className="text-emerald-400 hover:underline font-bold">+967 700 000 000</a>
+                <a href="https://wa.me/967776248526" target="_blank" rel="noreferrer" dir="ltr" className="text-emerald-400 hover:underline font-bold">+967 776 248 526</a>
               </p>
               <p className="font-outfit text-stone-300 text-[11px]">
                 {language === "ar" ? "شبكات إضافية: " : language === "id" ? "Nomor Lainnya: " : "Other lines: "}

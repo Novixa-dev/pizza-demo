@@ -58,7 +58,7 @@ describe("Location, Google Maps, Instagram & SEO Suite", () => {
     expect(locAr.instagramHandle).toBe("@novixa");
     expect(locAr.plusCode).toBe("Mukalla, Yemen");
     expect(locAr.landline).toBe("05-000000");
-    expect(locAr.whatsapp).toBe("700000000");
+    expect(locAr.whatsapp).toBe("776248526");
     expect(locAr.familyHall).toBeTruthy();
     expect(locAr.youthHall).toBeTruthy();
   });
@@ -69,7 +69,7 @@ describe("Location, Google Maps, Instagram & SEO Suite", () => {
     expect(locEn.instagramHandle).toBe("@novixa");
     expect(locEn.plusCode).toBe("Mukalla, Yemen");
     expect(locEn.landline).toBe("05-000000");
-    expect(locEn.whatsapp).toBe("700000000");
+    expect(locEn.whatsapp).toBe("776248526");
     expect(locEn.familyHall).toBeTruthy();
     expect(locEn.youthHall).toBeTruthy();
   });
