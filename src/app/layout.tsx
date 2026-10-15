@@ -8,6 +8,7 @@ import FloatingCartBar from "@/components/shared/FloatingCartBar";
 import RealtimeOrderToaster from "@/components/shared/RealtimeOrderToaster";
 import RecurringReminderBanner from "@/components/customer/RecurringReminderBanner";
 import PwaInstallPrompt from "@/components/shared/PwaInstallPrompt";
+import DemoBanner from "@/components/shared/DemoBanner";
 import { siteMetadata, siteViewport, jsonLdRestaurantData } from "@/lib/seoConfig";
 
 export const metadata: Metadata = siteMetadata;
@@ -34,6 +35,7 @@ export default function RootLayout({
       </head>
       <body className="font-cairo antialiased min-h-screen flex flex-col selection:bg-pizza-500 selection:text-white">
         <AppProvider>
+          <DemoBanner />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

@@ -98,7 +98,7 @@ export default function FloatingCartBar() {
 
           {/* 2. Map & Location */}
           <a
-            href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
+            href="https://www.google.com/maps/search/?api=1&query=Mukalla"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center gap-1 bg-[#141822] hover:bg-[#1a202c] text-stone-200 py-2.5 px-3 rounded-xl text-xs font-bold border border-white/10 active:scale-95 transition-all"
@@ -110,7 +110,7 @@ export default function FloatingCartBar() {
 
           {/* 3. WhatsApp Ordering */}
           <a
-            href="https://wa.me/967772207788"
+            href="https://wa.me/967776248526"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center gap-1 bg-emerald-950/80 text-emerald-300 py-2.5 px-3 rounded-xl text-xs font-bold border border-emerald-500/30 active:scale-95 transition-all font-outfit"
@@ -122,9 +122,9 @@ export default function FloatingCartBar() {
 
           {/* 4. Direct Call */}
           <a
-            href="tel:05375561"
+            href="tel:05000000"
             className="flex items-center justify-center p-2.5 bg-[#141822] text-[#EFCC80] hover:text-white rounded-xl text-xs border border-white/10 active:scale-95 transition-all"
-            title="Call 05375561"
+            title="Call 05000000"
           >
             <Phone className="w-3.5 h-3.5 text-[#C69843]" />
           </a>

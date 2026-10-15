@@ -109,7 +109,7 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
   const handleStatusChange = async (orderId: string, nextStatus: any) => {
     setIsUpdating(orderId);
     playChime();
-    await updateOrderStatusAction(orderId, nextStatus, "مطبخ بيتزا هاوس");
+    await updateOrderStatusAction(orderId, nextStatus, "مطبخ بيتزا نوڤا");
     router.refresh();
     setIsUpdating(null);
   };

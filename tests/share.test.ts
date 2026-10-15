@@ -32,8 +32,8 @@ describe("Order Tracking Social Media Share System", () => {
 
     const text =
       language === "ar"
-        ? `🍕 تابع معي تجهيز طلبنا من بيتزا هاوس المكلا (${order.orderNumber})!\nالحالة الحالية: ${statusLabel} | موعد الاستلام: ${order.pickupTime}\nرابط المتابعة المباشر:`
-        : `🍕 Track our Pizza House Mukalla order (${order.orderNumber})!\nCurrent Status: ${statusLabel}\nDirect tracking link:`;
+        ? `🍕 تابع معي تجهيز طلبنا من بيتزا نوڤا (${order.orderNumber})!\nالحالة الحالية: ${statusLabel} | موعد الاستلام: ${order.pickupTime}\nرابط المتابعة المباشر:`
+        : `🍕 Track our Pizza Nova order (${order.orderNumber})!\nCurrent Status: ${statusLabel}\nDirect tracking link:`;
 
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${text} ${directUrl}`)}`;
     const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(directUrl)}&text=${encodeURIComponent(text)}`;
@@ -50,7 +50,7 @@ describe("Order Tracking Social Media Share System", () => {
     const data = generateShareData(sampleOrder, "https://pizzahouse.ye", "ar");
     expect(data.text).toContain("#PH-2048");
     expect(data.text).toContain("في الفرن");
-    expect(data.text).toContain("بيتزا هاوس المكلا");
+    expect(data.text).toContain("بيتزا نوڤا");
   });
 
   it("formats WhatsApp share link correctly with encoded text and tracking URL", () => {

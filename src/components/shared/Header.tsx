@@ -144,7 +144,7 @@ export default function Header() {
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-lg sm:text-2xl font-black text-white font-cairo">
-                  {language === "ar" ? "بيتزا هاوس" : "Pizza House"}
+                  {language === "ar" ? "بيتزا نوڤا" : "Pizza Nova"}
                 </span>
                 <span className="text-[10px] bg-gradient-to-b from-[#EFCC80] to-[#C69843] text-[#2C1A04] px-1.5 py-0.5 rounded-full font-bold font-cairo">
                   {language === "ar" ? "المكلا" : "Mukalla"}
@@ -196,7 +196,7 @@ export default function Header() {
 
             {/* Quick Call on mobile */}
             <a
-              href="tel:05375561"
+              href="tel:05000000"
               className="p-2 sm:hidden rounded-full bg-[#141720] border border-white/10 text-[#EFCC80] hover:bg-[#1a202c] transition-colors"
               title="اتصال فوري"
               aria-label="Call"
@@ -382,10 +382,10 @@ export default function Header() {
           {/* Left: Support Phone Line (Matches Reference: پشتیبانی: ۰۲۱۸۸۲۳...) */}
           <div className="flex items-center gap-2 text-stone-300">
             <a
-              href="tel:05375561"
+              href="tel:05000000"
               className="flex items-center gap-1.5 hover:text-[#EFCC80] transition-colors font-semibold font-outfit"
             >
-              <span>{language === "ar" ? "خدمة العملاء: 05375561" : language === "id" ? "Layanan Pelanggan: 05375561" : "Support: 05375561"}</span>
+              <span>{language === "ar" ? "خدمة العملاء: 05000000" : language === "id" ? "Layanan Pelanggan: 05000000" : "Support: 05000000"}</span>
               <PhoneCall className="w-3.5 h-3.5 text-[#C69843]" />
             </a>
           </div>
@@ -475,20 +475,20 @@ export default function Header() {
             {/* Quick 1-tap Calling & WhatsApp Buttons */}
             <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/5">
               <a
-                href="tel:05375561"
+                href="tel:05000000"
                 className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-[#1a202c] hover:bg-[#222a3a] border border-amber-500/30 text-[#EFCC80] font-bold text-xs active:scale-95 transition-all font-outfit"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-[#C69843]" />
-                <span>05375561</span>
+                <span>05000000</span>
               </a>
               <a
-                href="https://wa.me/967772207788"
+                href="https://wa.me/967776248526"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/50 border border-emerald-500/30 text-emerald-300 font-bold text-xs active:scale-95 transition-all font-outfit"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
-                <span>772207788</span>
+                <span>776248526</span>
               </a>
             </div>
           </div>
@@ -779,7 +779,7 @@ export default function Header() {
           {/* 8. Mobile Quick Shortcuts: Google Maps & Instagram */}
           <div className="grid grid-cols-2 gap-2">
             <a
-              href="https://maps.app.goo.gl/zre73sxKGyM27KvE6"
+              href="https://www.google.com/maps/search/?api=1&query=Mukalla"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#141822] hover:bg-[#1a202c] text-stone-300 hover:text-[#EFCC80] text-xs font-semibold border border-white/10 active:scale-95 transition-all font-cairo"
@@ -788,13 +788,13 @@ export default function Header() {
               <span>{language === "ar" ? "خرائط Google" : language === "id" ? "Google Maps" : "Google Maps"}</span>
             </a>
             <a
-              href="https://www.instagram.com/pizza_house66/"
+              href="https://www.facebook.com/profile.php?id=61594556255556"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-[#141822] hover:bg-[#1a202c] text-stone-300 hover:text-rose-400 text-xs font-semibold border border-white/10 active:scale-95 transition-all font-outfit"
             >
               <span className="text-rose-400">📸</span>
-              <span>@pizza_house66</span>
+              <span>@novixa</span>
             </a>
           </div>
 

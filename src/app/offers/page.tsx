@@ -4,18 +4,18 @@ import { getActiveCouponsAction, getAutomaticGiftsAction } from "@/app/actions/c
 import OffersClientView from "./OffersClientView";
 
 export const metadata: Metadata = {
-  title: "العروض والكوبونات الحصرية | بيتزا هاوس المكلا",
-  description: "اكتشف أحدث كوبونات الخصم، الهدايا المجانية التلقائية، وبرنامج مكافآت الزبون الوفي في مطعم بيتزا هاوس فوه المكلا. خصومات تصل إلى 10% وهدايا مع كل طلب كبير.",
+  title: "العروض والكوبونات الحصرية | بيتزا نوڤا",
+  description: "اكتشف أحدث كوبونات الخصم، الهدايا المجانية التلقائية، وبرنامج مكافآت الزبون الوفي في مطعم بيتزا نوڤا وسط المدينة المكلا. خصومات تصل إلى 10% وهدايا مع كل طلب كبير.",
   keywords: [
-    "عروض بيتزا هاوس",
+    "عروض بيتزا نوڤا",
     "كوبونات بيتزا المكلا",
-    "خصم بيتزا هاوس فوه",
+    "خصم بيتزا نوڤا وسط المدينة",
     "هدايا مجانية بيتزا",
-    "Pizza House Mukalla Offers",
-    "Promo Pizza House Hadramout",
+    "Pizza Nova Offers",
+    "Promo Pizza Nova Hadramout",
   ],
   openGraph: {
-    title: "عروض وكوبونات بيتزا هاوس المكلا | تخفيضات وهدايا مجانية",
+    title: "عروض وكوبونات بيتزا نوڤا | تخفيضات وهدايا مجانية",
     description: "استمتع بأقوى العروض: كوبون ترحيبي 10%، هدايا تلقائية عند الوصول لمبلغ 12,000 ر.ي، ومكافأة كل 5 طلبات!",
     type: "website",
     locale: "ar_YE",

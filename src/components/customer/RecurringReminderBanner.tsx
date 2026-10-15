@@ -63,10 +63,10 @@ export default function RecurringReminderBanner() {
               <div>
                 <span className="text-xs font-black text-[#EFCC80] font-cairo">
                   {language === "ar"
-                    ? "اشتقنا لك في بيتزا هاوس!"
+                    ? "اشتقنا لك في بيتزا نوڤا!"
                     : language === "id"
-                    ? "Kami Rindu Anda di Pizza House!"
-                    : "We Miss You at Pizza House!"}
+                    ? "Kami Rindu Anda di Pizza Nova!"
+                    : "We Miss You at Pizza Nova!"}
                 </span>
               </div>
 

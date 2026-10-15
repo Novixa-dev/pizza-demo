@@ -1082,10 +1082,10 @@ export default function HomeClientView({
           {[0, 1].map((copy) => (
             <span key={copy} className="flex items-center gap-4">
               {(language === "ar"
-                ? ["بيتزا هاوس المكلا", "عجين طازج يومياً", "مخبوزة على الحجر", "اطلب مسبقاً واستلم بلا انتظار", "موزاريلا إيطالية أصلية"]
+                ? ["بيتزا نوڤا", "عجين طازج يومياً", "مخبوزة على الحجر", "اطلب مسبقاً واستلم بلا انتظار", "موزاريلا إيطالية أصلية"]
                 : language === "id"
-                ? ["Pizza House Mukalla", "Adonan Segar Setiap Hari", "Dipanggang di Batu", "Pesan Dulu, Ambil Tanpa Antre", "Mozzarella Italia Asli"]
-                : ["Pizza House Mukalla", "Fresh Dough Daily", "Stone-Baked", "Pre-order, Skip the Wait", "Authentic Italian Mozzarella"]
+                ? ["Pizza Nova", "Adonan Segar Setiap Hari", "Dipanggang di Batu", "Pesan Dulu, Ambil Tanpa Antre", "Mozzarella Italia Asli"]
+                : ["Pizza Nova", "Fresh Dough Daily", "Stone-Baked", "Pre-order, Skip the Wait", "Authentic Italian Mozzarella"]
               ).map((phrase) => (
                 <React.Fragment key={phrase}>
                   <span>{phrase}</span>
@@ -1108,12 +1108,12 @@ export default function HomeClientView({
               <Instagram className="w-4 h-4 fill-current" />
             </div>
             <span className="font-bold text-white font-cairo">
-              @pizza_house66 • معرض صور بيتزا هاوس
+              @novixa • معرض صور بيتزا نوڤا
             </span>
           </div>
 
           <a
-            href="https://www.instagram.com/pizza_house66/"
+            href="https://www.facebook.com/profile.php?id=61594556255556"
             target="_blank"
             rel="noreferrer"
             className="text-xs sm:text-sm font-bold text-[#EFCC80] hover:text-white transition-colors flex items-center gap-1.5 group font-cairo"
@@ -1153,7 +1153,7 @@ export default function HomeClientView({
           ].map((item, i) => (
             <a
               key={i}
-              href="https://www.instagram.com/pizza_house66/"
+              href="https://www.facebook.com/profile.php?id=61594556255556"
               target="_blank"
               rel="noreferrer"
               className="relative aspect-square overflow-hidden group bg-[#14181f] rounded-2xl border border-white/10 hover:border-[#EFCC80]/60 shadow-lg hover:shadow-[0_0_20px_rgba(239,204,128,0.25)] transition-all duration-300"

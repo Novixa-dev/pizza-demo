@@ -34,7 +34,7 @@ export default function HeroSection({
 
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [orderType, setOrderType] = useState<"delivery" | "pickup">("delivery");
-  const [address, setAddress] = useState("المكلا · فوه");
+  const [address, setAddress] = useState("المكلا · وسط المدينة");
   const [selectedTime, setSelectedTime] = useState<"asap" | "later">("asap");
   const [addedItemMessage, setAddedItemMessage] = useState<string | null>(null);
 
@@ -154,7 +154,7 @@ export default function HeroSection({
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero-oven.webp"
-            alt={language === "ar" ? "بيتزا هاوس - فرن حجري" : "Pizza House - Stone Oven"}
+            alt={language === "ar" ? "بيتزا نوڤا - فرن حجري" : "Pizza Nova - Stone Oven"}
             fill
             priority
             sizes="100vw"
@@ -330,10 +330,10 @@ export default function HeroSection({
                       className="w-full bg-[#0b0c10]/80 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-gray-400 focus:outline-none focus:border-[#C69843] font-cairo"
                       placeholder={
                         language === "ar"
-                          ? "عنوان التوصيل: المكلا · فوه"
+                          ? "عنوان التوصيل: المكلا · وسط المدينة"
                           : language === "id"
-                          ? "Alamat Pengantaran: Mukalla · Fuwah"
-                          : "Delivery Address: Mukalla · Fuwah"
+                          ? "Alamat Pengantaran: Mukalla · City Center"
+                          : "Delivery Address: Mukalla · City Center"
                       }
                     />
                   </div>
@@ -473,10 +473,10 @@ export default function HeroSection({
                 <Flame className="w-4 h-4 text-[#dab165] fill-[#dab165]" />
                 <span>
                   {language === "ar"
-                    ? "أسرار الخَبز الحجري الفاخر — بيتزا هاوس المكلا"
+                    ? "أسرار الخَبز الحجري الفاخر — بيتزا نوڤا"
                     : language === "id"
-                    ? "Rahasia Pemanggangan Batu Mewah — Pizza House Mukalla"
-                    : "Secrets of Stone-Baking — Pizza House Mukalla"}
+                    ? "Rahasia Pemanggangan Batu Mewah — Pizza Nova"
+                    : "Secrets of Stone-Baking — Pizza Nova"}
                 </span>
               </div>
               <button
@@ -493,7 +493,7 @@ export default function HeroSection({
               <iframe
                 className="w-full h-full"
                 src="https://www.youtube-nocookie.com/embed/1-SJGQ2HLp8?autoplay=1&mute=0"
-                title="Pizza House Stone-Baked Story"
+                title="Pizza Nova Stone-Baked Story"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />

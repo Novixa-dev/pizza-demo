@@ -359,10 +359,10 @@ export default function CheckoutClientView({
         </h1>
         <p className="text-xs sm:text-sm text-[#EFCC80] font-bold">
           {language === "ar"
-            ? "فرع فوه - حي المساكن | استلام سريع ومجدول"
+            ? "فرع وسط المدينة | استلام سريع ومجدول"
             : language === "id"
-            ? "Cabang Fuwah - Al-Masaken | Pesanan Cepat & Terjadwal"
-            : "Fuwah Branch - Al-Masaken | Instant & Scheduled Pickup"}
+            ? "Cabang City Center - City Center | Pesanan Cepat & Terjadwal"
+            : "City Center Branch - City Center | Instant & Scheduled Pickup"}
         </p>
       </div>
 

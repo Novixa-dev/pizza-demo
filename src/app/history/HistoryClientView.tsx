@@ -548,7 +548,7 @@ export default function HistoryClientView() {
             <div className="inline-flex items-center gap-2 bg-[#0c0e12]/80 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-[#EFCC80] border border-[#C69843]/30 shadow-xs">
               <Pizza className="w-3.5 h-3.5 text-[#EFCC80]" />
               <span>
-                {dict.brand.name} · {language === "ar" ? "المكلا - فوه - حي المساكن" : language === "id" ? "Mukalla - Fuwah - Al-Masakin" : "Mukalla - Fuwah - Al-Masakin"}
+                {dict.brand.name} · {language === "ar" ? "المكلا - وسط المدينة" : language === "id" ? "Mukalla - City Center" : "Mukalla - City Center"}
               </span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-black font-cairo tracking-tight text-white">
@@ -596,10 +596,10 @@ export default function HistoryClientView() {
                       : "Your pizza is actively baking in the stone oven.")
                   : currentActiveOrder.status === "READY"
                   ? (language === "ar"
-                      ? "طلبك جاهز وساخن للاستلام من فرع فوه!"
+                      ? "طلبك جاهز وساخن للاستلام من الفرع الرئيسي!"
                       : language === "id"
-                      ? "Pesanan Anda siap dan hangat untuk diambil di cabang Fuwah!"
-                      : "Your order is hot and ready for pickup at Fuwa branch!")
+                      ? "Pesanan Anda siap dan hangat untuk diambil di cabang City Center!"
+                      : "Your order is hot and ready for pickup at City Center branch!")
                   : (language === "ar"
                       ? "طلبك مجدول وجاري تجهيز المكونات."
                       : language === "id"
@@ -664,7 +664,7 @@ export default function HistoryClientView() {
                   dir="ltr"
                   value={phoneInput}
                   onChange={(e) => setPhoneInput(e.target.value)}
-                  placeholder="771234567 أو 05375561"
+                  placeholder="771234567 أو 05000000"
                   className="w-full text-start ps-10 pe-4 py-3.5 rounded-2xl border border-[#222934] bg-[#0c0e12] text-white placeholder:text-stone-500 font-outfit text-sm focus:outline-none focus:border-[#C69843] focus:ring-2 focus:ring-[#C69843]/30 transition-all shadow-inner"
                 />
                 {phoneInput && (
@@ -745,10 +745,10 @@ export default function HistoryClientView() {
                   <h3 className="text-lg font-black text-white font-cairo">
                     {stats.latestCustomerName ||
                       (language === "ar"
-                        ? "عميل بيتزا هاوس"
+                        ? "عميل بيتزا نوڤا"
                         : language === "id"
-                        ? "Pelanggan Pizza House"
-                        : "Pizza House Customer")}
+                        ? "Pelanggan Pizza Nova"
+                        : "Pizza Nova Customer")}
                   </h3>
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-[#EFCC80]/15 text-[#EFCC80] px-2.5 py-0.5 rounded-full border border-[#C69843]/30">
                     <Award className="w-3.5 h-3.5 text-[#EFCC80]" />
@@ -1419,12 +1419,12 @@ export default function HistoryClientView() {
 
                         {/* WhatsApp support */}
                         <a
-                          href={`https://wa.me/967772207788?text=${encodeURIComponent(
+                          href={`https://wa.me/967776248526?text=${encodeURIComponent(
                             language === "ar"
-                              ? `مرحباً مطعم بيتزا هاوس، بخصوص طلبي رقم ${order.orderNumber} باسم ${order.customerName}`
+                              ? `مرحباً مطعم بيتزا نوڤا، بخصوص طلبي رقم ${order.orderNumber} باسم ${order.customerName}`
                               : language === "id"
-                              ? `Halo Pizza House, mengenai pesanan saya nomor ${order.orderNumber} atas nama ${order.customerName}`
-                              : `Hello Pizza House, regarding my order ${order.orderNumber} under name ${order.customerName}`
+                              ? `Halo Pizza Nova, mengenai pesanan saya nomor ${order.orderNumber} atas nama ${order.customerName}`
+                              : `Hello Pizza Nova, regarding my order ${order.orderNumber} under name ${order.customerName}`
                           )}`}
                           target="_blank"
                           rel="noreferrer"
@@ -1488,10 +1488,10 @@ export default function HistoryClientView() {
               </h2>
               <p className="text-xs text-stone-500">
                 {language === "ar"
-                  ? "المكلا - فوه - حي المساكن | هاتف: 05375561"
+                  ? "المكلا - وسط المدينة | هاتف: 05000000"
                   : language === "id"
-                  ? "Mukalla - Fuwah - Al-Masakin | Telp: 05375561"
-                  : "Mukalla - Fuwah - Al-Masakin | Phone: 05375561"}
+                  ? "Mukalla - City Center | Telp: 05000000"
+                  : "Mukalla - City Center | Phone: 05000000"}
               </p>
               <p className="text-xs font-black font-outfit text-pizza-800 pt-1">
                 {activeReceiptOrder.orderNumber}

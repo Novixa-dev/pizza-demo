@@ -65,7 +65,7 @@ describe("Order Feedback & Rating System", () => {
       mealRating: 5,
       serviceRating: 5,
       tags: ["HOT_CRISPY", "ON_TIME"],
-      comment: "أشهى بيتزا في فوه، ساخنة ولذيذة جداً والتسليم كان بالموعد المحدد!",
+      comment: "أشهى بيتزا في وسط المدينة، ساخنة ولذيذة جداً والتسليم كان بالموعد المحدد!",
     });
 
     expect(res.success).toBe(true);
