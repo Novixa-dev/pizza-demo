@@ -25,6 +25,36 @@ async function main() {
           },
         });
         console.log("Demo mode: restaurant profile set to neutral demo values.");
+
+        // Rename any product text still carrying the original restaurant's brand.
+        const brandPairs: Array<[RegExp, string]> = [
+          [/بيتزا هاوس/g, "بيتزا نوڤا"],
+          [/Pizza House/g, "Pizza Nova"],
+        ];
+        const rebrand = (value: string) =>
+          brandPairs.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), value);
+        const products = await prisma.product.findMany({
+          select: { id: true, nameAr: true, nameEn: true, descriptionAr: true, descriptionEn: true },
+        });
+        let renamed = 0;
+        for (const product of products) {
+          const data = {
+            nameAr: rebrand(product.nameAr),
+            nameEn: rebrand(product.nameEn),
+            descriptionAr: rebrand(product.descriptionAr),
+            descriptionEn: rebrand(product.descriptionEn),
+          };
+          if (
+            data.nameAr !== product.nameAr ||
+            data.nameEn !== product.nameEn ||
+            data.descriptionAr !== product.descriptionAr ||
+            data.descriptionEn !== product.descriptionEn
+          ) {
+            await prisma.product.update({ where: { id: product.id }, data });
+            renamed++;
+          }
+        }
+        console.log(`Demo mode: rebranded ${renamed} product(s).`);
       }
       console.log("Production data already exists; skipping seed without changes.");
       return;
