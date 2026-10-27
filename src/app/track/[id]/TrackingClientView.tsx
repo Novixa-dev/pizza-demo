@@ -21,6 +21,7 @@ import { cancelCustomerOrderAction } from "@/app/actions/orderActions";
 import OrderFeedbackCard from "@/components/customer/OrderFeedbackCard";
 import OrderShareCard from "@/components/customer/OrderShareCard";
 import StoneOvenLiveView from "@/components/customer/StoneOvenLiveView";
+import { RESTAURANT_TIME_ZONE } from "@/lib/restaurantTime";
 
 interface TrackingClientViewProps {
   order: any;
@@ -166,7 +167,7 @@ export default function TrackingClientView({ order, isOwner = false }: TrackingC
         {
           hour: "2-digit",
           minute: "2-digit",
-          timeZone: "Asia/Aden",
+          timeZone: RESTAURANT_TIME_ZONE,
         }
       );
     } catch {

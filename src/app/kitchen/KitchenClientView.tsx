@@ -17,6 +17,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { logoutStaffAction } from "@/app/actions/orderActions";
+import { RESTAURANT_TIME_ZONE } from "@/lib/restaurantTime";
 
 interface KitchenClientViewProps {
   initialOrders: any[];
@@ -139,6 +140,7 @@ export default function KitchenClientView({ initialOrders }: KitchenClientViewPr
                 hour: "2-digit",
                 minute: "2-digit",
                 second: "2-digit",
+                timeZone: RESTAURANT_TIME_ZONE,
               })}
             </p>
           </div>
@@ -342,12 +344,12 @@ function TicketCard({
   const ticketLocale = language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US";
   const pickupTimeStr = new Date(order.requestedPickupTime).toLocaleTimeString(
     ticketLocale,
-    { hour: "2-digit", minute: "2-digit" }
+    { hour: "2-digit", minute: "2-digit", timeZone: RESTAURANT_TIME_ZONE }
   );
 
   const releaseTimeStr = new Date(order.plannedPrepStartTime).toLocaleTimeString(
     ticketLocale,
-    { hour: "2-digit", minute: "2-digit" }
+    { hour: "2-digit", minute: "2-digit", timeZone: RESTAURANT_TIME_ZONE }
   );
 
   return (

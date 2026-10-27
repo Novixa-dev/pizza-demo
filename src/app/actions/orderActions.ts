@@ -9,6 +9,8 @@ import {
   calculateKitchenReleaseTime,
 } from "@/lib/scheduler";
 import { calculateRestaurantStatus, getYemenNow } from "@/lib/businessHours";
+import { getPickupSlots } from "@/lib/pickupAvailability";
+import { resolveRestaurantSlot } from "@/lib/restaurantTime";
 import { validateOrderTransition, OrderStatus } from "@/lib/stateMachine";
 import {
   isAuthorizedStaff,
@@ -127,12 +129,13 @@ export async function createOrderAction(rawInput: unknown) {
       return { success: false, error: "تعذر العثور على بيانات المطعم." };
     }
 
+    const now = new Date();
     const opStatus = calculateRestaurantStatus({
       businessHours: restaurant.businessHours,
       isOnlineOrderingPaused: restaurant.isOnlineOrderingPaused,
       pauseMessageAr: restaurant.pauseMessageAr,
       pauseMessageEn: restaurant.pauseMessageEn,
-      now: getYemenNow(),
+      now: getYemenNow(now),
     });
 
     if (!opStatus.canOrderImmediate && !opStatus.canOrderScheduled) {
@@ -142,11 +145,24 @@ export async function createOrderAction(rawInput: unknown) {
       };
     }
 
+    // The same slot list the checkout page renders: the chosen time must still be open and not full.
+    const pickupSlots = await getPickupSlots(restaurant, now);
+
     if (data.pickupMode === "ASAP" && !opStatus.canOrderImmediate) {
-      // Gracefully switch to scheduled pre-order for next available opening shift
+      // Gracefully switch to a pre-order for the first open slot of the next shift.
       data.pickupMode = "SCHEDULED";
-      if (!data.requestedTime) {
-        data.requestedTime = "08:00";
+      data.requestedTime ||= pickupSlots.find((s) => s.isAvailable)?.timeString;
+    }
+
+    if (data.pickupMode === "SCHEDULED") {
+      const slot = pickupSlots.find((s) => s.timeString === data.requestedTime);
+      if (!slot?.isAvailable) {
+        return {
+          success: false,
+          error: slot?.reason
+            ? `موعد الاستلام المختار غير متاح (${slot.reason}). يرجى اختيار موعد آخر.`
+            : "موعد الاستلام المختار غير متاح. يرجى اختيار موعد آخر.",
+        };
       }
     }
 
@@ -156,35 +172,12 @@ export async function createOrderAction(rawInput: unknown) {
       return { success: false, error: calculation.errorMessage };
     }
 
-    // 3. Determine Pickup & Preparation Release Timings
-    const now = new Date();
-    let requestedPickupTime: Date;
-
-    if (data.pickupMode === "ASAP") {
-      requestedPickupTime = calculateEarliestPickup(
-        now,
-        restaurant.defaultPrepDuration,
-        5
-      );
-    } else {
-      if (!data.requestedTime) {
-        data.requestedTime = "08:00";
-      }
-      const [h, m] = data.requestedTime.split(":").map(Number);
-      requestedPickupTime = new Date(now);
-      requestedPickupTime.setHours(h, m, 0, 0);
-
-      // If scheduled time has already passed today or is too close, advance to tomorrow!
-      const earliestAllowed = calculateEarliestPickup(
-        now,
-        restaurant.defaultPrepDuration,
-        5
-      );
-
-      if (requestedPickupTime.getTime() < earliestAllowed.getTime()) {
-        requestedPickupTime.setDate(requestedPickupTime.getDate() + 1);
-      }
-    }
+    // 3. Determine Pickup & Preparation Release Timings (real instants, Yemen clock)
+    const earliestAllowed = calculateEarliestPickup(now, restaurant.defaultPrepDuration, 5);
+    const requestedPickupTime =
+      data.pickupMode === "SCHEDULED" && data.requestedTime
+        ? resolveRestaurantSlot(data.requestedTime, now, earliestAllowed)
+        : earliestAllowed;
 
     // Calculate Planned Prep Start (Release Time)
     const plannedPrepStartTime = calculateKitchenReleaseTime(
@@ -213,17 +206,28 @@ export async function createOrderAction(rawInput: unknown) {
     // 5. Authoritative Coupon Validation & Discount
     let couponDiscount = 0;
     let appliedCouponCode: string | undefined = undefined;
+    let couponFreeItem: string | undefined;
     if (data.couponCode) {
       const couponValidation = await validateCouponAction({
         code: data.couponCode,
         subtotal: calculation.subtotal,
         customerPhone: data.customerPhone,
       });
-      if (couponValidation.success && couponValidation.discountAmount) {
-        couponDiscount = couponValidation.discountAmount;
+      // A FREE_ITEM coupon is valid with a zero discount: it still applies and grants its item.
+      if (couponValidation.success) {
+        couponDiscount = couponValidation.discountAmount ?? 0;
         appliedCouponCode = couponValidation.code;
+        couponFreeItem = couponValidation.freeItemNameAr;
       }
     }
+
+    // 5b. Automatic gift: the highest active tier the subtotal reaches, decided here, never by the client.
+    const automaticGift = await prisma.automaticGift.findFirst({
+      where: { isActive: true, minSpend: { lte: calculation.subtotal } },
+      orderBy: { minSpend: "desc" },
+    });
+    const giftItemName =
+      [automaticGift?.nameAr, couponFreeItem].filter(Boolean).join(" + ") || undefined;
 
     const finalDiscount = calculation.discount + couponDiscount;
     const finalTotal = Math.max(0, calculation.subtotal - finalDiscount);
@@ -247,7 +251,7 @@ export async function createOrderAction(rawInput: unknown) {
           discount: finalDiscount,
           couponCode: appliedCouponCode,
           couponDiscount,
-          giftItemName: data.giftItemName,
+          giftItemName,
           total: finalTotal,
           notes: data.notes,
           items: {
