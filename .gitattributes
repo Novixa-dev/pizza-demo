@@ -1,0 +1,12 @@
+# Keep LF everywhere: shell scripts, the Docker entrypoint and nginx/compose files
+# run on Linux, and a CRLF shebang ("#!/bin/sh\r") makes the container fail to start.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.db binary

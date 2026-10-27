@@ -61,8 +61,10 @@ if [ -n "$NGINX_CTR" ] && ! docker inspect -f '{{json .NetworkSettings.Networks}
   docker network connect "$EDGE_NET" "$NGINX_CTR" && echo "✔ mailcow nginx joined $EDGE_NET"
 fi
 
+PREV_IMAGE="$(grep -E '^APP_IMAGE=' .env | cut -d= -f2- || true)"
 PREV_TAG="$(grep -E '^APP_TAG=' .env | cut -d= -f2- || true)"
-echo "▶ Deploying $IMAGE:$TAG (previous: ${PREV_TAG:-none})"
+PREV_IMAGE="${PREV_IMAGE:-$IMAGE}"
+echo "▶ Deploying $IMAGE:$TAG (previous: ${PREV_TAG:+$PREV_IMAGE:$PREV_TAG}${PREV_TAG:-none})"
 
 if [ -n "${GHCR_TOKEN:-}" ]; then
   echo "$GHCR_TOKEN" | docker login ghcr.io -u "${GHCR_USER:-github}" --password-stdin >/dev/null
@@ -84,8 +86,10 @@ if wait_healthy; then
 else
   echo "::error::$TAG failed its health check — recent logs:"
   docker compose logs --tail=80 app || true
-  if [ -n "$PREV_TAG" ] && [ "$PREV_TAG" != "$TAG" ] && [ "$PREV_TAG" != "latest" ]; then
-    echo "↩ Rolling back to $PREV_TAG"
+  if [ -n "$PREV_TAG" ] && [ "$PREV_IMAGE:$PREV_TAG" != "$IMAGE:$TAG" ] && [ "$PREV_TAG" != "latest" ]; then
+    # Restore the image name too: it changes when the repository is renamed.
+    echo "↩ Rolling back to $PREV_IMAGE:$PREV_TAG"
+    set_kv APP_IMAGE "$PREV_IMAGE"
     set_kv APP_TAG "$PREV_TAG"
     docker compose up -d app
     wait_healthy && echo "↩ Rollback to $PREV_TAG is healthy" || echo "::error::Rollback is unhealthy too"
