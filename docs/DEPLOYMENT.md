@@ -105,6 +105,8 @@ cp data/backups/daily-YYYYMMDDTHHMMSSZ.db data/pizza-demo.db && rm -f data/pizza
 docker compose up -d app
 ```
 
+**Find the staff PINs** (`/admin` accepts the admin PIN; `/kitchen` the kitchen or admin PIN): `ssh root@<VPS_IP> "grep _PIN= /opt/pizza-demo/.env"`. The admin PIN unlocks every staff screen. Five wrong attempts lock that IP out for 15 minutes.
+
 **Rotate staff PINs / session secret**: edit `/opt/pizza-demo/.env`, then `docker compose up -d app`. Changing `SESSION_SECRET` signs every staff member out.
 
 **Off-site copies**: sync `/opt/pizza-demo/data/backups/` to object storage (e.g. `rclone sync` to Contabo Object Storage or Cloudflare R2) from cron.

@@ -92,10 +92,10 @@ export default function CheckoutClientView({
         tier: "TIER2",
         name:
           language === "ar"
-            ? "فطيرة شوكولاتة نوتيلا وموز مجانية"
+            ? "فطيرة نوتيلا بالموز الفاخرة مجاناً"
             : language === "id"
-            ? "Fatayer Nutella Pisang Cokelat Gratis"
-            : "Free Nutella Banana Fatayer",
+            ? "Fatayer Nutella Pisang Premium Gratis"
+            : "Free Premium Nutella & Banana Fatayer",
       };
     }
     if (cartTotal >= 12000) {
@@ -103,10 +103,10 @@ export default function CheckoutClientView({
         tier: "TIER1",
         name:
           language === "ar"
-            ? "بطاطس مقلية ذهبية مقرمشة مجانية"
+            ? "خبز بالثوم والموزاريلا الساخن مجاناً"
             : language === "id"
-            ? "Kentang Goreng Krispi Gratis"
-            : "Free Crispy Golden Fries",
+            ? "Roti Bawang Putih Keju Hangat Gratis"
+            : "Free Hot Cheesy Garlic Bread",
       };
     }
     return null;
@@ -283,7 +283,6 @@ export default function CheckoutClientView({
         receiptUrl: receiptBase64 || undefined,
         notes: notes.trim() || undefined,
         couponCode: appliedCoupon?.code || undefined,
-        giftItemName: activeGift?.name || undefined,
         items: cart.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,

@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { legacyBrandChanges } from "./legacyBrand";
+import { seedDemoShowcase } from "./demoShowcase";
 
 const prisma = new PrismaClient();
+const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE !== "false";
 
 /**
  * Rewrites the pre-rebrand restaurant name inside already-seeded catalog rows.
@@ -59,7 +61,7 @@ async function main() {
     });
     if (existingRestaurant) {
       // Public demo: keep the restaurant profile neutral (no real business identity).
-      if (process.env.NEXT_PUBLIC_DEMO_MODE !== "false") {
+      if (isDemoMode) {
         await prisma.restaurant.update({
           where: { id: existingRestaurant.id },
           data: {
@@ -76,12 +78,16 @@ async function main() {
         // already-seeded catalog (products, categories, options, coupons, gifts).
         const renamed = await neutralizeLegacyBrandInCatalog();
         console.log(`Demo mode: removed the legacy restaurant name from ${renamed} catalog row(s).`);
+        await seedDemoShowcase(prisma, existingRestaurant.id);
       }
       console.log("Production data already exists; skipping seed without changes.");
       return;
     }
   } else {
     // Development fixtures are intentionally rebuilt from scratch.
+    await prisma.coupon.deleteMany();
+    await prisma.automaticGift.deleteMany();
+    await prisma.customerLoyalty.deleteMany();
     await prisma.auditLog.deleteMany();
     await prisma.analyticsEvent.deleteMany();
     await prisma.paymentReceipt.deleteMany();
@@ -553,7 +559,8 @@ async function main() {
   console.log("✅ Seeded full menu items and options!");
 
   if (isProduction) {
-    console.log("Production bootstrap completed without synthetic customer data.");
+    if (isDemoMode) await seedDemoShowcase(prisma, restaurant.id);
+    console.log("Production bootstrap completed without synthetic active orders.");
     console.log("🎉 Database seeding completed successfully!");
     return;
   }
@@ -703,259 +710,8 @@ async function main() {
     },
   });
 
-  // Seed completed orders with customer testimonials (OrderFeedback)
-  const pepperoniProd = await prisma.product.findFirst({ where: { nameEn: "Classic Pepperoni Pizza" } });
-  const supremeProd = await prisma.product.findFirst({ where: { nameEn: "Pizza Nova Supreme Special" } });
-  const ranchProd = await prisma.product.findFirst({ where: { nameEn: "Chicken Ranch Pizza" } });
-  const margheritaProd = await prisma.product.findFirst({ where: { nameEn: "Traditional Margherita" } });
-
-  const feedbacksData = [
-    {
-      orderNumber: "#PH-991",
-      customerName: "أحمد سالم باوزير",
-      customerPhone: "771234567",
-      product: supremeProd || pepperoniProd!,
-      unitPrice: 5500,
-      total: 7500,
-      mealRating: 5,
-      serviceRating: 5,
-      tags: "طازج وساخن, عجينة ممتازة, استلام سريع",
-      comment: "أفضل بيتزا في المكلا بلا منازع! طلبت مسبقاً ووصلت الفرع واستلمتها ساخنة مقرمشة طازجة من الفرن بدون أي انتظار. الجبنة الموزاريلا واضحة أنها أصلية والعجينة خفيفة جداً.",
-      daysAgo: 1,
-    },
-    {
-      orderNumber: "#PH-992",
-      customerName: "د. عمر بن عبد العزيز",
-      customerPhone: "772345678",
-      product: ranchProd || pepperoniProd!,
-      unitPrice: 5000,
-      total: 7000,
-      mealRating: 5,
-      serviceRating: 5,
-      tags: "خدمة راقية, دقة الموعد, موقع مميز",
-      comment: "موقع المطعم ممتاز في وسط المدينة. خدمة الطلب المسبق وفرت علينا وقتاً ثميناً بين المحاضرات. صوص الرانش والتحمير على الحجر متقن للغاية.",
-      daysAgo: 2,
-    },
-    {
-      orderNumber: "#PH-993",
-      customerName: "أم عبدالله الكندي",
-      customerPhone: "773456789",
-      product: margheritaProd || pepperoniProd!,
-      unitPrice: 3500,
-      total: 5500,
-      mealRating: 5,
-      serviceRating: 5,
-      tags: "جلسات عائلية مريحة, نظافة فائقة",
-      comment: "زرنا قسم العوائل في الفرع الرئيسي، الجلسات مريحة وتوفر الخصوصية التامة للعائلات مع تكييف ممتاز. الأبناء استمتعوا جداً بطعم البيتزا والفطائر الساخنة.",
-      daysAgo: 3,
-    },
-    {
-      orderNumber: "#PH-994",
-      customerName: "سالم بن دغار",
-      customerPhone: "774567890",
-      product: pepperoniProd!,
-      unitPrice: 4500,
-      total: 8500,
-      mealRating: 5,
-      serviceRating: 4,
-      tags: "طعم إيطالي أصيل, تحويل كريمي سهل",
-      comment: "دفعت عن طريق تطبيق بنك الكريمي حاسب بسهولة واستلمت الطلب في موعده تماماً. الخبز على الحجر يعطي نكهة مدخنة مميزة تختلف عن أي مطعم آخر بالمكلا.",
-      daysAgo: 4,
-    },
-    {
-      orderNumber: "#PH-995",
-      customerName: "م. خالد باحيدرة",
-      customerPhone: "775678901",
-      product: ranchProd || supremeProd!,
-      unitPrice: 5000,
-      total: 7000,
-      mealRating: 5,
-      serviceRating: 5,
-      tags: "كرنش ممتاز, صوصات رهيبة",
-      comment: "الصوصات الجانبية خصوصاً الثومية والهلابينو ممتازة وتكمل الطعم. فكرة شاشة متابعة حالة الخبز في الفرن ذكية واحترافية. استمروا بهذا المستوى!",
-      daysAgo: 5,
-    },
-  ];
-
-  for (const item of feedbacksData) {
-    const orderDate = new Date(now.getTime() - item.daysAgo * 24 * 60 * 60 * 1000);
-    const order = await prisma.order.create({
-      data: {
-        orderNumber: item.orderNumber,
-        restaurantId: restaurant.id,
-        customerName: item.customerName,
-        customerPhone: item.customerPhone,
-        pickupMode: "SCHEDULED",
-        requestedPickupTime: orderDate,
-        plannedPrepStartTime: orderDate,
-        actualPrepStartTime: orderDate,
-        readyTime: orderDate,
-        completedTime: orderDate,
-        status: "COMPLETED",
-        subtotal: item.total,
-        discount: 0,
-        total: item.total,
-        createdAt: orderDate,
-        items: {
-          create: {
-            productId: item.product.id,
-            productNameAr: item.product.nameAr,
-            productNameEn: item.product.nameEn,
-            unitPrice: item.unitPrice,
-            quantity: 1,
-            subtotal: item.total,
-          },
-        },
-        payment: {
-          create: {
-            method: "PAY_AT_PICKUP",
-            status: "VERIFIED",
-            amount: item.total,
-            verifiedAt: orderDate,
-          },
-        },
-        feedback: {
-          create: {
-            mealRating: item.mealRating,
-            serviceRating: item.serviceRating,
-            tags: item.tags,
-            comment: item.comment,
-            customerName: item.customerName,
-            createdAt: orderDate,
-          },
-        },
-      },
-    });
-  }
-
-  console.log("✅ Seeded 5 completed orders with authentic customer feedback testimonials!");
-
-  // 6. Seed Coupons
-  await prisma.coupon.deleteMany();
-  await prisma.coupon.createMany({
-    data: [
-      {
-        code: "WELCOME10",
-        titleAr: "خصم 10% للطلب الأول",
-        titleEn: "10% Off First Order",
-        titleId: "Diskon 10% Pesanan Pertama",
-        descriptionAr: "خصم 10% عند طلبك بقيمة 8,000 ر.ي أو أكثر (حد أقصى للخصم 1,000 ر.ي)",
-        descriptionEn: "10% discount on orders of 8,000 YER or more (max discount 1,000 YER)",
-        descriptionId: "Diskon 10% untuk pesanan minimal 8.000 YER (maksimal diskon 1.000 YER)",
-        discountType: "PERCENTAGE",
-        discountValue: 10,
-        minOrderAmount: 8000,
-        maxDiscount: 1000,
-        isFirstOrderOnly: true,
-        isActive: true,
-        usageLimit: 500,
-        usedCount: 14,
-      },
-      {
-        code: "FAMILYBOX",
-        titleAr: "خبز بالثوم والموزاريلا مجاناً",
-        titleEn: "Free Cheesy Garlic Bread",
-        titleId: "Roti Bawang Putih Keju Gratis",
-        descriptionAr: "احصل على خبز بالثوم والموزاريلا مجاناً مع وجبات التوفير العائلية بقيمة 15,000 ر.ي فأكثر",
-        descriptionEn: "Receive free cheesy garlic bread on family feast orders of 15,000 YER or more",
-        descriptionId: "Dapatkan roti bawang putih keju gratis untuk pesanan 15.000 YER ke atas",
-        discountType: "FREE_ITEM",
-        discountValue: 0,
-        freeItemNameAr: "خبز بالثوم والموزاريلا مجاناً",
-        freeItemNameEn: "Free Cheesy Garlic Bread",
-        minOrderAmount: 15000,
-        isActive: true,
-        usageLimit: 300,
-        usedCount: 28,
-      },
-      {
-        code: "MUKALLA500",
-        titleAr: "خصم فوري 500 ر.ي",
-        titleEn: "Instant 500 YER Discount",
-        titleId: "Diskon Instan 500 YER",
-        descriptionAr: "خصم فوري 500 ر.ي على جميع طلبات البيتزا بقيمة 6,000 ر.ي فأكثر",
-        descriptionEn: "Instant 500 YER off on any order of 6,000 YER or more",
-        descriptionId: "Diskon instan 500 YER untuk semua pesanan mulai dari 6.000 YER",
-        discountType: "FIXED",
-        discountValue: 500,
-        minOrderAmount: 6000,
-        isActive: true,
-        usageLimit: 1000,
-        usedCount: 62,
-      },
-      {
-        code: "HADRAMOUT",
-        titleAr: "عرض رواد وسط المدينة والطلاب 15%",
-        titleEn: "15% Hadramout Community & Students Deal",
-        titleId: "Promo Komunitas & Mahasiswa 15%",
-        descriptionAr: "خصم 15% للطلاب وأهالي المدينة لطلبات 10,000 ر.ي فأكثر (حد أقصى 2,000 ر.ي)",
-        descriptionEn: "15% student discount on 10,000+ YER orders (max 2,000 YER)",
-        descriptionId: "Diskon 15% untuk mahasiswa untuk pesanan 10.000+ YER (maks 2.000 YER)",
-        discountType: "PERCENTAGE",
-        discountValue: 15,
-        minOrderAmount: 10000,
-        maxDiscount: 2000,
-        isActive: true,
-        usageLimit: 400,
-        usedCount: 45,
-      },
-    ],
-  });
-  console.log("✅ Seeded 4 promotional coupons!");
-
-  // 7. Seed Automatic Gifts
-  await prisma.automaticGift.deleteMany();
-  await prisma.automaticGift.createMany({
-    data: [
-      {
-        nameAr: "خبز بالثوم والموزاريلا الساخن",
-        nameEn: "Hot Cheesy Garlic Bread",
-        nameId: "Roti Bawang Putih Keju Hangat",
-        descriptionAr: "هدية مجانية تلقائية تضاف لسلتك عند تجاوز 12,000 ر.ي",
-        descriptionEn: "Automatically added to your cart when spending 12,000 YER or more",
-        minSpend: 12000,
-        imageUrl: "https://images.unsplash.com/photo-1619895092538-128341789043?w=600&q=80",
-        isActive: true,
-        sortOrder: 1,
-      },
-      {
-        nameAr: "فطيرة نوتيلا بالموز الفاخرة",
-        nameEn: "Premium Nutella & Banana Fatayer",
-        nameId: "Fatayer Nutella Pisang Premium",
-        descriptionAr: "هدية تحلية فاخرة تضاف تلقائياً للطلبات الكبيرة عند بلوغ 20,000 ر.ي",
-        descriptionEn: "A premium dessert gift automatically added on large orders of 20,000 YER or more",
-        minSpend: 20000,
-        imageUrl: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=600&q=80",
-        isActive: true,
-        sortOrder: 2,
-      },
-    ],
-  });
-  console.log("✅ Seeded 2 automatic gift tiers!");
-
-  // 8. Seed Customer Loyalty Records
-  await prisma.customerLoyalty.deleteMany();
-  await prisma.customerLoyalty.createMany({
-    data: [
-      {
-        customerPhone: "776248526",
-        ordersCount: 5,
-        totalSpent: 32000,
-        rewardsEarned: 1,
-        rewardsClaimed: 0,
-        lastOrderAt: now,
-      },
-      {
-        customerPhone: "771234567",
-        ordersCount: 3,
-        totalSpent: 18500,
-        rewardsEarned: 0,
-        rewardsClaimed: 0,
-        lastOrderAt: now,
-      },
-    ],
-  });
-  console.log("✅ Seeded customer loyalty records!");
+  // 6. Coupons, gift tiers, reviews and a loyalty-ready demo customer
+  await seedDemoShowcase(prisma, restaurant.id, now);
 
   console.log("🎉 Database seeding completed successfully!");
 }

@@ -11,6 +11,7 @@ import {
 } from "@/app/actions/couponActions";
 import { createOrderAction } from "@/app/actions/orderActions";
 import { prisma } from "@/lib/prisma";
+import { getPickupSlots } from "@/lib/pickupAvailability";
 
 describe("Coupons, Automatic Gifts & Loyalty System", () => {
   it("blocks unauthenticated coupon administration", async () => {
@@ -109,73 +110,81 @@ describe("Coupons, Automatic Gifts & Loyalty System", () => {
     expect(res.loyalty?.currentProgress).toBe((res.loyalty?.totalOrders || 0) % 5);
   });
 
-  it("creates an order with server-validated coupon discount and applies it to total", async () => {
-    const restaurant = await prisma.restaurant.findFirst();
+  async function placeTestOrder(quantity: number, extra: Record<string, unknown> = {}) {
+    const restaurant = await prisma.restaurant.findFirst({ include: { businessHours: true } });
     const product = await prisma.product.findFirst({
       where: { nameEn: { contains: "Pepperoni" } },
-      include: {
-        optionGroups: {
-          include: {
-            options: true,
-          },
-        },
-      },
+      include: { optionGroups: { include: { options: true } } },
     });
-
     if (!restaurant || !product) {
       throw new Error("Missing restaurant or product seed data");
     }
 
-    const selectedOptionIds: string[] = [];
-    for (const group of product.optionGroups) {
-      if (group.isRequired && group.options.length > 0) {
-        selectedOptionIds.push(group.options[0].id);
-      }
-    }
+    const selectedOptionIds = product.optionGroups
+      .filter((group) => group.isRequired && group.options.length > 0)
+      .map((group) => group.options[0].id);
 
-    // 2 pizzas at 4,500 YER base = 9,000 YER subtotal >= 8,000 min order for WELCOME10
+    // Any slot the checkout would offer right now, so the test does not depend on the time of day.
+    const slot = (await getPickupSlots(restaurant)).find((s) => s.isAvailable);
+    expect(slot).toBeDefined();
+
     const orderRes = await createOrderAction({
       customerName: "سالم باوزير (كوبون تجريبي)",
       customerPhone: "774433221",
       pickupMode: "SCHEDULED",
-      requestedTime: "20:00",
+      requestedTime: slot!.timeString,
       paymentMethod: "PAY_AT_PICKUP",
-      couponCode: "WELCOME10",
-      giftItemName: "خبز بالثوم والموزاريلا الساخن",
-      items: [
-        {
-          productId: product.id,
-          quantity: 2,
-          selectedOptionIds,
-        },
-      ],
+      items: [{ productId: product.id, quantity, selectedOptionIds }],
+      ...extra,
     });
-
     expect(orderRes.success).toBe(true);
     expect(orderRes.orderId).toBeDefined();
 
-    // Verify created order directly in db
-    const savedOrder = await prisma.order.findUnique({
-      where: { id: orderRes.orderId },
-    });
-
+    const savedOrder = await prisma.order.findUnique({ where: { id: orderRes.orderId } });
     expect(savedOrder).toBeDefined();
-    expect(savedOrder?.couponCode).toBe("WELCOME10");
-    expect(savedOrder?.couponDiscount).toBeGreaterThan(0);
-    expect(savedOrder?.giftItemName).toBe("خبز بالثوم والموزاريلا الساخن");
-    expect(savedOrder?.total).toBe(savedOrder!.subtotal - savedOrder!.discount);
+    return savedOrder!;
+  }
 
-    // Clean up test order
-    if (orderRes.orderId) {
-      await prisma.orderItemOption.deleteMany({
-        where: { orderItem: { orderId: orderRes.orderId } },
-      });
-      await prisma.orderItem.deleteMany({
-        where: { orderId: orderRes.orderId },
-      });
-      await prisma.order.delete({
-        where: { id: orderRes.orderId },
-      });
+  async function deleteTestOrder(orderId: string) {
+    await prisma.orderItemOption.deleteMany({ where: { orderItem: { orderId } } });
+    await prisma.orderItem.deleteMany({ where: { orderId } });
+    await prisma.payment.deleteMany({ where: { orderId } });
+    await prisma.order.delete({ where: { id: orderId } });
+  }
+
+  it("creates an order with server-validated coupon discount and ignores a client-claimed gift", async () => {
+    // 2 pizzas at 4,500 YER base = 9,000 YER subtotal: enough for WELCOME10, below the 12,000 gift tier
+    const order = await placeTestOrder(2, {
+      couponCode: "WELCOME10",
+      giftItemName: "خبز بالثوم والموزاريلا الساخن",
+    });
+    try {
+      expect(order.couponCode).toBe("WELCOME10");
+      expect(order.couponDiscount).toBeGreaterThan(0);
+      expect(order.giftItemName).toBeNull();
+      expect(order.total).toBe(order.subtotal - order.discount);
+    } finally {
+      await deleteTestOrder(order.id);
+    }
+  });
+
+  it("grants the automatic gift tier the subtotal reaches", async () => {
+    const order = await placeTestOrder(3); // 13,500 YER >= 12,000
+    try {
+      expect(order.giftItemName).toBe("خبز بالثوم والموزاريلا الساخن");
+    } finally {
+      await deleteTestOrder(order.id);
+    }
+  });
+
+  it("applies a FREE_ITEM coupon even though its discount is zero", async () => {
+    const order = await placeTestOrder(4, { couponCode: "FAMILYBOX" }); // 18,000 YER >= 15,000
+    try {
+      expect(order.couponCode).toBe("FAMILYBOX");
+      expect(order.couponDiscount).toBe(0);
+      expect(order.giftItemName).toContain("خبز بالثوم والموزاريلا مجاناً");
+    } finally {
+      await deleteTestOrder(order.id);
     }
   });
 });

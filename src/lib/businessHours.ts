@@ -1,4 +1,5 @@
 import { BusinessHourRecord } from "./scheduler";
+import { getRestaurantWallClock } from "./restaurantTime";
 
 export type RestaurantOperationalStatus =
   | "OPEN_FOR_ORDERING"
@@ -24,36 +25,14 @@ export interface RestaurantStatusResult {
 }
 
 /**
- * Returns current Date & Time in Yemen timezone (Asia/Aden, UTC+3).
+ * Returns a Date whose *local* fields (getHours, getDay, …) show the Yemen
+ * wall clock (Asia/Aden, UTC+3) for `instant`. Only for shift/slot arithmetic:
+ * it is not a real instant, so never store it — convert slots with
+ * `resolveRestaurantSlot` from "@/lib/restaurantTime" instead.
  */
-export function getYemenNow(): Date {
-  try {
-    const formatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: "Asia/Aden",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    });
-
-    const parts = formatter.formatToParts(new Date());
-    const dateMap: Record<string, string> = {};
-    parts.forEach((p) => {
-      dateMap[p.type] = p.value;
-    });
-
-    return new Date(
-      `${dateMap.year}-${dateMap.month}-${dateMap.day}T${dateMap.hour}:${dateMap.minute}:${dateMap.second}`
-    );
-  } catch {
-    // Fallback: manually offset UTC by +3 hours
-    const d = new Date();
-    const utc = d.getTime() + d.getTimezoneOffset() * 60000;
-    return new Date(utc + 3600000 * 3);
-  }
+export function getYemenNow(instant: Date = new Date()): Date {
+  const { year, month, day, hours, minutes } = getRestaurantWallClock(instant);
+  return new Date(year, month - 1, day, hours, minutes, instant.getUTCSeconds());
 }
 
 /**

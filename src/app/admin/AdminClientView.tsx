@@ -44,6 +44,7 @@ import {
   createCouponAction,
   deleteCouponAction,
 } from "@/app/actions/couponActions";
+import { RESTAURANT_TIME_ZONE } from "@/lib/restaurantTime";
 
 interface AdminClientViewProps {
   restaurant: any;
@@ -518,7 +519,7 @@ export default function AdminClientView({
                         <td className="py-3 px-3 font-outfit text-stone-300">
                           {new Date(o.requestedPickupTime).toLocaleTimeString(
                             language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
-                            { hour: "2-digit", minute: "2-digit" }
+                            { hour: "2-digit", minute: "2-digit", timeZone: RESTAURANT_TIME_ZONE }
                           )}
                         </td>
                         <td className="py-3 px-3 font-bold font-outfit text-[#EFCC80]">
@@ -616,7 +617,7 @@ export default function AdminClientView({
                       <b className="font-outfit text-stone-200">
                         {new Date(order.requestedPickupTime).toLocaleTimeString(
                           language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
-                          { hour: "2-digit", minute: "2-digit" }
+                          { hour: "2-digit", minute: "2-digit", timeZone: RESTAURANT_TIME_ZONE }
                         )}
                       </b>
                     </span>
@@ -746,7 +747,7 @@ export default function AdminClientView({
                         <b className="font-outfit text-stone-200">
                           {new Date(order.requestedPickupTime).toLocaleTimeString(
                             language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
-                            { hour: "2-digit", minute: "2-digit" }
+                            { hour: "2-digit", minute: "2-digit", timeZone: RESTAURANT_TIME_ZONE }
                           )}
                         </b>
                       </span>
@@ -997,7 +998,8 @@ export default function AdminClientView({
                         </div>
                         <span className="text-[11px] text-stone-400 font-outfit">
                           {new Date(fb.createdAt).toLocaleDateString(
-                            language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US"
+                            language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
+                            { timeZone: RESTAURANT_TIME_ZONE }
                           )}
                         </span>
                       </div>
