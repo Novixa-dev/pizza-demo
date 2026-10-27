@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  APP_URL: https://pizza-house.novixa.dev
+  APP_URL: https://pizza-demo.novixa.dev
   # Origin server (Contabo VPS). Override with PIZZA_DEMO_HOST / PIZZA_DEMO_USER secrets if it ever moves.
   DEPLOY_HOST: 161.97.75.64
   DEPLOY_USER: pizza
@@ -67,7 +67,7 @@ jobs:
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.title=pizza-house-website
+            org.opencontainers.image.title=pizza-demo
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -111,8 +111,8 @@ jobs:
           key: ${{ secrets.PIZZA_DEMO_SSH_KEY }}
           passphrase: ${{ secrets.PIZZA_DEMO_SSH_KEY_PASSWORD }}
           port: ${{ secrets.PIZZA_DEMO_PORT || 22 }}
-          source: deploy/docker-compose.yml,deploy/scripts/remote-deploy.sh,deploy/nginx/pizza-house.mailcow.conf
-          target: /opt/pizza-house
+          source: deploy/docker-compose.yml,deploy/scripts/remote-deploy.sh,deploy/nginx/pizza-demo.mailcow.conf
+          target: /opt/pizza-demo
           strip_components: 1
           overwrite: true
 
@@ -132,7 +132,7 @@ jobs:
           port: ${{ secrets.PIZZA_DEMO_PORT || 22 }}
           envs: IMAGE,TAG,GHCR_USER,GHCR_TOKEN
           command_timeout: 10m
-          script: bash /opt/pizza-house/scripts/remote-deploy.sh "$IMAGE" "$TAG"
+          script: bash /opt/pizza-demo/scripts/remote-deploy.sh "$IMAGE" "$TAG"
 
       - name: Public smoke test
         if: steps.creds.outputs.ready == 'true'

@@ -7,12 +7,12 @@ set -euo pipefail
 
 IMAGE="${1:?usage: remote-deploy.sh <image> <tag>}"
 TAG="${2:?usage: remote-deploy.sh <image> <tag>}"
-APP_DIR="${APP_DIR:-/opt/pizza-house}"
-CONTAINER="pizza-house-app"
+APP_DIR="${APP_DIR:-/opt/pizza-demo}"
+CONTAINER="pizza-demo-app"
 HEALTH_TIMEOUT="${HEALTH_TIMEOUT:-180}"
-EDGE_NET="pizza-house-edge"            # shared with mailcow's nginx only
-SITE_SRC="$APP_DIR/nginx/pizza-house.mailcow.conf"
-SITE_CONF="${SITE_CONF:-/opt/mailcow-dockerized/data/conf/nginx/pizza-house.conf}"
+EDGE_NET="pizza-demo-edge"            # shared with mailcow's nginx only
+SITE_SRC="$APP_DIR/nginx/pizza-demo.mailcow.conf"
+SITE_CONF="${SITE_CONF:-/opt/mailcow-dockerized/data/conf/nginx/pizza-demo.conf}"
 
 cd "$APP_DIR"
 [ -f .env ] || { echo "::error::$APP_DIR/.env is missing — run deploy/scripts/server-setup.sh on the server first."; exit 1; }
@@ -61,8 +61,10 @@ if [ -n "$NGINX_CTR" ] && ! docker inspect -f '{{json .NetworkSettings.Networks}
   docker network connect "$EDGE_NET" "$NGINX_CTR" && echo "✔ mailcow nginx joined $EDGE_NET"
 fi
 
+PREV_IMAGE="$(grep -E '^APP_IMAGE=' .env | cut -d= -f2- || true)"
 PREV_TAG="$(grep -E '^APP_TAG=' .env | cut -d= -f2- || true)"
-echo "▶ Deploying $IMAGE:$TAG (previous: ${PREV_TAG:-none})"
+PREV_IMAGE="${PREV_IMAGE:-$IMAGE}"
+echo "▶ Deploying $IMAGE:$TAG (previous: ${PREV_TAG:+$PREV_IMAGE:$PREV_TAG}${PREV_TAG:-none})"
 
 if [ -n "${GHCR_TOKEN:-}" ]; then
   echo "$GHCR_TOKEN" | docker login ghcr.io -u "${GHCR_USER:-github}" --password-stdin >/dev/null
@@ -71,7 +73,11 @@ fi
 
 set_kv APP_IMAGE "$IMAGE"
 set_kv APP_TAG "$TAG"
-docker compose pull app
+# A registry outage (or an image built on this host) must not block a release that is already here.
+if ! docker compose pull app; then
+  docker image inspect "$IMAGE:$TAG" >/dev/null 2>&1 || { echo "::error::$IMAGE:$TAG could not be pulled and is not present locally"; exit 1; }
+  echo "⚠ pull failed — using the local copy of $IMAGE:$TAG"
+fi
 docker compose up -d --remove-orphans app
 
 if wait_healthy; then
@@ -80,8 +86,10 @@ if wait_healthy; then
 else
   echo "::error::$TAG failed its health check — recent logs:"
   docker compose logs --tail=80 app || true
-  if [ -n "$PREV_TAG" ] && [ "$PREV_TAG" != "$TAG" ] && [ "$PREV_TAG" != "latest" ]; then
-    echo "↩ Rolling back to $PREV_TAG"
+  if [ -n "$PREV_TAG" ] && [ "$PREV_IMAGE:$PREV_TAG" != "$IMAGE:$TAG" ] && [ "$PREV_TAG" != "latest" ]; then
+    # Restore the image name too: it changes when the repository is renamed.
+    echo "↩ Rolling back to $PREV_IMAGE:$PREV_TAG"
+    set_kv APP_IMAGE "$PREV_IMAGE"
     set_kv APP_TAG "$PREV_TAG"
     docker compose up -d app
     wait_healthy && echo "↩ Rollback to $PREV_TAG is healthy" || echo "::error::Rollback is unhealthy too"

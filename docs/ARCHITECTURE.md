@@ -53,7 +53,7 @@ The Pizza House platform is architected as a **Modular Monolith** using Next.js 
 ## 3. Directory Structure
 
 ```text
-pizza-house66/
+pizza-demo/
 ├── docs/                        # Complete 25-module documentation suite
 ├── prisma/
 │   ├── schema.prisma            # Relational database schema

@@ -28,5 +28,5 @@ node node_modules/prisma/build/index.js db push --skip-generate --schema prisma/
 echo "[entrypoint] Ensuring baseline restaurant data…"
 node prisma/seed.cjs
 
-echo "[entrypoint] Starting Pizza House on :${PORT:-3000}"
+echo "[entrypoint] Starting Pizza Demo on :${PORT:-3000}"
 exec "$@"

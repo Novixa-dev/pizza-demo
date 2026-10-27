@@ -1,6 +1,6 @@
 {
-  "name": "Pizza House Mukalla",
-  "description": "Online ordering, scheduled pickup, kitchen display system, and order tracking for Pizza House restaurant in Mukalla.",
+  "name": "Pizza Demo by Novixa",
+  "description": "Novixa's restaurant ordering demo: online ordering, scheduled pickup, kitchen display system and order tracking for the Pizza Nova demo restaurant.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -12,7 +12,7 @@ function getSessionSecret(): string {
   if (process.env.NODE_ENV === "production") {
     throw new Error("SESSION_SECRET must contain at least 32 bytes in production");
   }
-  return "pizza-house-mukalla-secret-key-2026";
+  return "pizza-demo-development-only-secret-key";
 }
 
 export function getRolePins(): Record<StaffRole, string[]> {

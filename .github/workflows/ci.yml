@@ -24,7 +24,7 @@ jobs:
       ADMIN_PIN: "100001"
       KITCHEN_PIN: "100002"
       CASHIER_PIN: "100003"
-      NEXT_PUBLIC_APP_URL: https://pizza-house.novixa.dev
+      NEXT_PUBLIC_APP_URL: https://pizza-demo.novixa.dev
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - uses: actions/checkout@v4

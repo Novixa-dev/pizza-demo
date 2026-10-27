@@ -1,5 +1,5 @@
 {
-  "name": "pizza-house66",
+  "name": "pizza-demo",
   "version": "1.0.0",
   "private": true,
   "engines": {
@@ -23,7 +23,7 @@
     "@prisma/client": "^5.21.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.453.0",
-    "next": "16.4.0",
+    "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "tailwind-merge": "^2.5.4",
@@ -35,7 +35,7 @@
     "@types/react-dom": "19.3.0",
     "autoprefixer": "^10.4.20",
     "eslint": "10.12.0",
-    "eslint-config-next": "16.4.0",
+    "eslint-config-next": "16.4.3",
     "postcss": "^8.4.47",
     "prisma": "^5.21.1",
     "sharp": "^0.35.5",
