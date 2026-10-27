@@ -71,7 +71,11 @@ fi
 
 set_kv APP_IMAGE "$IMAGE"
 set_kv APP_TAG "$TAG"
-docker compose pull app
+# A registry outage (or an image built on this host) must not block a release that is already here.
+if ! docker compose pull app; then
+  docker image inspect "$IMAGE:$TAG" >/dev/null 2>&1 || { echo "::error::$IMAGE:$TAG could not be pulled and is not present locally"; exit 1; }
+  echo "⚠ pull failed — using the local copy of $IMAGE:$TAG"
+fi
 docker compose up -d --remove-orphans app
 
 if wait_healthy; then
