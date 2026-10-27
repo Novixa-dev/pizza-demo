@@ -267,7 +267,7 @@ export async function triggerDueReminder(
 
   const sent = await sendBrowserNotification(title, {
     body,
-    tag: "pizza-house-recurring-order-reminder",
+    tag: "pizza-demo-recurring-order-reminder",
     url: "/menu",
     requireInteraction: true,
   });

@@ -7,12 +7,12 @@ set -euo pipefail
 
 IMAGE="${1:?usage: remote-deploy.sh <image> <tag>}"
 TAG="${2:?usage: remote-deploy.sh <image> <tag>}"
-APP_DIR="${APP_DIR:-/opt/pizza-house}"
-CONTAINER="pizza-house-app"
+APP_DIR="${APP_DIR:-/opt/pizza-demo}"
+CONTAINER="pizza-demo-app"
 HEALTH_TIMEOUT="${HEALTH_TIMEOUT:-180}"
-EDGE_NET="pizza-house-edge"            # shared with mailcow's nginx only
-SITE_SRC="$APP_DIR/nginx/pizza-house.mailcow.conf"
-SITE_CONF="${SITE_CONF:-/opt/mailcow-dockerized/data/conf/nginx/pizza-house.conf}"
+EDGE_NET="pizza-demo-edge"            # shared with mailcow's nginx only
+SITE_SRC="$APP_DIR/nginx/pizza-demo.mailcow.conf"
+SITE_CONF="${SITE_CONF:-/opt/mailcow-dockerized/data/conf/nginx/pizza-demo.conf}"
 
 cd "$APP_DIR"
 [ -f .env ] || { echo "::error::$APP_DIR/.env is missing — run deploy/scripts/server-setup.sh on the server first."; exit 1; }

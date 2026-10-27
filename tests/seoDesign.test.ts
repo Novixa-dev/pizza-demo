@@ -15,7 +15,7 @@ describe("Theme, Design & SEO Comprehensive Verification", () => {
 
   it("provides canonical URL and alternates", () => {
     expect(siteMetadata.alternates?.canonical).toBe("/");
-    expect(siteMetadata.metadataBase?.toString()).toBe("https://pizza-house.novixa.dev/");
+    expect(siteMetadata.metadataBase?.toString()).toBe("https://pizza-demo.novixa.dev/");
   });
 
   it("includes valid keywords matching Mukalla and Pizza Nova branding", () => {
@@ -32,7 +32,7 @@ describe("Theme, Design & SEO Comprehensive Verification", () => {
     expect(jsonLdRestaurantData.currenciesAccepted).toBe("YER");
     // Self-declared review aggregates violate Google's review-snippet policy; ratings come from real feedback only.
     expect("aggregateRating" in jsonLdRestaurantData).toBe(false);
-    expect(jsonLdRestaurantData.url).toBe("https://pizza-house.novixa.dev");
+    expect(jsonLdRestaurantData.url).toBe("https://pizza-demo.novixa.dev");
   });
 });
 

@@ -1,14 +1,13 @@
-# Pizza House (بيتزا هاوس) — Digital Ordering & Restaurant Operations Platform
-> **Mukalla, Hadhramaut, Yemen** | Official Account: [@pizza_house66](https://www.instagram.com/pizza_house66/)  
-> Validation Pilot for **Novixa Restaurant Technology Platform**
+# Pizza Demo by Novixa — Digital Ordering & Restaurant Operations Platform
+> A [Novixa](https://novixa.dev) product · Live demo restaurant: **Pizza Nova (بيتزا نوڤا)**, Mukalla, Hadhramaut, Yemen
 >
-> 🌐 **Production:** https://pizza-house.novixa.dev · [![Deploy](https://github.com/Novixa-dev/pizza-house-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/Novixa-dev/pizza-house-website/actions/workflows/deploy.yml)
+> 🌐 **Live demo:** https://pizza-demo.novixa.dev · [![Deploy](https://github.com/Novixa-dev/pizza-demo/actions/workflows/deploy.yml/badge.svg)](https://github.com/Novixa-dev/pizza-demo/actions/workflows/deploy.yml)
 
 ---
 
 ## 🍕 Overview
 
-**Pizza House** is a production-grade digital pre-ordering and kitchen operations platform built specifically for the operational reality of Mukalla, Yemen. It addresses the primary friction of in-store dining and takeaway: **eliminating customer waiting times (15–25 minutes) through an Intelligent Scheduled Preparation Engine**.
+**Pizza Demo** is a production-grade digital pre-ordering and kitchen operations platform built specifically for the operational reality of Mukalla, Yemen. It addresses the primary friction of in-store dining and takeaway: **eliminating customer waiting times (15–25 minutes) through an Intelligent Scheduled Preparation Engine**.
 
 ### Core Value Proposition
 - **Scheduled Preparation Engine**: Automatically calculates oven release time based on customer pickup schedule ($T_{\text{release}} = T_{\text{pickup}} - T_{\text{prep}}$) to ensure pizza comes out of the oven sizzling hot at the exact minute the customer arrives.
@@ -24,7 +23,7 @@
 ## 📂 Project Structure
 
 ```
-pizza-house66/
+pizza-demo/
 ├── docs/                       # Complete 25-module architectural & business documentation
 │   ├── PROJECT_ORIGIN.md       # Origin story, Mukalla local context, Instagram research
 │   ├── PRODUCT_VISION.md       # Strategic vision & Novixa Restaurant roadmap
@@ -84,8 +83,8 @@ pizza-house66/
 
 ### 2. Installation
 ```bash
-# Clone or navigate to the repository
-cd pizza-house66
+git clone https://github.com/Novixa-dev/pizza-demo.git
+cd pizza-demo
 
 # Install locked dependencies
 npm ci
@@ -132,14 +131,14 @@ Pushing to `main` runs lint, typecheck, tests and build, publishes a Docker imag
 
 ## 💰 Yemeni Payment Rails Configured
 
-Pizza House Mukalla accepts cash at pickup alongside direct electronic transfers to verified local accounts:
+The demo restaurant accepts cash at pickup alongside direct electronic transfers. The account numbers below are **demo placeholders** shown in the checkout and admin screens:
 
-| Provider | Merchant Account Number | Beneficiary Name |
+| Provider | Demo Account Number | Beneficiary Name |
 |---|---|---|
-| **Al-Kuraimi Bank (الكريمي)** | `PH-772207788` | بيتزا هاوس فوة المساكن |
-| **Al-Amqi Exchange (العمقي)** | `25401982` | بيتزا هاوس - المكلا |
-| **Al-Busairi Exchange (البصيري)**| `889104` | مطعم بيتزا هاوس |
-| **Pay at Pickup (نقداً عند الاستلام)** | N/A | Cashier counter at Fuwa branch |
+| **Al-Kuraimi Bank (الكريمي)** | `PH-772207788` | بيتزا نوڤا |
+| **Al-Amqi Exchange (العمقي)** | `25401982` | بيتزا نوڤا |
+| **Al-Busairi Exchange (البصيري)**| `889104` | بيتزا نوڤا وسط المدينة |
+| **Pay at Pickup (نقداً عند الاستلام)** | N/A | Cashier counter |
 
 ---
 
@@ -150,5 +149,5 @@ Run the automated checks with `npm test`, `npm run typecheck`, `npm run lint`, a
 ---
 
 ## 📜 License & Ownership
-Created as an authentic commercial restaurant platform for **Pizza House Mukalla** (`@pizza_house66`) and the foundational architecture of **Novixa Restaurant**.  
-All rights reserved © 2026.
+**Pizza Demo** is a product of **[Novixa](https://novixa.dev)** and the foundational architecture of **Novixa Restaurant**. It was originally validated as a pilot with a real restaurant in Mukalla; the public demo runs under the neutral **Pizza Nova** brand.
+All rights reserved © 2026 Novixa.

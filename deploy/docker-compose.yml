@@ -1,11 +1,11 @@
-# Production stack for pizza-house.novixa.dev
-# Lives on the VPS at /opt/pizza-house/docker-compose.yml (synced by the deploy workflow).
-name: pizza-house
+# Production stack for pizza-demo.novixa.dev
+# Lives on the VPS at /opt/pizza-demo/docker-compose.yml (synced by the deploy workflow).
+name: pizza-demo
 
 services:
   app:
-    image: ${APP_IMAGE:-ghcr.io/novixa-dev/pizza-house-website}:${APP_TAG:-latest}
-    container_name: pizza-house-app
+    image: ${APP_IMAGE:-ghcr.io/novixa-dev/pizza-demo}:${APP_TAG:-latest}
+    container_name: pizza-demo-app
     restart: unless-stopped
     init: true
     env_file: .env
@@ -13,10 +13,10 @@ services:
       NODE_ENV: production
       PORT: "3000"
       HOSTNAME: 0.0.0.0
-      DATABASE_URL: file:/app/data/pizza-house.db
+      DATABASE_URL: file:/app/data/pizza-demo.db
     ports:
       # Loopback only, for on-host checks. Public traffic arrives through mailcow's
-      # nginx over the pizza-house-edge network (deploy/nginx/pizza-house.mailcow.conf).
+      # nginx over the pizza-demo-edge network (deploy/nginx/pizza-demo.mailcow.conf).
       - "127.0.0.1:${APP_PORT:-3066}:3000"
     networks:
       - edge
@@ -47,4 +47,4 @@ networks:
   # Shared only with mailcow's nginx; created by scripts/remote-deploy.sh.
   edge:
     external: true
-    name: pizza-house-edge
+    name: pizza-demo-edge

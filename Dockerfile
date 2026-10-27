@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 # ---------------------------------------------------------------------------
-# Pizza House — production image (Next.js standalone + Prisma/SQLite)
+# Pizza Demo — production image (Next.js standalone + Prisma/SQLite)
 # ---------------------------------------------------------------------------
 ARG NODE_IMAGE=node:24-bookworm-slim
 
@@ -22,7 +22,7 @@ WORKDIR /app
 RUN ldconfig -p | grep -q "libssl.so.3" || (apt-get update \
       && apt-get install -y --no-install-recommends openssl \
       && rm -rf /var/lib/apt/lists/*)
-ARG NEXT_PUBLIC_APP_URL=https://pizza-house.novixa.dev
+ARG NEXT_PUBLIC_APP_URL=https://pizza-demo.novixa.dev
 ENV NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL} \
     NEXT_TELEMETRY_DISABLED=1 \
     NODE_ENV=production
@@ -44,7 +44,7 @@ ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \
     HOSTNAME=0.0.0.0 \
-    DATABASE_URL=file:/app/data/pizza-house.db \
+    DATABASE_URL=file:/app/data/pizza-demo.db \
     CHECKPOINT_DISABLE=1 \
     PRISMA_HIDE_UPDATE_MESSAGE=1
 
