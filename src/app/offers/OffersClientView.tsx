@@ -23,6 +23,7 @@ import {
   TrendingUp,
   Pizza,
 } from "lucide-react";
+import { RESTAURANT_TIME_ZONE } from "@/lib/restaurantTime";
 
 interface CouponItem {
   id: string;
@@ -424,7 +425,7 @@ export default function OffersClientView({
                           <div className="flex justify-between">
                             <span>{dict.offers.expires}</span>
                             <span className="font-outfit text-stone-300">
-                              {new Date(coupon.endDate).toLocaleDateString()}
+                              {new Date(coupon.endDate).toLocaleDateString(undefined, { timeZone: RESTAURANT_TIME_ZONE })}
                             </span>
                           </div>
                         )}

@@ -39,6 +39,7 @@ import {
   Bell,
   Plus,
 } from "lucide-react";
+import { RESTAURANT_TIME_ZONE } from "@/lib/restaurantTime";
 
 interface HistoryOrder {
   id: string;
@@ -1121,12 +1122,12 @@ export default function HistoryClientView() {
                     day: "numeric",
                     hour: "numeric",
                     minute: "2-digit",
-                    timeZone: "Asia/Aden",
+                    timeZone: RESTAURANT_TIME_ZONE,
                   }
                 );
                 const pickupTime = new Date(order.requestedPickupTime).toLocaleTimeString(
                   orderLocale,
-                  { hour: "numeric", minute: "2-digit", timeZone: "Asia/Aden" }
+                  { hour: "numeric", minute: "2-digit", timeZone: RESTAURANT_TIME_ZONE }
                 );
 
                 return (
@@ -1512,7 +1513,8 @@ export default function HistoryClientView() {
                 <span>{language === "ar" ? "التاريخ:" : language === "id" ? "Tanggal:" : "Date:"}</span>
                 <span>
                   {new Date(activeReceiptOrder.createdAt).toLocaleString(
-                    language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US"
+                    language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US",
+                    { timeZone: RESTAURANT_TIME_ZONE }
                   )}
                 </span>
               </div>
@@ -1534,6 +1536,7 @@ export default function HistoryClientView() {
                       ).toLocaleTimeString(language === "ar" ? "ar-YE" : language === "id" ? "id-ID" : "en-US", {
                         hour: "numeric",
                         minute: "2-digit",
+                        timeZone: RESTAURANT_TIME_ZONE,
                       })})`}
                 </span>
               </div>

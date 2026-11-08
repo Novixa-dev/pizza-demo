@@ -20,6 +20,22 @@
 
 ---
 
+## 🧪 Try the Live Demo
+
+The demo database is seeded automatically (idempotent, never overwrites admin edits) so every feature can be tried right away:
+
+| What | How to try it |
+|---|---|
+| **Coupons** | `NOVIXA20` (20% off from 3,000 YER) · `WELCOME10` (first order, 10% from 8,000 YER) · `MUKALLA500` (500 YER off from 6,000 YER) · `HADRAMOUT` (15% from 10,000 YER) · `FAMILYBOX` (free garlic bread from 15,000 YER) |
+| **Automatic gifts** | Cart of 12,000 YER+ → free cheesy garlic bread · 20,000 YER+ → free Nutella & banana fatayer (decided by the server) |
+| **Loyalty reward & order history** | Use the demo phone `770000000` at checkout or in *My Orders*: 5 completed orders, reward ready to claim |
+| **Reviews** | Five completed orders with customer feedback appear in the testimonials and the admin panel |
+| **Staff screens** | `/kitchen` and `/admin` need the staff PINs from the server's `.env` (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md#2-day-2-operations)) |
+
+All times (pickup slots, kitchen tickets, tracking) are shown in the restaurant's time zone, **Asia/Aden (UTC+3)**, wherever the visitor is.
+
+---
+
 ## 📂 Project Structure
 
 ```
